@@ -21,6 +21,16 @@ export const nav = [
 
 export const work = [
   {
+    url: "ayahs-beauty-greenford.pages.dev",
+    title: "Ayahs Beauty",
+    label: "Laser hair removal, lashes & advanced facials · Greenford",
+    span: "sm:col-span-12 md:col-span-12",
+    aspect: "16 / 8",
+    device: "desktop" as const,
+    startAt: 0.22,
+    featured: true,
+  },
+  {
     url: "maisyrose-flowers-collier-row.pages.dev",
     title: "Maisy Rose Flowers",
     label: "Florist · Collier Row",
@@ -51,8 +61,8 @@ export const work = [
     url: "nurse-vella-loughton.pages.dev",
     title: "Nurse Vella Skin & Beauty",
     label: "Aesthetic clinic · Woodford Green",
-    span: "sm:col-span-6 md:col-span-6",
-    aspect: "16 / 10",
+    span: "sm:col-span-3 md:col-span-3",
+    aspect: "4 / 3",
     device: "desktop" as const,
     startAt: 0.28,
   },
@@ -60,10 +70,28 @@ export const work = [
     url: "bare-essence-leyton.pages.dev",
     title: "Bare Essence Skin Clinic",
     label: "Electrolysis · Leyton",
-    span: "sm:col-span-6 md:col-span-6",
-    aspect: "16 / 10",
+    span: "sm:col-span-3 md:col-span-3",
+    aspect: "4 / 3",
     device: "desktop" as const,
     startAt: 0.3,
+  },
+  {
+    url: "dulci-beauty-dagenham.pages.dev",
+    title: "Dulci Beauty & Trend",
+    label: "Aesthetic clinic · Dagenham",
+    span: "sm:col-span-3 md:col-span-3",
+    aspect: "4 / 3",
+    device: "desktop" as const,
+    startAt: 0.25,
+  },
+  {
+    url: "demo-priscas-skincare.pages.dev",
+    title: "Prisca's Skincare",
+    label: "Personalised skin treatments · Hounslow",
+    span: "sm:col-span-3 md:col-span-3",
+    aspect: "4 / 3",
+    device: "desktop" as const,
+    startAt: 0.25,
   },
 ];
 

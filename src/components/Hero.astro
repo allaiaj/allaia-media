@@ -62,17 +62,23 @@ import { site } from "../data/site";
       </a>
     </div>
 
-    <!-- Trust strip / metrics -->
+    <!-- Trust strip / metrics (animated counters) -->
     <div class="reveal mt-20 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-3xl border border-ink-900/8" style="background: rgb(14 13 10 / 0.08);">
       {[
-        { v: "500+", l: "brands shipped" },
-        { v: "100%", l: "client retention" },
-        { v: "7 days", l: "to website launch" },
-        { v: "4.8x", l: "average meta roas" },
+        { final: "500+", target: 500, suffix: "+", l: "brands shipped" },
+        { final: "100%", target: 100, suffix: "%", l: "client retention" },
+        { final: "7", target: 7, suffix: " days", l: "to website launch" },
+        { final: "4.8x", target: 4.8, suffix: "x", l: "average meta roas", decimals: 1 },
       ].map((m) => (
-        <div class="px-5 py-6 sm:py-8 text-center sm:text-left" style="background: var(--color-paper);">
-          <div class="font-serif italic text-3xl sm:text-4xl text-gradient-violet">
-            {m.v}
+        <div class="relative px-5 py-6 sm:py-8 text-center sm:text-left overflow-hidden" style="background: var(--color-paper);">
+          <div
+            class="font-serif italic text-3xl sm:text-4xl text-gradient-violet"
+            data-counter
+            data-target={m.target}
+            data-suffix={m.suffix}
+            data-decimals={m.decimals ?? 0}
+          >
+            {m.final}
           </div>
           <div class="mt-1.5 text-[11px] uppercase tracking-[0.18em] text-ink-500">
             {m.l}
@@ -81,6 +87,47 @@ import { site } from "../data/site";
       ))}
     </div>
   </div>
+
+  <script>
+    // Count-up animation for hero metrics
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    function animateCounter(el: HTMLElement) {
+      if (el.dataset.counted === "1") return;
+      el.dataset.counted = "1";
+      const target = parseFloat(el.dataset.target || "0");
+      const decimals = parseInt(el.dataset.decimals || "0");
+      const suffix = el.dataset.suffix || "";
+      const duration = 1800;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const elapsed = now - start;
+        const ratio = Math.min(1, elapsed / duration);
+        const current = target * easeOut(ratio);
+        el.textContent = current.toFixed(decimals) + suffix;
+        if (ratio < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    const counters = document.querySelectorAll<HTMLElement>("[data-counter]");
+    if ("IntersectionObserver" in window && counters.length) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target as HTMLElement);
+              obs.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.4 }
+      );
+      counters.forEach((el) => obs.observe(el));
+    } else {
+      counters.forEach(animateCounter);
+    }
+  </script>
 
   <!-- Floating decorative orbs -->
   <div
