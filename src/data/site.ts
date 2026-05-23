@@ -13,10 +13,41 @@ export const site = {
 
 export const nav = [
   { label: "Services", href: "#services" },
+  { label: "Work", href: "#work" },
   { label: "Pricing", href: "#pricing" },
   { label: "Process", href: "#process" },
-  { label: "Proof", href: "#proof" },
   { label: "FAQ", href: "#faq" },
+];
+
+export const work = [
+  {
+    url: "neolution-face-and-body.pages.dev",
+    title: "Neolution Face & Body",
+    label: "Aesthetic clinic · Isle of Dogs, London",
+    span: "md:col-span-4",
+    aspect: "16 / 11",
+  },
+  {
+    url: "maisyrose-flowers-collier-row.pages.dev",
+    title: "Maisy Rose Flowers",
+    label: "Florist since 1993 · Collier Row",
+    span: "md:col-span-2",
+    aspect: "3 / 4",
+  },
+  {
+    url: "nurse-vella-loughton.pages.dev",
+    title: "Nurse Vella Skin & Beauty",
+    label: "Nurse-led aesthetic clinic · Woodford Green",
+    span: "md:col-span-3",
+    aspect: "4 / 3",
+  },
+  {
+    url: "bare-essence-leyton.pages.dev",
+    title: "Bare Essence Skin Clinic",
+    label: "Permanent electrolysis · Leyton",
+    span: "md:col-span-3",
+    aspect: "4 / 3",
+  },
 ];
 
 export const services = [

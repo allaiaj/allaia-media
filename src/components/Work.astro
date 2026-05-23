@@ -1,0 +1,202 @@
+---
+import { work } from "../data/site";
+---
+
+<section id="work" class="relative scroll-mt-24 py-24 sm:py-32">
+  <div class="mx-auto max-w-6xl px-6">
+    <!-- Header -->
+    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+      <div>
+        <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+          Selected work · 04 recent builds
+        </p>
+        <h2 class="display max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-medium">
+          <span class="text-gradient-ink">Sites that ship.</span><br />
+          <span class="font-serif italic text-gradient-violet">Numbers that grow.</span>
+        </h2>
+      </div>
+      <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
+        Each one launched in seven days. Each one ranks where it counts. Scroll inside any card to walk through the build.
+      </p>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="grid gap-4 sm:gap-5 md:grid-cols-6">
+      {
+        work.map((w) => (
+          <a
+            href={`https://${w.url}`}
+            target="_blank"
+            rel="noopener"
+            class={`reveal group block relative overflow-hidden rounded-3xl surface transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-30px_rgba(124,58,237,0.25)] ${w.span}`}
+          >
+            {/* Browser chrome */}
+            <div
+              class="flex items-center gap-3 px-4 py-3 border-b border-ink-900/8"
+              style="background: linear-gradient(180deg, #f5f4f1, #faf9f6);"
+            >
+              <div class="flex gap-1.5 flex-none">
+                <span class="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
+                <span class="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+              </div>
+              <div
+                class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-full border border-ink-900/8 px-3 py-1 text-[10px] text-ink-500"
+                style="background: #ffffff;"
+              >
+                <svg
+                  width="9"
+                  height="9"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                  class="flex-none"
+                >
+                  <path
+                    d="M3.5 5V3.5a2.5 2.5 0 015 0V5M3 5h6a1 1 0 011 1v4a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span class="truncate">{w.url}</span>
+              </div>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                class="flex-none text-ink-400 group-hover:text-ink-700 transition-colors"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 9L9 3M9 3H4M9 3v5"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            {/* Preview frame */}
+            <div
+              data-preview-frame
+              class="relative cursor-grab active:cursor-grabbing"
+              style={`aspect-ratio: ${w.aspect}; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;`}
+            >
+              <div
+                class="absolute inset-0 overflow-y-auto overflow-x-hidden"
+                data-preview-scroll
+              >
+                <div data-preview-reservoir class="relative w-full" style="height: 1px;">
+                  <iframe
+                    src={`https://${w.url}`}
+                    class="absolute top-0 left-0 origin-top-left pointer-events-none border-0 bg-white"
+                    style="width: 1440px; height: 5000px;"
+                    referrerpolicy="no-referrer"
+                    loading="lazy"
+                    title={w.title}
+                    aria-label={`Preview of ${w.title}`}
+                  />
+                </div>
+              </div>
+              {/* Subtle gradient overlay so preview reads as preview, not as live site */}
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/40 to-transparent"></div>
+            </div>
+
+            {/* Info footer */}
+            <div class="flex items-center justify-between gap-3 px-5 py-4 border-t border-ink-900/8 bg-white/60">
+              <div class="min-w-0">
+                <h3 class="text-sm sm:text-base font-medium text-ink-900 truncate">
+                  {w.title}
+                </h3>
+                <p class="text-xs text-ink-500 truncate">{w.label}</p>
+              </div>
+              <span class="inline-flex items-center gap-1 text-xs font-medium text-ink-700 group-hover:text-ink-900 transition-colors flex-none">
+                Visit
+                <svg
+                  width="10"
+                  height="10"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  class="transition-transform group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 9L9 3M9 3H4M9 3v5"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="reveal mt-10 text-center text-xs text-ink-500">
+      All four built in the last 12 months. Tap any card to open the live site.
+    </p>
+  </div>
+</section>
+
+<script>
+  // Scale each iframe so it fills its card width while rendering at desktop dimensions
+  const IFRAME_WIDTH = 1440;
+  const IFRAME_HEIGHT = 5000;
+
+  function fitFrame(frame: HTMLElement) {
+    const reservoir = frame.querySelector<HTMLElement>(
+      "[data-preview-reservoir]"
+    );
+    const iframe = frame.querySelector<HTMLIFrameElement>("iframe");
+    if (!reservoir || !iframe) return;
+    const containerWidth = frame.offsetWidth;
+    if (containerWidth === 0) return;
+    const scale = containerWidth / IFRAME_WIDTH;
+    iframe.style.transform = `scale(${scale})`;
+    iframe.style.width = IFRAME_WIDTH + "px";
+    iframe.style.height = IFRAME_HEIGHT + "px";
+    reservoir.style.height = IFRAME_HEIGHT * scale + "px";
+    reservoir.style.width = "100%";
+  }
+
+  function fitAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-preview-frame]")
+      .forEach(fitFrame);
+  }
+
+  // Fit on initial load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", fitAll);
+  } else {
+    fitAll();
+  }
+  // Fit again after window load (when fonts/layouts settle)
+  window.addEventListener("load", fitAll);
+
+  // Re-fit when each card resizes (handles bento responsive breakpoints)
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        fitFrame(entry.target as HTMLElement);
+      }
+    });
+    document
+      .querySelectorAll<HTMLElement>("[data-preview-frame]")
+      .forEach((el) => ro.observe(el));
+  }
+
+  // Resize fallback
+  let resizeTimer: number | undefined;
+  window.addEventListener("resize", () => {
+    if (resizeTimer) window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(fitAll, 80);
+  });
+</script>
