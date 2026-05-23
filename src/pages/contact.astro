@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import FAQ from "../components/FAQ.astro";
+import { site } from "../data/site";
+
+const channels = [
+  {
+    label: "Book a 30-min discovery",
+    sub: "Pick a time. No deck. No pitch.",
+    href: site.cal,
+    icon: "calendar",
+    cta: "Open calendar",
+    primary: true,
+  },
+  {
+    label: "Chat on WhatsApp",
+    sub: "Reply within 4 hours during waking hours across our 5 markets.",
+    href: site.whatsapp,
+    icon: "whatsapp",
+    cta: "Open WhatsApp",
+  },
+  {
+    label: "Email us",
+    sub: "Long brief? Send it through and we'll come back the same day.",
+    href: `mailto:${site.email}`,
+    icon: "mail",
+    cta: site.email,
+  },
+  {
+    label: "DM on Instagram",
+    sub: "Quick question or want to see more work? Slide into the DMs.",
+    href: site.instagram,
+    icon: "instagram",
+    cta: "@allaia.media",
+  },
+];
+---
+
+<Layout
+  title="Contact - Allaia Media"
+  description="Book a discovery call, message on WhatsApp, email, or DM. We reply within 4 hours."
+>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden pt-36 sm:pt-44 pb-12 sm:pb-20">
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div
+          class="absolute left-1/2 top-1/3 h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[100px]"
+          style="background: radial-gradient(circle, rgba(167,139,250,0.4) 0%, transparent 60%);"
+        ></div>
+      </div>
+      <div class="mx-auto max-w-4xl px-6">
+        <p class="reveal mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500 text-center">
+          Talk to us · reply within 4 hours
+        </p>
+        <h1 class="reveal display-tight mx-auto max-w-3xl text-center text-[clamp(2.75rem,9vw,7.5rem)] font-medium">
+          <span class="text-gradient-ink">Pick the channel</span><br />
+          <span class="font-serif italic text-gradient-violet">that suits you.</span>
+        </h1>
+        <p class="reveal mt-10 mx-auto max-w-2xl text-center text-base sm:text-lg text-ink-700 leading-relaxed">
+          You'll talk to a human - same one who runs your account if we end up working together. No call-centre, no chatbot funnel.
+        </p>
+      </div>
+    </section>
+
+    <!-- Channels grid -->
+    <section class="relative py-12 sm:py-16">
+      <div class="mx-auto max-w-4xl px-6">
+        <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+          {
+            channels.map((c) => (
+              <a
+                href={c.href}
+                target={c.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={c.href.startsWith("mailto:") ? undefined : "noopener"}
+                class={`reveal group block rounded-3xl p-7 transition-all duration-500 hover:-translate-y-1 ${c.primary ? "shimmer-border text-ink-900" : "surface"}`}
+                style={c.primary ? "box-shadow: 0 30px 80px -30px rgba(124,58,237,0.3), 0 1px 0 rgb(255 255 255 / 0.9) inset;" : ""}
+              >
+                <div class="flex items-start gap-4">
+                  <span
+                    class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-white"
+                    style={
+                      c.icon === "whatsapp"
+                        ? "background: linear-gradient(135deg, #25d366, #128c7e);"
+                        : "background: linear-gradient(135deg, var(--color-accent-bright), var(--color-accent-deep));"
+                    }
+                  >
+                    {c.icon === "calendar" && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6" />
+                        <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                      </svg>
+                    )}
+                    {c.icon === "whatsapp" && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M17.6 6.32A7.85 7.85 0 0012.05 4 7.94 7.94 0 005.32 16.05L4 21l5.05-1.32a7.92 7.92 0 003.78.96h.01a7.94 7.94 0 005.5-13.32m-5.5 12.21h-.01a6.6 6.6 0 01-3.36-.92l-.24-.14-2.99.78.8-2.92-.16-.25a6.59 6.59 0 1112.33-3.34 6.59 6.59 0 01-6.38 6.79"/>
+                      </svg>
+                    )}
+                    {c.icon === "mail" && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.6"/>
+                        <path d="M3.5 7l8.5 6L20.5 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    )}
+                    {c.icon === "instagram" && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/>
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+                      </svg>
+                    )}
+                  </span>
+                  <div class="flex-1 min-w-0">
+                    <h2 class="text-lg sm:text-xl font-medium text-ink-900 tracking-tight">{c.label}</h2>
+                    <p class="mt-1.5 text-sm text-ink-700 leading-relaxed">{c.sub}</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-5 border-t border-ink-900/8 flex items-center justify-between">
+                  <span class="text-[13px] text-ink-700 group-hover:text-ink-900 transition-colors truncate">
+                    {c.cta}
+                  </span>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="text-ink-500 group-hover:text-ink-900 group-hover:translate-x-0.5 transition-all flex-none" aria-hidden="true">
+                    <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+
+        <!-- Markets row -->
+        <div class="reveal mt-10 surface rounded-3xl p-7 text-center">
+          <p class="text-[11px] uppercase tracking-[0.18em] text-ink-500 mb-3">
+            Operators across
+          </p>
+          <p class="font-serif italic text-2xl sm:text-3xl text-gradient-violet">
+            {site.markets.join(" · ")}
+          </p>
+          <p class="mt-4 text-xs text-ink-500">
+            Your account runs in your timezone, not ours. Invoicing in GBP, USD, AED, IDR, PHP.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>

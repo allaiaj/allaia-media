@@ -12,11 +12,11 @@ export const site = {
 };
 
 export const nav = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Process", href: "#process" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Services", href: "/#services" },
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const work = [
@@ -27,7 +27,7 @@ export const work = [
     span: "sm:col-span-12 md:col-span-12",
     aspect: "16 / 8",
     device: "desktop" as const,
-    startAt: 0.22,
+    startAt: 0.42,
     featured: true,
   },
   {
@@ -37,7 +37,7 @@ export const work = [
     span: "sm:col-span-3 md:col-span-3",
     aspect: "9 / 16",
     device: "mobile" as const,
-    startAt: 0.18,
+    startAt: 0.42,
   },
   {
     url: "neolution-face-and-body.pages.dev",
@@ -46,7 +46,7 @@ export const work = [
     span: "sm:col-span-6 md:col-span-6",
     aspect: "16 / 10",
     device: "desktop" as const,
-    startAt: 0.22,
+    startAt: 0.45,
   },
   {
     url: "simply-pizza-ilford.pages.dev",
@@ -55,7 +55,7 @@ export const work = [
     span: "sm:col-span-3 md:col-span-3",
     aspect: "9 / 16",
     device: "mobile" as const,
-    startAt: 0.15,
+    startAt: 0.32,
   },
   {
     url: "nurse-vella-loughton.pages.dev",
@@ -64,7 +64,7 @@ export const work = [
     span: "sm:col-span-3 md:col-span-3",
     aspect: "4 / 3",
     device: "desktop" as const,
-    startAt: 0.28,
+    startAt: 0.5,
   },
   {
     url: "bare-essence-leyton.pages.dev",
@@ -73,7 +73,7 @@ export const work = [
     span: "sm:col-span-3 md:col-span-3",
     aspect: "4 / 3",
     device: "desktop" as const,
-    startAt: 0.3,
+    startAt: 0.55,
   },
   {
     url: "dulci-beauty-dagenham.pages.dev",
@@ -82,7 +82,7 @@ export const work = [
     span: "sm:col-span-3 md:col-span-3",
     aspect: "4 / 3",
     device: "desktop" as const,
-    startAt: 0.25,
+    startAt: 0.45,
   },
   {
     url: "demo-priscas-skincare.pages.dev",
@@ -91,7 +91,7 @@ export const work = [
     span: "sm:col-span-3 md:col-span-3",
     aspect: "4 / 3",
     device: "desktop" as const,
-    startAt: 0.25,
+    startAt: 0.4,
   },
 ];
 

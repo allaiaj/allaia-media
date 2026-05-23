@@ -1,24 +1,31 @@
 ---
 import { work } from "../data/site";
+
+interface Props {
+  showHeader?: boolean;
+}
+
+const { showHeader = true } = Astro.props;
 ---
 
 <section id="work" class="relative scroll-mt-24 py-24 sm:py-32" style="perspective: 2000px;">
   <div class="mx-auto max-w-5xl px-6">
-    <!-- Header -->
-    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-      <div>
-        <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-          Selected work · 8 from 500+ builds
+    {showHeader && (
+      <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+        <div>
+          <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+            Selected work · 8 from 500+ builds
+          </p>
+          <h2 class="display max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-medium">
+            <span class="text-gradient-ink">Sites that ship.</span><br />
+            <span class="font-serif italic text-gradient-violet">Numbers that grow.</span>
+          </h2>
+        </div>
+        <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
+          Each one launched in seven days. Each one ranks where it counts. Scroll inside any preview to walk through the build.
         </p>
-        <h2 class="display max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-medium">
-          <span class="text-gradient-ink">Sites that ship.</span><br />
-          <span class="font-serif italic text-gradient-violet">Numbers that grow.</span>
-        </h2>
       </div>
-      <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
-        Each one launched in seven days. Each one ranks where it counts. Scroll inside any preview to walk through the build.
-      </p>
-    </div>
+    )}
 
     <!-- Bento (12-col, smaller cards, mixed mobile + desktop frames) -->
     <div class="grid grid-cols-6 gap-3 sm:gap-4 sm:grid-cols-12">
@@ -35,44 +42,16 @@ import { work } from "../data/site";
                 Latest flagship
               </span>
             )}
-            {/* Browser/device chrome */}
-            <div
-              class="flex items-center gap-2 px-3 py-2 border-b border-ink-900/8"
-              style="background: linear-gradient(180deg, #f5f4f1, #faf9f6);"
-            >
-              <div class="flex gap-1 flex-none">
-                <span class="h-2 w-2 rounded-full bg-rose-400/80" />
-                <span class="h-2 w-2 rounded-full bg-amber-400/80" />
-                <span class="h-2 w-2 rounded-full bg-emerald-400/80" />
-              </div>
-              <div
-                class="flex-1 min-w-0 inline-flex items-center justify-center gap-1 rounded-full border border-ink-900/8 px-2 py-0.5 text-[9px] text-ink-500"
-                style="background: #ffffff;"
-              >
-                <svg
-                  width="7"
-                  height="7"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  aria-hidden="true"
-                  class="flex-none"
-                >
-                  <path
-                    d="M3.5 5V3.5a2.5 2.5 0 015 0V5M3 5h6a1 1 0 011 1v4a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z"
-                    stroke="currentColor"
-                    stroke-width="1.2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
+            {/* Tiny device tag (no URL bar - per design) */}
+            {w.device === "mobile" && (
+              <span class="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 backdrop-blur-sm px-2 py-0.5 text-[9px] uppercase tracking-wider text-ink-50 font-medium">
+                <svg width="8" height="10" viewBox="0 0 8 10" fill="none" aria-hidden="true">
+                  <rect x="0.6" y="0.6" width="6.8" height="8.8" rx="1.2" stroke="currentColor" stroke-width="1.2" />
+                  <line x1="3" y1="8" x2="5" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
                 </svg>
-                <span class="truncate">{w.url}</span>
-              </div>
-              {w.device === "mobile" && (
-                <span class="flex-none text-[8px] uppercase tracking-wider text-ink-400 font-mono">
-                  mobile
-                </span>
-              )}
-            </div>
+                Mobile
+              </span>
+            )}
 
             {/* Preview frame */}
             <div
