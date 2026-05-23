@@ -1,0 +1,128 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.name} - ${site.tagline}`,
+  description = site.description,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#050410" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={site.name} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts: Geist + Geist Mono + Instrument Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        name: site.name,
+        url: `https://www.${site.domain}`,
+        description: site.description,
+        areaServed: site.markets,
+        sameAs: [site.instagram],
+      })}
+    />
+  </head>
+  <body class="relative min-h-screen bg-ink-950 text-ink-50 antialiased">
+    <!-- Global background aurora -->
+    <div
+      class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      aria-hidden="true"
+    >
+      <div
+        class="absolute -top-40 -left-40 h-[60vh] w-[60vh] rounded-full opacity-50 blur-[120px]"
+        style="background: radial-gradient(circle, var(--color-accent-deep), transparent 70%); animation: var(--animate-aurora);"
+      >
+      </div>
+      <div
+        class="absolute top-1/3 -right-40 h-[55vh] w-[55vh] rounded-full opacity-40 blur-[120px]"
+        style="background: radial-gradient(circle, var(--color-accent-glow), transparent 70%); animation: var(--animate-aurora); animation-delay: -6s;"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 left-1/4 h-[50vh] w-[50vh] rounded-full opacity-30 blur-[120px]"
+        style="background: radial-gradient(circle, var(--color-accent), transparent 70%); animation: var(--animate-aurora); animation-delay: -12s;"
+      >
+      </div>
+
+      <!-- Subtle grid texture -->
+      <div
+        class="absolute inset-0 opacity-[0.025]"
+        style="background-image: linear-gradient(rgb(255 255 255 / 0.6) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.6) 1px, transparent 1px); background-size: 64px 64px;"
+      >
+      </div>
+
+      <!-- Vignette -->
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at center, transparent 30%, rgb(5 4 16 / 0.85) 100%);"
+      >
+      </div>
+    </div>
+
+    <slot />
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

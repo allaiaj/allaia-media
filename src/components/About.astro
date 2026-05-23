@@ -1,0 +1,76 @@
+---
+import { site } from "../data/site";
+---
+
+<section
+  id="about"
+  class="relative isolate scroll-mt-24 overflow-hidden text-ink-900"
+  style="background: linear-gradient(180deg, #f5f4f1 0%, #faf9f6 100%);"
+>
+  <!-- top transition from dark -->
+  <div
+    class="pointer-events-none absolute inset-x-0 -top-px h-24 bg-gradient-to-b from-ink-950 to-transparent"
+    aria-hidden="true"
+  ></div>
+
+  <!-- bottom transition back to dark -->
+  <div
+    class="pointer-events-none absolute inset-x-0 -bottom-px h-32 bg-gradient-to-t from-ink-950 to-transparent"
+    aria-hidden="true"
+  ></div>
+
+  <!-- subtle warm wash -->
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 opacity-40"
+    style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(167,139,250,0.08), transparent 60%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+    <div class="grid md:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="md:col-span-5 md:sticky md:top-32">
+        <p class="reveal mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+          Why we exist
+        </p>
+        <h2 class="reveal display text-5xl sm:text-6xl lg:text-7xl font-medium">
+          <span class="text-gradient-ink">Built for</span><br />
+          <span class="font-serif italic text-gradient-violet">founders who actually do</span><br />
+          <span class="text-gradient-ink">the work.</span>
+        </h2>
+      </div>
+
+      <div class="md:col-span-7 space-y-7 text-[17px] text-ink-800 leading-relaxed">
+        <p class="reveal">
+          The agency world is broken. Founders pay <span class="text-ink-900 font-medium">$10,000 a month</span> for slide decks, status calls, and accounts that mysteriously underperform - then get told they need a longer contract to "see results."
+        </p>
+        <p class="reveal">
+          We started Allaia because we got tired of watching good operators with great offers get bled out by retainers they could not justify. So we built the opposite.
+        </p>
+        <p class="reveal font-serif italic text-2xl sm:text-3xl text-gradient-violet leading-snug">
+          One operator on your account. AI doing the leverage. Real numbers in real dashboards. WhatsApp instead of weekly status calls.
+        </p>
+        <p class="reveal">
+          We're a small, remote-first studio with people on the ground in {site.markets.join(", ")}. We take a handful of clients per quarter on purpose - because attention is the actual product, not headcount.
+        </p>
+
+        <!-- mini stats row -->
+        <div class="reveal grid grid-cols-3 gap-4 pt-8">
+          {[
+            { v: "1 operator", l: "per account" },
+            { v: "0 retainers", l: "longer than 3 mo" },
+            { v: "<4h", l: "WhatsApp reply" },
+          ].map((m) => (
+            <div class="surface-warm rounded-2xl p-4">
+              <div class="font-serif italic text-xl sm:text-2xl text-gradient-violet">
+                {m.v}
+              </div>
+              <div class="mt-1 text-[10px] uppercase tracking-[0.16em] text-ink-500">
+                {m.l}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

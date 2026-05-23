@@ -1,0 +1,63 @@
+---
+import { site } from "../data/site";
+---
+
+<section class="relative py-24 sm:py-32">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal relative overflow-hidden rounded-[2.5rem] glass-strong p-10 sm:p-16 lg:p-24 text-center">
+      <!-- gradient blobs -->
+      <div
+        class="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full opacity-50 blur-3xl"
+        style="background: radial-gradient(circle, var(--color-accent-deep), transparent 70%);"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full opacity-40 blur-3xl"
+        style="background: radial-gradient(circle, var(--color-accent-glow), transparent 70%);"
+        aria-hidden="true"
+      ></div>
+
+      <p class="relative mb-5 text-[11px] uppercase tracking-[0.22em] text-ink-300">
+        Last spot for Q3 · {site.markets.join(" · ")}
+      </p>
+      <h2 class="relative display-tight mx-auto max-w-4xl text-5xl sm:text-7xl lg:text-8xl font-medium">
+        <span class="text-gradient">If your offer is good,</span><br />
+        <span class="font-serif italic text-gradient-accent">we'll prove it pays.</span>
+      </h2>
+      <p class="relative mt-8 mx-auto max-w-xl text-base sm:text-lg text-ink-200 leading-relaxed">
+        Book a 30-minute discovery call. We'll map your numbers, your offer, your bottleneck - and tell you honestly whether we can move them.
+      </p>
+
+      <div class="relative mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href={site.cal}
+          target="_blank"
+          rel="noopener"
+          class="group relative inline-flex w-full sm:w-auto items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-4 text-[15px] font-medium text-ink-950"
+          style="background: linear-gradient(135deg, #ffffff 0%, #e6e3ff 100%); box-shadow: 0 16px 50px -15px rgba(167,139,250,0.7), 0 0 0 1px rgba(255,255,255,0.6) inset;"
+        >
+          <span class="relative">Book a discovery call</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="relative transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+            <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full"></span>
+        </a>
+        <a
+          href={site.whatsapp}
+          target="_blank"
+          rel="noopener"
+          class="glass inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-7 py-4 text-[15px] font-medium text-ink-50 hover:bg-white/10 transition-colors"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-emerald-400">
+            <path d="M17.6 6.32A7.85 7.85 0 0012.05 4 7.94 7.94 0 005.32 16.05L4 21l5.05-1.32a7.92 7.92 0 003.78.96h.01a7.94 7.94 0 005.5-13.32m-5.5 12.21h-.01a6.6 6.6 0 01-3.36-.92l-.24-.14-2.99.78.8-2.92-.16-.25a6.59 6.59 0 1112.33-3.34 6.59 6.59 0 01-6.38 6.79"/>
+          </svg>
+          Or message on WhatsApp
+        </a>
+      </div>
+
+      <p class="relative mt-10 text-xs text-ink-400">
+        Reply within 4 hours. No pitch deck. No pressure.
+      </p>
+    </div>
+  </div>
+</section>

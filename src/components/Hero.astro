@@ -1,0 +1,106 @@
+---
+import { site } from "../data/site";
+---
+
+<section class="relative isolate overflow-hidden pt-36 sm:pt-44 pb-24 sm:pb-32">
+  <!-- Local hero mesh gradient -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="absolute left-1/2 top-1/3 h-[80vh] w-[80vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[100px]"
+      style="background: radial-gradient(circle, var(--color-accent-deep) 0%, transparent 60%);"
+    >
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <!-- Status pill -->
+    <div class="reveal flex justify-center mb-10">
+      <div class="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12px] text-ink-200">
+        <span class="relative flex h-1.5 w-1.5">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        </span>
+        <span>Booking June - August 2026.</span>
+        <span class="text-ink-400">·</span>
+        <span class="text-ink-300">2 spots left.</span>
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="reveal display-tight mx-auto max-w-5xl text-center text-[clamp(2.75rem,9vw,8.25rem)] font-medium">
+      <span class="text-gradient">The systems</span><br />
+      <span class="text-gradient">behind brands</span><br />
+      <span class="font-serif italic text-gradient-accent">that grow.</span>
+    </h1>
+
+    <!-- Sub -->
+    <p class="reveal mt-10 mx-auto max-w-2xl text-center text-base sm:text-lg text-ink-200 leading-relaxed">
+      We build the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue machines.
+      <span class="text-ink-400">No retainers. No theatre. One operator on WhatsApp.</span>
+    </p>
+
+    <!-- CTA row -->
+    <div class="reveal mt-12 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a
+        href={site.cal}
+        target="_blank"
+        rel="noopener"
+        class="group relative inline-flex w-full sm:w-auto items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3.5 text-sm font-medium text-ink-950"
+        style="background: linear-gradient(135deg, #ffffff 0%, #e6e3ff 100%); box-shadow: 0 10px 30px -10px rgba(167,139,250,0.55), 0 0 0 1px rgba(255,255,255,0.6) inset;"
+      >
+        <span class="relative">Book a 30-min discovery</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="relative transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+          <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full"></span>
+      </a>
+      <a
+        href="#services"
+        class="glass inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium text-ink-100 hover:bg-white/10 transition-colors"
+      >
+        See what we build
+      </a>
+    </div>
+
+    <!-- Trust strip / metrics -->
+    <div class="reveal mt-20 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-3xl border border-white/8 bg-white/5">
+      {[
+        { v: "100%", l: "client retention" },
+        { v: "7 days", l: "to website launch" },
+        { v: "4.8x", l: "average meta roas" },
+        { v: "5", l: "markets, one team" },
+      ].map((m) => (
+        <div class="bg-ink-950/60 px-5 py-6 sm:py-8 text-center sm:text-left">
+          <div class="font-serif italic text-3xl sm:text-4xl text-gradient-accent">
+            {m.v}
+          </div>
+          <div class="mt-1.5 text-[11px] uppercase tracking-[0.18em] text-ink-300">
+            {m.l}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Floating decorative orb -->
+  <div
+    class="pointer-events-none absolute right-[6%] top-[28%] hidden xl:block"
+    style="animation: var(--animate-float);"
+    aria-hidden="true"
+  >
+    <div class="relative h-32 w-32">
+      <div class="absolute inset-0 rounded-full opacity-70 blur-2xl" style="background: radial-gradient(circle, var(--color-accent-bright), transparent 70%);"></div>
+      <div class="absolute inset-4 rounded-full border border-white/15 backdrop-blur-md" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));"></div>
+    </div>
+  </div>
+  <div
+    class="pointer-events-none absolute left-[5%] bottom-[18%] hidden xl:block"
+    style="animation: var(--animate-float); animation-delay: -3s;"
+    aria-hidden="true"
+  >
+    <div class="relative h-24 w-24">
+      <div class="absolute inset-0 rounded-full opacity-60 blur-2xl" style="background: radial-gradient(circle, var(--color-accent-glow), transparent 70%);"></div>
+      <div class="absolute inset-3 rounded-full border border-white/15 backdrop-blur-md" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));"></div>
+    </div>
+  </div>
+</section>

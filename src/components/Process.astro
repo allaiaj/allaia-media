@@ -1,0 +1,59 @@
+---
+import { process } from "../data/site";
+---
+
+<section id="process" class="relative scroll-mt-24 py-24 sm:py-32">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal max-w-3xl mb-20">
+      <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-400">
+        How we work · 04 steps
+      </p>
+      <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
+        <span class="text-gradient">No decks.</span><br />
+        <span class="font-serif italic text-gradient-accent">No theatre.</span>
+        <span class="text-gradient"> Just ship.</span>
+      </h2>
+    </div>
+
+    <ol class="relative space-y-3 sm:space-y-4">
+      <!-- vertical connector -->
+      <div
+        class="pointer-events-none absolute left-7 sm:left-10 top-6 bottom-6 w-px"
+        style="background: linear-gradient(180deg, transparent, var(--color-accent-deep) 20%, var(--color-accent) 50%, var(--color-accent-glow) 80%, transparent);"
+        aria-hidden="true"
+      ></div>
+
+      {
+        process.map((step) => (
+          <li class="reveal relative">
+            <div class="glass group relative flex flex-col sm:flex-row gap-6 sm:gap-10 rounded-3xl p-6 sm:p-8 pl-16 sm:pl-24 transition-colors hover:bg-white/8">
+              {/* number badge */}
+              <span
+                class="absolute left-4 sm:left-6 top-6 sm:top-8 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full font-mono text-xs text-ink-950"
+                style="background: linear-gradient(135deg, var(--color-accent-bright), var(--color-accent-deep)); box-shadow: 0 0 24px -4px var(--color-accent-deep);"
+              >
+                {step.n}
+              </span>
+
+              <div class="sm:flex-1">
+                <h3 class="text-2xl sm:text-3xl font-medium tracking-tight">
+                  {step.title}
+                </h3>
+                <p class="mt-2 text-[15px] text-ink-200 leading-relaxed max-w-2xl">
+                  {step.body}
+                </p>
+              </div>
+
+              <div class="sm:w-40 sm:text-right">
+                <p class="text-[11px] uppercase tracking-[0.18em] text-ink-400 mb-1">
+                  Timeline
+                </p>
+                <p class="font-serif italic text-xl text-ink-100">{step.duration}</p>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

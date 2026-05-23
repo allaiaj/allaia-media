@@ -1,0 +1,75 @@
+---
+import { site, nav } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="relative mt-32 border-t border-white/5 bg-ink-950/60 backdrop-blur-xl">
+  <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"></div>
+
+  <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-5 space-y-4">
+        <div class="flex items-center gap-2 text-base font-medium tracking-tight">
+          <span
+            class="relative flex h-8 w-8 items-center justify-center rounded-full"
+            style="background: conic-gradient(from 220deg, var(--color-accent-bright), var(--color-accent-deep), var(--color-accent-glow), var(--color-accent-bright));"
+          >
+            <span class="absolute inset-[2px] rounded-full bg-ink-950"></span>
+            <span class="relative font-serif italic text-ink-50 text-base leading-none">a</span>
+          </span>
+          <span class="text-ink-100">allaia<span class="text-ink-400">/media</span></span>
+        </div>
+        <p class="font-serif italic text-2xl text-ink-200 leading-tight max-w-sm">
+          {site.tagline}
+        </p>
+        <p class="text-sm text-ink-300 max-w-sm leading-relaxed">
+          Remote-first studio. Operators in {site.markets.join(", ")}.
+        </p>
+      </div>
+
+      <div class="md:col-span-3">
+        <h4 class="text-xs uppercase tracking-[0.2em] text-ink-400 mb-4">Sitemap</h4>
+        <ul class="space-y-2.5 text-sm text-ink-200">
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} class="hover:text-ink-50 transition-colors">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="md:col-span-4">
+        <h4 class="text-xs uppercase tracking-[0.2em] text-ink-400 mb-4">Talk to us</h4>
+        <ul class="space-y-2.5 text-sm text-ink-200">
+          <li>
+            <a href={site.cal} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 hover:text-ink-50 transition-colors">
+              Book a discovery call
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href={site.whatsapp} target="_blank" rel="noopener" class="hover:text-ink-50 transition-colors">WhatsApp</a>
+          </li>
+          <li>
+            <a href={site.instagram} target="_blank" rel="noopener" class="hover:text-ink-50 transition-colors">Instagram - @allaia.media</a>
+          </li>
+          <li>
+            <a href={`mailto:${site.email}`} class="hover:text-ink-50 transition-colors">{site.email}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-8 border-t border-white/5">
+      <p class="text-xs text-ink-400">
+        &copy; {year} {site.name}. All rights reserved.
+      </p>
+      <div class="flex items-center gap-5 text-xs text-ink-400">
+        <a href="/privacy" class="hover:text-ink-200 transition-colors">Privacy</a>
+        <a href="/imprint" class="hover:text-ink-200 transition-colors">Imprint</a>
+        <span class="hidden sm:inline">·</span>
+        <span class="hidden sm:inline">Built like it's 2027</span>
+      </div>
+    </div>
+  </div>
+</footer>
