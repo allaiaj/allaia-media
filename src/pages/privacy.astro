@@ -1,0 +1,95 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { site } from "../data/site";
+
+const lastUpdated = "May 2026";
+---
+
+<PageLayout
+  title="Privacy Policy - Allaia Media"
+  description="How Allaia Media collects, uses, and protects your data."
+  eyebrow={`Last updated: ${lastUpdated}`}
+  heading="Privacy policy."
+  intro="Short version: we collect the minimum we need to talk to you, deliver work, and keep the site running. We never sell your data. Here's the long version, in plain English."
+>
+  <h2>1. Who we are</h2>
+  <p>
+    Allaia Media (referred to as <strong>"we"</strong>, <strong>"us"</strong>, or <strong>"Allaia"</strong>) is a remote-first marketing studio with operators across {site.markets.join(", ")}. We're the controller of any personal data you share with us via this site or in the course of working together.
+  </p>
+  <p>
+    Reach us about anything privacy-related at <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+
+  <h2>2. What we collect</h2>
+  <h3>When you visit allaiamedia.com</h3>
+  <ul>
+    <li><strong>Basic analytics</strong> - page views, referrers, country, device type. We use a privacy-respecting analytics provider that does not track you across other sites.</li>
+    <li><strong>Server logs</strong> - IP address, timestamp, and request path. Retained for 30 days for security and debugging.</li>
+  </ul>
+  <h3>When you contact us</h3>
+  <ul>
+    <li><strong>Cal.com booking</strong> - your name, email, and timezone, plus whatever you write in the booking notes.</li>
+    <li><strong>WhatsApp</strong> - your phone number and the content of your messages.</li>
+    <li><strong>Email</strong> - whatever you send us.</li>
+  </ul>
+  <h3>When you become a client</h3>
+  <ul>
+    <li>Business name, billing address, invoicing details, and any account access you grant us to deliver the work (e.g. Google, Meta, Webflow).</li>
+  </ul>
+
+  <h2>3. Why we collect it</h2>
+  <ul>
+    <li>To respond to your enquiry and run a discovery call (legitimate interest, contract preparation).</li>
+    <li>To deliver the services you've engaged us for (contract).</li>
+    <li>To invoice you and meet our tax/legal obligations (legal obligation).</li>
+    <li>To improve the site and understand which content lands (legitimate interest).</li>
+  </ul>
+
+  <h2>4. Who we share it with</h2>
+  <p>
+    We don't sell or rent your data. We use a small set of trusted processors to operate the business - each bound by a data-processing agreement:
+  </p>
+  <ul>
+    <li><strong>Hosting</strong>: Vercel (US/EU).</li>
+    <li><strong>Booking</strong>: Cal.com.</li>
+    <li><strong>Email & docs</strong>: Google Workspace.</li>
+    <li><strong>Messaging</strong>: WhatsApp (Meta).</li>
+    <li><strong>Accounting</strong>: standard cloud accounting platform under DPA.</li>
+  </ul>
+  <p>
+    We share data with these processors only to the extent needed to do their job. We do not transfer your data to anyone else without your explicit consent or a clear legal basis.
+  </p>
+
+  <h2>5. How long we keep it</h2>
+  <ul>
+    <li>Enquiries that don't convert: deleted after 12 months.</li>
+    <li>Active client data: kept for the duration of our work plus 7 years for legal/accounting reasons.</li>
+    <li>Server logs: 30 days.</li>
+    <li>Analytics: aggregated, no individual retention.</li>
+  </ul>
+
+  <h2>6. Your rights</h2>
+  <p>
+    Wherever you're based, you can ask us to:
+  </p>
+  <ul>
+    <li>See what data we hold about you.</li>
+    <li>Correct anything that's wrong.</li>
+    <li>Delete it (subject to legal-hold periods).</li>
+    <li>Stop processing it for marketing.</li>
+    <li>Export it in a portable format.</li>
+  </ul>
+  <p>
+    Email <a href={`mailto:${site.email}`}>{site.email}</a> and we'll respond within 30 days. If you're in the EU/UK, you also have the right to lodge a complaint with your local data-protection authority.
+  </p>
+
+  <h2>7. Cookies</h2>
+  <p>
+    We use the minimum cookies needed to run the site. No third-party advertising cookies. No cross-site tracking. Your browser settings let you block or delete any cookies you don't want.
+  </p>
+
+  <h2>8. Changes to this policy</h2>
+  <p>
+    If we change anything material, we'll update the date at the top and post the new version here. Significant changes get an email to anyone we've worked with directly.
+  </p>
+</PageLayout>

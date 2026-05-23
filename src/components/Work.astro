@@ -8,7 +8,7 @@ import { work } from "../data/site";
     <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
         <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-          Selected work · 4 from 500+ builds
+          Selected work · 5 from 500+ builds
         </p>
         <h2 class="display max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-medium">
           <span class="text-gradient-ink">Sites that ship.</span><br />
@@ -20,8 +20,8 @@ import { work } from "../data/site";
       </p>
     </div>
 
-    <!-- Bento grid -->
-    <div class="grid gap-4 sm:gap-5 md:grid-cols-6">
+    <!-- Bento grid (12-col for finer control with 5 cards) -->
+    <div class="grid gap-4 sm:gap-5 md:grid-cols-12">
       {
         work.map((w) => (
           <a
@@ -140,7 +140,7 @@ import { work } from "../data/site";
     </div>
 
     <p class="reveal mt-10 text-center text-xs text-ink-500">
-      All four built in the last 12 months. Tap any card to open the live site.
+      Five recent builds, all shipped in the last 12 months. Tap any card to open the live site.
     </p>
   </div>
 </section>
