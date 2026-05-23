@@ -1,5 +1,10 @@
 ---
 import { services, site } from "../data/site";
+
+interface Props {
+  showHeader?: boolean;
+}
+const { showHeader = true } = Astro.props;
 ---
 
 <section
@@ -14,18 +19,20 @@ import { services, site } from "../data/site";
   ></div>
 
   <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-    <div class="reveal text-center max-w-3xl mx-auto mb-16">
-      <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-        Honest pricing
-      </p>
-      <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
-        <span class="text-gradient-ink">Pay for what works.</span><br />
-        <span class="font-serif italic text-gradient-violet">No retainers. No lock-in.</span>
-      </h2>
-      <p class="mt-6 text-base text-ink-700 leading-relaxed">
-        Starting rates below. Final pricing is tailored to your scope. Month-to-month on everything except Meta Ads (3-month minimum, because the data needs time to compound).
-      </p>
-    </div>
+    {showHeader && (
+      <div class="reveal text-center max-w-3xl mx-auto mb-16">
+        <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+          Honest pricing
+        </p>
+        <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
+          <span class="text-gradient-ink">Pay for what works.</span><br />
+          <span class="font-serif italic text-gradient-violet">No retainers. No lock-in.</span>
+        </h2>
+        <p class="mt-6 text-base text-ink-700 leading-relaxed">
+          Starting rates below. Final pricing is tailored to your scope. Month-to-month on everything except Meta Ads (3-month minimum, because the data needs time to compound).
+        </p>
+      </div>
+    )}
 
     <!-- 4 service price cards -->
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

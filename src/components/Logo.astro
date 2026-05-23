@@ -1,0 +1,27 @@
+---
+interface Props {
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  inverted?: boolean;
+  className?: string;
+}
+
+const { size = "md", inverted = false, className = "" } = Astro.props;
+
+const sizeMap = {
+  xs: "text-sm",
+  sm: "text-base sm:text-lg",
+  md: "text-lg sm:text-xl",
+  lg: "text-2xl sm:text-3xl",
+  xl: "text-4xl sm:text-5xl",
+};
+
+const colorClass = inverted ? "text-ink-50" : "text-ink-900";
+---
+
+<span
+  class={`inline-flex items-baseline gap-[0.05em] font-medium tracking-tight leading-none ${sizeMap[size]} ${colorClass} ${className}`}
+  aria-label="Allaia Media"
+>
+  <span class="font-serif italic" style="font-weight: 400;">allaia</span>
+  <span class="font-sans" style="font-weight: 700; letter-spacing: -0.02em;">media.</span>
+</span>

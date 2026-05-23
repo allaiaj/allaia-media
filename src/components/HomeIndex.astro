@@ -1,0 +1,103 @@
+---
+const pages = [
+  {
+    label: "Services",
+    href: "/services",
+    eyebrow: "01 · what we build",
+    body: "Web, Google Business Profile, Meta Ads, Social. Stack what you need.",
+  },
+  {
+    label: "Work",
+    href: "/work",
+    eyebrow: "02 · the receipts",
+    body: "500+ founder-led brands. Eight recent builds you can scroll through.",
+  },
+  {
+    label: "About",
+    href: "/about",
+    eyebrow: "03 · why we exist",
+    body: "One operator per account. No retainers. Built for founders who do the work.",
+  },
+  {
+    label: "Pricing",
+    href: "/pricing",
+    eyebrow: "04 · honest pricing",
+    body: "Month-to-month. From $199. Bundle discount when you stack two or more.",
+  },
+];
+---
+
+<section class="relative scroll-mt-24 py-16 sm:py-24">
+  <div class="mx-auto max-w-5xl px-6">
+    <div class="reveal text-center max-w-2xl mx-auto mb-12">
+      <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+        Explore · 04 destinations
+      </p>
+      <h2 class="display text-4xl sm:text-5xl lg:text-6xl font-medium">
+        <span class="text-gradient-ink">Pick where</span>
+        <span class="font-serif italic text-gradient-violet">to start.</span>
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+      {
+        pages.map((p) => (
+          <a
+            href={p.href}
+            class="reveal group relative overflow-hidden rounded-3xl surface p-7 sm:p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-30px_rgba(124,58,237,0.25)]"
+          >
+            <div
+              class="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style="background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 0%), rgba(167,139,250,0.16), transparent 40%);"
+            />
+            <div class="relative flex flex-col h-full min-h-[180px]">
+              <p class="font-mono text-[11px] uppercase tracking-wider text-ink-500">
+                {p.eyebrow}
+              </p>
+              <h3 class="mt-6 text-3xl sm:text-4xl font-medium tracking-tight text-ink-900">
+                <span class="font-serif italic text-gradient-violet">{p.label}</span>
+              </h3>
+              <p class="mt-3 text-[15px] text-ink-700 leading-relaxed flex-1">
+                {p.body}
+              </p>
+              <div class="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-ink-700 group-hover:text-ink-900 transition-colors">
+                Open
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  class="transition-transform group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 9L9 3M9 3H4M9 3v5"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>(
+    "section a.surface, section a.group"
+  );
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty("--mx", `${x}%`);
+      card.style.setProperty("--my", `${y}%`);
+    });
+  });
+</script>

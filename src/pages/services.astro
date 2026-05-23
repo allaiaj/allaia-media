@@ -1,0 +1,63 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Services from "../components/Services.astro";
+import Process from "../components/Process.astro";
+import CTA from "../components/CTA.astro";
+import { site } from "../data/site";
+---
+
+<Layout
+  title="Services - Allaia Media"
+  description="Web, Google Business Profile, Meta Ads, and Social. Four engines you can stack as your business grows."
+>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden pt-36 sm:pt-44 pb-12 sm:pb-20">
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div
+          class="absolute left-1/2 top-1/3 h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[100px]"
+          style="background: radial-gradient(circle, rgba(167,139,250,0.4) 0%, transparent 60%);"
+        ></div>
+      </div>
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <p class="reveal mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+          Services · four engines
+        </p>
+        <h1 class="reveal display-tight mx-auto max-w-3xl text-[clamp(2.75rem,9vw,7.5rem)] font-medium">
+          <span class="text-gradient-ink">Pick one.</span>
+          <span class="font-serif italic text-gradient-violet">Stack four.</span>
+        </h1>
+        <p class="reveal mt-10 mx-auto max-w-2xl text-base sm:text-lg text-ink-700 leading-relaxed">
+          We build the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue. Each engine works alone. Stacked, they compound.
+        </p>
+        <div class="reveal mt-10 flex flex-wrap justify-center gap-3">
+          <a
+            href={site.cal}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-medium text-ink-50 hover:scale-[1.02] transition-transform"
+          >
+            Book a discovery
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M3 9L9 3M9 3H4M9 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a
+            href="/pricing"
+            class="inline-flex items-center gap-2 rounded-full surface px-6 py-3 text-sm font-medium text-ink-900 hover:bg-ink-900/5 transition-colors"
+          >
+            See pricing
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <Services />
+    <Process />
+    <CTA />
+  </main>
+  <Footer />
+</Layout>

@@ -12,11 +12,29 @@ export const site = {
 };
 
 export const nav = [
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/services" },
   { label: "Work", href: "/work" },
+  { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
-  { label: "Pricing", href: "/#pricing" },
   { label: "Contact", href: "/contact" },
+];
+
+export const footerNav = [
+  { group: "Studio", links: [
+    { label: "Services", href: "/services" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Work", href: "/work" },
+    { label: "About", href: "/about" },
+  ]},
+  { group: "Trust", links: [
+    { label: "Reviews", href: "/reviews" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact", href: "/contact" },
+  ]},
+  { group: "Legal", links: [
+    { label: "Privacy", href: "/privacy" },
+    { label: "Imprint", href: "/imprint" },
+  ]},
 ];
 
 export const work = [
