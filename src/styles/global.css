@@ -1,25 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette - deep navy/violet base + electric violet accent */
-  --color-ink-50: #f5f4ff;
-  --color-ink-100: #e6e3ff;
-  --color-ink-200: #c4bff7;
-  --color-ink-300: #9a93e8;
-  --color-ink-400: #6d63d4;
-  --color-ink-500: #4a3fb8;
-  --color-ink-600: #2f2785;
-  --color-ink-700: #1e185c;
-  --color-ink-800: #120e3d;
-  --color-ink-900: #0a0820;
-  --color-ink-950: #050410;
+  /* Brand palette - deep navy/violet for accent + neutrals */
+  --color-ink-50: #faf9f6;
+  --color-ink-100: #f5f4f1;
+  --color-ink-200: #ece9e3;
+  --color-ink-300: #d4d0c4;
+  --color-ink-400: #9a9484;
+  --color-ink-500: #6b6557;
+  --color-ink-600: #45413a;
+  --color-ink-700: #2a2722;
+  --color-ink-800: #1a1814;
+  --color-ink-900: #0e0d0a;
+  --color-ink-950: #050403;
 
-  --color-accent: #a78bfa;
-  --color-accent-bright: #c4b5fd;
-  --color-accent-deep: #7c3aed;
-  --color-accent-glow: #818cf8;
+  --color-accent: #7c3aed;
+  --color-accent-bright: #a78bfa;
+  --color-accent-deep: #5b21b6;
+  --color-accent-glow: #6366f1;
+  --color-accent-soft: #f3eefe;
 
-  --color-cream: #f5f4f1;
+  --color-cream: #faf9f6;
+  --color-paper: #ffffff;
 
   /* Display fonts */
   --font-sans:
@@ -31,14 +33,15 @@
     monospace;
 
   /* Custom shadows */
-  --shadow-glow: 0 0 80px -20px rgb(167 139 250 / 0.4);
-  --shadow-glow-strong: 0 0 120px -10px rgb(167 139 250 / 0.55);
+  --shadow-soft: 0 1px 3px rgb(14 13 10 / 0.04), 0 12px 40px -18px rgb(14 13 10 / 0.1);
+  --shadow-glow: 0 0 80px -20px rgb(124 58 237 / 0.3);
+  --shadow-glow-strong: 0 0 120px -10px rgb(124 58 237 / 0.45);
 
   /* Animations */
   --animate-marquee: marquee 40s linear infinite;
   --animate-marquee-slow: marquee 60s linear infinite;
   --animate-float: float 8s ease-in-out infinite;
-  --animate-aurora: aurora 18s ease-in-out infinite;
+  --animate-aurora: aurora 20s ease-in-out infinite;
   --animate-shimmer: shimmer 3s linear infinite;
 }
 
@@ -103,97 +106,68 @@ html {
 
 html,
 body {
-  background: #050410;
-  color: var(--color-ink-50);
+  background: var(--color-cream);
+  color: var(--color-ink-900);
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "ss02", "cv11";
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--color-accent-deep);
-  color: var(--color-ink-50);
+  background: var(--color-accent);
+  color: white;
 }
 
 /* Custom utilities */
-@utility glass {
-  background: linear-gradient(
-    180deg,
-    rgb(255 255 255 / 0.04),
-    rgb(255 255 255 / 0.015)
-  );
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgb(255 255 255 / 0.08);
+
+@utility surface {
+  background: var(--color-paper);
+  border: 1px solid rgb(14 13 10 / 0.06);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 1px 3px rgb(14 13 10 / 0.04),
+    0 12px 40px -18px rgb(14 13 10 / 0.1);
 }
 
-@utility glass-strong {
-  background: linear-gradient(
-    180deg,
-    rgb(255 255 255 / 0.07),
-    rgb(255 255 255 / 0.025)
-  );
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
-  border: 1px solid rgb(255 255 255 / 0.12);
+@utility surface-warm {
+  background: linear-gradient(180deg, #ffffff 0%, #faf9f6 100%);
+  border: 1px solid rgb(14 13 10 / 0.06);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 1px 3px rgb(14 13 10 / 0.04),
+    0 12px 40px -18px rgb(14 13 10 / 0.1);
+}
+
+@utility surface-muted {
+  background: rgb(14 13 10 / 0.025);
+  border: 1px solid rgb(14 13 10 / 0.06);
+}
+
+@utility glass-light {
+  background: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(14 13 10 / 0.06);
 }
 
 @utility glass-nav {
-  background: rgb(5 4 16 / 0.55);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+  background: rgb(250 249 246 / 0.75);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgb(14 13 10 / 0.06);
+  box-shadow: 0 4px 24px -12px rgb(14 13 10 / 0.08);
 }
 
 @utility text-gradient {
   background: linear-gradient(
     180deg,
-    var(--color-ink-50) 0%,
-    var(--color-ink-200) 100%
+    var(--color-ink-900) 0%,
+    var(--color-ink-700) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-}
-
-@utility text-gradient-accent {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-bright) 0%,
-    var(--color-accent) 50%,
-    var(--color-accent-glow) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-@utility shimmer-border {
-  background:
-    linear-gradient(var(--color-ink-900), var(--color-ink-900)) padding-box,
-    linear-gradient(
-        135deg,
-        var(--color-accent-bright),
-        var(--color-accent-deep),
-        var(--color-accent-glow)
-      )
-      border-box;
-  border: 1px solid transparent;
-}
-
-@utility shimmer-border-light {
-  background:
-    linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(
-        135deg,
-        var(--color-accent-bright),
-        var(--color-accent-deep),
-        var(--color-accent-glow)
-      )
-      border-box;
-  border: 1px solid transparent;
 }
 
 @utility text-gradient-ink {
@@ -221,25 +195,33 @@ body {
   color: transparent;
 }
 
-@utility surface-light {
-  background: #ffffff;
-  border: 1px solid rgb(10 8 32 / 0.06);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 1px 3px rgb(10 8 32 / 0.04),
-    0 10px 30px -15px rgb(10 8 32 / 0.08);
+@utility text-gradient-accent {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-deep) 0%,
+    var(--color-accent) 50%,
+    var(--color-accent-glow) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
-@utility surface-warm {
-  background: linear-gradient(180deg, #ffffff 0%, #faf9f6 100%);
-  border: 1px solid rgb(10 8 32 / 0.06);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 1px 3px rgb(10 8 32 / 0.04),
-    0 12px 40px -18px rgb(10 8 32 / 0.1);
+@utility shimmer-border {
+  background:
+    linear-gradient(var(--color-paper), var(--color-paper)) padding-box,
+    linear-gradient(
+        135deg,
+        var(--color-accent-bright),
+        var(--color-accent-deep),
+        var(--color-accent-glow)
+      )
+      border-box;
+  border: 1.5px solid transparent;
 }
 
-/* Scroll-reveal helpers (no-JS friendly: shows if JS off) */
+/* Scroll-reveal helpers */
 .reveal {
   opacity: 0;
   transform: translateY(20px);

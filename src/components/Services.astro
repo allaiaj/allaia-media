@@ -7,15 +7,15 @@ import { services } from "../data/site";
     <!-- Header -->
     <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
-        <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-400">
+        <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
           What we build · 04
         </p>
         <h2 class="display max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-medium">
-          <span class="text-gradient">Four engines.</span><br />
-          <span class="font-serif italic text-gradient-accent">Stack what you need.</span>
+          <span class="text-gradient-ink">Four engines.</span><br />
+          <span class="font-serif italic text-gradient-violet">Stack what you need.</span>
         </h2>
       </div>
-      <p class="md:max-w-sm text-base text-ink-300 leading-relaxed">
+      <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
         Start with one. Add the next when the numbers say so. We never sell you something your business cannot absorb yet.
       </p>
     </div>
@@ -25,7 +25,7 @@ import { services } from "../data/site";
       {
         services.map((s, i) => (
           <article
-            class={`reveal group relative overflow-hidden rounded-3xl glass p-7 sm:p-9 transition-all duration-500 hover:-translate-y-1 hover:bg-white/8 ${
+            class={`reveal group relative overflow-hidden rounded-3xl surface p-7 sm:p-9 transition-all duration-500 hover:-translate-y-1 ${
               i === 0 ? "md:col-span-4" : i === 1 ? "md:col-span-2" : i === 2 ? "md:col-span-2" : "md:col-span-4"
             }`}
           >
@@ -37,29 +37,29 @@ import { services } from "../data/site";
 
             <div class="relative flex flex-col h-full min-h-[280px] sm:min-h-[320px]">
               <div class="flex items-start justify-between gap-4">
-                <span class="font-mono text-xs text-ink-400 tracking-wider">{s.n}</span>
-                <span class="glass-strong rounded-full px-3 py-1 text-[11px] text-ink-100">
+                <span class="font-mono text-xs text-ink-500 tracking-wider">{s.n}</span>
+                <span class="rounded-full bg-ink-900/5 px-3 py-1 text-[11px] text-ink-700">
                   {s.price}
                 </span>
               </div>
 
               <div class="mt-10 sm:mt-14 flex-1">
-                <h3 class="text-2xl sm:text-3xl font-medium tracking-tight">
+                <h3 class="text-2xl sm:text-3xl font-medium tracking-tight text-ink-900">
                   {s.title}
                 </h3>
-                <p class="mt-2 font-serif italic text-lg sm:text-xl text-ink-300">
+                <p class="mt-2 font-serif italic text-lg sm:text-xl text-ink-500">
                   {s.sub}
                 </p>
-                <p class="mt-5 text-sm sm:text-[15px] text-ink-200 leading-relaxed max-w-md">
+                <p class="mt-5 text-sm sm:text-[15px] text-ink-700 leading-relaxed max-w-md">
                   {s.body}
                 </p>
               </div>
 
-              <div class="mt-6 pt-5 border-t border-white/8 flex flex-wrap gap-x-5 gap-y-2">
+              <div class="mt-6 pt-5 border-t border-ink-900/8 flex flex-wrap gap-x-5 gap-y-2">
                 {s.deliverables.map((d) => (
-                  <span class="inline-flex items-center gap-1.5 text-xs text-ink-300">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-ink-600">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                      <circle cx="5" cy="5" r="2" fill="currentColor" class="text-accent" />
+                      <circle cx="5" cy="5" r="2" fill="currentColor" style="color: var(--color-accent);" />
                     </svg>
                     {d}
                   </span>
@@ -74,7 +74,6 @@ import { services } from "../data/site";
 </section>
 
 <script>
-  // Mouse-follow glow on service cards
   const cards = document.querySelectorAll<HTMLElement>("#services article");
   cards.forEach((card) => {
     card.addEventListener("mousemove", (e) => {

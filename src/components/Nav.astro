@@ -15,19 +15,19 @@ import { nav, site } from "../data/site";
         class="relative flex h-7 w-7 items-center justify-center rounded-full"
         style="background: conic-gradient(from 220deg, var(--color-accent-bright), var(--color-accent-deep), var(--color-accent-glow), var(--color-accent-bright));"
       >
-        <span class="absolute inset-[2px] rounded-full bg-ink-950"></span>
-        <span class="relative font-serif italic text-ink-50 text-[15px] leading-none">a</span>
+        <span class="absolute inset-[2px] rounded-full bg-paper" style="background: var(--color-paper);"></span>
+        <span class="relative font-serif italic text-ink-900 text-[15px] leading-none">a</span>
       </span>
-      <span class="hidden sm:inline text-ink-100">allaia<span class="text-ink-400">/media</span></span>
+      <span class="hidden sm:inline text-ink-900">allaia<span class="text-ink-400">/media</span></span>
     </a>
 
-    <ul class="hidden md:flex items-center gap-1 text-[13px] text-ink-200">
+    <ul class="hidden md:flex items-center gap-1 text-[13px] text-ink-600">
       {
         nav.map((item) => (
           <li>
             <a
               href={item.href}
-              class="block rounded-full px-3 py-1.5 transition-colors hover:bg-white/5 hover:text-ink-50"
+              class="block rounded-full px-3 py-1.5 transition-colors hover:bg-ink-900/5 hover:text-ink-900"
             >
               {item.label}
             </a>
@@ -40,7 +40,7 @@ import { nav, site } from "../data/site";
       href={site.cal}
       target="_blank"
       rel="noopener"
-      class="group relative inline-flex items-center gap-1.5 rounded-full bg-ink-50 px-4 py-2 text-[13px] font-medium text-ink-950 transition-transform hover:scale-[1.03] active:scale-[0.98]"
+      class="group relative inline-flex items-center gap-1.5 rounded-full bg-ink-900 px-4 py-2 text-[13px] font-medium text-ink-50 transition-transform hover:scale-[1.03] active:scale-[0.98]"
     >
       <span>Book a call</span>
       <svg

@@ -6,26 +6,27 @@ import { faqs } from "../data/site";
   <div class="mx-auto max-w-6xl px-6">
     <div class="grid md:grid-cols-12 gap-10 lg:gap-16">
       <div class="md:col-span-4">
-        <p class="reveal mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-400">
+        <p class="reveal mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
           Honest answers
         </p>
         <h2 class="reveal display text-5xl sm:text-6xl font-medium">
-          <span class="text-gradient">Things founders</span><br />
-          <span class="font-serif italic text-gradient-accent">actually ask.</span>
+          <span class="text-gradient-ink">Things founders</span><br />
+          <span class="font-serif italic text-gradient-violet">actually ask.</span>
         </h2>
       </div>
 
       <div class="md:col-span-8">
-        <div class="reveal glass rounded-3xl overflow-hidden divide-y divide-white/8">
+        <div class="reveal surface rounded-3xl overflow-hidden divide-y divide-ink-900/8">
           {
             faqs.map((item, i) => (
               <details class="group" open={i === 0}>
                 <summary class="flex cursor-pointer items-center justify-between gap-6 px-6 sm:px-8 py-6 list-none [&::-webkit-details-marker]:hidden">
-                  <span class="text-base sm:text-lg font-medium text-ink-50 pr-4">
+                  <span class="text-base sm:text-lg font-medium text-ink-900 pr-4">
                     {item.q}
                   </span>
                   <span
-                    class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-white/5 text-ink-200 transition-all group-open:rotate-45 group-open:bg-accent/20 group-open:text-accent-bright"
+                    class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-ink-900/5 text-ink-700 transition-all group-open:rotate-45"
+                    style="--accent-bg: rgb(124 58 237 / 0.12);"
                     aria-hidden="true"
                   >
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -33,7 +34,7 @@ import { faqs } from "../data/site";
                     </svg>
                   </span>
                 </summary>
-                <div class="px-6 sm:px-8 pb-7 -mt-1 text-[15px] text-ink-300 leading-relaxed max-w-2xl">
+                <div class="px-6 sm:px-8 pb-7 -mt-1 text-[15px] text-ink-700 leading-relaxed max-w-2xl">
                   {item.a}
                 </div>
               </details>
@@ -44,3 +45,10 @@ import { faqs } from "../data/site";
     </div>
   </div>
 </section>
+
+<style>
+  details[open] summary span:last-child {
+    background: rgb(124 58 237 / 0.15);
+    color: var(--color-accent-deep);
+  }
+</style>

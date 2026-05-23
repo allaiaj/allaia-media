@@ -5,24 +5,30 @@ const doubled = [...logos, ...logos];
 
 <section aria-label="Trusted by" class="relative py-12">
   <div class="mx-auto max-w-6xl px-6 mb-8">
-    <p class="text-center text-[11px] uppercase tracking-[0.24em] text-ink-400">
+    <p class="text-center text-[11px] uppercase tracking-[0.24em] text-ink-500">
       Trusted by 20+ founder-led brands across 5 markets
     </p>
   </div>
 
   <div class="relative overflow-hidden">
-    <!-- Fade edges -->
-    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-ink-950 to-transparent"></div>
-    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-ink-950 to-transparent"></div>
+    <!-- Fade edges (now cream, not dark) -->
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32"
+      style="background: linear-gradient(to right, var(--color-cream), transparent);"
+    ></div>
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32"
+      style="background: linear-gradient(to left, var(--color-cream), transparent);"
+    ></div>
 
     <div class="flex w-max" style="animation: var(--animate-marquee-slow);">
       {
         doubled.map((logo) => (
           <div class="flex items-center gap-3 px-10 py-4">
-            <span class="font-serif italic text-2xl sm:text-3xl text-ink-300/70 whitespace-nowrap">
+            <span class="font-serif italic text-2xl sm:text-3xl text-ink-500/80 whitespace-nowrap">
               {logo}
             </span>
-            <span class="h-1 w-1 rounded-full bg-ink-600"></span>
+            <span class="h-1 w-1 rounded-full bg-ink-300"></span>
           </div>
         ))
       }

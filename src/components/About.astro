@@ -5,24 +5,11 @@ import { site } from "../data/site";
 <section
   id="about"
   class="relative isolate scroll-mt-24 overflow-hidden text-ink-900"
-  style="background: linear-gradient(180deg, #f5f4f1 0%, #faf9f6 100%);"
 >
-  <!-- top transition from dark -->
+  <!-- subtle violet wash -->
   <div
-    class="pointer-events-none absolute inset-x-0 -top-px h-24 bg-gradient-to-b from-ink-950 to-transparent"
-    aria-hidden="true"
-  ></div>
-
-  <!-- bottom transition back to dark -->
-  <div
-    class="pointer-events-none absolute inset-x-0 -bottom-px h-32 bg-gradient-to-t from-ink-950 to-transparent"
-    aria-hidden="true"
-  ></div>
-
-  <!-- subtle warm wash -->
-  <div
-    class="pointer-events-none absolute inset-0 -z-10 opacity-40"
-    style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(167,139,250,0.08), transparent 60%);"
+    class="pointer-events-none absolute inset-0 -z-10 opacity-50"
+    style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(167,139,250,0.18), transparent 60%);"
     aria-hidden="true"
   ></div>
 
@@ -60,7 +47,7 @@ import { site } from "../data/site";
             { v: "0 retainers", l: "longer than 3 mo" },
             { v: "<4h", l: "WhatsApp reply" },
           ].map((m) => (
-            <div class="surface-warm rounded-2xl p-4">
+            <div class="surface rounded-2xl p-4">
               <div class="font-serif italic text-xl sm:text-2xl text-gradient-violet">
                 {m.v}
               </div>

@@ -5,24 +5,11 @@ import { services, site } from "../data/site";
 <section
   id="pricing"
   class="relative isolate scroll-mt-24 overflow-hidden text-ink-900"
-  style="background: linear-gradient(180deg, #faf9f6 0%, #f5f4f1 60%, #ece9e3 100%);"
 >
-  <!-- top transition from dark -->
-  <div
-    class="pointer-events-none absolute inset-x-0 -top-px h-24 bg-gradient-to-b from-ink-950 to-transparent"
-    aria-hidden="true"
-  ></div>
-
-  <!-- bottom transition back to dark -->
-  <div
-    class="pointer-events-none absolute inset-x-0 -bottom-px h-32 bg-gradient-to-t from-ink-950 to-transparent"
-    aria-hidden="true"
-  ></div>
-
-  <!-- floating violet wash -->
+  <!-- subtle violet wash from bottom -->
   <div
     class="pointer-events-none absolute inset-0 -z-10 opacity-50"
-    style="background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(124,58,237,0.1), transparent 70%);"
+    style="background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(167,139,250,0.18), transparent 70%);"
     aria-hidden="true"
   ></div>
 
@@ -44,7 +31,7 @@ import { services, site } from "../data/site";
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         services.map((s) => (
-          <article class="reveal surface-warm group relative flex flex-col rounded-3xl p-7 transition-transform hover:-translate-y-1">
+          <article class="reveal surface group relative flex flex-col rounded-3xl p-7 transition-transform hover:-translate-y-1">
             <div class="flex items-start justify-between gap-3">
               <span class="font-mono text-xs text-ink-500 tracking-wider">{s.n}</span>
               <span class="rounded-full bg-ink-900/5 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-ink-600">
@@ -85,26 +72,31 @@ import { services, site } from "../data/site";
       }
     </div>
 
-    <!-- bundle discount callout -->
+    <!-- bundle discount callout (bright violet-accent card) -->
     <div
-      class="reveal relative mt-10 overflow-hidden rounded-3xl p-8 sm:p-10"
-      style="background: linear-gradient(135deg, #1e185c 0%, #120e3d 60%, #1e185c 100%); box-shadow: 0 20px 60px -20px rgba(124,58,237,0.4);"
+      class="reveal shimmer-border relative mt-10 overflow-hidden rounded-3xl p-8 sm:p-10"
+      style="box-shadow: 0 30px 80px -30px rgba(124,58,237,0.25);"
     >
       <div
-        class="pointer-events-none absolute -top-20 -right-10 h-72 w-72 rounded-full opacity-50 blur-3xl"
-        style="background: radial-gradient(circle, var(--color-accent-deep), transparent 70%);"
+        class="pointer-events-none absolute -top-32 -right-10 h-72 w-72 rounded-full opacity-40 blur-3xl"
+        style="background: radial-gradient(circle, rgba(167,139,250,0.6), transparent 70%);"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="pointer-events-none absolute -bottom-32 -left-10 h-72 w-72 rounded-full opacity-35 blur-3xl"
+        style="background: radial-gradient(circle, rgba(251,207,232,0.6), transparent 70%);"
         aria-hidden="true"
       ></div>
 
       <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div class="max-w-2xl">
-          <p class="text-[11px] uppercase tracking-[0.22em] text-accent-bright mb-3">
+          <p class="text-[11px] uppercase tracking-[0.22em] text-accent-deep mb-3">
             Stacking two or more?
           </p>
-          <h3 class="font-serif italic text-3xl sm:text-4xl text-ink-50 leading-tight">
+          <h3 class="font-serif italic text-3xl sm:text-4xl text-gradient-violet leading-tight">
             Ask about our bundle discount.
           </h3>
-          <p class="mt-3 text-[15px] text-ink-200 leading-relaxed">
+          <p class="mt-3 text-[15px] text-ink-700 leading-relaxed">
             Most founders run web + one growth channel. Combining services brings the price down and the data sharper. We'll quote it on the call.
           </p>
         </div>
@@ -112,8 +104,8 @@ import { services, site } from "../data/site";
           href={site.cal}
           target="_blank"
           rel="noopener"
-          class="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3.5 text-sm font-medium text-ink-950 whitespace-nowrap flex-none"
-          style="background: linear-gradient(135deg, #ffffff 0%, #e6e3ff 100%); box-shadow: 0 10px 30px -10px rgba(167,139,250,0.55);"
+          class="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-ink-900 px-6 py-3.5 text-sm font-medium text-ink-50 whitespace-nowrap flex-none"
+          style="box-shadow: 0 12px 36px -10px rgba(14,13,10,0.4);"
         >
           Get a custom quote
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="relative transition-transform group-hover:translate-x-0.5" aria-hidden="true">
