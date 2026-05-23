@@ -3,7 +3,7 @@ import { work } from "../data/site";
 ---
 
 <section id="work" class="relative scroll-mt-24 py-24 sm:py-32">
-  <div class="mx-auto max-w-6xl px-6">
+  <div class="mx-auto max-w-5xl px-6">
     <!-- Header -->
     <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
@@ -16,37 +16,34 @@ import { work } from "../data/site";
         </h2>
       </div>
       <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
-        Each one launched in seven days. Each one ranks where it counts. Scroll inside any card to walk through the build.
+        Each one launched in seven days. Each one ranks where it counts. Scroll inside any preview to walk through the build.
       </p>
     </div>
 
-    <!-- Bento grid (12-col for finer control with 5 cards) -->
-    <div class="grid gap-4 sm:gap-5 md:grid-cols-12">
+    <!-- Bento (12-col, smaller cards, mixed mobile + desktop frames) -->
+    <div class="grid grid-cols-6 gap-3 sm:gap-4 sm:grid-cols-12">
       {
         work.map((w) => (
-          <a
-            href={`https://${w.url}`}
-            target="_blank"
-            rel="noopener"
-            class={`reveal group block relative overflow-hidden rounded-3xl surface transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-30px_rgba(124,58,237,0.25)] ${w.span}`}
+          <article
+            class={`reveal group block relative overflow-hidden rounded-2xl surface transition-all duration-500 hover:-translate-y-0.5 col-span-6 ${w.span}`}
           >
-            {/* Browser chrome */}
+            {/* Browser/device chrome */}
             <div
-              class="flex items-center gap-3 px-4 py-3 border-b border-ink-900/8"
+              class="flex items-center gap-2 px-3 py-2 border-b border-ink-900/8"
               style="background: linear-gradient(180deg, #f5f4f1, #faf9f6);"
             >
-              <div class="flex gap-1.5 flex-none">
-                <span class="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
-                <span class="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
-                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+              <div class="flex gap-1 flex-none">
+                <span class="h-2 w-2 rounded-full bg-rose-400/80" />
+                <span class="h-2 w-2 rounded-full bg-amber-400/80" />
+                <span class="h-2 w-2 rounded-full bg-emerald-400/80" />
               </div>
               <div
-                class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-full border border-ink-900/8 px-3 py-1 text-[10px] text-ink-500"
+                class="flex-1 min-w-0 inline-flex items-center justify-center gap-1 rounded-full border border-ink-900/8 px-2 py-0.5 text-[9px] text-ink-500"
                 style="background: #ffffff;"
               >
                 <svg
-                  width="9"
-                  height="9"
+                  width="7"
+                  height="7"
                   viewBox="0 0 12 12"
                   fill="none"
                   aria-hidden="true"
@@ -62,27 +59,18 @@ import { work } from "../data/site";
                 </svg>
                 <span class="truncate">{w.url}</span>
               </div>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                class="flex-none text-ink-400 group-hover:text-ink-700 transition-colors"
-                aria-hidden="true"
-              >
-                <path
-                  d="M3 9L9 3M9 3H4M9 3v5"
-                  stroke="currentColor"
-                  stroke-width="1.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              {w.device === "mobile" && (
+                <span class="flex-none text-[8px] uppercase tracking-wider text-ink-400 font-mono">
+                  mobile
+                </span>
+              )}
             </div>
 
             {/* Preview frame */}
             <div
               data-preview-frame
+              data-device={w.device}
+              data-start-at={w.startAt}
               class="relative cursor-grab active:cursor-grabbing"
               style={`aspect-ratio: ${w.aspect}; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;`}
             >
@@ -102,52 +90,34 @@ import { work } from "../data/site";
                   />
                 </div>
               </div>
-              {/* Subtle gradient overlay so preview reads as preview, not as live site */}
-              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/40 to-transparent"></div>
+              {/* Subtle gradient overlay */}
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white/30 to-transparent"></div>
             </div>
 
-            {/* Info footer */}
-            <div class="flex items-center justify-between gap-3 px-5 py-4 border-t border-ink-900/8 bg-white/60">
-              <div class="min-w-0">
-                <h3 class="text-sm sm:text-base font-medium text-ink-900 truncate">
-                  {w.title}
-                </h3>
-                <p class="text-xs text-ink-500 truncate">{w.label}</p>
-              </div>
-              <span class="inline-flex items-center gap-1 text-xs font-medium text-ink-700 group-hover:text-ink-900 transition-colors flex-none">
-                Visit
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  class="transition-transform group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M3 9L9 3M9 3H4M9 3v5"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </span>
+            {/* Info footer (no clickable link) */}
+            <div class="px-3 py-2.5 border-t border-ink-900/8 bg-white/60">
+              <h3 class="text-xs sm:text-[13px] font-medium text-ink-900 truncate">
+                {w.title}
+              </h3>
+              <p class="text-[10px] sm:text-[11px] text-ink-500 truncate">
+                {w.label}
+              </p>
             </div>
-          </a>
+          </article>
         ))
       }
     </div>
 
     <p class="reveal mt-10 text-center text-xs text-ink-500">
-      Five recent builds, all shipped in the last 12 months. Tap any card to open the live site.
+      Five recent builds, all shipped in the last 12 months.
     </p>
   </div>
 </section>
 
 <script>
-  // Scale each iframe so it fills its card width while rendering at desktop dimensions
-  const IFRAME_WIDTH = 1440;
+  // Scale each iframe to fit its card; render mobile previews at mobile width
+  const DESKTOP_WIDTH = 1440;
+  const MOBILE_WIDTH = 390;
   const IFRAME_HEIGHT = 5000;
 
   function fitFrame(frame: HTMLElement) {
@@ -155,15 +125,28 @@ import { work } from "../data/site";
       "[data-preview-reservoir]"
     );
     const iframe = frame.querySelector<HTMLIFrameElement>("iframe");
-    if (!reservoir || !iframe) return;
+    const scroll = frame.querySelector<HTMLElement>("[data-preview-scroll]");
+    if (!reservoir || !iframe || !scroll) return;
+
     const containerWidth = frame.offsetWidth;
     if (containerWidth === 0) return;
-    const scale = containerWidth / IFRAME_WIDTH;
+
+    const renderWidth =
+      frame.dataset.device === "mobile" ? MOBILE_WIDTH : DESKTOP_WIDTH;
+    const scale = containerWidth / renderWidth;
+
     iframe.style.transform = `scale(${scale})`;
-    iframe.style.width = IFRAME_WIDTH + "px";
+    iframe.style.width = renderWidth + "px";
     iframe.style.height = IFRAME_HEIGHT + "px";
     reservoir.style.height = IFRAME_HEIGHT * scale + "px";
     reservoir.style.width = "100%";
+
+    // Pre-scroll past the hero whitespace so user sees real content
+    const startAt = parseFloat(frame.dataset.startAt || "0.22");
+    requestAnimationFrame(() => {
+      const target = (scroll.scrollHeight - scroll.clientHeight) * startAt;
+      scroll.scrollTop = target;
+    });
   }
 
   function fitAll() {
@@ -172,16 +155,32 @@ import { work } from "../data/site";
       .forEach(fitFrame);
   }
 
-  // Fit on initial load
+  // Initial fit
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", fitAll);
   } else {
     fitAll();
   }
-  // Fit again after window load (when fonts/layouts settle)
+  // Re-fit when iframes finish loading (so pre-scroll lands on real content)
+  document
+    .querySelectorAll<HTMLIFrameElement>(
+      "[data-preview-frame] iframe"
+    )
+    .forEach((iframe) => {
+      iframe.addEventListener(
+        "load",
+        () => {
+          const frame = iframe.closest<HTMLElement>("[data-preview-frame]");
+          if (frame) {
+            setTimeout(() => fitFrame(frame), 250);
+          }
+        },
+        { once: true }
+      );
+    });
+
   window.addEventListener("load", fitAll);
 
-  // Re-fit when each card resizes (handles bento responsive breakpoints)
   if ("ResizeObserver" in window) {
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -193,7 +192,6 @@ import { work } from "../data/site";
       .forEach((el) => ro.observe(el));
   }
 
-  // Resize fallback
   let resizeTimer: number | undefined;
   window.addEventListener("resize", () => {
     if (resizeTimer) window.clearTimeout(resizeTimer);
