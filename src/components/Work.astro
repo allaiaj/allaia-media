@@ -6,10 +6,10 @@ interface Props {
 }
 const { showHeader = true } = Astro.props;
 
-// Build a microlink screenshot URL per device.
-// Microlink fetches + caches each unique URL on its CDN, so subsequent
-// visitors load the cached image instantly. No iframe scroll, no race
-// conditions, no empty heroes - each preview is always a clean shot.
+// Tall-viewport microlink screenshot so the captured image extends well
+// past the first viewport - users scroll inside the card to walk through
+// the page. Free tier ignores fullPage + jpeg flags, so we fake it by
+// rendering at a tall viewport.
 function shotUrl(url: string, device: "desktop" | "mobile") {
   const isMobile = device === "mobile";
   const params = new URLSearchParams({
@@ -18,12 +18,9 @@ function shotUrl(url: string, device: "desktop" | "mobile") {
     meta: "false",
     embed: "screenshot.url",
     "viewport.width": isMobile ? "390" : "1440",
-    "viewport.height": isMobile ? "844" : "900",
-    "viewport.deviceScaleFactor": "2",
+    "viewport.height": isMobile ? "2200" : "2400",
+    "viewport.deviceScaleFactor": "1",
     waitForTimeout: "1500",
-    type: "jpeg",
-    "screenshot.quality": "82",
-    "screenshot.fullPage": "false",
   });
   return `https://api.microlink.io/?${params.toString()}`;
 }
@@ -43,7 +40,7 @@ function shotUrl(url: string, device: "desktop" | "mobile") {
           </h2>
         </div>
         <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
-          Real builds for real founders. Each one launched in seven days, ranking and converting in its own market.
+          Real builds for real founders. Scroll inside any preview to walk through the full page.
         </p>
       </div>
     )}
@@ -73,21 +70,23 @@ function shotUrl(url: string, device: "desktop" | "mobile") {
               </span>
             )}
 
-            {/* Screenshot - object-cover crops to the top of the page so hero is always visible */}
+            {/* Scrollable full-page screenshot - user walks through the build */}
             <div
-              class="relative overflow-hidden"
+              class="relative overflow-hidden cursor-grab active:cursor-grabbing"
               style={`aspect-ratio: ${w.aspect}; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;`}
             >
-              <img
-                src={shotUrl(w.url, w.device)}
-                alt={`${w.title} website preview`}
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 w-full h-full object-cover object-top"
-                style="background: #ffffff;"
-              />
+              <div class="absolute inset-0 overflow-y-auto overflow-x-hidden" style="scroll-behavior: smooth;">
+                <img
+                  src={shotUrl(w.url, w.device)}
+                  alt={`${w.title} website preview`}
+                  loading="lazy"
+                  decoding="async"
+                  class="block w-full h-auto"
+                  style="background: #ffffff;"
+                />
+              </div>
               {/* Subtle gradient overlay - reads as "preview" not "live" */}
-              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white/30 to-transparent"></div>
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white/40 to-transparent"></div>
             </div>
 
             {/* Info footer */}
