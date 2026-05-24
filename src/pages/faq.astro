@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import FAQ from "../components/FAQ.astro";
+import CTA from "../components/CTA.astro";
+import { faqs, site } from "../data/site";
+---
+
+<Layout
+  title="FAQ - Allaia Media"
+  description="Honest answers to the questions founders actually ask before they book a call."
+>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden pt-36 sm:pt-44 pb-8 sm:pb-12">
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div
+          class="absolute left-1/2 top-1/3 h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[100px]"
+          style="background: radial-gradient(circle, rgba(167,139,250,0.4) 0%, transparent 60%);"
+        ></div>
+      </div>
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <p class="reveal mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+          FAQ · {faqs.length} honest answers
+        </p>
+        <h1 class="reveal display-tight mx-auto max-w-3xl text-[clamp(2.75rem,9vw,7.5rem)] font-medium">
+          <span class="text-gradient-ink">The questions</span><br />
+          <span class="font-serif italic text-gradient-violet">we get asked.</span>
+        </h1>
+        <p class="reveal mt-10 mx-auto max-w-2xl text-base sm:text-lg text-ink-700 leading-relaxed">
+          Real answers, not deflections. Anything missing? Send it on WhatsApp - we'll reply within four hours and add it here if it'd help others.
+        </p>
+      </div>
+    </section>
+
+    <FAQ />
+    <CTA />
+  </main>
+  <Footer />
+</Layout>
