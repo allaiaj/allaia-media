@@ -67,6 +67,7 @@ const cacheBust = Date.now().toString(36);
               <div
                 class="absolute inset-0 overflow-y-auto overflow-x-hidden"
                 data-preview-scroll
+                style="scroll-behavior: auto;"
               >
                 <div data-preview-reservoir class="relative w-full" style="height: 1px;">
                   <iframe
@@ -110,13 +111,12 @@ const cacheBust = Date.now().toString(36);
   const MOBILE_WIDTH = 390;
   const IFRAME_HEIGHT = 5000;
 
-  function fitFrame(frame: HTMLElement) {
+  function sizeFrame(frame: HTMLElement) {
     const reservoir = frame.querySelector<HTMLElement>(
       "[data-preview-reservoir]"
     );
     const iframe = frame.querySelector<HTMLIFrameElement>("iframe");
-    const scroll = frame.querySelector<HTMLElement>("[data-preview-scroll]");
-    if (!reservoir || !iframe || !scroll) return;
+    if (!reservoir || !iframe) return;
 
     const containerWidth = frame.offsetWidth;
     if (containerWidth === 0) return;
@@ -130,51 +130,65 @@ const cacheBust = Date.now().toString(36);
     iframe.style.height = IFRAME_HEIGHT + "px";
     reservoir.style.height = IFRAME_HEIGHT * scale + "px";
     reservoir.style.width = "100%";
-
-    // Pre-scroll past the hero whitespace so user sees real content
-    const startAt = parseFloat(frame.dataset.startAt || "0.22");
-    requestAnimationFrame(() => {
-      const target = (scroll.scrollHeight - scroll.clientHeight) * startAt;
-      scroll.scrollTop = target;
-    });
   }
 
-  function fitAll() {
+  function preScroll(frame: HTMLElement) {
+    const scroll = frame.querySelector<HTMLElement>("[data-preview-scroll]");
+    if (!scroll) return;
+    const startAt = parseFloat(frame.dataset.startAt || "0.22");
+    const target = Math.max(
+      0,
+      (scroll.scrollHeight - scroll.clientHeight) * startAt
+    );
+    scroll.scrollTop = target;
+  }
+
+  function fitFrame(frame: HTMLElement, doPreScroll = false) {
+    sizeFrame(frame);
+    if (doPreScroll) {
+      // Multiple attempts to win against layout settling
+      requestAnimationFrame(() => preScroll(frame));
+      setTimeout(() => preScroll(frame), 120);
+      setTimeout(() => preScroll(frame), 400);
+      setTimeout(() => preScroll(frame), 900);
+    }
+  }
+
+  function fitAll(doPreScroll = false) {
     document
       .querySelectorAll<HTMLElement>("[data-preview-frame]")
-      .forEach(fitFrame);
+      .forEach((f) => fitFrame(f, doPreScroll));
   }
 
-  // Initial fit
+  // Initial fit + pre-scroll
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", fitAll);
+    document.addEventListener("DOMContentLoaded", () => fitAll(true));
   } else {
-    fitAll();
+    fitAll(true);
   }
-  // Re-fit when iframes finish loading (so pre-scroll lands on real content)
+
+  // When each iframe's content loads, re-fit + pre-scroll for that one
   document
-    .querySelectorAll<HTMLIFrameElement>(
-      "[data-preview-frame] iframe"
-    )
+    .querySelectorAll<HTMLIFrameElement>("[data-preview-frame] iframe")
     .forEach((iframe) => {
       iframe.addEventListener(
         "load",
         () => {
           const frame = iframe.closest<HTMLElement>("[data-preview-frame]");
-          if (frame) {
-            setTimeout(() => fitFrame(frame), 250);
-          }
+          if (frame) fitFrame(frame, true);
         },
         { once: true }
       );
     });
 
-  window.addEventListener("load", fitAll);
+  // Window load = final pre-scroll safety net
+  window.addEventListener("load", () => fitAll(true));
 
+  // ResizeObserver: re-size only, don't re-prescroll (else user-scroll gets stomped)
   if ("ResizeObserver" in window) {
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        fitFrame(entry.target as HTMLElement);
+        sizeFrame(entry.target as HTMLElement);
       }
     });
     document
@@ -185,7 +199,7 @@ const cacheBust = Date.now().toString(36);
   let resizeTimer: number | undefined;
   window.addEventListener("resize", () => {
     if (resizeTimer) window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(fitAll, 80);
+    resizeTimer = window.setTimeout(() => fitAll(false), 80);
   });
 
   // Subtle 3D tilt on hover (mouse only, respects reduced motion)
