@@ -6,24 +6,9 @@ interface Props {
 }
 const { showHeader = true } = Astro.props;
 
-// Tall-viewport microlink screenshot so the captured image extends well
-// past the first viewport - users scroll inside the card to walk through
-// the page. Free tier ignores fullPage + jpeg flags, so we fake it by
-// rendering at a tall viewport.
-function shotUrl(url: string, device: "desktop" | "mobile") {
-  const isMobile = device === "mobile";
-  const params = new URLSearchParams({
-    url: `https://${url}`,
-    screenshot: "true",
-    meta: "false",
-    embed: "screenshot.url",
-    "viewport.width": isMobile ? "390" : "1440",
-    "viewport.height": isMobile ? "2200" : "2400",
-    "viewport.deviceScaleFactor": "1",
-    waitForTimeout: "1500",
-  });
-  return `https://api.microlink.io/?${params.toString()}`;
-}
+// Local full-page JPEG screenshots captured by scripts/screenshot-work.mjs
+// Re-run that script when client sites change.
+const shotUrl = (slug: string) => `/screenshots/${slug}.jpg`;
 ---
 
 <section id="work" class="relative scroll-mt-24 py-24 sm:py-32" style="perspective: 2000px;">
@@ -77,7 +62,7 @@ function shotUrl(url: string, device: "desktop" | "mobile") {
             >
               <div class="absolute inset-0 overflow-y-auto overflow-x-hidden" style="scroll-behavior: smooth;">
                 <img
-                  src={shotUrl(w.url, w.device)}
+                  src={shotUrl(w.slug)}
                   alt={`${w.title} website preview`}
                   loading="lazy"
                   decoding="async"
