@@ -43,26 +43,84 @@ for (const site of sites) {
   console.log(`Capturing ${site.slug} (${site.device})...`);
   try {
     await page.goto(site.url, { waitUntil: "networkidle", timeout: 45000 });
-    // Settle for lazy-loaded fonts / images
-    await page.waitForTimeout(2000);
-    // Scroll through to trigger lazy images
+    // Settle for lazy-loaded fonts / intro animations
+    await page.waitForTimeout(4500);
+
+    // Walk down the page slowly to trigger every IntersectionObserver
+    // and lazy-loaded image, then back to the top.
     await page.evaluate(async () => {
-      await new Promise((resolve) => {
-        let total = 0;
-        const step = 600;
-        const timer = setInterval(() => {
-          window.scrollBy(0, step);
-          total += step;
-          if (total >= document.documentElement.scrollHeight) {
-            clearInterval(timer);
-            resolve();
-          }
-        }, 80);
-      });
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      const step = 400;
+      const total = document.documentElement.scrollHeight;
+      for (let y = 0; y <= total; y += step) {
+        window.scrollTo(0, y);
+        await sleep(180);
+      }
+      window.scrollTo(0, total);
+      await sleep(600);
     });
     await page.waitForTimeout(1500);
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500);
+
+    // Force every animation/transition to a finished state, reveal all
+    // reveal/fade-in classes (most agency templates use these), and
+    // convert sticky/fixed elements to absolute so they don't appear
+    // floating in the middle of the full-page screenshot.
+    await page.addStyleTag({
+      content: `
+        *, *::before, *::after {
+          animation-duration: 0s !important;
+          animation-delay: 0s !important;
+          transition-duration: 0s !important;
+          transition-delay: 0s !important;
+        }
+        [class*="opacity-0"], [style*="opacity:0"], [style*="opacity: 0"] {
+          opacity: 1 !important;
+        }
+      `,
+    });
+
+    await page.evaluate(() => {
+      // Reveal any common scroll-triggered hidden states
+      document
+        .querySelectorAll(
+          ".reveal, [data-reveal], [data-animate], [data-aos], .opacity-0, .fade-in, .invisible"
+        )
+        .forEach((el) => {
+          el.classList.add(
+            "is-visible",
+            "is-inview",
+            "in-view",
+            "active",
+            "visible",
+            "aos-animate"
+          );
+          el.classList.remove("opacity-0", "invisible");
+          el.style.opacity = "1";
+          el.style.transform = "none";
+          el.style.visibility = "visible";
+        });
+
+      // Kill anything that looks like a cookie banner / consent dialog
+      const cookieRegex = /(cookie|consent|gdpr|privacy[-_]?(banner|notice|bar)|cc[-_]?(banner|window))/i;
+      document.querySelectorAll("body *").forEach((el) => {
+        const idClass = `${el.id || ""} ${el.className || ""}`;
+        if (typeof el.className === "string" && cookieRegex.test(idClass)) {
+          el.style.display = "none";
+        }
+      });
+
+      // De-fix sticky/fixed elements so they don't smear across full-page capture
+      document.querySelectorAll("*").forEach((el) => {
+        const pos = getComputedStyle(el).position;
+        if (pos === "fixed" || pos === "sticky") {
+          el.style.position = "absolute";
+        }
+      });
+    });
+
+    await page.waitForTimeout(800);
 
     const buf = await page.screenshot({
       fullPage: true,
