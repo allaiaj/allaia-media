@@ -4,11 +4,29 @@ import { work } from "../data/site";
 interface Props {
   showHeader?: boolean;
 }
-
 const { showHeader = true } = Astro.props;
 
-// Cache-bust query so iframes pull fresh content on every deploy
-const cacheBust = Date.now().toString(36);
+// Build a microlink screenshot URL per device.
+// Microlink fetches + caches each unique URL on its CDN, so subsequent
+// visitors load the cached image instantly. No iframe scroll, no race
+// conditions, no empty heroes - each preview is always a clean shot.
+function shotUrl(url: string, device: "desktop" | "mobile") {
+  const isMobile = device === "mobile";
+  const params = new URLSearchParams({
+    url: `https://${url}`,
+    screenshot: "true",
+    meta: "false",
+    embed: "screenshot.url",
+    "viewport.width": isMobile ? "390" : "1440",
+    "viewport.height": isMobile ? "844" : "900",
+    "viewport.deviceScaleFactor": "2",
+    waitForTimeout: "1500",
+    type: "jpeg",
+    "screenshot.quality": "82",
+    "screenshot.fullPage": "false",
+  });
+  return `https://api.microlink.io/?${params.toString()}`;
+}
 ---
 
 <section id="work" class="relative scroll-mt-24 py-24 sm:py-32" style="perspective: 2000px;">
@@ -25,18 +43,18 @@ const cacheBust = Date.now().toString(36);
           </h2>
         </div>
         <p class="md:max-w-sm text-base text-ink-600 leading-relaxed">
-          Each one launched in seven days. Each one ranks where it counts. Scroll inside any preview to walk through the build.
+          Real builds for real founders. Each one launched in seven days, ranking and converting in its own market.
         </p>
       </div>
     )}
 
-    <!-- Bento (12-col, smaller cards, mixed mobile + desktop frames) -->
+    <!-- Bento -->
     <div class="grid grid-cols-6 gap-3 sm:gap-4 sm:grid-cols-12">
       {
         work.map((w) => (
           <article
             data-tilt
-            class={`reveal group block relative overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-0.5 col-span-6 will-change-transform ${w.span} ${w.featured ? "shimmer-border" : "surface"}`}
+            class={`reveal group relative overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-0.5 col-span-6 will-change-transform ${w.span} ${w.featured ? "shimmer-border" : "surface"}`}
             style={`transform-style: preserve-3d; ${w.featured ? "box-shadow: 0 30px 80px -30px rgba(124,58,237,0.35), 0 1px 0 rgb(255 255 255 / 0.9) inset;" : ""}`}
           >
             {w.featured && (
@@ -45,8 +63,7 @@ const cacheBust = Date.now().toString(36);
                 Latest flagship
               </span>
             )}
-            {/* Tiny device tag (no URL bar - per design) */}
-            {w.device === "mobile" && (
+            {w.device === "mobile" && !w.featured && (
               <span class="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 backdrop-blur-sm px-2 py-0.5 text-[9px] uppercase tracking-wider text-ink-50 font-medium">
                 <svg width="8" height="10" viewBox="0 0 8 10" fill="none" aria-hidden="true">
                   <rect x="0.6" y="0.6" width="6.8" height="8.8" rx="1.2" stroke="currentColor" stroke-width="1.2" />
@@ -56,36 +73,24 @@ const cacheBust = Date.now().toString(36);
               </span>
             )}
 
-            {/* Preview frame */}
+            {/* Screenshot - object-cover crops to the top of the page so hero is always visible */}
             <div
-              data-preview-frame
-              data-device={w.device}
-              data-start-at={w.startAt}
-              class="relative cursor-grab active:cursor-grabbing"
+              class="relative overflow-hidden"
               style={`aspect-ratio: ${w.aspect}; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;`}
             >
-              <div
-                class="absolute inset-0 overflow-y-auto overflow-x-hidden"
-                data-preview-scroll
-                style="scroll-behavior: auto;"
-              >
-                <div data-preview-reservoir class="relative w-full" style="height: 1px;">
-                  <iframe
-                    src={`https://${w.url}?_=${cacheBust}`}
-                    class="absolute top-0 left-0 origin-top-left pointer-events-none border-0 bg-white"
-                    style="width: 1440px; height: 5000px;"
-                    referrerpolicy="no-referrer"
-                    loading="lazy"
-                    title={w.title}
-                    aria-label={`Preview of ${w.title}`}
-                  />
-                </div>
-              </div>
-              {/* Subtle gradient overlay */}
-              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white/30 to-transparent"></div>
+              <img
+                src={shotUrl(w.url, w.device)}
+                alt={`${w.title} website preview`}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover object-top"
+                style="background: #ffffff;"
+              />
+              {/* Subtle gradient overlay - reads as "preview" not "live" */}
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white/30 to-transparent"></div>
             </div>
 
-            {/* Info footer (no clickable link) */}
+            {/* Info footer */}
             <div class="px-3 py-2.5 border-t border-ink-900/8 bg-white/60">
               <h3 class="text-xs sm:text-[13px] font-medium text-ink-900 truncate">
                 {w.title}
@@ -106,108 +111,14 @@ const cacheBust = Date.now().toString(36);
 </section>
 
 <script>
-  // Scale each iframe to fit its card; render mobile previews at mobile width
-  const DESKTOP_WIDTH = 1440;
-  const MOBILE_WIDTH = 390;
-  const IFRAME_HEIGHT = 5000;
-
-  function sizeFrame(frame: HTMLElement) {
-    const reservoir = frame.querySelector<HTMLElement>(
-      "[data-preview-reservoir]"
-    );
-    const iframe = frame.querySelector<HTMLIFrameElement>("iframe");
-    if (!reservoir || !iframe) return;
-
-    const containerWidth = frame.offsetWidth;
-    if (containerWidth === 0) return;
-
-    const renderWidth =
-      frame.dataset.device === "mobile" ? MOBILE_WIDTH : DESKTOP_WIDTH;
-    const scale = containerWidth / renderWidth;
-
-    iframe.style.transform = `scale(${scale})`;
-    iframe.style.width = renderWidth + "px";
-    iframe.style.height = IFRAME_HEIGHT + "px";
-    reservoir.style.height = IFRAME_HEIGHT * scale + "px";
-    reservoir.style.width = "100%";
-  }
-
-  function preScroll(frame: HTMLElement) {
-    const scroll = frame.querySelector<HTMLElement>("[data-preview-scroll]");
-    if (!scroll) return;
-    const startAt = parseFloat(frame.dataset.startAt || "0.22");
-    const target = Math.max(
-      0,
-      (scroll.scrollHeight - scroll.clientHeight) * startAt
-    );
-    scroll.scrollTop = target;
-  }
-
-  function fitFrame(frame: HTMLElement, doPreScroll = false) {
-    sizeFrame(frame);
-    if (doPreScroll) {
-      // Multiple attempts to win against layout settling
-      requestAnimationFrame(() => preScroll(frame));
-      setTimeout(() => preScroll(frame), 120);
-      setTimeout(() => preScroll(frame), 400);
-      setTimeout(() => preScroll(frame), 900);
-    }
-  }
-
-  function fitAll(doPreScroll = false) {
-    document
-      .querySelectorAll<HTMLElement>("[data-preview-frame]")
-      .forEach((f) => fitFrame(f, doPreScroll));
-  }
-
-  // Initial fit + pre-scroll
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => fitAll(true));
-  } else {
-    fitAll(true);
-  }
-
-  // When each iframe's content loads, re-fit + pre-scroll for that one
-  document
-    .querySelectorAll<HTMLIFrameElement>("[data-preview-frame] iframe")
-    .forEach((iframe) => {
-      iframe.addEventListener(
-        "load",
-        () => {
-          const frame = iframe.closest<HTMLElement>("[data-preview-frame]");
-          if (frame) fitFrame(frame, true);
-        },
-        { once: true }
-      );
-    });
-
-  // Window load = final pre-scroll safety net
-  window.addEventListener("load", () => fitAll(true));
-
-  // ResizeObserver: re-size only, don't re-prescroll (else user-scroll gets stomped)
-  if ("ResizeObserver" in window) {
-    const ro = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        sizeFrame(entry.target as HTMLElement);
-      }
-    });
-    document
-      .querySelectorAll<HTMLElement>("[data-preview-frame]")
-      .forEach((el) => ro.observe(el));
-  }
-
-  let resizeTimer: number | undefined;
-  window.addEventListener("resize", () => {
-    if (resizeTimer) window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(() => fitAll(false), 80);
-  });
-
   // Subtle 3D tilt on hover (mouse only, respects reduced motion)
   const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isFinePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const isFinePointer = matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
 
   if (!prefersReduced && isFinePointer) {
-    const MAX_TILT = 5; // degrees
+    const MAX_TILT = 5;
     document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((card) => {
       let rect: DOMRect | null = null;
       const onEnter = () => {
