@@ -6,6 +6,9 @@ interface Props {
 }
 
 const { showHeader = true } = Astro.props;
+
+// Cache-bust query so iframes pull fresh content on every deploy
+const cacheBust = Date.now().toString(36);
 ---
 
 <section id="work" class="relative scroll-mt-24 py-24 sm:py-32" style="perspective: 2000px;">
@@ -67,7 +70,7 @@ const { showHeader = true } = Astro.props;
               >
                 <div data-preview-reservoir class="relative w-full" style="height: 1px;">
                   <iframe
-                    src={`https://${w.url}`}
+                    src={`https://${w.url}?_=${cacheBust}`}
                     class="absolute top-0 left-0 origin-top-left pointer-events-none border-0 bg-white"
                     style="width: 1440px; height: 5000px;"
                     referrerpolicy="no-referrer"
