@@ -60,13 +60,17 @@ const shotUrl = (slug: string) => `/screenshots/${slug}.jpg`;
               class="relative overflow-hidden cursor-grab active:cursor-grabbing"
               style={`aspect-ratio: ${w.aspect}; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;`}
             >
-              <div class="absolute inset-0 overflow-y-auto overflow-x-hidden" style="scroll-behavior: smooth;">
+              <div
+                class="absolute inset-0 overflow-y-auto overflow-x-hidden"
+                style="scroll-behavior: auto; overscroll-behavior: contain; touch-action: pan-y; -webkit-overflow-scrolling: touch;"
+              >
                 <img
                   src={shotUrl(w.slug)}
                   alt={`${w.title} website preview`}
                   loading="lazy"
                   decoding="async"
-                  class="block w-full h-auto"
+                  class="block w-full h-auto select-none"
+                  draggable="false"
                   style="background: #ffffff;"
                 />
               </div>

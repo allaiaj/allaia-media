@@ -46,27 +46,46 @@ for (const site of sites) {
     // Settle for lazy-loaded fonts / intro animations
     await page.waitForTimeout(4500);
 
-    // Walk down the page slowly to trigger every IntersectionObserver
-    // and lazy-loaded image, then back to the top.
+    // Walk down the page, re-measuring scrollHeight each pass so we keep
+    // going as lazy content extends the document. Loop until height is
+    // stable AND we've actually reached the bottom.
     await page.evaluate(async () => {
       const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       const step = 400;
-      const total = document.documentElement.scrollHeight;
-      for (let y = 0; y <= total; y += step) {
+      let y = 0;
+      let stableLoops = 0;
+      let lastHeight = 0;
+      // Safety: hard cap at 200 iterations (~80,000px)
+      for (let i = 0; i < 200; i++) {
+        const h = document.documentElement.scrollHeight;
+        if (h === lastHeight) {
+          stableLoops++;
+        } else {
+          stableLoops = 0;
+          lastHeight = h;
+        }
+        if (y >= h - 100) {
+          // At bottom - require 3 stable passes before exiting
+          if (stableLoops >= 3) break;
+          y = h;
+          window.scrollTo(0, y);
+          await sleep(350);
+          continue;
+        }
+        y = Math.min(y + step, h);
         window.scrollTo(0, y);
-        await sleep(180);
+        await sleep(160);
       }
-      window.scrollTo(0, total);
-      await sleep(600);
+      // Plant at the very bottom for a final settle pass
+      window.scrollTo(0, document.documentElement.scrollHeight);
+      await sleep(800);
     });
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(1200);
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(1200);
 
-    // Force every animation/transition to a finished state, reveal all
-    // reveal/fade-in classes (most agency templates use these), and
-    // convert sticky/fixed elements to absolute so they don't appear
-    // floating in the middle of the full-page screenshot.
+    // Kill animations + transitions globally, then reveal common
+    // scroll-driven hidden states.
     await page.addStyleTag({
       content: `
         *, *::before, *::after {
@@ -82,10 +101,9 @@ for (const site of sites) {
     });
 
     await page.evaluate(() => {
-      // Reveal any common scroll-triggered hidden states
       document
         .querySelectorAll(
-          ".reveal, [data-reveal], [data-animate], [data-aos], .opacity-0, .fade-in, .invisible"
+          ".reveal, [data-reveal], [data-animate], [data-aos], .opacity-0, .fade-in, .invisible, [data-scroll]"
         )
         .forEach((el) => {
           el.classList.add(
@@ -102,25 +120,46 @@ for (const site of sites) {
           el.style.visibility = "visible";
         });
 
-      // Kill anything that looks like a cookie banner / consent dialog
-      const cookieRegex = /(cookie|consent|gdpr|privacy[-_]?(banner|notice|bar)|cc[-_]?(banner|window))/i;
+      // Kill cookie / consent banners
+      const cookieRegex =
+        /(cookie|consent|gdpr|privacy[-_]?(banner|notice|bar)|cc[-_]?(banner|window))/i;
       document.querySelectorAll("body *").forEach((el) => {
-        const idClass = `${el.id || ""} ${el.className || ""}`;
-        if (typeof el.className === "string" && cookieRegex.test(idClass)) {
+        const idClass = `${el.id || ""} ${
+          typeof el.className === "string" ? el.className : ""
+        }`;
+        if (cookieRegex.test(idClass)) {
           el.style.display = "none";
-        }
-      });
-
-      // De-fix sticky/fixed elements so they don't smear across full-page capture
-      document.querySelectorAll("*").forEach((el) => {
-        const pos = getComputedStyle(el).position;
-        if (pos === "fixed" || pos === "sticky") {
-          el.style.position = "absolute";
         }
       });
     });
 
-    await page.waitForTimeout(800);
+    // De-stick navs - run LAST, with extra heuristics for full-bleed
+    // sticky bars that aren't class/id-named obviously
+    await page.evaluate(() => {
+      const allElements = Array.from(document.querySelectorAll("*"));
+      allElements.forEach((el) => {
+        const cs = getComputedStyle(el);
+        if (cs.position === "fixed" || cs.position === "sticky") {
+          el.style.setProperty("position", "absolute", "important");
+          el.style.setProperty("transform", "none", "important");
+        }
+      });
+      // Some sites use a wrapper that becomes sticky via JS (top: 0 + transform)
+      document.querySelectorAll("nav, header").forEach((el) => {
+        el.style.setProperty("position", "absolute", "important");
+        el.style.setProperty("top", "0", "important");
+        el.style.setProperty("transform", "none", "important");
+      });
+    });
+
+    await page.waitForTimeout(1200);
+
+    const pageHeight = await page.evaluate(() => ({
+      scrollH: document.documentElement.scrollHeight,
+      bodyH: document.body.scrollHeight,
+      footerExists: !!document.querySelector("footer"),
+      footerTop: document.querySelector("footer")?.getBoundingClientRect().top,
+    }));
 
     const buf = await page.screenshot({
       fullPage: true,
@@ -130,7 +169,9 @@ for (const site of sites) {
     const out = resolve(OUT_DIR, `${site.slug}.jpg`);
     writeFileSync(out, buf);
     const sizeKB = (buf.length / 1024).toFixed(0);
-    console.log(`  → ${site.slug}.jpg (${sizeKB} KB)`);
+    console.log(
+      `  → ${site.slug}.jpg (${sizeKB} KB) - page ${pageHeight.scrollH}px, footer@${pageHeight.footerTop}px`
+    );
   } catch (err) {
     console.error(`  ✗ ${site.slug}: ${err.message}`);
   } finally {
