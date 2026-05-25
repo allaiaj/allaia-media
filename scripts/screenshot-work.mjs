@@ -133,23 +133,27 @@ for (const site of sites) {
       });
     });
 
-    // De-stick navs - run LAST, with extra heuristics for full-bleed
-    // sticky bars that aren't class/id-named obviously
+    // De-stick navs - convert fixed/sticky to STATIC so they push the
+    // hero down instead of floating over it. Run LAST so all the dynamic
+    // positioning has settled by now.
     await page.evaluate(() => {
       const allElements = Array.from(document.querySelectorAll("*"));
+      const reset = (el) => {
+        el.style.setProperty("position", "static", "important");
+        el.style.setProperty("top", "auto", "important");
+        el.style.setProperty("bottom", "auto", "important");
+        el.style.setProperty("left", "auto", "important");
+        el.style.setProperty("right", "auto", "important");
+        el.style.setProperty("transform", "none", "important");
+      };
       allElements.forEach((el) => {
         const cs = getComputedStyle(el);
         if (cs.position === "fixed" || cs.position === "sticky") {
-          el.style.setProperty("position", "absolute", "important");
-          el.style.setProperty("transform", "none", "important");
+          reset(el);
         }
       });
-      // Some sites use a wrapper that becomes sticky via JS (top: 0 + transform)
-      document.querySelectorAll("nav, header").forEach((el) => {
-        el.style.setProperty("position", "absolute", "important");
-        el.style.setProperty("top", "0", "important");
-        el.style.setProperty("transform", "none", "important");
-      });
+      // Catch nav/header elements that became sticky via JS-injected styles
+      document.querySelectorAll("nav, header").forEach(reset);
     });
 
     await page.waitForTimeout(1200);
