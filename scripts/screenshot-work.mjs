@@ -194,23 +194,115 @@ for (const site of sites) {
       quality: 80,
     });
 
-    // sharp - crop to contentBottom (1x DPR after the deviceScaleFactor=1 fix)
+    // Crop to actual content bottom first
     const dpr = 1;
-    const targetH = Math.min(contentBottom * dpr, pageHeight * dpr);
     const img = sharp(fullBuf);
     const meta = await img.metadata();
-    const finalH = Math.min(targetH, meta.height);
-    const cropped = await sharp(fullBuf)
+    const finalH = Math.min(contentBottom * dpr, meta.height);
+    const trimmedBuf = await sharp(fullBuf)
       .extract({ left: 0, top: 0, width: meta.width, height: finalH })
-      .jpeg({ quality: 80 })
-      .toBuffer();
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+
+    // Detect + collapse large blank-white horizontal stripes between
+    // sections (common in 2027-style designs with generous whitespace).
+    // Any contiguous stretch of >120px of near-white rows gets collapsed
+    // to 80px of breathing space.
+    const { data, info } = trimmedBuf;
+    const W = info.width;
+    const H = info.height;
+    const ch = info.channels;
+    const MIN_BRIGHTNESS = 232; // catches cream / off-white spacers too
+    const MAX_VARIANCE = 4; // uniform-color rows (low pixel-to-pixel variance)
+    const MIN_BLANK_RUN = 150;
+    const KEEP_PADDING = 60;
+
+    // Row-by-row mean brightness AND pixel-to-pixel variance
+    const rowBrightness = new Float32Array(H);
+    const rowVariance = new Float32Array(H);
+    for (let y = 0; y < H; y++) {
+      const rowStart = y * W * ch;
+      let sum = 0;
+      let samples = 0;
+      const brightnesses = [];
+      for (let x = 0; x < W; x += 8) {
+        const i = rowStart + x * ch;
+        const b = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        brightnesses.push(b);
+        sum += b;
+        samples++;
+      }
+      const mean = sum / samples;
+      let varSum = 0;
+      for (const b of brightnesses) varSum += Math.abs(b - mean);
+      rowBrightness[y] = mean;
+      rowVariance[y] = varSum / samples;
+    }
+
+    // Blank row = light AND uniform (no visible content)
+    const isBlankRow = (y) =>
+      rowBrightness[y] >= MIN_BRIGHTNESS && rowVariance[y] <= MAX_VARIANCE;
+
+    // Find blank runs
+    const segments = []; // [{from, to}] of non-blank
+    let cursor = 0;
+    let blankStart = -1;
+    for (let y = 0; y < H; y++) {
+      const blank = isBlankRow(y);
+      if (blank && blankStart === -1) blankStart = y;
+      if (!blank && blankStart !== -1) {
+        const runLen = y - blankStart;
+        if (runLen >= MIN_BLANK_RUN) {
+          const segEnd = blankStart + Math.floor(KEEP_PADDING / 2);
+          if (segEnd > cursor) segments.push({ from: cursor, to: segEnd });
+          cursor = y - Math.floor(KEEP_PADDING / 2);
+          if (cursor < 0) cursor = 0;
+        }
+        blankStart = -1;
+      }
+    }
+    if (cursor < H) segments.push({ from: cursor, to: H });
+
+    let finalBuf;
+    let trimmedPx = 0;
+    if (segments.length > 1 || segments[0]?.from > 0 || segments[0]?.to < H) {
+      // Stitch the non-blank segments
+      const totalH = segments.reduce((s, seg) => s + (seg.to - seg.from), 0);
+      trimmedPx = H - totalH;
+      const composites = [];
+      let yCursor = 0;
+      for (const seg of segments) {
+        const segH = seg.to - seg.from;
+        const segBuf = await sharp(fullBuf)
+          .extract({ left: 0, top: seg.from, width: W, height: segH })
+          .png()
+          .toBuffer();
+        composites.push({ input: segBuf, top: yCursor, left: 0 });
+        yCursor += segH;
+      }
+      finalBuf = await sharp({
+        create: {
+          width: W,
+          height: totalH,
+          channels: 3,
+          background: { r: 255, g: 255, b: 255 },
+        },
+      })
+        .composite(composites)
+        .jpeg({ quality: 80 })
+        .toBuffer();
+    } else {
+      finalBuf = await sharp(fullBuf)
+        .extract({ left: 0, top: 0, width: W, height: H })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+    }
 
     const out = resolve(OUT_DIR, `${site.slug}.jpg`);
-    writeFileSync(out, cropped);
-    const sizeKB = (cropped.length / 1024).toFixed(0);
-    const trimmed = Math.round((meta.height - finalH) / dpr);
+    writeFileSync(out, finalBuf);
+    const sizeKB = (finalBuf.length / 1024).toFixed(0);
     console.log(
-      `  → ${site.slug}.jpg (${sizeKB} KB) - page ${pageHeight}px, content ${contentBottom}px, trimmed ${trimmed}px of whitespace`
+      `  → ${site.slug}.jpg (${sizeKB} KB) - page ${pageHeight}px, content ${contentBottom}px, collapsed ${trimmedPx}px of blank stripes`
     );
   } catch (err) {
     console.error(`  ✗ ${site.slug}: ${err.message}`);
