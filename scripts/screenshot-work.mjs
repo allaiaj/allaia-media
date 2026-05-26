@@ -2,6 +2,7 @@
 // work[] and save them as JPEGs in /public/screenshots/.
 // Run with: node scripts/screenshot-work.mjs
 import { chromium } from "playwright";
+import sharp from "sharp";
 import { writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -31,9 +32,12 @@ const browser = await chromium.launch();
 
 for (const site of sites) {
   const viewport = site.device === "mobile" ? MOBILE_VIEWPORT : DESKTOP_VIEWPORT;
+  // deviceScaleFactor: 1 keeps the full-page screenshot under Chromium's
+  // ~16384px canvas limit. At 2x DPR our captures were getting padded
+  // with white at the bottom because they exceeded the limit.
   const context = await browser.newContext({
     viewport,
-    deviceScaleFactor: 2,
+    deviceScaleFactor: 1,
     userAgent:
       site.device === "mobile"
         ? "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
@@ -158,23 +162,55 @@ for (const site of sites) {
 
     await page.waitForTimeout(1200);
 
-    const pageHeight = await page.evaluate(() => ({
-      scrollH: document.documentElement.scrollHeight,
-      bodyH: document.body.scrollHeight,
-      footerExists: !!document.querySelector("footer"),
-      footerTop: document.querySelector("footer")?.getBoundingClientRect().top,
-    }));
+    // Find the bottom of actual visible content - the lowest pixel that
+    // any visible element occupies. This is the TRUE bottom of the page;
+    // anything below it (often from inflated container heights, margin
+    // collapse oddities, or absolute-positioning artifacts) is empty.
+    const contentBottom = await page.evaluate(() => {
+      let max = 0;
+      const visit = (el) => {
+        const cs = getComputedStyle(el);
+        if (cs.display === "none" || cs.visibility === "hidden") return;
+        const r = el.getBoundingClientRect();
+        if (r.width > 0 && r.height > 0) {
+          const bottom = r.bottom + window.scrollY;
+          if (bottom > max) max = bottom;
+        }
+        for (const child of el.children) visit(child);
+      };
+      visit(document.body);
+      return Math.ceil(max);
+    });
 
-    const buf = await page.screenshot({
+    const pageHeight = await page.evaluate(
+      () => document.documentElement.scrollHeight
+    );
+
+    // Take the full-page capture, then crop to the real content bottom
+    // so users don't have to scroll through hundreds of px of whitespace.
+    const fullBuf = await page.screenshot({
       fullPage: true,
       type: "jpeg",
       quality: 80,
     });
+
+    // sharp - crop to contentBottom (1x DPR after the deviceScaleFactor=1 fix)
+    const dpr = 1;
+    const targetH = Math.min(contentBottom * dpr, pageHeight * dpr);
+    const img = sharp(fullBuf);
+    const meta = await img.metadata();
+    const finalH = Math.min(targetH, meta.height);
+    const cropped = await sharp(fullBuf)
+      .extract({ left: 0, top: 0, width: meta.width, height: finalH })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+
     const out = resolve(OUT_DIR, `${site.slug}.jpg`);
-    writeFileSync(out, buf);
-    const sizeKB = (buf.length / 1024).toFixed(0);
+    writeFileSync(out, cropped);
+    const sizeKB = (cropped.length / 1024).toFixed(0);
+    const trimmed = Math.round((meta.height - finalH) / dpr);
     console.log(
-      `  → ${site.slug}.jpg (${sizeKB} KB) - page ${pageHeight.scrollH}px, footer@${pageHeight.footerTop}px`
+      `  → ${site.slug}.jpg (${sizeKB} KB) - page ${pageHeight}px, content ${contentBottom}px, trimmed ${trimmed}px of whitespace`
     );
   } catch (err) {
     console.error(`  ✗ ${site.slug}: ${err.message}`);
