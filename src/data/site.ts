@@ -165,8 +165,8 @@ export const services = [
     title: "Personal Brand Coaching",
     sub: "Build a name before you build a product.",
     body: "1:1 coaching for creators, consultants and professionals building their personal brand from scratch. Niche, positioning, voice, content cadence - everything you need to become someone in your space.",
-    price: "from $499",
-    cadence: "monthly · 3-month minimum",
+    price: "Bespoke",
+    cadence: "Pricing on request",
     timeline: "first call in 7 days",
     deliverables: [
       "Niche & positioning",
