@@ -8,10 +8,10 @@ import { services } from "../data/site";
     <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
         <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-          What we build · 04
+          What we build · 05
         </p>
         <h2 class="display max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-medium">
-          <span class="text-gradient-ink">Four engines.</span><br />
+          <span class="text-gradient-ink">Five engines.</span><br />
           <span class="font-serif italic text-gradient-violet">Stack what you need.</span>
         </h2>
       </div>
@@ -20,14 +20,24 @@ import { services } from "../data/site";
       </p>
     </div>
 
-    <!-- Bento grid -->
+    <!-- Bento grid: 5 cards arranged 4+2 / 2+4 / 6 on md+ for asymmetric rhythm -->
     <div class="grid gap-4 sm:gap-5 md:grid-cols-6">
       {
-        services.map((s, i) => (
+        services.map((s, i) => {
+          // 0: web (wide), 1: GBP (narrow), 2: meta ads (narrow), 3: social (wide), 4: coaching (full-width finale)
+          const spanClass =
+            i === 0
+              ? "md:col-span-4"
+              : i === 1
+              ? "md:col-span-2"
+              : i === 2
+              ? "md:col-span-2"
+              : i === 3
+              ? "md:col-span-4"
+              : "md:col-span-6";
+          return (
           <article
-            class={`reveal group relative overflow-hidden rounded-3xl surface p-7 sm:p-9 transition-all duration-500 hover:-translate-y-1 ${
-              i === 0 ? "md:col-span-4" : i === 1 ? "md:col-span-2" : i === 2 ? "md:col-span-2" : "md:col-span-4"
-            }`}
+            class={`reveal group relative overflow-hidden rounded-3xl surface p-7 sm:p-9 transition-all duration-500 hover:-translate-y-1 ${spanClass}`}
           >
             {/* hover glow */}
             <div
@@ -67,7 +77,8 @@ import { services } from "../data/site";
               </div>
             </div>
           </article>
-        ))
+          );
+        })
       }
     </div>
   </div>
