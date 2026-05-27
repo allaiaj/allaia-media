@@ -12,9 +12,9 @@ const OUT_DIR = resolve(__dirname, "..", "public", "screenshots");
 
 const sites = [
   { slug: "ayahs-beauty", url: "https://ayahs-beauty-greenford.pages.dev", device: "desktop" },
-  { slug: "maisy-rose", url: "https://maisyrose-flowers-collier-row.pages.dev", device: "mobile" },
+  { slug: "maisy-rose", url: "https://maisyrose-flowers-collier-row.pages.dev", device: "desktop" },
   { slug: "neolution", url: "https://neolution-face-and-body.pages.dev", device: "desktop" },
-  { slug: "simply-pizza", url: "https://simply-pizza-ilford.pages.dev", device: "mobile" },
+  { slug: "simply-pizza", url: "https://simply-pizza-ilford.pages.dev", device: "desktop" },
   { slug: "nurse-vella", url: "https://nurse-vella-loughton.pages.dev", device: "desktop" },
   { slug: "bare-essence", url: "https://bare-essence-leyton.pages.dev", device: "desktop" },
   { slug: "dulci-beauty", url: "https://dulci-beauty-dagenham.pages.dev", device: "desktop" },

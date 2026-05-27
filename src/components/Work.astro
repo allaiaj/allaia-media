@@ -6,7 +6,7 @@ interface Props {
 }
 const { showHeader = true } = Astro.props;
 
-// Local full-page JPEG screenshots captured by scripts/screenshot-work.mjs
+// Local full-page JPEG screenshots captured by scripts/screenshot-work.mjs.
 // Re-run that script when client sites change.
 const shotUrl = (slug: string) => `/screenshots/${slug}.jpg`;
 ---
@@ -30,35 +30,26 @@ const shotUrl = (slug: string) => `/screenshots/${slug}.jpg`;
       </div>
     )}
 
-    <!-- Bento -->
-    <div class="grid grid-cols-6 gap-3 sm:gap-4 sm:grid-cols-12">
+    <!-- Uniform 2-col (mobile) / 3-col (tablet) / 4-col (desktop) grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       {
         work.map((w) => (
           <article
             data-tilt
-            class={`reveal group relative overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-0.5 col-span-6 will-change-transform ${w.span} ${w.featured ? "shimmer-border" : "surface"}`}
-            style={`transform-style: preserve-3d; ${w.featured ? "box-shadow: 0 30px 80px -30px rgba(124,58,237,0.35), 0 1px 0 rgb(255 255 255 / 0.9) inset;" : ""}`}
+            class={`reveal group relative overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-0.5 will-change-transform ${w.featured ? "shimmer-border" : "surface"}`}
+            style={`transform-style: preserve-3d; ${w.featured ? "box-shadow: 0 24px 60px -24px rgba(124,58,237,0.3), 0 1px 0 rgb(255 255 255 / 0.9) inset;" : ""}`}
           >
             {w.featured && (
-              <span class="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-900 px-2.5 py-1 text-[9px] uppercase tracking-wider text-ink-50 font-medium">
+              <span class="absolute right-2.5 top-2.5 z-10 inline-flex items-center gap-1 rounded-full bg-ink-900 px-2 py-0.5 text-[9px] uppercase tracking-wider text-ink-50 font-medium">
                 <span class="h-1 w-1 rounded-full bg-accent-bright" />
-                Latest flagship
-              </span>
-            )}
-            {w.device === "mobile" && !w.featured && (
-              <span class="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 backdrop-blur-sm px-2 py-0.5 text-[9px] uppercase tracking-wider text-ink-50 font-medium">
-                <svg width="8" height="10" viewBox="0 0 8 10" fill="none" aria-hidden="true">
-                  <rect x="0.6" y="0.6" width="6.8" height="8.8" rx="1.2" stroke="currentColor" stroke-width="1.2" />
-                  <line x1="3" y1="8" x2="5" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                </svg>
-                Mobile
+                Flagship
               </span>
             )}
 
-            {/* Scrollable full-page screenshot - user walks through the build */}
+            {/* Scrollable full-page screenshot */}
             <div
               class="relative overflow-hidden cursor-grab active:cursor-grabbing"
-              style={`aspect-ratio: ${w.aspect}; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;`}
+              style="aspect-ratio: 16 / 10; background: linear-gradient(135deg, #f5f4f1 0%, #faf9f6 50%, #f5f4f1 100%); background-size: 200% 200%; animation: shimmer 4s ease-in-out infinite;"
             >
               <div
                 class="absolute inset-0 overflow-y-auto overflow-x-hidden"
@@ -74,8 +65,7 @@ const shotUrl = (slug: string) => `/screenshots/${slug}.jpg`;
                   style="background: #ffffff;"
                 />
               </div>
-              {/* Subtle gradient overlay - reads as "preview" not "live" */}
-              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white/40 to-transparent"></div>
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white/40 to-transparent"></div>
             </div>
 
             {/* Info footer */}
@@ -93,20 +83,19 @@ const shotUrl = (slug: string) => `/screenshots/${slug}.jpg`;
     </div>
 
     <p class="reveal mt-10 text-center text-xs text-ink-500">
-      Eight recent builds, all shipped in the last 12 months. Ayahs Beauty is our latest flagship.
+      Eight recent builds, all shipped in the last 12 months.
     </p>
   </div>
 </section>
 
 <script>
-  // Subtle 3D tilt on hover (mouse only, respects reduced motion)
   const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isFinePointer = matchMedia(
     "(hover: hover) and (pointer: fine)"
   ).matches;
 
   if (!prefersReduced && isFinePointer) {
-    const MAX_TILT = 5;
+    const MAX_TILT = 4;
     document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((card) => {
       let rect: DOMRect | null = null;
       const onEnter = () => {
