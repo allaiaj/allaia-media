@@ -163,16 +163,16 @@ export const services = [
   {
     n: "05",
     title: "Personal Brand Coaching",
-    sub: "Show up online like the founder you actually are.",
-    body: "1:1 coaching for founders who know they need to be the face of the brand but freeze when the camera comes on. Strategy, scripts, weekly accountability - your voice, sharpened.",
+    sub: "Build a name before you build a product.",
+    body: "1:1 coaching for creators, consultants and professionals building their personal brand from scratch. Niche, positioning, voice, content cadence - everything you need to become someone in your space.",
     price: "from $499",
     cadence: "monthly · 3-month minimum",
     timeline: "first call in 7 days",
     deliverables: [
-      "Personal brand strategy",
-      "Weekly 1:1 coaching call",
-      "Content hooks & scripts",
-      "Voice & positioning audit",
+      "Niche & positioning",
+      "Weekly 1:1 strategy call",
+      "Content blueprint & hooks",
+      "Audience growth playbook",
     ],
   },
 ];
