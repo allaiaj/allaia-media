@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { site } from "../data/site";
 import ScrollProgress from "../components/ScrollProgress.astro";
 import WhatsAppFab from "../components/WhatsAppFab.astro";
+import Cursor from "../components/Cursor.astro";
 
 interface Props {
   title?: string;
@@ -129,6 +130,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     </div>
 
     <ScrollProgress />
+    <Cursor />
 
     <slot />
 
