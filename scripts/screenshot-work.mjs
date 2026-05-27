@@ -85,6 +85,25 @@ for (const site of sites) {
       await sleep(800);
     });
     await page.waitForTimeout(1200);
+
+    // Visit every iframe (Google Maps, YouTube, etc.) so each tile/video
+    // gets a chance to load before we capture. Iframes are lazy by default.
+    const iframeYs = await page.evaluate(() => {
+      const ys = [];
+      document.querySelectorAll("iframe").forEach((f) => {
+        const rect = f.getBoundingClientRect();
+        if (rect.width > 100 && rect.height > 100) {
+          ys.push(Math.max(0, rect.top + window.scrollY - 200));
+        }
+      });
+      return ys;
+    });
+    for (const y of iframeYs) {
+      await page.evaluate((yPos) => window.scrollTo(0, yPos), y);
+      // Maps tiles need real time - 3s per iframe
+      await page.waitForTimeout(3000);
+    }
+
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(1200);
 
