@@ -303,9 +303,57 @@ export const testimonials = [
 export const caseStudies = [
   {
     n: "01",
+    slug: "simply-pizza",
+    brand: "Simply Pizza",
+    industry: "Hand-made pizza · plant-forward",
+    market: "Ilford, East London",
+    timeline: "Built in 7 days",
+    problem:
+      "New restaurant opening with no online presence, competing for orders against chain delivery apps that take 30% commission.",
+    approach: [
+      "Editorial site with the menu front-and-centre and a 'three pizzas, done right' positioning",
+      "Google Business Profile from scratch + automated review collection",
+      "WhatsApp ordering channel so loyal locals bypass the delivery-app fees entirely",
+    ],
+    metrics: [
+      { v: "Sold out", l: "launch weekend" },
+      { v: "4.9", l: "across 100+ Google reviews" },
+      { v: "60%", l: "of orders direct (no commission)" },
+    ],
+    quote:
+      "Allaia made our small place feel intentional. Locals know us now - and most order direct.",
+    quoteBy: "Owner, Simply Pizza",
+    accent: "peach",
+  },
+  {
+    n: "02",
+    slug: "prisca-skincare",
+    brand: "Prisca's Skincare",
+    industry: "Personalised skin treatments",
+    market: "Hounslow, West London",
+    timeline: "Built in 8 days",
+    problem:
+      "Premium skin clinic with no website, growing an Instagram following but losing serious clients to competitors who looked the part online.",
+    approach: [
+      "Editorial site featuring Kanupriya's expertise + treatment library",
+      "Niche positioning around 'personalised skin treatments by Kanupriya Bakshi'",
+      "Consultation lead form + WhatsApp triage so enquiries get answered in hours, not days",
+    ],
+    metrics: [
+      { v: "+50%", l: "qualified consultations / month" },
+      { v: "Page 1", l: "for personalised skin treatments Hounslow" },
+      { v: "5x", l: "weekly consultations Q1" },
+    ],
+    quote:
+      "Allaia turned my Instagram following into actual paying clients. The site does the qualifying for me.",
+    quoteBy: "Kanupriya Bakshi, Founder",
+    accent: "pink",
+  },
+  {
+    n: "03",
     slug: "ayahs-beauty",
     brand: "Ayahs Beauty",
-    industry: "Aesthetic clinic",
+    industry: "Laser, lashes & advanced facials",
     market: "Greenford, West London",
     timeline: "Built in 7 days",
     problem:
@@ -324,54 +372,6 @@ export const caseStudies = [
       "Allaia made me look established before I felt established. Now I'm booked four weeks out.",
     quoteBy: "Ayah, Founder",
     accent: "violet",
-  },
-  {
-    n: "02",
-    slug: "maisy-rose",
-    brand: "Maisy Rose Flowers",
-    industry: "Florist · since 1993",
-    market: "Collier Row, Romford",
-    timeline: "Built in 6 days",
-    problem:
-      "30-year family florist - beautiful in person, invisible online. Old Squarespace site nobody could find.",
-    approach: [
-      "Story-first site with same-day delivery checkout + bespoke wedding form",
-      "GBP rebuild, weekly photo posts, automated review requests",
-      "WhatsApp ordering channel for repeat regulars",
-    ],
-    metrics: [
-      { v: "3x", l: "online orders Q1" },
-      { v: "60+", l: "five-star Google reviews" },
-      { v: "2x", l: "wedding bookings YoY" },
-    ],
-    quote:
-      "We've been doing flowers since 1993. Allaia made us look like the brand we always were.",
-    quoteBy: "Scot & Emma, Owners",
-    accent: "pink",
-  },
-  {
-    n: "03",
-    slug: "neolution",
-    brand: "Neolution Face & Body",
-    industry: "Body sculpting & advanced facials",
-    market: "Isle of Dogs, London E14",
-    timeline: "Built in 9 days",
-    problem:
-      "Premium riverside clinic - but the old site looked like a flyer. Local search invisible to Canary Wharf catchment.",
-    approach: [
-      "Editorial-style site with treatment library + appointment-only positioning",
-      "Local SEO + GBP for Canary Wharf and E14 catchment",
-      "Meta ads targeting body-sculpting search intent, weekly creative iteration",
-    ],
-    metrics: [
-      { v: "8", l: "page-1 Google terms" },
-      { v: "3.6x", l: "Meta ROAS by month 2" },
-      { v: "+65%", l: "treatment bookings Q1" },
-    ],
-    quote:
-      "It feels like a destination now, not a shop. The right people find us.",
-    quoteBy: "Founder, Neolution",
-    accent: "peach",
   },
 ];
 
