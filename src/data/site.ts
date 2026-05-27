@@ -285,6 +285,81 @@ export const testimonials = [
   },
 ];
 
+export const caseStudies = [
+  {
+    n: "01",
+    slug: "ayahs-beauty",
+    brand: "Ayahs Beauty",
+    industry: "Aesthetic clinic",
+    market: "Greenford, West London",
+    timeline: "Built in 7 days",
+    problem:
+      "Just qualified, no online presence. Walk-ins only, owner handling admin between clients.",
+    approach: [
+      "Conversion-first build on Framer with editorial-style hero + treatment menu",
+      "Google Business Profile from scratch, review automation, weekly posts",
+      "WhatsApp booking flow trained into the owner's daily workflow",
+    ],
+    metrics: [
+      { v: "+42%", l: "bookings in 30 days" },
+      { v: "#1", l: "for ‘laser hair removal Greenford’" },
+      { v: "5.0", l: "across 60+ reviews" },
+    ],
+    quote:
+      "Allaia made me look established before I felt established. Now I'm booked four weeks out.",
+    quoteBy: "Ayah, Founder",
+    accent: "violet",
+  },
+  {
+    n: "02",
+    slug: "maisy-rose",
+    brand: "Maisy Rose Flowers",
+    industry: "Florist · since 1993",
+    market: "Collier Row, Romford",
+    timeline: "Built in 6 days",
+    problem:
+      "30-year family florist - beautiful in person, invisible online. Old Squarespace site nobody could find.",
+    approach: [
+      "Story-first site with same-day delivery checkout + bespoke wedding form",
+      "GBP rebuild, weekly photo posts, automated review requests",
+      "WhatsApp ordering channel for repeat regulars",
+    ],
+    metrics: [
+      { v: "3x", l: "online orders Q1" },
+      { v: "60+", l: "five-star Google reviews" },
+      { v: "2x", l: "wedding bookings YoY" },
+    ],
+    quote:
+      "We've been doing flowers since 1993. Allaia made us look like the brand we always were.",
+    quoteBy: "Scot & Emma, Owners",
+    accent: "pink",
+  },
+  {
+    n: "03",
+    slug: "neolution",
+    brand: "Neolution Face & Body",
+    industry: "Body sculpting & advanced facials",
+    market: "Isle of Dogs, London E14",
+    timeline: "Built in 9 days",
+    problem:
+      "Premium riverside clinic - but the old site looked like a flyer. Local search invisible to Canary Wharf catchment.",
+    approach: [
+      "Editorial-style site with treatment library + appointment-only positioning",
+      "Local SEO + GBP for Canary Wharf and E14 catchment",
+      "Meta ads targeting body-sculpting search intent, weekly creative iteration",
+    ],
+    metrics: [
+      { v: "8", l: "page-1 Google terms" },
+      { v: "3.6x", l: "Meta ROAS by month 2" },
+      { v: "+65%", l: "treatment bookings Q1" },
+    ],
+    quote:
+      "It feels like a destination now, not a shop. The right people find us.",
+    quoteBy: "Founder, Neolution",
+    accent: "peach",
+  },
+];
+
 export const faqs = [
   {
     q: "How is this different from a normal agency?",
