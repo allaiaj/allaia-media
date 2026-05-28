@@ -71,15 +71,26 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       })}
     />
   </head>
-  <body class="relative min-h-screen text-ink-900 antialiased" style="background: #ffffff;">
-    <!-- Subtle single accent wash, top-right only - no more vibrant aurora -->
+  <body class="relative min-h-screen text-ink-900 antialiased" style="background: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #ffffff 100%);">
+    <!-- Soft accent gradients - present but not overwhelming -->
     <div
       class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
       aria-hidden="true"
     >
+      <!-- Top-right violet -->
       <div
-        class="absolute -top-40 -right-40 h-[60vh] w-[60vh] rounded-full opacity-30 blur-[120px]"
-        style="background: radial-gradient(circle, rgba(167,139,250,0.6) 0%, transparent 70%);"
+        class="absolute -top-32 -right-32 h-[55vh] w-[55vh] rounded-full opacity-50 blur-[110px]"
+        style="background: radial-gradient(circle, rgba(167,139,250,0.55) 0%, transparent 70%);"
+      ></div>
+      <!-- Mid-left soft pink -->
+      <div
+        class="absolute top-1/2 -left-40 h-[50vh] w-[50vh] rounded-full opacity-40 blur-[120px]"
+        style="background: radial-gradient(circle, rgba(251,207,232,0.6) 0%, transparent 70%);"
+      ></div>
+      <!-- Bottom-right peach -->
+      <div
+        class="absolute -bottom-40 right-1/4 h-[50vh] w-[50vh] rounded-full opacity-35 blur-[120px]"
+        style="background: radial-gradient(circle, rgba(254,215,170,0.6) 0%, transparent 70%);"
       ></div>
     </div>
 
