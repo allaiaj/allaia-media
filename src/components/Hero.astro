@@ -61,13 +61,14 @@ import { site } from "../data/site";
       ].map((m) => (
         <div class="relative px-5 py-6 sm:py-8 text-center sm:text-left bg-white">
           <div
-            class="font-semibold text-3xl sm:text-4xl text-gradient-violet tracking-tight"
+            class="font-semibold text-3xl sm:text-4xl text-gradient-violet tracking-tight tabular-nums"
             data-counter
             data-target={m.target}
             data-suffix={m.suffix}
             data-decimals={m.decimals ?? 0}
+            data-final={m.final}
           >
-            {m.final}
+            0{m.suffix}
           </div>
           <div class="mt-1.5 text-[11px] uppercase tracking-[0.18em] text-ink-500">
             {m.l}
@@ -87,34 +88,65 @@ import { site } from "../data/site";
       const target = parseFloat(el.dataset.target || "0");
       const decimals = parseInt(el.dataset.decimals || "0");
       const suffix = el.dataset.suffix || "";
-      const duration = 1800;
+      const finalText = el.dataset.final || target.toFixed(decimals) + suffix;
+      const duration = 2400;
       const start = performance.now();
       const tick = (now: number) => {
         const elapsed = now - start;
         const ratio = Math.min(1, elapsed / duration);
         const current = target * easeOut(ratio);
-        el.textContent = current.toFixed(decimals) + suffix;
+        if (ratio >= 1) {
+          // Snap to the human-readable final text (e.g. "500+", "4.8x", "7 days")
+          el.textContent = finalText;
+        } else {
+          el.textContent = current.toFixed(decimals) + suffix;
+        }
         if (ratio < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
     }
 
-    const counters = document.querySelectorAll<HTMLElement>("[data-counter]");
-    if ("IntersectionObserver" in window && counters.length) {
-      const obs = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              animateCounter(entry.target as HTMLElement);
-              obs.unobserve(entry.target);
-            }
+    function setupCounters() {
+      const counters =
+        document.querySelectorAll<HTMLElement>("[data-counter]");
+      if (!counters.length) return;
+
+      // Trigger any counter currently in viewport after a brief delay so
+      // the user actually sees the count-up after the page paints.
+      const triggerInView = () => {
+        counters.forEach((el) => {
+          if (el.dataset.counted === "1") return;
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            animateCounter(el);
           }
-        },
-        { threshold: 0.4 }
-      );
-      counters.forEach((el) => obs.observe(el));
+        });
+      };
+
+      // Initial paint delay so the eye lands on "0" before it counts up
+      setTimeout(triggerInView, 600);
+
+      // Catch counters that come into view as the user scrolls
+      if ("IntersectionObserver" in window) {
+        const obs = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                animateCounter(entry.target as HTMLElement);
+                obs.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15 }
+        );
+        counters.forEach((el) => obs.observe(el));
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", setupCounters);
     } else {
-      counters.forEach(animateCounter);
+      setupCounters();
     }
   </script>
 

@@ -1,0 +1,104 @@
+---
+const pains = [
+  {
+    n: "01",
+    title: "Your site is a brochure, not a salesperson.",
+    body: "Pretty homepage, zero conversion architecture. People bounce because nothing tells them why you, why now, what next.",
+    fix: "Conversion-first rebuild in 7 days.",
+  },
+  {
+    n: "02",
+    title: "Google can't find you in your own postcode.",
+    body: "You're trusting the algorithm to magically rank you. It won't. No GBP optimisation, no review cadence, no local SEO.",
+    fix: "Local search engine, live in 30 days.",
+  },
+  {
+    n: "03",
+    title: "Meta ads burning cash with nothing to show.",
+    body: "Boosting posts is not advertising. No creative strategy, no funnel, no weekly iteration - just an account haemorrhaging budget.",
+    fix: "Full-funnel Meta with weekly creative.",
+  },
+  {
+    n: "04",
+    title: "Posting once a week is not a social strategy.",
+    body: "Nobody sees you. Algorithm punishes you. You feel like content is a tax instead of an asset.",
+    fix: "Reels engine that actually compounds.",
+  },
+  {
+    n: "05",
+    title: "You're invisible online vs. your industry.",
+    body: "The face of the brand should be the brand. But you freeze when the camera comes on - and the content suffers.",
+    fix: "1:1 coaching to build your name.",
+  },
+  {
+    n: "06",
+    title: "Last agency took your money. Didn't move the numbers.",
+    body: "Pretty slide decks every month, no actual outcomes. Felt like paying for theatre.",
+    fix: "Real dashboards, real outcomes, cancel any month.",
+  },
+];
+---
+
+<section id="pain-points" class="relative scroll-mt-24 py-24 sm:py-32">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+      <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+        Sound familiar?
+      </p>
+      <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
+        <span class="text-ink-900">Six reasons</span><br />
+        <span class="font-serif italic text-gradient-violet">your numbers won't move.</span>
+      </h2>
+      <p class="mt-6 text-base text-ink-700 leading-relaxed">
+        Every founder we work with arrives with at least three of these. By month three, none of them are still true.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+      {
+        pains.map((p) => (
+          <article class="reveal surface group rounded-2xl p-6 sm:p-7 transition-all duration-500 hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-3 mb-5">
+              <span class="font-mono text-xs text-ink-500 tracking-wider">
+                {p.n}
+              </span>
+              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink-900/5 text-ink-500 group-hover:bg-accent/15 group-hover:text-accent-deep transition-colors">
+                <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4" />
+                  <path d="M4.5 4.5l5 5M9.5 4.5l-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-medium text-ink-900 tracking-tight leading-snug">
+              {p.title}
+            </h3>
+            <p class="mt-3 text-[14px] text-ink-700 leading-relaxed">
+              {p.body}
+            </p>
+            <div class="mt-5 pt-4 border-t border-ink-900/8 flex items-start gap-2">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-0.5 flex-none" style="color: var(--color-accent-deep);">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 8.2l2 2 4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-[13px] text-ink-900 font-medium leading-snug">
+                {p.fix}
+              </span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="reveal mt-12 text-center">
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-ink-900 px-5 py-3 text-sm font-medium text-white hover:bg-ink-800 transition-colors"
+      >
+        Tell us which ones hurt
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
