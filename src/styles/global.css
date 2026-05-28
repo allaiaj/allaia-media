@@ -118,47 +118,75 @@ body {
   color: white;
 }
 
-/* Surfaces - clean SaaS base with subtle gradient warmth */
+/* Glassmorphism - frosted surfaces over the accent gradient background */
 
 @utility surface {
-  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
-  border: 1px solid rgb(0 0 0 / 0.07);
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.6);
   box-shadow:
     0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 1px 2px rgb(0 0 0 / 0.04),
-    0 8px 24px -12px rgb(0 0 0 / 0.06);
+    0 4px 12px -2px rgb(124 58 237 / 0.08),
+    0 16px 40px -12px rgb(124 58 237 / 0.12);
 }
 
 @utility surface-warm {
   background:
-    linear-gradient(180deg, #ffffff 0%, #fafafa 100%),
-    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.08), transparent 60%);
-  background-blend-mode: normal;
-  border: 1px solid rgb(0 0 0 / 0.07);
+    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.15), transparent 60%),
+    rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.6);
   box-shadow:
     0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 1px 2px rgb(0 0 0 / 0.04),
-    0 8px 24px -12px rgb(0 0 0 / 0.06);
+    0 4px 12px -2px rgb(124 58 237 / 0.1),
+    0 20px 50px -15px rgb(124 58 237 / 0.18);
+}
+
+@utility surface-solid {
+  /* opaque variant when glass over text would hurt readability */
+  background: var(--color-paper);
+  border: 1px solid rgb(0 0 0 / 0.07);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
 }
 
 @utility surface-muted {
-  background: var(--color-ink-50);
-  border: 1px solid rgb(0 0 0 / 0.05);
+  background: rgb(255 255 255 / 0.35);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.4);
 }
 
 @utility glass-light {
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 4px 12px -2px rgb(124 58 237 / 0.08);
+}
+
+@utility glass-strong {
   background: rgb(255 255 255 / 0.7);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgb(0 0 0 / 0.07);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.7);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.95) inset,
+    0 4px 16px -2px rgb(124 58 237 / 0.1),
+    0 20px 50px -15px rgb(124 58 237 / 0.2);
 }
 
 @utility glass-nav {
-  background: rgb(255 255 255 / 0.85);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgb(0 0 0 / 0.06);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
+  background: rgb(255 255 255 / 0.65);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 4px 16px -4px rgb(124 58 237 / 0.12);
 }
 
 @utility text-gradient {
