@@ -3,7 +3,7 @@ export const site = {
   domain: "allaiamedia.com",
   tagline: "The systems behind brands that grow.",
   description:
-    "Allaia Media builds the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue machines. No retainers. No theatre.",
+    "Allaia Media builds the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue machines. Month-to-month. No long contracts. No theatre.",
   cal: "https://cal.com/allaiamedia/discovery",
   whatsapp: "https://wa.me/447000000000",
   instagram: "https://instagram.com/allaia.media",
