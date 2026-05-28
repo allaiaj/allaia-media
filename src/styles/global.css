@@ -199,6 +199,8 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  padding-bottom: 0.1em;
+  display: inline-block;
 }
 
 @utility text-gradient-ink {
@@ -211,6 +213,8 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  padding-bottom: 0.1em;
+  display: inline-block;
 }
 
 @utility text-gradient-violet {
@@ -224,6 +228,10 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  /* Give descenders (g, y, p, q) room when used with italic + tight line-height */
+  padding-bottom: 0.12em;
+  display: inline-block;
+  line-height: 1.15;
 }
 
 @utility text-gradient-accent {
@@ -237,6 +245,8 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  padding-bottom: 0.1em;
+  display: inline-block;
 }
 
 @utility shimmer-border {
