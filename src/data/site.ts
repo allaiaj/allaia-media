@@ -107,7 +107,7 @@ export const services = [
     body: "Conversion-first builds on Framer or Webflow. Strategy, copy, design, dev, launch - one operator, one week.",
     price: "from $399",
     cadence: "one-time build",
-    timeline: "7 days",
+    timeline: "1 day",
     deliverables: [
       "Brand & narrative",
       "Wireframe & UX",
@@ -167,7 +167,7 @@ export const services = [
     body: "1:1 coaching for creators, consultants and professionals building their personal brand from scratch. Niche, positioning, voice, content cadence - everything you need to become someone in your space.",
     price: "Bespoke",
     cadence: "Pricing on request",
-    timeline: "first call in 7 days",
+    timeline: "first call in 24h",
     deliverables: [
       "Niche & positioning",
       "Weekly 1:1 strategy call",
@@ -307,7 +307,7 @@ export const caseStudies = [
     brand: "Simply Pizza",
     industry: "Hand-made pizza · plant-forward",
     market: "Ilford, East London",
-    timeline: "Built in 7 days",
+    timeline: "Built in 1 day",
     problem:
       "New restaurant opening with no online presence, competing for orders against chain delivery apps that take 30% commission.",
     approach: [
@@ -355,7 +355,7 @@ export const caseStudies = [
     brand: "Ayahs Beauty",
     industry: "Laser, lashes & advanced facials",
     market: "Greenford, West London",
-    timeline: "Built in 7 days",
+    timeline: "Built in 1 day",
     problem:
       "Just qualified, no online presence. Walk-ins only, owner handling admin between clients.",
     approach: [

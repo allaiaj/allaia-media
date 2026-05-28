@@ -1,0 +1,128 @@
+---
+// Industries served + 4 outcome stat cards. A "what working with Allaia
+// actually changes in your week" snapshot.
+const verticals = [
+  "Aesthetic clinics",
+  "Dentistry",
+  "Beauty & skin",
+  "Wellness & spa",
+  "Florists & retail",
+  "Hospitality",
+];
+
+const outcomes = [
+  {
+    v: "+8h",
+    label: "Per week",
+    title: "More time",
+    body: "No more chasing missed calls. No more WhatsApp chaos. The system handles the front desk.",
+    icon: "clock",
+  },
+  {
+    v: "#1",
+    label: "Local visibility",
+    title: "More visibility",
+    body: "When someone searches your category in your town - your name shows up first, not seventh.",
+    icon: "eye",
+  },
+  {
+    v: "+47%",
+    label: "More inquiries",
+    title: "More customers",
+    body: "Every inquiry gets answered in minutes - before they call the next business on the list.",
+    icon: "users",
+  },
+  {
+    v: "24/7",
+    label: "Always on",
+    title: "Less stress",
+    body: "Your system runs while you're on a job, asleep, or on a weekend. Bookings still come in.",
+    icon: "shield",
+  },
+];
+---
+
+<section class="relative scroll-mt-24 py-24 sm:py-32">
+  <div class="mx-auto max-w-6xl px-6">
+    <!-- Industry strip -->
+    <div class="reveal text-center mb-14 sm:mb-16">
+      <p class="text-[11px] uppercase tracking-[0.22em] text-ink-500 mb-4">
+        500+ founder-led brands · across categories like
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-3 text-[12px] sm:text-[13px] uppercase tracking-[0.2em] text-ink-600 font-medium">
+        {
+          verticals.map((v, i) => (
+            <>
+              <span class="hover:text-accent-deep transition-colors cursor-default">
+                {v}
+              </span>
+              {i < verticals.length - 1 && (
+                <span class="text-ink-300" aria-hidden="true">·</span>
+              )}
+            </>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Outcome cards -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      {
+        outcomes.map((o) => (
+          <article class="reveal surface group rounded-2xl p-6 sm:p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(124,58,237,0.18)]">
+            {/* Icon */}
+            <div class="mb-6">
+              <span
+                class="inline-flex h-11 w-11 items-center justify-center rounded-2xl"
+                style="background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(124,58,237,0.12));"
+              >
+                {o.icon === "clock" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color: var(--color-accent-deep);">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+                    <path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                  </svg>
+                )}
+                {o.icon === "eye" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color: var(--color-accent-deep);">
+                    <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6" />
+                  </svg>
+                )}
+                {o.icon === "users" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color: var(--color-accent-deep);">
+                    <circle cx="9" cy="8" r="4" stroke="currentColor" stroke-width="1.6" />
+                    <path d="M2 21c0-3.5 3-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    <circle cx="17.5" cy="9" r="3" stroke="currentColor" stroke-width="1.6" />
+                    <path d="M14.5 21c0-2.5 2-4.5 5-4.5s4.5 2 4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                  </svg>
+                )}
+                {o.icon === "shield" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color: var(--color-accent-deep);">
+                    <path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                    <path d="M8.5 12l2.5 2.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                )}
+              </span>
+            </div>
+
+            {/* Big metric */}
+            <div class="font-semibold text-4xl sm:text-5xl text-gradient-violet tracking-tight">
+              {o.v}
+            </div>
+            <p class="mt-1.5 text-[10px] uppercase tracking-[0.18em] text-ink-500">
+              {o.label}
+            </p>
+
+            {/* Title + body */}
+            <h3 class="mt-6 text-lg sm:text-xl font-medium text-ink-900 tracking-tight">
+              {o.title}
+            </h3>
+            <p class="mt-2 text-[14px] text-ink-700 leading-relaxed">
+              {o.body}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

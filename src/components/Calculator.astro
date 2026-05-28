@@ -1,20 +1,20 @@
 ---
-// Interactive revenue/lead-loss calculator inspired by Blacklyne's
-// transparency tool. Two sliders + live readout.
+// Loss-framed revenue calculator. Three honest inputs → see the annual
+// number that's slipping away while your systems aren't working.
 ---
 
 <section id="calculator" class="relative scroll-mt-24 py-24 sm:py-32">
   <div class="mx-auto max-w-5xl px-6">
-    <div class="reveal text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+    <div class="reveal max-w-3xl mb-12 sm:mb-16">
       <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-        The honest calculator
+        The slipping-away calculator
       </p>
       <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
-        <span class="text-ink-900">What you're</span><br />
-        <span class="font-serif italic text-gradient-violet">leaving on the table.</span>
+        <span class="text-ink-900">The revenue you're</span><br />
+        <span class="font-serif italic text-gradient-violet">losing right now.</span>
       </h2>
-      <p class="mt-6 text-base text-ink-700 leading-relaxed">
-        Drag the sliders to match your business. Honest math, no fairy-tale conversions - the kind of numbers we can actually move for you.
+      <p class="mt-6 text-base text-ink-700 leading-relaxed max-w-2xl">
+        Drag the sliders. No fairy-tale conversion rates, no sales-deck maths - just your inputs and what your funnel is bleeding annually because nothing is plugging the leaks.
       </p>
     </div>
 
@@ -22,42 +22,75 @@
       class="reveal surface-warm rounded-3xl overflow-hidden"
       data-calc
     >
-      <div class="grid lg:grid-cols-[1.1fr_1fr]">
+      <div class="grid lg:grid-cols-[1.05fr_1fr]">
         <!-- Inputs -->
-        <div class="p-7 sm:p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-ink-900/8">
-          <!-- Monthly leads -->
+        <div class="p-7 sm:p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-ink-900/10 bg-white/60">
+          <p class="text-[11px] uppercase tracking-[0.18em] text-ink-500 mb-8">
+            Your numbers
+          </p>
+
+          <!-- Weekly inquiries -->
           <div class="space-y-3">
             <div class="flex items-baseline justify-between gap-4">
-              <label class="text-xs uppercase tracking-[0.18em] text-ink-500" for="calc-leads">
-                Monthly leads / enquiries
+              <label class="text-sm font-medium text-ink-900" for="calc-leads">
+                Inquiries you get per week
               </label>
               <output
                 class="font-serif italic text-3xl text-gradient-violet tabular-nums"
                 data-calc-leads-out
               >
-                40
+                25
               </output>
             </div>
             <input
               id="calc-leads"
               type="range"
-              min="5"
-              max="200"
-              step="5"
-              value="40"
+              min="3"
+              max="120"
+              step="1"
+              value="25"
               class="calc-slider w-full"
               data-calc-leads
-              aria-label="Monthly leads"
+              aria-label="Inquiries per week"
             />
             <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              <span>5</span><span>200</span>
+              <span>3</span><span>120</span>
             </div>
           </div>
 
-          <!-- Avg customer value -->
+          <!-- Missed % -->
           <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
             <div class="flex items-baseline justify-between gap-4">
-              <label class="text-xs uppercase tracking-[0.18em] text-ink-500" for="calc-value">
+              <label class="text-sm font-medium text-ink-900" for="calc-missed">
+                Answered too late or never
+              </label>
+              <output
+                class="font-serif italic text-3xl text-gradient-violet tabular-nums"
+                data-calc-missed-out
+              >
+                30%
+              </output>
+            </div>
+            <input
+              id="calc-missed"
+              type="range"
+              min="5"
+              max="80"
+              step="1"
+              value="30"
+              class="calc-slider w-full"
+              data-calc-missed
+              aria-label="Percentage missed"
+            />
+            <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
+              <span>5%</span><span>80%</span>
+            </div>
+          </div>
+
+          <!-- Avg value -->
+          <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
+            <div class="flex items-baseline justify-between gap-4">
+              <label class="text-sm font-medium text-ink-900" for="calc-value">
                 Average customer value
               </label>
               <output
@@ -83,93 +116,119 @@
             </div>
           </div>
 
-          <!-- Current conversion -->
+          <!-- Close rate -->
           <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
             <div class="flex items-baseline justify-between gap-4">
-              <label class="text-xs uppercase tracking-[0.18em] text-ink-500" for="calc-conv">
-                Current close rate
+              <label class="text-sm font-medium text-ink-900" for="calc-conv">
+                Inquiry → customer rate (when answered)
               </label>
               <output
                 class="font-serif italic text-3xl text-gradient-violet tabular-nums"
                 data-calc-conv-out
               >
-                15%
+                35%
               </output>
             </div>
             <input
               id="calc-conv"
               type="range"
-              min="2"
-              max="60"
+              min="5"
+              max="80"
               step="1"
-              value="15"
+              value="35"
               class="calc-slider w-full"
               data-calc-conv
-              aria-label="Current close rate"
+              aria-label="Close rate"
             />
             <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              <span>2%</span><span>60%</span>
+              <span>5%</span><span>80%</span>
             </div>
           </div>
         </div>
 
         <!-- Output -->
-        <div class="relative p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+        <div
+          class="relative p-7 sm:p-10 lg:p-12 flex flex-col text-ink-50"
+          style="background: linear-gradient(160deg, #0e0d0a 0%, #1a1814 70%, #2a2722 100%);"
+        >
           <div
-            class="pointer-events-none absolute inset-0 opacity-50"
-            style="background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(167,139,250,0.18), transparent 70%);"
+            class="pointer-events-none absolute inset-0 opacity-40"
+            style="background: radial-gradient(ellipse 80% 60% at 80% 0%, rgba(167,139,250,0.45), transparent 70%), radial-gradient(ellipse 60% 40% at 20% 100%, rgba(251,182,206,0.35), transparent 70%);"
             aria-hidden="true"
           ></div>
 
           <div class="relative">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-ink-500">
-              Current annual revenue from leads
+            <p class="text-[11px] uppercase tracking-[0.22em] text-accent-bright mb-3">
+              What's slipping out the back door
             </p>
-            <div class="mt-2 font-serif italic text-4xl sm:text-5xl text-ink-900 tabular-nums">
-              <span data-calc-current>$18,000</span>
+            <div class="font-serif italic text-5xl sm:text-6xl text-gradient-accent tabular-nums leading-none">
+              $<span data-calc-loss>32,760</span>
             </div>
+            <p class="mt-2 text-sm text-ink-300">
+              annual revenue · gone
+            </p>
 
-            <div class="mt-8 pt-7 border-t border-ink-900/10">
-              <p class="text-[11px] uppercase tracking-[0.18em] text-ink-500">
-                With Allaia · 2.5x close-rate lift
-              </p>
-              <div class="mt-2 font-serif italic text-5xl sm:text-6xl text-gradient-violet tabular-nums">
-                <span data-calc-projected>$45,000</span>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              <div class="rounded-xl bg-white/5 px-4 py-3 border border-white/10">
+                <p class="text-[10px] uppercase tracking-wider text-ink-400">
+                  Per month
+                </p>
+                <p class="mt-1 font-serif italic text-xl text-ink-50 tabular-nums">
+                  ≈ $<span data-calc-loss-month>2,730</span>
+                </p>
+              </div>
+              <div class="rounded-xl bg-white/5 px-4 py-3 border border-white/10">
+                <p class="text-[10px] uppercase tracking-wider text-ink-400">
+                  Lost customers / yr
+                </p>
+                <p class="mt-1 font-serif italic text-xl text-ink-50 tabular-nums">
+                  <span data-calc-lost-customers>131</span>
+                </p>
               </div>
             </div>
 
-            <div class="mt-8 pt-7 border-t border-ink-900/10">
-              <p class="text-[11px] uppercase tracking-[0.18em] text-ink-500">
-                Annual upside
-              </p>
-              <div class="mt-2 flex items-baseline gap-2">
-                <span class="font-serif italic text-3xl sm:text-4xl text-ink-900 tabular-nums">
-                  +<span data-calc-upside>$27,000</span>
+            <div
+              class="mt-7 rounded-2xl px-5 py-5"
+              style="background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25);"
+            >
+              <div class="flex items-start gap-3">
+                <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full" style="background: var(--color-accent);">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M3 6.2l2 2 4-4.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </span>
-                <span class="text-sm text-ink-500">per year</span>
+                <div>
+                  <p class="text-sm text-ink-50 leading-snug">
+                    With Allaia, expect to win back roughly
+                    <span class="font-serif italic text-gradient-accent text-lg">
+                      $<span data-calc-recover>27,846</span>
+                    </span>
+                    a year
+                  </p>
+                  <p class="mt-1 text-xs text-ink-400">
+                    Inquiries answered in minutes, follow-ups automated, funnel that pre-qualifies before the call.
+                  </p>
+                </div>
               </div>
-              <p class="mt-3 text-xs text-ink-600 leading-relaxed">
-                Numbers assume we raise your close rate from current to a typical 37.5% (2.5x). Real lift varies by industry - on the discovery call we model your actuals.
-              </p>
             </div>
 
             <a
               href="/contact"
-              class="mt-8 inline-flex items-center gap-1.5 rounded-lg bg-ink-900 px-5 py-3 text-sm font-medium text-white hover:bg-ink-800 transition-colors"
+              class="group mt-7 inline-flex items-center justify-center gap-1.5 rounded-lg bg-white px-5 py-3 text-sm font-medium text-ink-900 hover:scale-[1.02] transition-transform"
             >
-              Get the real model
-              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              Show me the real model
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
                 <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
+
+            <p class="mt-4 text-[11px] text-ink-400 leading-relaxed">
+              Rough estimate based on your inputs - real lift depends on industry, offer, and starting baseline. We model your actuals on the discovery call.
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-    <p class="reveal mt-8 text-center text-xs text-ink-500">
-      Average across our roster: 2.1-2.8x close-rate lift in the first 90 days.
-    </p>
   </div>
 </section>
 
@@ -184,7 +243,6 @@
   .calc-slider:focus {
     outline: none;
   }
-  /* Track */
   .calc-slider::-webkit-slider-runnable-track {
     height: 4px;
     background: linear-gradient(90deg, var(--color-accent-deep), var(--color-accent), var(--color-accent-glow));
@@ -195,17 +253,16 @@
     background: linear-gradient(90deg, var(--color-accent-deep), var(--color-accent), var(--color-accent-glow));
     border-radius: 9999px;
   }
-  /* Thumb */
   .calc-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 9999px;
     background: #ffffff;
     border: 2px solid var(--color-accent);
-    margin-top: -8px;
-    box-shadow: 0 4px 12px -2px rgb(124 58 237 / 0.4);
+    margin-top: -9px;
+    box-shadow: 0 4px 14px -2px rgb(124 58 237 / 0.5);
     transition: transform 0.15s ease;
   }
   .calc-slider::-webkit-slider-thumb:hover,
@@ -213,12 +270,12 @@
     transform: scale(1.15);
   }
   .calc-slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 9999px;
     background: #ffffff;
     border: 2px solid var(--color-accent);
-    box-shadow: 0 4px 12px -2px rgb(124 58 237 / 0.4);
+    box-shadow: 0 4px 14px -2px rgb(124 58 237 / 0.5);
     cursor: pointer;
   }
 </style>
@@ -227,43 +284,51 @@
   const root = document.querySelector<HTMLElement>("[data-calc]");
   if (root) {
     const leadsIn = root.querySelector<HTMLInputElement>("[data-calc-leads]")!;
+    const missedIn = root.querySelector<HTMLInputElement>("[data-calc-missed]")!;
     const valueIn = root.querySelector<HTMLInputElement>("[data-calc-value]")!;
     const convIn = root.querySelector<HTMLInputElement>("[data-calc-conv]")!;
 
     const leadsOut = root.querySelector<HTMLElement>("[data-calc-leads-out]")!;
+    const missedOut = root.querySelector<HTMLElement>("[data-calc-missed-out]")!;
     const valueOut = root.querySelector<HTMLElement>("[data-calc-value-out]")!;
     const convOut = root.querySelector<HTMLElement>("[data-calc-conv-out]")!;
 
-    const current = root.querySelector<HTMLElement>("[data-calc-current]")!;
-    const projected = root.querySelector<HTMLElement>(
-      "[data-calc-projected]"
+    const lossEl = root.querySelector<HTMLElement>("[data-calc-loss]")!;
+    const lossMonthEl = root.querySelector<HTMLElement>(
+      "[data-calc-loss-month]"
     )!;
-    const upside = root.querySelector<HTMLElement>("[data-calc-upside]")!;
+    const lostCustEl = root.querySelector<HTMLElement>(
+      '[data-calc-lost-customers"]'
+    ) || root.querySelector<HTMLElement>("[data-calc-lost-customers]")!;
+    const recoverEl = root.querySelector<HTMLElement>("[data-calc-recover]")!;
 
-    const fmt = (n: number) =>
-      "$" + Math.round(n).toLocaleString("en-US");
+    const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
 
     const update = () => {
       const leads = parseFloat(leadsIn.value);
+      const missedPct = parseFloat(missedIn.value);
       const value = parseFloat(valueIn.value);
       const conv = parseFloat(convIn.value);
 
       leadsOut.textContent = leads.toString();
+      missedOut.textContent = missedPct + "%";
       valueOut.textContent = "$" + value.toLocaleString("en-US");
       convOut.textContent = conv + "%";
 
-      const currentAnnual = leads * 12 * (conv / 100) * value;
-      // Cap projected conversion at 60% (realistic ceiling)
-      const projConv = Math.min(60, conv * 2.5);
-      const projectedAnnual = leads * 12 * (projConv / 100) * value;
-      const delta = projectedAnnual - currentAnnual;
+      const yearlyInquiries = leads * 52;
+      const missedInquiries = yearlyInquiries * (missedPct / 100);
+      const lostCustomers = missedInquiries * (conv / 100);
+      const annualLoss = lostCustomers * value;
+      // Assume Allaia plugs ~85% of the leak
+      const recoverable = annualLoss * 0.85;
 
-      current.textContent = fmt(currentAnnual);
-      projected.textContent = fmt(projectedAnnual);
-      upside.textContent = fmt(delta).replace("$", "$");
+      lossEl.textContent = fmt(annualLoss);
+      lossMonthEl.textContent = fmt(annualLoss / 12);
+      if (lostCustEl) lostCustEl.textContent = fmt(lostCustomers);
+      recoverEl.textContent = fmt(recoverable);
     };
 
-    [leadsIn, valueIn, convIn].forEach((el) =>
+    [leadsIn, missedIn, valueIn, convIn].forEach((el) =>
       el.addEventListener("input", update)
     );
     update();

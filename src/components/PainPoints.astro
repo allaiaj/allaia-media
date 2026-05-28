@@ -1,104 +1,281 @@
 ---
+// Expandable pain-point accordion. Each row opens to a detailed breakdown
+// with timeline / pricing / guarantee tiles + bullet list of what changes.
 const pains = [
   {
     n: "01",
-    title: "Your site is a brochure, not a salesperson.",
-    body: "Pretty homepage, zero conversion architecture. People bounce because nothing tells them why you, why now, what next.",
-    fix: "Conversion-first rebuild in 7 days.",
+    tag: "Too invisible",
+    title: "Nobody finds you when they search.",
+    sub: "They google your category. They land on a competitor.",
+    detail:
+      "A modern website is the single biggest lever for trust before a customer ever speaks to you. Without local SEO + a real Google Business Profile, you're invisible at the exact moment people are deciding.",
+    bullets: [
+      "Conversion-first site, mobile-first, sub-1-second load",
+      "Local SEO baked in - GBP, schema, citations",
+      "Maintenance + hosting included, zero WordPress headaches",
+      "Same-day edits via WhatsApp",
+    ],
+    promise: "You look credible. You get found. The inbox starts moving.",
+    timeline: { v: "1 day", l: "to live" },
+    price: { v: "From $399", l: "one-time build" },
+    guarantee: { v: "14 days", l: "money back" },
+    examples: ["ayahs-beauty-greenford.pages.dev", "nurse-vella-loughton.pages.dev"],
   },
   {
     n: "02",
-    title: "Google can't find you in your own postcode.",
-    body: "You're trusting the algorithm to magically rank you. It won't. No GBP optimisation, no review cadence, no local SEO.",
-    fix: "Local search engine, live in 30 days.",
+    tag: "Too slow",
+    title: "Inquiries die between Tuesday and Thursday.",
+    sub: "Your phone rings while you're with a client. By the time you call back, they've booked elsewhere.",
+    detail:
+      "Speed-to-lead is the single most studied conversion variable in sales. Reply within 5 minutes and you 21x your odds of closing. Most local businesses reply in 24-72 hours.",
+    bullets: [
+      "Auto-reply within seconds, human follow-up within minutes",
+      "WhatsApp + email + missed-call SMS - never silent",
+      "Pre-qualification questions so cold leads aren't your problem",
+      "Calendar links so booking happens without you",
+    ],
+    promise: "Every inquiry gets a reply before the prospect cools off.",
+    timeline: { v: "3 days", l: "to wire up" },
+    price: { v: "From $199", l: "monthly" },
+    guarantee: { v: "Cancel", l: "any month" },
+    examples: ["maisyrose-flowers-collier-row.pages.dev"],
   },
   {
     n: "03",
-    title: "Meta ads burning cash with nothing to show.",
-    body: "Boosting posts is not advertising. No creative strategy, no funnel, no weekly iteration - just an account haemorrhaging budget.",
-    fix: "Full-funnel Meta with weekly creative.",
+    tag: "Too quiet",
+    title: "Your social feeds look abandoned.",
+    sub: "Last post: 4 weeks ago. Algorithm punishes you. Customers wonder if you're still open.",
+    detail:
+      "Posting once a fortnight is not a content strategy - it's a slow-motion brand suicide. We run a real production pipeline: Reels, stills, captions, DM replies, weekly review of what landed.",
+    bullets: [
+      "Reels + posts shipped weekly - never two-week silence",
+      "Hooks written specifically for your industry's keywords",
+      "Inbox + comments managed so leads don't sit unread",
+      "Monthly review of what's converting vs. what's vanity",
+    ],
+    promise: "Your feed becomes an asset, not a guilty Sunday-night task.",
+    timeline: { v: "14 days", l: "live" },
+    price: { v: "From $399", l: "monthly" },
+    guarantee: { v: "Cancel", l: "any month" },
+    examples: ["simply-pizza-ilford.pages.dev"],
   },
   {
     n: "04",
-    title: "Posting once a week is not a social strategy.",
-    body: "Nobody sees you. Algorithm punishes you. You feel like content is a tax instead of an asset.",
-    fix: "Reels engine that actually compounds.",
+    tag: "Too expensive",
+    title: "Your Meta ads burn cash with nothing to show.",
+    sub: "Boosting posts isn't advertising. There's no creative strategy, no funnel, no weekly iteration - just a budget haemorrhage.",
+    detail:
+      "Modern Meta requires constant creative production and weekly testing against your audience signals. A boosted post is gambling. A funnel with feedback loops is compounding.",
+    bullets: [
+      "Creative strategy + video production aligned to offer",
+      "Audience architecture + retargeting layers",
+      "Weekly iteration on what's actually converting",
+      "Honest ROAS reporting - vanity metrics binned",
+    ],
+    promise: "Ads start carrying their own weight by week 6-8.",
+    timeline: { v: "3 mo", l: "minimum" },
+    price: { v: "From $299", l: "monthly + ad spend" },
+    guarantee: { v: "Real", l: "ROAS reports" },
+    examples: ["dulci-beauty-dagenham.pages.dev"],
   },
   {
     n: "05",
-    title: "You're invisible online vs. your industry.",
-    body: "The face of the brand should be the brand. But you freeze when the camera comes on - and the content suffers.",
-    fix: "1:1 coaching to build your name.",
+    tag: "Too invisible online",
+    title: "You're not the face of your own business.",
+    sub: "The expertise is in your head. The trust lives behind the counter. Online, you don't exist.",
+    detail:
+      "For founder-led brands, the face IS the brand. Without personal positioning, content scripts, and weekly accountability, you'll spend years building a name nobody Googles.",
+    bullets: [
+      "Niche + positioning strategy you can hold up under pressure",
+      "Weekly 1:1 strategy call - same operator every time",
+      "Scripts and hook library so on-camera doesn't freeze you",
+      "Audience growth playbook tied to your actual goals",
+    ],
+    promise: "You become someone in your space - not just a small business.",
+    timeline: { v: "First call", l: "in 24h" },
+    price: { v: "Bespoke", l: "on request" },
+    guarantee: { v: "3 month", l: "minimum" },
+    examples: ["demo-priscas-skincare.pages.dev"],
   },
   {
     n: "06",
-    title: "Last agency took your money. Didn't move the numbers.",
-    body: "Pretty slide decks every month, no actual outcomes. Felt like paying for theatre.",
-    fix: "Real dashboards, real outcomes, cancel any month.",
+    tag: "Too burned",
+    title: "Your last agency took the money and ran.",
+    sub: "Slide decks, status calls, big invoices. Zero new customers. You're now suspicious of anyone in this category.",
+    detail:
+      "We get it. Most agencies sell hours and dashboards. We sell systems and outcomes. One operator runs your account. You can stop any month (except Meta - 3-month minimum because the data needs time to stabilise).",
+    bullets: [
+      "One named operator - same person from brief to weekly report",
+      "Reply within 4 hours on WhatsApp, always",
+      "Cancel any month - no exit fees, no calls to retain you",
+      "Real numbers in real dashboards, not slide-deck theatre",
+    ],
+    promise: "It feels different from week one. The contract proves it.",
+    timeline: { v: "30-min", l: "discovery" },
+    price: { v: "Honest", l: "by default" },
+    guarantee: { v: "Cancel", l: "any month" },
+    examples: [],
   },
 ];
 ---
 
 <section id="pain-points" class="relative scroll-mt-24 py-24 sm:py-32">
   <div class="mx-auto max-w-6xl px-6">
-    <div class="reveal text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+    <div class="reveal max-w-3xl mb-14 sm:mb-16">
       <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-        Sound familiar?
+        Sound familiar? · 06 pain points
       </p>
       <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
         <span class="text-ink-900">Six reasons</span><br />
         <span class="font-serif italic text-gradient-violet">your numbers won't move.</span>
       </h2>
-      <p class="mt-6 text-base text-ink-700 leading-relaxed">
-        Every founder we work with arrives with at least three of these. By month three, none of them are still true.
+      <p class="mt-6 text-base text-ink-700 leading-relaxed max-w-2xl">
+        Every founder we work with arrives with at least three of these. Tap any row to see exactly what we ship, how long it takes, and the guarantee that comes with it.
       </p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+    <div class="reveal space-y-3 sm:space-y-4">
       {
-        pains.map((p) => (
-          <article class="reveal surface group rounded-2xl p-6 sm:p-7 transition-all duration-500 hover:-translate-y-0.5">
-            <div class="flex items-start justify-between gap-3 mb-5">
-              <span class="font-mono text-xs text-ink-500 tracking-wider">
+        pains.map((p, i) => (
+          <details
+            class="pain-row surface group rounded-2xl overflow-hidden"
+            open={i === 0}
+          >
+            <summary class="list-none cursor-pointer flex items-center gap-4 sm:gap-6 px-5 sm:px-7 py-5 sm:py-6 [&::-webkit-details-marker]:hidden">
+              {/* Big numeral */}
+              <span class="font-serif italic text-4xl sm:text-5xl text-gradient-violet leading-none flex-none w-12 sm:w-16">
                 {p.n}
               </span>
-              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink-900/5 text-ink-500 group-hover:bg-accent/15 group-hover:text-accent-deep transition-colors">
-                <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4" />
-                  <path d="M4.5 4.5l5 5M9.5 4.5l-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              {/* Tag + headline */}
+              <div class="flex-1 min-w-0">
+                <span class="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-accent-deep font-medium mb-2">
+                  {p.tag}
+                </span>
+                <h3 class="text-lg sm:text-2xl font-medium text-ink-900 tracking-tight leading-snug">
+                  {p.title}
+                </h3>
+                <p class="hidden sm:block mt-1 text-sm text-ink-600">{p.sub}</p>
+              </div>
+              {/* Open/close pill */}
+              <span class="flex-none inline-flex items-center gap-1.5 rounded-full bg-ink-900/5 group-open:bg-accent/15 px-3 py-1.5 text-[10px] uppercase tracking-wider text-ink-700 group-open:text-accent-deep transition-colors">
+                <span class="hidden sm:inline group-open:hidden">Open</span>
+                <span class="hidden group-open:inline">Close</span>
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  class="transition-transform group-open:rotate-180"
+                  aria-hidden="true"
+                >
+                  <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
+            </summary>
+
+            {/* Expanded body */}
+            <div class="px-5 sm:px-7 pb-6 sm:pb-8 pt-2 grid lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-12">
+              {/* Left: detail + bullets */}
+              <div>
+                <p class="text-[15px] text-ink-700 leading-relaxed max-w-xl">
+                  {p.detail}
+                </p>
+                <ul class="mt-5 space-y-2.5">
+                  {p.bullets.map((b) => (
+                    <li class="flex items-start gap-2.5 text-[14px] text-ink-900 leading-snug">
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-0.5 flex-none" style="color: var(--color-accent-deep);">
+                        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4" fill="rgb(124 58 237 / 0.08)"/>
+                        <path d="M5 8.2l2 2 4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div
+                  class="mt-6 inline-flex items-start gap-2.5 rounded-xl px-4 py-3"
+                  style="background: rgba(167,243,208,0.18); border: 1px solid rgba(16,185,129,0.25);"
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-0.5 flex-none text-emerald-600">
+                    <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M5 8.2l2 2 4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <p class="text-[13px] font-medium text-emerald-800 leading-snug">
+                    {p.promise}
+                  </p>
+                </div>
+              </div>
+
+              {/* Right: tiles + CTA + examples */}
+              <div class="space-y-4">
+                <div class="grid grid-cols-3 gap-2 sm:gap-3">
+                  <div class="rounded-xl bg-white/60 backdrop-blur-sm border border-ink-900/8 px-3 py-4 text-center">
+                    <p class="font-serif italic text-lg sm:text-xl text-gradient-violet leading-none">
+                      {p.timeline.v}
+                    </p>
+                    <p class="mt-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-ink-500 leading-snug">
+                      {p.timeline.l}
+                    </p>
+                  </div>
+                  <div class="rounded-xl bg-white/60 backdrop-blur-sm border border-ink-900/8 px-3 py-4 text-center">
+                    <p class="font-serif italic text-lg sm:text-xl text-gradient-violet leading-none">
+                      {p.price.v}
+                    </p>
+                    <p class="mt-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-ink-500 leading-snug">
+                      {p.price.l}
+                    </p>
+                  </div>
+                  <div class="rounded-xl bg-white/60 backdrop-blur-sm border border-ink-900/8 px-3 py-4 text-center">
+                    <p class="font-serif italic text-lg sm:text-xl text-gradient-violet leading-none">
+                      {p.guarantee.v}
+                    </p>
+                    <p class="mt-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-ink-500 leading-snug">
+                      {p.guarantee.l}
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="/contact"
+                  class="group flex items-center justify-center gap-1.5 rounded-lg bg-ink-900 px-5 py-3 text-sm font-medium text-white hover:bg-ink-800 transition-colors"
+                >
+                  Talk about this one
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+                    <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+
+                {p.examples.length > 0 && (
+                  <p class="text-[11px] text-ink-500 leading-snug">
+                    Live examples ·{" "}
+                    {p.examples.map((e, idx) => (
+                      <>
+                        <a
+                          href={`https://${e}`}
+                          target="_blank"
+                          rel="noopener"
+                          class="underline decoration-ink-300 underline-offset-2 hover:text-ink-900 transition-colors"
+                        >
+                          {e}
+                        </a>
+                        {idx < p.examples.length - 1 ? " · " : ""}
+                      </>
+                    ))}
+                  </p>
+                )}
+              </div>
             </div>
-            <h3 class="text-lg sm:text-xl font-medium text-ink-900 tracking-tight leading-snug">
-              {p.title}
-            </h3>
-            <p class="mt-3 text-[14px] text-ink-700 leading-relaxed">
-              {p.body}
-            </p>
-            <div class="mt-5 pt-4 border-t border-ink-900/8 flex items-start gap-2">
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-0.5 flex-none" style="color: var(--color-accent-deep);">
-                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M5 8.2l2 2 4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="text-[13px] text-ink-900 font-medium leading-snug">
-                {p.fix}
-              </span>
-            </div>
-          </article>
+          </details>
         ))
       }
     </div>
-
-    <div class="reveal mt-12 text-center">
-      <a
-        href="/contact"
-        class="inline-flex items-center gap-1.5 rounded-lg bg-ink-900 px-5 py-3 text-sm font-medium text-white hover:bg-ink-800 transition-colors"
-      >
-        Tell us which ones hurt
-        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
   </div>
 </section>
+
+<style>
+  .pain-row summary {
+    transition: background-color 0.15s ease;
+  }
+  .pain-row summary:hover {
+    background-color: rgb(255 255 255 / 0.4);
+  }
+</style>
