@@ -104,7 +104,7 @@ export const services = [
     n: "01",
     title: "Website Build",
     sub: "Sites built to sell, not to win awards.",
-    body: "Conversion-first builds on Framer or Webflow. Strategy, copy, design, dev, launch - one operator, one week.",
+    body: "Conversion-first builds on a modern stack - fast load, mobile-first, SEO-ready. Strategy, copy, design, dev, launch - one operator, one day.",
     price: "from $399",
     cadence: "one-time build",
     timeline: "1 day",
@@ -359,7 +359,7 @@ export const caseStudies = [
     problem:
       "Just qualified, no online presence. Walk-ins only, owner handling admin between clients.",
     approach: [
-      "Conversion-first build on Framer with editorial-style hero + treatment menu",
+      "Conversion-first build with editorial-style hero + treatment menu",
       "Google Business Profile from scratch, review automation, weekly posts",
       "WhatsApp booking flow trained into the owner's daily workflow",
     ],
