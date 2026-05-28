@@ -47,20 +47,18 @@ for (const site of sites) {
   console.log(`Capturing ${site.slug} (${site.device})...`);
   try {
     await page.goto(site.url, { waitUntil: "networkidle", timeout: 45000 });
-    // Settle for lazy-loaded fonts / intro animations
-    await page.waitForTimeout(4500);
+    // Settle: fonts + intro animations + scroll-reveals on the hero
+    await page.waitForTimeout(6000);
 
-    // Walk down the page, re-measuring scrollHeight each pass so we keep
-    // going as lazy content extends the document. Loop until height is
-    // stable AND we've actually reached the bottom.
+    // Walk down slowly so every counter / stat / reveal animation has
+    // time to fully play to its END state before we move past it.
     await page.evaluate(async () => {
       const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-      const step = 400;
+      const step = 320;
       let y = 0;
       let stableLoops = 0;
       let lastHeight = 0;
-      // Safety: hard cap at 200 iterations (~80,000px)
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 250; i++) {
         const h = document.documentElement.scrollHeight;
         if (h === lastHeight) {
           stableLoops++;
@@ -69,22 +67,21 @@ for (const site of sites) {
           lastHeight = h;
         }
         if (y >= h - 100) {
-          // At bottom - require 3 stable passes before exiting
-          if (stableLoops >= 3) break;
+          if (stableLoops >= 4) break;
           y = h;
           window.scrollTo(0, y);
-          await sleep(350);
+          await sleep(500);
           continue;
         }
         y = Math.min(y + step, h);
         window.scrollTo(0, y);
-        await sleep(160);
+        // 450ms per step gives JS-driven counters time to ease to target
+        await sleep(450);
       }
-      // Plant at the very bottom for a final settle pass
       window.scrollTo(0, document.documentElement.scrollHeight);
-      await sleep(800);
+      await sleep(1500);
     });
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(2500);
 
     // Visit every iframe (Google Maps, YouTube, etc.) so each tile/video
     // gets a chance to load before we capture. Iframes are lazy by default.
@@ -105,28 +102,30 @@ for (const site of sites) {
     }
 
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(2500);
 
-    // Kill animations + transitions globally, then reveal common
-    // scroll-driven hidden states.
-    await page.addStyleTag({
-      content: `
-        *, *::before, *::after {
-          animation-duration: 0s !important;
-          animation-delay: 0s !important;
-          transition-duration: 0s !important;
-          transition-delay: 0s !important;
-        }
-        [class*="opacity-0"], [style*="opacity:0"], [style*="opacity: 0"] {
-          opacity: 1 !important;
-        }
-      `,
+    // Second walk top-to-bottom - some counters/stats only animate when
+    // their element enters viewport from ABOVE (not when scrolled past
+    // from below during our first descent). This pass triggers them.
+    await page.evaluate(async () => {
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      const h = document.documentElement.scrollHeight;
+      const step = 280;
+      for (let y = 0; y <= h; y += step) {
+        window.scrollTo(0, y);
+        await sleep(550);
+      }
+      window.scrollTo(0, 0);
+      await sleep(2000);
     });
 
+    // Reveal scroll-triggered hidden states WITHOUT killing animations -
+    // we want the END state of every counter/stat/reveal animation, NOT
+    // animations disabled (which would leave JS counters frozen at 0).
     await page.evaluate(() => {
       document
         .querySelectorAll(
-          ".reveal, [data-reveal], [data-animate], [data-aos], .opacity-0, .fade-in, .invisible, [data-scroll]"
+          ".reveal, [data-reveal], [data-animate], [data-aos], .fade-in, .invisible, [data-scroll]"
         )
         .forEach((el) => {
           el.classList.add(
@@ -137,11 +136,11 @@ for (const site of sites) {
             "visible",
             "aos-animate"
           );
-          el.classList.remove("opacity-0", "invisible");
-          el.style.opacity = "1";
-          el.style.transform = "none";
-          el.style.visibility = "visible";
+          el.classList.remove("invisible");
         });
+      document.querySelectorAll(".opacity-0").forEach((el) => {
+        el.classList.remove("opacity-0");
+      });
 
       // Kill cookie / consent banners
       const cookieRegex =
@@ -156,30 +155,30 @@ for (const site of sites) {
       });
     });
 
-    // De-stick navs - convert fixed/sticky to STATIC so they push the
-    // hero down instead of floating over it. Run LAST so all the dynamic
-    // positioning has settled by now.
+    // De-stick navs - convert fixed/sticky to STATIC so they don't smear
+    // through the full-page capture. Only touch position/inset; leave
+    // transforms alone so counter end-states + animation transforms
+    // remain visible.
     await page.evaluate(() => {
-      const allElements = Array.from(document.querySelectorAll("*"));
       const reset = (el) => {
         el.style.setProperty("position", "static", "important");
         el.style.setProperty("top", "auto", "important");
         el.style.setProperty("bottom", "auto", "important");
         el.style.setProperty("left", "auto", "important");
         el.style.setProperty("right", "auto", "important");
-        el.style.setProperty("transform", "none", "important");
       };
-      allElements.forEach((el) => {
+      document.querySelectorAll("*").forEach((el) => {
         const cs = getComputedStyle(el);
         if (cs.position === "fixed" || cs.position === "sticky") {
           reset(el);
         }
       });
-      // Catch nav/header elements that became sticky via JS-injected styles
       document.querySelectorAll("nav, header").forEach(reset);
     });
 
-    await page.waitForTimeout(1200);
+    // Final settle so any positioning shifts from de-stick + any last
+    // animations are 100% done before we capture.
+    await page.waitForTimeout(2500);
 
     // Find the bottom of actual visible content - the lowest pixel that
     // any visible element occupies. This is the TRUE bottom of the page;
