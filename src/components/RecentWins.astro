@@ -66,7 +66,12 @@ const accentMap = {
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
       {
         wins.map((w) => (
-          <article class="reveal group relative overflow-hidden rounded-3xl surface flex flex-col transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-30px_rgba(124,58,237,0.22)]">
+          <article
+            data-tilt
+            data-tilt-max="5"
+            data-tilt-lift="4"
+            class="reveal group relative overflow-hidden rounded-3xl surface flex flex-col transition-all duration-500 hover:shadow-[0_30px_80px_-30px_rgba(124,58,237,0.28)]"
+          >
             {/* Top color band */}
             <div class="relative h-32 sm:h-36 overflow-hidden" style={`background: ${accentMap[w.accent as keyof typeof accentMap]};`}>
               <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6), transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4), transparent 50%);"></div>

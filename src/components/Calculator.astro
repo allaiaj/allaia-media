@@ -1,20 +1,23 @@
 ---
-// Loss-framed revenue calculator. Three honest inputs → see the annual
-// number that's slipping away while your systems aren't working.
+// Visibility / capture gap calculator - what local-search demand are
+// you NOT capturing right now because you're under-ranked, under-
+// converting, or both. No automation/reply-bot assumptions - this is
+// purely the revenue arithmetic of being more findable + more
+// persuasive online.
 ---
 
 <section id="calculator" class="relative scroll-mt-24 py-24 sm:py-32">
   <div class="mx-auto max-w-5xl px-6">
     <div class="reveal max-w-3xl mb-12 sm:mb-16">
       <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
-        The slipping-away calculator
+        The visibility gap · honest math
       </p>
       <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium">
-        <span class="text-ink-900">The revenue you're</span><br />
-        <span class="font-serif italic text-gradient-violet">losing right now.</span>
+        <span class="text-ink-900">The demand you're</span><br />
+        <span class="font-serif italic text-gradient-violet">not capturing yet.</span>
       </h2>
       <p class="mt-6 text-base text-ink-700 leading-relaxed max-w-2xl">
-        Drag the sliders. No fairy-tale conversion rates, no sales-deck maths - just your inputs and what your funnel is bleeding annually because nothing is plugging the leaks.
+        People are searching for what you sell. Most of them never land on your site. Most of those who do, bounce. Drag the sliders and see what that gap is worth a year.
       </p>
     </div>
 
@@ -26,122 +29,128 @@
         <!-- Inputs -->
         <div class="p-7 sm:p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-ink-900/10 bg-white/60">
           <p class="text-[11px] uppercase tracking-[0.18em] text-ink-500 mb-8">
-            Your numbers
+            Your local market
           </p>
 
-          <!-- Weekly inquiries -->
+          <!-- Monthly local search demand -->
           <div class="space-y-3">
             <div class="flex items-baseline justify-between gap-4">
-              <label class="text-sm font-medium text-ink-900" for="calc-leads">
-                Inquiries you get per week
+              <label class="text-sm font-medium text-ink-900" for="calc-demand">
+                Monthly local searches for your service
               </label>
               <output
                 class="font-serif italic text-3xl text-gradient-violet tabular-nums"
-                data-calc-leads-out
+                data-calc-demand-out
               >
-                25
+                1,200
               </output>
             </div>
             <input
-              id="calc-leads"
+              id="calc-demand"
               type="range"
-              min="3"
-              max="120"
-              step="1"
-              value="25"
+              min="100"
+              max="20000"
+              step="100"
+              value="1200"
               class="calc-slider w-full"
-              data-calc-leads
-              aria-label="Inquiries per week"
+              data-calc-demand
+              aria-label="Monthly local searches"
             />
             <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              <span>3</span><span>120</span>
+              <span>100</span><span>20,000</span>
             </div>
           </div>
 
-          <!-- Missed % -->
+          <!-- Current visibility share -->
           <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
             <div class="flex items-baseline justify-between gap-4">
-              <label class="text-sm font-medium text-ink-900" for="calc-missed">
-                Answered too late or never
+              <label class="text-sm font-medium text-ink-900" for="calc-visibility">
+                Of those, % who actually click YOUR listing today
               </label>
               <output
                 class="font-serif italic text-3xl text-gradient-violet tabular-nums"
-                data-calc-missed-out
+                data-calc-visibility-out
               >
-                30%
+                3%
               </output>
             </div>
             <input
-              id="calc-missed"
+              id="calc-visibility"
               type="range"
-              min="5"
-              max="80"
-              step="1"
-              value="30"
+              min="0.5"
+              max="40"
+              step="0.5"
+              value="3"
               class="calc-slider w-full"
-              data-calc-missed
-              aria-label="Percentage missed"
+              data-calc-visibility
+              aria-label="Click-through share"
             />
             <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              <span>5%</span><span>80%</span>
+              <span>0.5%</span><span>40%</span>
             </div>
+            <p class="text-[11px] text-ink-500 leading-snug">
+              Below 5% usually means you're stuck on page 2 of Google or don't show up in the local map pack at all.
+            </p>
           </div>
 
-          <!-- Avg value -->
+          <!-- Site conversion -->
+          <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
+            <div class="flex items-baseline justify-between gap-4">
+              <label class="text-sm font-medium text-ink-900" for="calc-conv">
+                Site visitor → paying customer
+              </label>
+              <output
+                class="font-serif italic text-3xl text-gradient-violet tabular-nums"
+                data-calc-conv-out
+              >
+                2.5%
+              </output>
+            </div>
+            <input
+              id="calc-conv"
+              type="range"
+              min="0.5"
+              max="20"
+              step="0.1"
+              value="2.5"
+              class="calc-slider w-full"
+              data-calc-conv
+              aria-label="Visitor to customer rate"
+            />
+            <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
+              <span>0.5%</span><span>20%</span>
+            </div>
+            <p class="text-[11px] text-ink-500 leading-snug">
+              Local service sites typically sit at 1-3%. A conversion-first rebuild lands 6-10%.
+            </p>
+          </div>
+
+          <!-- Customer value -->
           <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
             <div class="flex items-baseline justify-between gap-4">
               <label class="text-sm font-medium text-ink-900" for="calc-value">
-                Average customer value
+                Average customer value (lifetime)
               </label>
               <output
                 class="font-serif italic text-3xl text-gradient-violet tabular-nums"
                 data-calc-value-out
               >
-                $250
+                $400
               </output>
             </div>
             <input
               id="calc-value"
               type="range"
               min="50"
-              max="3000"
+              max="5000"
               step="25"
-              value="250"
+              value="400"
               class="calc-slider w-full"
               data-calc-value
               aria-label="Average customer value"
             />
             <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              <span>$50</span><span>$3,000</span>
-            </div>
-          </div>
-
-          <!-- Close rate -->
-          <div class="space-y-3 mt-8 pt-8 border-t border-ink-900/8">
-            <div class="flex items-baseline justify-between gap-4">
-              <label class="text-sm font-medium text-ink-900" for="calc-conv">
-                Inquiry → customer rate (when answered)
-              </label>
-              <output
-                class="font-serif italic text-3xl text-gradient-violet tabular-nums"
-                data-calc-conv-out
-              >
-                35%
-              </output>
-            </div>
-            <input
-              id="calc-conv"
-              type="range"
-              min="5"
-              max="80"
-              step="1"
-              value="35"
-              class="calc-slider w-full"
-              data-calc-conv
-              aria-label="Close rate"
-            />
-            <div class="flex justify-between text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              <span>5%</span><span>80%</span>
+              <span>$50</span><span>$5,000</span>
             </div>
           </div>
         </div>
@@ -159,33 +168,39 @@
 
           <div class="relative">
             <p class="text-[11px] uppercase tracking-[0.22em] text-accent-bright mb-3">
-              What's slipping out the back door
+              Where you sit today
+            </p>
+            <div class="grid grid-cols-2 gap-3 mb-7">
+              <div class="rounded-xl bg-white/5 px-4 py-3 border border-white/10">
+                <p class="text-[10px] uppercase tracking-wider text-ink-400">
+                  Customers / yr
+                </p>
+                <p class="mt-1 font-serif italic text-2xl text-ink-50 tabular-nums">
+                  <span data-calc-current-customers>11</span>
+                </p>
+              </div>
+              <div class="rounded-xl bg-white/5 px-4 py-3 border border-white/10">
+                <p class="text-[10px] uppercase tracking-wider text-ink-400">
+                  Annual revenue
+                </p>
+                <p class="mt-1 font-serif italic text-2xl text-ink-50 tabular-nums">
+                  $<span data-calc-current-rev>4,320</span>
+                </p>
+              </div>
+            </div>
+
+            <p class="text-[11px] uppercase tracking-[0.22em] text-accent-bright mb-3">
+              Where Allaia builds you toward
+            </p>
+            <p class="text-[11px] text-ink-400 mb-2 leading-snug">
+              ~12% click share + 7% site conversion. Realistic with full stack live.
             </p>
             <div class="font-serif italic text-5xl sm:text-6xl text-gradient-accent tabular-nums leading-none">
-              $<span data-calc-loss>32,760</span>
+              $<span data-calc-projected-rev>48,384</span>
             </div>
             <p class="mt-2 text-sm text-ink-300">
-              annual revenue · gone
+              projected annual revenue
             </p>
-
-            <div class="mt-6 grid grid-cols-2 gap-3">
-              <div class="rounded-xl bg-white/5 px-4 py-3 border border-white/10">
-                <p class="text-[10px] uppercase tracking-wider text-ink-400">
-                  Per month
-                </p>
-                <p class="mt-1 font-serif italic text-xl text-ink-50 tabular-nums">
-                  ≈ $<span data-calc-loss-month>2,730</span>
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/5 px-4 py-3 border border-white/10">
-                <p class="text-[10px] uppercase tracking-wider text-ink-400">
-                  Lost customers / yr
-                </p>
-                <p class="mt-1 font-serif italic text-xl text-ink-50 tabular-nums">
-                  <span data-calc-lost-customers>131</span>
-                </p>
-              </div>
-            </div>
 
             <div
               class="mt-7 rounded-2xl px-5 py-5"
@@ -199,14 +214,13 @@
                 </span>
                 <div>
                   <p class="text-sm text-ink-50 leading-snug">
-                    With Allaia, expect to win back roughly
+                    Annual upside if we close the gap:
                     <span class="font-serif italic text-gradient-accent text-lg">
-                      $<span data-calc-recover>27,846</span>
+                      +$<span data-calc-upside>44,064</span>
                     </span>
-                    a year
                   </p>
                   <p class="mt-1 text-xs text-ink-400">
-                    Inquiries answered in minutes, follow-ups automated, funnel that pre-qualifies before the call.
+                    Higher click share comes from GBP + local SEO. Higher site conversion comes from a real rebuild. We can address either alone, or both together for compounding effect.
                   </p>
                 </div>
               </div>
@@ -223,7 +237,7 @@
             </a>
 
             <p class="mt-4 text-[11px] text-ink-400 leading-relaxed">
-              Rough estimate based on your inputs - real lift depends on industry, offer, and starting baseline. We model your actuals on the discovery call.
+              Estimate based on your inputs. Real lift varies by industry, geography, and starting baseline - we model your actuals on the discovery call.
             </p>
           </div>
         </div>
@@ -283,52 +297,69 @@
 <script>
   const root = document.querySelector<HTMLElement>("[data-calc]");
   if (root) {
-    const leadsIn = root.querySelector<HTMLInputElement>("[data-calc-leads]")!;
-    const missedIn = root.querySelector<HTMLInputElement>("[data-calc-missed]")!;
-    const valueIn = root.querySelector<HTMLInputElement>("[data-calc-value]")!;
+    const demandIn = root.querySelector<HTMLInputElement>("[data-calc-demand]")!;
+    const visIn = root.querySelector<HTMLInputElement>("[data-calc-visibility]")!;
     const convIn = root.querySelector<HTMLInputElement>("[data-calc-conv]")!;
+    const valueIn = root.querySelector<HTMLInputElement>("[data-calc-value]")!;
 
-    const leadsOut = root.querySelector<HTMLElement>("[data-calc-leads-out]")!;
-    const missedOut = root.querySelector<HTMLElement>("[data-calc-missed-out]")!;
-    const valueOut = root.querySelector<HTMLElement>("[data-calc-value-out]")!;
-    const convOut = root.querySelector<HTMLElement>("[data-calc-conv-out]")!;
-
-    const lossEl = root.querySelector<HTMLElement>("[data-calc-loss]")!;
-    const lossMonthEl = root.querySelector<HTMLElement>(
-      "[data-calc-loss-month]"
+    const demandOut = root.querySelector<HTMLElement>(
+      "[data-calc-demand-out]"
     )!;
-    const lostCustEl = root.querySelector<HTMLElement>(
-      '[data-calc-lost-customers"]'
-    ) || root.querySelector<HTMLElement>("[data-calc-lost-customers]")!;
-    const recoverEl = root.querySelector<HTMLElement>("[data-calc-recover]")!;
+    const visOut = root.querySelector<HTMLElement>(
+      "[data-calc-visibility-out]"
+    )!;
+    const convOut = root.querySelector<HTMLElement>("[data-calc-conv-out]")!;
+    const valueOut = root.querySelector<HTMLElement>("[data-calc-value-out]")!;
+
+    const curCust = root.querySelector<HTMLElement>(
+      "[data-calc-current-customers]"
+    )!;
+    const curRev = root.querySelector<HTMLElement>(
+      "[data-calc-current-rev]"
+    )!;
+    const projRev = root.querySelector<HTMLElement>(
+      "[data-calc-projected-rev]"
+    )!;
+    const upside = root.querySelector<HTMLElement>("[data-calc-upside]")!;
 
     const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
 
+    // Projection targets - realistic upper bounds with full stack live
+    const TARGET_VISIBILITY = 12; // 12% click share (GBP top + page-1 organic)
+    const TARGET_CONV = 7; // 7% site conversion (good conversion-first build)
+
     const update = () => {
-      const leads = parseFloat(leadsIn.value);
-      const missedPct = parseFloat(missedIn.value);
-      const value = parseFloat(valueIn.value);
+      const demand = parseFloat(demandIn.value);
+      const vis = parseFloat(visIn.value);
       const conv = parseFloat(convIn.value);
+      const value = parseFloat(valueIn.value);
 
-      leadsOut.textContent = leads.toString();
-      missedOut.textContent = missedPct + "%";
-      valueOut.textContent = "$" + value.toLocaleString("en-US");
+      demandOut.textContent = demand.toLocaleString("en-US");
+      visOut.textContent = vis + "%";
       convOut.textContent = conv + "%";
+      valueOut.textContent = "$" + value.toLocaleString("en-US");
 
-      const yearlyInquiries = leads * 52;
-      const missedInquiries = yearlyInquiries * (missedPct / 100);
-      const lostCustomers = missedInquiries * (conv / 100);
-      const annualLoss = lostCustomers * value;
-      // Assume Allaia plugs ~85% of the leak
-      const recoverable = annualLoss * 0.85;
+      // Current: demand × your click share × your site conversion × value
+      const currentMonthly = demand * (vis / 100) * (conv / 100);
+      const currentYearlyCust = currentMonthly * 12;
+      const currentRev = currentYearlyCust * value;
 
-      lossEl.textContent = fmt(annualLoss);
-      lossMonthEl.textContent = fmt(annualLoss / 12);
-      if (lostCustEl) lostCustEl.textContent = fmt(lostCustomers);
-      recoverEl.textContent = fmt(recoverable);
+      // Projected: same demand × target click share × target conversion × value
+      // Use the higher of current vs. target so the calculator never goes
+      // backwards if user is already above one threshold.
+      const projVis = Math.max(vis, TARGET_VISIBILITY);
+      const projConv = Math.max(conv, TARGET_CONV);
+      const projMonthly = demand * (projVis / 100) * (projConv / 100);
+      const projYearlyCust = projMonthly * 12;
+      const projRevenue = projYearlyCust * value;
+
+      curCust.textContent = fmt(currentYearlyCust);
+      curRev.textContent = fmt(currentRev);
+      projRev.textContent = fmt(projRevenue);
+      upside.textContent = fmt(projRevenue - currentRev);
     };
 
-    [leadsIn, missedIn, valueIn, convIn].forEach((el) =>
+    [demandIn, visIn, convIn, valueIn].forEach((el) =>
       el.addEventListener("input", update)
     );
     update();

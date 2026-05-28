@@ -37,7 +37,10 @@ import { services } from "../data/site";
               : "md:col-span-6";
           return (
           <article
-            class={`reveal group relative overflow-hidden rounded-3xl surface p-7 sm:p-9 transition-all duration-500 hover:-translate-y-1 ${spanClass}`}
+            data-tilt
+            data-tilt-max="4"
+            data-tilt-lift="3"
+            class={`reveal group relative overflow-hidden rounded-3xl surface p-7 sm:p-9 transition-all duration-500 ${spanClass}`}
           >
             {/* hover glow */}
             <div

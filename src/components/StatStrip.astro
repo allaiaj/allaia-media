@@ -69,7 +69,12 @@ const outcomes = [
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
       {
         outcomes.map((o) => (
-          <article class="reveal surface group rounded-2xl p-6 sm:p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(124,58,237,0.18)]">
+          <article
+            data-tilt
+            data-tilt-max="5"
+            data-tilt-lift="4"
+            class="reveal surface group rounded-2xl p-6 sm:p-7 transition-all duration-500 hover:shadow-[0_24px_60px_-20px_rgba(124,58,237,0.22)]"
+          >
             {/* Icon */}
             <div class="mb-6">
               <span

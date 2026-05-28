@@ -120,6 +120,69 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       document
         .querySelectorAll(".reveal")
         .forEach((el) => io.observe(el));
+
+      // Global 3D tilt-on-hover for any element marked [data-tilt].
+      // Desktop / fine-pointer only, respects prefers-reduced-motion.
+      const prefersReduced = matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      const isFinePointer = matchMedia(
+        "(hover: hover) and (pointer: fine)"
+      ).matches;
+
+      if (!prefersReduced && isFinePointer) {
+        const attach = (card) => {
+          const max = parseFloat(card.dataset.tiltMax || "5");
+          const lift = parseFloat(card.dataset.tiltLift || "2");
+          let rect = null;
+          card.style.transformStyle = "preserve-3d";
+          card.style.willChange = "transform";
+          card.addEventListener("mouseenter", () => {
+            rect = card.getBoundingClientRect();
+            card.style.transition = "transform 0.15s ease-out";
+          });
+          card.addEventListener("mousemove", (e) => {
+            if (!rect) rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            const rx = (-y * max).toFixed(2);
+            const ry = (x * max).toFixed(2);
+            card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-${lift}px)`;
+          });
+          card.addEventListener("mouseleave", () => {
+            card.style.transition =
+              "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
+            card.style.transform = "";
+            rect = null;
+          });
+        };
+        document.querySelectorAll("[data-tilt]").forEach(attach);
+
+        // Subtle mouse-parallax on anything marked [data-parallax]
+        const parallaxEls = Array.from(
+          document.querySelectorAll("[data-parallax]")
+        );
+        if (parallaxEls.length) {
+          let mx = 0,
+            my = 0,
+            tx = 0,
+            ty = 0;
+          window.addEventListener("mousemove", (e) => {
+            mx = (e.clientX / window.innerWidth - 0.5) * 2;
+            my = (e.clientY / window.innerHeight - 0.5) * 2;
+          });
+          const tick = () => {
+            tx += (mx - tx) * 0.06;
+            ty += (my - ty) * 0.06;
+            parallaxEls.forEach((el) => {
+              const depth = parseFloat(el.dataset.parallax || "20");
+              el.style.transform = `translate3d(${tx * depth}px, ${ty * depth}px, 0)`;
+            });
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      }
     </script>
   </body>
 </html>

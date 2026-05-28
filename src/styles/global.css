@@ -121,27 +121,30 @@ body {
 /* Glassmorphism - frosted surfaces over the accent gradient background */
 
 @utility surface {
-  background: rgb(255 255 255 / 0.55);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgb(255 255 255 / 0.6);
+  background: rgb(255 255 255 / 0.45);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 0.55);
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 4px 12px -2px rgb(124 58 237 / 0.08),
-    0 16px 40px -12px rgb(124 58 237 / 0.12);
+    0 1px 0 rgb(255 255 255 / 0.95) inset,
+    0 -1px 0 rgb(0 0 0 / 0.04) inset,
+    0 6px 16px -4px rgb(124 58 237 / 0.1),
+    0 24px 50px -16px rgb(124 58 237 / 0.18);
 }
 
 @utility surface-warm {
   background:
-    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.15), transparent 60%),
-    rgb(255 255 255 / 0.55);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
+    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.18), transparent 65%),
+    radial-gradient(circle at 0% 100%, rgba(251, 182, 206, 0.12), transparent 65%),
+    rgb(255 255 255 / 0.45);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
   border: 1px solid rgb(255 255 255 / 0.6);
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 4px 12px -2px rgb(124 58 237 / 0.1),
-    0 20px 50px -15px rgb(124 58 237 / 0.18);
+    0 1px 0 rgb(255 255 255 / 0.95) inset,
+    0 -1px 0 rgb(0 0 0 / 0.04) inset,
+    0 6px 16px -4px rgb(124 58 237 / 0.12),
+    0 28px 60px -18px rgb(124 58 237 / 0.22);
 }
 
 @utility surface-solid {

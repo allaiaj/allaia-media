@@ -53,7 +53,12 @@ const industries = [
     <div class="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3">
       {
         industries.map((ind) => (
-          <article class="reveal group surface rounded-2xl p-5 sm:p-6 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-20px_rgba(124,58,237,0.18)]">
+          <article
+            data-tilt
+            data-tilt-max="6"
+            data-tilt-lift="3"
+            class="reveal group surface rounded-2xl p-5 sm:p-6 transition-all duration-500 hover:shadow-[0_20px_50px_-20px_rgba(124,58,237,0.22)]"
+          >
             <div class="flex items-start gap-3">
               <span
                 class="flex h-9 w-9 flex-none items-center justify-center rounded-xl text-white transition-transform group-hover:rotate-6"
