@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette - deep navy/violet for accent + neutrals */
-  --color-ink-50: #faf9f6;
-  --color-ink-100: #f5f4f1;
-  --color-ink-200: #ece9e3;
-  --color-ink-300: #d4d0c4;
-  --color-ink-400: #9a9484;
-  --color-ink-500: #6b6557;
-  --color-ink-600: #45413a;
-  --color-ink-700: #2a2722;
-  --color-ink-800: #1a1814;
-  --color-ink-900: #0e0d0a;
-  --color-ink-950: #050403;
+  /* Cleaner SaaS palette - neutral grayscale base + single violet accent */
+  --color-ink-50: #fafafa;
+  --color-ink-100: #f5f5f5;
+  --color-ink-200: #e7e7e7;
+  --color-ink-300: #d4d4d4;
+  --color-ink-400: #a3a3a3;
+  --color-ink-500: #737373;
+  --color-ink-600: #525252;
+  --color-ink-700: #404040;
+  --color-ink-800: #262626;
+  --color-ink-900: #171717;
+  --color-ink-950: #0a0a0a;
 
   --color-accent: #7c3aed;
   --color-accent-bright: #a78bfa;
@@ -20,7 +20,7 @@
   --color-accent-glow: #6366f1;
   --color-accent-soft: #f3eefe;
 
-  --color-cream: #faf9f6;
+  --color-cream: #fafafa;
   --color-paper: #ffffff;
 
   /* Display fonts */
@@ -118,44 +118,36 @@ body {
   color: white;
 }
 
-/* Custom utilities */
+/* Custom utilities - cleaner SaaS-style surfaces (less glassy, more solid) */
 
 @utility surface {
   background: var(--color-paper);
-  border: 1px solid rgb(14 13 10 / 0.06);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 1px 3px rgb(14 13 10 / 0.04),
-    0 12px 40px -18px rgb(14 13 10 / 0.1);
+  border: 1px solid rgb(0 0 0 / 0.07);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
 }
 
 @utility surface-warm {
-  background: linear-gradient(180deg, #ffffff 0%, #faf9f6 100%);
-  border: 1px solid rgb(14 13 10 / 0.06);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 1px 3px rgb(14 13 10 / 0.04),
-    0 12px 40px -18px rgb(14 13 10 / 0.1);
+  background: var(--color-paper);
+  border: 1px solid rgb(0 0 0 / 0.07);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
 }
 
 @utility surface-muted {
-  background: rgb(14 13 10 / 0.025);
-  border: 1px solid rgb(14 13 10 / 0.06);
+  background: var(--color-ink-50);
+  border: 1px solid rgb(0 0 0 / 0.05);
 }
 
 @utility glass-light {
-  background: rgb(255 255 255 / 0.7);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgb(14 13 10 / 0.06);
+  background: var(--color-paper);
+  border: 1px solid rgb(0 0 0 / 0.07);
 }
 
 @utility glass-nav {
-  background: rgb(250 249 246 / 0.75);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgb(14 13 10 / 0.06);
-  box-shadow: 0 4px 24px -12px rgb(14 13 10 / 0.08);
+  background: rgb(255 255 255 / 0.85);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgb(0 0 0 / 0.06);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
 }
 
 @utility text-gradient {

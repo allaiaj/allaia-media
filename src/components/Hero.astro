@@ -2,77 +2,66 @@
 import { site } from "../data/site";
 ---
 
-<section class="relative isolate overflow-hidden pt-36 sm:pt-44 pb-24 sm:pb-32">
-  <!-- Local hero violet wash -->
-  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <div
-      class="absolute left-1/2 top-1/3 h-[80vh] w-[80vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[100px]"
-      style="background: radial-gradient(circle, rgba(167,139,250,0.4) 0%, transparent 60%);"
-    >
-    </div>
-  </div>
-
-  <div class="mx-auto max-w-6xl px-6">
+<section class="relative isolate overflow-hidden pt-36 sm:pt-44 pb-20 sm:pb-28">
+  <div class="mx-auto max-w-5xl px-6">
     <!-- Status pill -->
-    <div class="reveal flex justify-center mb-10">
-      <div class="surface inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12px] text-ink-700">
+    <div class="reveal flex justify-center mb-8">
+      <div class="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-[12px] text-ink-700">
         <span class="relative flex h-1.5 w-1.5">
           <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>
           <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
         </span>
-        <span>Booking June - August 2026.</span>
-        <span class="text-ink-400">·</span>
-        <span class="text-ink-500">2 spots left.</span>
+        <span>Now booking · 500+ founder-led brands trust us</span>
       </div>
     </div>
 
-    <!-- Headline -->
-    <h1 class="reveal display-tight mx-auto max-w-5xl text-center text-[clamp(2.75rem,9vw,8.25rem)] font-medium">
-      <span class="text-gradient-ink">The systems</span><br />
-      <span class="text-gradient-ink">behind brands</span><br />
-      <span class="font-serif italic text-gradient-violet">that grow.</span>
+    <!-- Headline - bold solid, single italic accent -->
+    <h1 class="reveal display-tight mx-auto max-w-4xl text-center text-[clamp(2.5rem,8vw,6.5rem)] font-semibold text-ink-900">
+      The systems behind brands <span class="font-serif italic font-normal text-accent-deep">that grow.</span>
     </h1>
 
     <!-- Sub -->
-    <p class="reveal mt-10 mx-auto max-w-2xl text-center text-base sm:text-lg text-ink-700 leading-relaxed">
-      We build the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue machines.
-      <span class="text-ink-500">No retainers. No theatre. One operator on WhatsApp.</span>
+    <p class="reveal mt-7 mx-auto max-w-2xl text-center text-base sm:text-lg text-ink-600 leading-relaxed">
+      We build the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue. No retainers. No theatre. One operator on WhatsApp.
     </p>
 
     <!-- CTA row -->
-    <div class="reveal mt-12 flex flex-col sm:flex-row items-center justify-center gap-3">
+    <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
       <a
         href={site.cal}
         target="_blank"
         rel="noopener"
-        class="group relative inline-flex w-full sm:w-auto items-center justify-center gap-2 overflow-hidden rounded-full bg-ink-900 px-6 py-3.5 text-sm font-medium text-ink-50"
-        style="box-shadow: 0 12px 36px -10px rgba(14,13,10,0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;"
+        class="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-ink-900 px-5 py-3 text-sm font-medium text-white hover:bg-ink-800 transition-colors"
       >
-        <span class="relative">Book a 30-min discovery</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="relative transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+        <span>Book a 30-min discovery</span>
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
           <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full"></span>
       </a>
       <a
-        href="#services"
-        class="surface inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium text-ink-900 hover:bg-ink-900/5 transition-colors"
+        href="/services"
+        class="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white px-5 py-3 text-sm font-medium text-ink-900 hover:bg-ink-50 transition-colors"
       >
         See what we build
       </a>
     </div>
 
-    <!-- Trust strip / metrics (animated counters) -->
-    <div class="reveal mt-20 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-3xl border border-ink-900/8" style="background: rgb(14 13 10 / 0.08);">
+    <!-- Tiny trust line -->
+    <p class="reveal mt-6 text-center text-xs text-ink-500">
+      ★★★★★ &nbsp;5.0 across all engagements &nbsp;·&nbsp; Reply within 4h on WhatsApp
+    </p>
+
+    <!-- Trust strip / metrics - cleaner SaaS feel, no gradient italic -->
+    <div class="reveal mt-16 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-ink-200 bg-ink-200">
       {[
         { final: "500+", target: 500, suffix: "+", l: "brands shipped" },
         { final: "100%", target: 100, suffix: "%", l: "client retention" },
         { final: "7", target: 7, suffix: " days", l: "to website launch" },
         { final: "4.8x", target: 4.8, suffix: "x", l: "average meta roas", decimals: 1 },
       ].map((m) => (
-        <div class="relative px-5 py-6 sm:py-8 text-center sm:text-left overflow-hidden" style="background: var(--color-paper);">
+        <div class="relative px-5 py-6 sm:py-8 text-center sm:text-left bg-white">
           <div
-            class="font-serif italic text-3xl sm:text-4xl text-gradient-violet"
+            class="font-semibold text-3xl sm:text-4xl text-ink-900 tracking-tight"
             data-counter
             data-target={m.target}
             data-suffix={m.suffix}
