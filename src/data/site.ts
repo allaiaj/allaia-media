@@ -104,15 +104,15 @@ export const services = [
     n: "01",
     title: "Website Build",
     sub: "Sites built to sell, not to win awards.",
-    body: "Conversion-first builds on a modern stack - fast load, mobile-first, SEO-ready. Strategy, copy, design, dev, launch - one operator, one day.",
-    price: "from $399",
-    cadence: "one-time build",
+    body: "Conversion-first builds on a modern stack - fast load, mobile-first, SEO-ready. Strategy, copy, design, dev, launch - one operator, one day. Hosting, maintenance, edits, and uptime included while the retainer is active. Cancel any month - site stays live as long as the retainer runs.",
+    price: "from $499",
+    cadence: "monthly · cancel anytime",
     timeline: "1 day",
     deliverables: [
       "Brand & narrative",
       "Wireframe & UX",
       "Design & dev",
-      "Analytics & CRO",
+      "Hosting + uptime + edits",
     ],
   },
   {
@@ -135,7 +135,7 @@ export const services = [
     title: "Meta Ads",
     sub: "Full-funnel paid that pays for itself.",
     body: "Creative strategy, video editing, audience architecture, weekly iteration. Three-month minimum so the data actually compounds.",
-    price: "from $299",
+    price: "from $399",
     cadence: "monthly · ad spend separate",
     timeline: "3 mo minimum",
     deliverables: [
@@ -150,7 +150,7 @@ export const services = [
     title: "Social Media",
     sub: "A feed you don't have to think about.",
     body: "AI-assisted content production with human taste on top. Reels, posts, captions, DMs - your social runs itself.",
-    price: "from $399",
+    price: "from $799",
     cadence: "monthly · posts, reels, captions",
     timeline: "live in 14 days",
     deliverables: [
