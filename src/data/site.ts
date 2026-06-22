@@ -12,9 +12,9 @@ export const site = {
 };
 
 export const nav = [
-  { label: "Services", href: "/services" },
+  { label: "Coaching", href: "/#coaching" },
+  { label: "Brand collabs", href: "/#brand-collabs" },
   { label: "Work", href: "/work" },
-  { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

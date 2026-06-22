@@ -1,0 +1,180 @@
+---
+import { site } from "../data/site";
+
+const journey = [
+  {
+    n: "01",
+    title: "Discovery call",
+    body: "30 minutes. We map who you want to be online, what's blocking you, and whether I'm actually the right coach for it. No pitch.",
+  },
+  {
+    n: "02",
+    title: "Positioning week",
+    body: "Niche, voice, audience, the look. By the end of week one you can explain who you are in one sentence and a stranger gets it.",
+  },
+  {
+    n: "03",
+    title: "Weekly 1:1s + scripts",
+    body: "Every week we ship together - posts, scripts, hooks, on-camera reps. I'm in your WhatsApp between calls.",
+  },
+  {
+    n: "04",
+    title: "Quarterly review",
+    body: "What worked, what didn't, what to double down on. Goals reset against real numbers, not vanity.",
+  },
+];
+
+const outcomes = [
+  "A clear positioning sentence you actually believe",
+  "A content blueprint that doesn't drain you",
+  "Hook library + scripts so on-camera stops freezing you",
+  "Audience growth playbook tied to your real goals",
+  "Weekly accountability from a single coach (me)",
+];
+---
+
+<section
+  id="coaching"
+  class="relative scroll-mt-24 py-24 sm:py-32 isolate overflow-hidden"
+>
+  <!-- Mesh backdrop - this is the headline offer, give it presence -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="absolute -top-40 right-1/4 h-[60vh] w-[60vh] rounded-full opacity-65 blur-[110px]"
+      style="background: radial-gradient(circle, rgba(167,139,250,0.65), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-0 -left-32 h-[55vh] w-[55vh] rounded-full opacity-55 blur-[110px]"
+      style="background: radial-gradient(circle, rgba(251,182,206,0.7), transparent 70%);"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <!-- Header -->
+    <div class="reveal max-w-3xl mb-14 sm:mb-16">
+      <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+        Headline offer · personal brand coaching
+      </p>
+      <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium" style="letter-spacing: -0.035em; line-height: 1.02;">
+        <span class="text-ink-900">Build the</span><br />
+        <span class="font-serif italic text-gradient-violet">name first.</span>
+      </h2>
+      <p class="mt-7 text-base sm:text-lg text-ink-700 leading-relaxed max-w-2xl">
+        1:1 coaching for creators, consultants, and founders building a
+        personal brand from scratch. Niche, positioning, voice, content
+        cadence - everything you need to become someone people google by
+        name. We work weekly. Same coach (me) start to finish.
+      </p>
+    </div>
+
+    <!-- Featured panel -->
+    <div class="reveal surface-warm rounded-3xl overflow-hidden">
+      <div class="grid lg:grid-cols-[1.1fr_1fr]">
+        <!-- Left: 4-step journey -->
+        <div class="p-8 sm:p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-ink-900/8">
+          <p class="text-[11px] uppercase tracking-[0.22em] text-ink-500 mb-8">
+            How it runs
+          </p>
+          <ol class="space-y-7 relative">
+            <!-- Vertical connector -->
+            <div
+              class="pointer-events-none absolute left-[15px] top-7 bottom-7 w-px"
+              style="background: linear-gradient(180deg, transparent, var(--color-accent-bright) 15%, var(--color-accent) 50%, var(--color-accent-deep) 85%, transparent);"
+              aria-hidden="true"
+            ></div>
+            {
+              journey.map((j) => (
+                <li class="relative flex gap-5">
+                  <span
+                    class="flex-none flex h-8 w-8 items-center justify-center rounded-full font-mono text-[11px] text-white relative z-10"
+                    style="background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep)); box-shadow: 0 0 0 4px rgb(255 255 255 / 0.8), 0 6px 16px -4px rgba(124,58,237,0.5);"
+                  >
+                    {j.n}
+                  </span>
+                  <div>
+                    <h3 class="text-lg font-medium text-ink-900 tracking-tight">
+                      {j.title}
+                    </h3>
+                    <p class="mt-1.5 text-[14px] text-ink-700 leading-relaxed">
+                      {j.body}
+                    </p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <!-- Right: outcomes + CTA -->
+        <div class="relative p-8 sm:p-10 lg:p-12 flex flex-col text-ink-50 overflow-hidden">
+          <div
+            class="absolute inset-0"
+            style="background: linear-gradient(160deg, #0e0d0a 0%, #1a1814 65%, #2a2722 100%);"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="pointer-events-none absolute inset-0 opacity-50"
+            style="background: radial-gradient(ellipse 70% 60% at 80% 10%, rgba(167,139,250,0.55), transparent 70%), radial-gradient(ellipse 60% 50% at 10% 90%, rgba(251,182,206,0.45), transparent 70%);"
+            aria-hidden="true"
+          ></div>
+
+          <div class="relative">
+            <p class="text-[11px] uppercase tracking-[0.22em] text-accent-bright mb-3">
+              What you walk away with
+            </p>
+            <h3 class="font-serif italic text-3xl sm:text-4xl text-ink-50 leading-tight mb-7">
+              A name, a system,<br />and the proof.
+            </h3>
+
+            <ul class="space-y-3.5 mb-9">
+              {
+                outcomes.map((o) => (
+                  <li class="flex items-start gap-3 text-[14px] sm:text-[15px] text-ink-100 leading-snug">
+                    <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full" style="background: var(--color-accent);">
+                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M3 6.2l2 2 4-4.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                    <span>{o}</span>
+                  </li>
+                ))
+              }
+            </ul>
+
+            <!-- Price + commitment row -->
+            <div class="grid grid-cols-3 gap-3 mb-7 pb-7 border-b border-white/10">
+              <div>
+                <p class="text-[10px] uppercase tracking-[0.16em] text-ink-400">Investment</p>
+                <p class="mt-1.5 font-serif italic text-xl text-gradient-accent">Bespoke</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-[0.16em] text-ink-400">Cadence</p>
+                <p class="mt-1.5 font-serif italic text-xl text-gradient-accent">Weekly 1:1</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-[0.16em] text-ink-400">Minimum</p>
+                <p class="mt-1.5 font-serif italic text-xl text-gradient-accent">3 months</p>
+              </div>
+            </div>
+
+            <a
+              href={site.cal}
+              target="_blank"
+              rel="noopener"
+              class="group inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3.5 text-sm font-medium text-ink-900 hover:scale-[1.02] transition-transform"
+            >
+              Book a discovery call
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+                <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <p class="mt-4 text-[11px] text-ink-400 leading-relaxed">
+              30-min free intro. No pitch deck. We'll talk through where you
+              are, where you want to be, and whether the coaching fits.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

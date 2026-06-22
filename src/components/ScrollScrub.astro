@@ -1,0 +1,189 @@
+---
+// Sticky scroll-scrub section. As the user scrolls through, the
+// pinned headline transitions through a sequence of phrases that
+// tell the founder's story. Pure scroll-driven - no video assets.
+
+const scenes = [
+  {
+    eyebrow: "2022 · Started",
+    headline: "Built a small studio.",
+    body: "A laptop, a Notion doc, and one founder who said yes.",
+  },
+  {
+    eyebrow: "2023 · Scaled",
+    headline: "500+ founder-led brands shipped.",
+    body: "Aesthetic clinics, florists, dentists, pizza shops. The unsexy work that compounds.",
+  },
+  {
+    eyebrow: "2024 · Coached",
+    headline: "Helped creators build a name.",
+    body: "1:1 personal brand coaching for the people who needed the founder, not the agency.",
+  },
+  {
+    eyebrow: "2025 · Partnered",
+    headline: "Started collaborating with brands.",
+    body: "Hotels, fashion houses, lifestyle - hand-picked partners whose taste lines up with mine.",
+  },
+  {
+    eyebrow: "2026 · What's next",
+    headline: "Maybe you.",
+    body: "Coaching slots open monthly. Brand partnership inquiries reviewed weekly. Studio takes a small roster per quarter.",
+  },
+];
+---
+
+<section
+  class="relative"
+  data-scroll-scrub
+  style={`height: ${scenes.length * 100}vh;`}
+>
+  <!-- Sticky inner that pins as the section scrolls past -->
+  <div class="sticky top-0 h-screen flex items-center overflow-hidden">
+    <!-- Soft accent gradient backdrop -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div
+        class="absolute -top-32 left-1/4 h-[60vh] w-[60vh] rounded-full opacity-60 blur-[100px]"
+        style="background: radial-gradient(circle, rgba(167,139,250,0.55), transparent 70%);"
+      ></div>
+      <div
+        class="absolute bottom-0 right-1/4 h-[55vh] w-[55vh] rounded-full opacity-50 blur-[110px]"
+        style="background: radial-gradient(circle, rgba(251,182,206,0.65), transparent 70%);"
+      ></div>
+    </div>
+
+    <div class="relative w-full mx-auto max-w-6xl px-6">
+      <!-- Progress rail -->
+      <div class="absolute left-6 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-3">
+        {
+          scenes.map((_, i) => (
+            <span
+              data-scrub-dot={i}
+              class="scrub-dot h-2 w-2 rounded-full bg-ink-300 transition-all duration-500"
+            />
+          ))
+        }
+      </div>
+
+      <!-- Stacked scenes - all rendered, one visible at a time via data-active -->
+      <div class="relative md:pl-16">
+        {
+          scenes.map((s, i) => (
+            <article
+              data-scrub-scene={i}
+              class={`scrub-scene ${i === 0 ? "is-active" : ""}`}
+            >
+              <p class="text-[11px] uppercase tracking-[0.24em] text-ink-500 mb-5">
+                {s.eyebrow}
+              </p>
+              <h2
+                class="font-semibold text-ink-900 text-[clamp(2.5rem,7vw,5.5rem)]"
+                style="letter-spacing: -0.035em; line-height: 1;"
+              >
+                {s.headline.split(/(\.|,)/).map((part, idx) =>
+                  idx === 0 ? (
+                    <span class="font-serif italic font-normal text-gradient-violet">
+                      {part}
+                    </span>
+                  ) : (
+                    <>{part}</>
+                  )
+                )}
+              </h2>
+              <p class="mt-7 max-w-xl text-base sm:text-lg text-ink-700 leading-relaxed">
+                {s.body}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+
+      <!-- Index counter bottom-right -->
+      <div class="absolute right-6 bottom-8 sm:bottom-12 font-mono text-[11px] tracking-wider text-ink-500">
+        <span data-scrub-counter>01</span>
+        <span class="text-ink-300"> / {String(scenes.length).padStart(2, "0")}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrub-scene {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .scrub-scene.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .scrub-dot.is-active {
+    background-color: var(--color-accent);
+    transform: scale(1.5);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scrub-scene {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-scroll-scrub]");
+  if (root) {
+    const scenes = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-scrub-scene]")
+    );
+    const dots = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-scrub-dot]")
+    );
+    const counter = root.querySelector<HTMLElement>(
+      "[data-scrub-counter]"
+    );
+    const total = scenes.length;
+
+    const onScroll = () => {
+      const rect = root.getBoundingClientRect();
+      const total_h = root.offsetHeight - window.innerHeight;
+      // 0 -> 1 across the entire scrubbable range
+      const progress = Math.min(
+        1,
+        Math.max(0, -rect.top / total_h)
+      );
+      // Map progress 0..1 to an index 0..total-1
+      const idx = Math.min(total - 1, Math.floor(progress * total));
+
+      scenes.forEach((el, i) => {
+        el.classList.toggle("is-active", i === idx);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle("is-active", i === idx);
+      });
+      if (counter) {
+        counter.textContent = String(idx + 1).padStart(2, "0");
+      }
+    };
+
+    let ticking = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            onScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    onScroll();
+  }
+</script>

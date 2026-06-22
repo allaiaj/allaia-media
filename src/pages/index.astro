@@ -2,21 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
+import ScrollScrub from "../components/ScrollScrub.astro";
+import Coaching from "../components/Coaching.astro";
+import BrandCollabs from "../components/BrandCollabs.astro";
 import LogoMarquee from "../components/LogoMarquee.astro";
 import StatStrip from "../components/StatStrip.astro";
-import Industries from "../components/Industries.astro";
-import PainPoints from "../components/PainPoints.astro";
-import Services from "../components/Services.astro";
-import Versus from "../components/Versus.astro";
-import Calculator from "../components/Calculator.astro";
-import Work from "../components/Work.astro";
 import CaseStudies from "../components/CaseStudies.astro";
-import RecentWins from "../components/RecentWins.astro";
-import Pricing from "../components/Pricing.astro";
-import Process from "../components/Process.astro";
-import Testimonials from "../components/Testimonials.astro";
-import TestimonialMarquee from "../components/TestimonialMarquee.astro";
 import About from "../components/About.astro";
+import TestimonialMarquee from "../components/TestimonialMarquee.astro";
+import Services from "../components/Services.astro";
 import FAQ from "../components/FAQ.astro";
 import CTA from "../components/CTA.astro";
 import Footer from "../components/Footer.astro";
@@ -25,22 +19,25 @@ import Footer from "../components/Footer.astro";
 <Layout>
   <Nav />
   <main>
+    <!-- Founder-first narrative -->
     <Hero />
+    <ScrollScrub />
+
+    <!-- Headline offers -->
+    <Coaching />
+    <BrandCollabs />
+
+    <!-- Proof + studio side -->
     <LogoMarquee />
     <StatStrip />
-    <Industries />
-    <PainPoints />
-    <Services />
-    <Versus />
-    <Calculator />
-    <Work />
     <CaseStudies />
-    <RecentWins />
-    <About />
-    <Process />
-    <Pricing />
-    <Testimonials />
     <TestimonialMarquee />
+
+    <!-- About + services lower in flow as supporting context -->
+    <About />
+    <Services />
+
+    <!-- Close -->
     <FAQ />
     <CTA />
   </main>

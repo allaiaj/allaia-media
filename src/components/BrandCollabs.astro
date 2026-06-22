@@ -1,0 +1,201 @@
+---
+import { site } from "../data/site";
+
+const categories = [
+  {
+    n: "01",
+    tag: "Hospitality",
+    title: "Hotels & boutique stays",
+    body: "Editorial visit. Honest review. Reels + stills + a written piece that ranks. I travel slow and document well - room, light, breakfast, neighbourhood.",
+    deliverables: ["3-5 day stay", "Long-form review", "Reels + stills set", "On-site brand mention"],
+    accent: "violet",
+  },
+  {
+    n: "02",
+    tag: "Lifestyle stays",
+    title: "Airbnb & rental hosts",
+    body: "Same energy as the hotel work, scaled to independent hosts. Great for new properties that need launch content + the first wave of social proof.",
+    deliverables: ["2-3 night stay", "Reels-first content set", "Tagged Instagram coverage", "Optional listing copy"],
+    accent: "pink",
+  },
+  {
+    n: "03",
+    tag: "Fashion & jewellery",
+    title: "Fashion labels",
+    body: "Hand-picked drops that fit the way I dress in real life. Editorial styling, real wear, never gifted-content theatre.",
+    deliverables: ["Editorial shoot", "Reels styling reel", "Story takeover", "Caption + tag in feed"],
+    accent: "peach",
+  },
+  {
+    n: "04",
+    tag: "Lifestyle goods",
+    title: "Lifestyle & home brands",
+    body: "Skincare, fragrance, home, wellness - the things that fit a slow-mornings, well-made-objects lifestyle. Usage in real context, not unboxing theatre.",
+    deliverables: ["Integrated content series", "Reels + carousel", "Honest review post", "Optional ambassador term"],
+    accent: "mint",
+  },
+];
+
+const accentMap = {
+  violet:
+    "linear-gradient(135deg, rgba(167,139,250,0.9), rgba(124,58,237,0.85))",
+  pink: "linear-gradient(135deg, rgba(251,182,206,0.92), rgba(236,72,153,0.8))",
+  peach:
+    "linear-gradient(135deg, rgba(254,205,170,0.92), rgba(251,146,60,0.8))",
+  mint: "linear-gradient(135deg, rgba(167,243,208,0.92), rgba(16,185,129,0.8))",
+};
+---
+
+<section
+  id="brand-collabs"
+  class="relative scroll-mt-24 py-24 sm:py-32 isolate overflow-hidden"
+>
+  <!-- Backdrop -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="absolute top-1/4 -left-32 h-[55vh] w-[55vh] rounded-full opacity-50 blur-[120px]"
+      style="background: radial-gradient(circle, rgba(254,205,170,0.65), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-0 -right-32 h-[55vh] w-[55vh] rounded-full opacity-55 blur-[120px]"
+      style="background: radial-gradient(circle, rgba(167,243,208,0.6), transparent 70%);"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <!-- Header -->
+    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 sm:mb-16">
+      <div class="max-w-2xl">
+        <p class="mb-4 text-[11px] uppercase tracking-[0.22em] text-ink-500">
+          Brand partnerships · selectively open
+        </p>
+        <h2 class="display text-5xl sm:text-6xl lg:text-7xl font-medium" style="letter-spacing: -0.035em; line-height: 1.02;">
+          <span class="text-ink-900">Work with me,</span><br />
+          <span class="font-serif italic text-gradient-violet">on something good.</span>
+        </h2>
+      </div>
+      <p class="md:max-w-sm text-base text-ink-700 leading-relaxed">
+        I take a small number of brand collaborations per quarter. Hand-picked, taste-aligned, honest. Here are the four categories where I lean in.
+      </p>
+    </div>
+
+    <!-- Category grid -->
+    <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+      {
+        categories.map((c) => (
+          <article
+            data-tilt
+            data-tilt-max="4"
+            data-tilt-lift="3"
+            class="reveal group relative overflow-hidden rounded-3xl surface flex flex-col will-change-transform"
+          >
+            {/* Accent header band */}
+            <div
+              class="relative h-32 sm:h-36 overflow-hidden"
+              style={`background: ${accentMap[c.accent as keyof typeof accentMap]};`}
+            >
+              <div
+                class="absolute inset-0 opacity-35"
+                style="background-image: radial-gradient(circle at 25% 30%, rgba(255,255,255,0.55), transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.35), transparent 55%);"
+              />
+              <div class="relative flex flex-col h-full px-6 sm:px-7 py-5 justify-between text-white">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-white font-medium self-start">
+                  <span class="h-1 w-1 rounded-full bg-white" />
+                  {c.tag}
+                </span>
+                <span class="font-serif italic text-5xl sm:text-6xl leading-none drop-shadow-sm">
+                  {c.n}
+                </span>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div class="flex-1 flex flex-col p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-medium text-ink-900 tracking-tight">
+                {c.title}
+              </h3>
+              <p class="mt-3 text-[14px] text-ink-700 leading-relaxed">
+                {c.body}
+              </p>
+
+              <ul class="mt-5 grid grid-cols-2 gap-x-3 gap-y-2 pt-5 border-t border-ink-900/8">
+                {c.deliverables.map((d) => (
+                  <li class="flex items-start gap-2 text-xs text-ink-700 leading-snug">
+                    <span
+                      class="mt-1.5 flex h-1 w-1 flex-none rounded-full"
+                      style="background: var(--color-accent);"
+                    />
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Audience + media-kit panel -->
+    <div
+      class="reveal mt-10 surface-warm rounded-3xl p-7 sm:p-10 grid md:grid-cols-[1.2fr_1fr] gap-8 items-center"
+    >
+      <div>
+        <p class="text-[11px] uppercase tracking-[0.22em] text-ink-500 mb-3">
+          The audience side
+        </p>
+        <h3 class="font-serif italic text-3xl sm:text-4xl text-ink-900 leading-tight max-w-md">
+          A small, taste-driven readership that actually books.
+        </h3>
+        <p class="mt-4 text-[14px] text-ink-700 leading-relaxed max-w-lg">
+          Real engagement over follower counts. Founders, creators, well-travelled
+          professionals - the kind of audience that books the hotel, buys the
+          piece, follows the recommendation. Full numbers in the media kit.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href={`mailto:${site.email}?subject=Brand%20partnership%20inquiry`}
+            class="group inline-flex items-center gap-1.5 rounded-lg bg-ink-900 px-5 py-3 text-sm font-medium text-white hover:bg-ink-800 transition-colors"
+          >
+            Request media kit
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+              <path d="M3 11L11 3M11 3H4M11 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a
+            href={site.instagram}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-1.5 rounded-lg border border-ink-300 bg-white/70 backdrop-blur-sm px-5 py-3 text-sm font-medium text-ink-900 hover:bg-white transition-colors"
+          >
+            See recent work on Instagram
+          </a>
+        </div>
+      </div>
+
+      <!-- Mini reach tiles - placeholders; swap numbers when ready -->
+      <div class="grid grid-cols-2 gap-3 sm:gap-4">
+        {
+          [
+            { v: "Slow", l: "honest content" },
+            { v: "Editorial", l: "always" },
+            { v: "Hand-picked", l: "per quarter" },
+            { v: "Long-form", l: "feed + reels" },
+          ].map((m) => (
+            <div class="rounded-2xl bg-white/70 backdrop-blur-sm border border-ink-900/8 px-4 py-5 text-center">
+              <p class="font-serif italic text-xl sm:text-2xl text-gradient-violet leading-none">
+                {m.v}
+              </p>
+              <p class="mt-2 text-[10px] uppercase tracking-[0.16em] text-ink-500 leading-snug">
+                {m.l}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <p class="reveal mt-8 text-center text-xs text-ink-500">
+      I review every partnership inquiry personally. If your brand isn't a fit, I'll tell you - and likely point you to someone who is.
+    </p>
+  </div>
+</section>
