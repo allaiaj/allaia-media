@@ -9,7 +9,19 @@ const firstLetter = editorialOpening.body.trim().charAt(0);
 const bodyRest = editorialOpening.body.trim().slice(1);
 ---
 
-<section class="relative py-24 sm:py-32 lg:py-40 border-t border-ink/8">
+<section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+  <!-- Local atmospheric depth -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-ink/15 to-transparent"></div>
+    <div
+      class="absolute top-1/4 left-[-10%] h-[55vh] w-[55vh] rounded-full opacity-40 blur-[140px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-0 right-0 h-[45vh] w-[45vh] rounded-full opacity-35 blur-[120px]"
+      style="background: radial-gradient(circle, rgba(139,157,126,0.45), transparent 70%);"
+    ></div>
+  </div>
   <div class="mx-auto max-w-6xl px-6 grid lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-20 items-start">
     <figure class="reveal lg:sticky lg:top-32">
       <div class="aspect-[4/5] rounded-[1.75rem] overflow-hidden paper-grain bg-bone shadow-photo">

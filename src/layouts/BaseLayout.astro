@@ -2,6 +2,7 @@
 import '@styles/global.css';
 import { site } from '@data/site';
 import GlassPillNav from '@components/GlassPillNav.astro';
+import AtmosphericBackdrop from '@components/AtmosphericBackdrop.astro';
 import EditorialFooter from '@components/EditorialFooter.astro';
 
 interface Props {
@@ -63,6 +64,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
   </head>
   <body class={`bg-cream text-ink antialiased ${bodyClass}`}>
     <a href="#main" class="skip-link">Skip to content</a>
+    <AtmosphericBackdrop />
     <GlassPillNav />
     <main id="main" style="overflow-x: clip;">
       <slot />

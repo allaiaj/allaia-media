@@ -8,11 +8,17 @@ const parts = (await getCollection('bookChapters')).sort(
 );
 ---
 
-<section id="book" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40 bg-bone border-y border-ink/8 overflow-hidden">
+<section id="book" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40 overflow-hidden">
+  <!-- Section atmosphere — warmer tint, multiple depth layers -->
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(250,246,238,0.85) 0%, rgba(245,238,225,0.92) 50%, rgba(250,246,238,0.85) 100%);"></div>
     <div
-      class="absolute top-0 right-0 h-[70vh] w-[70vh] rounded-full opacity-30 blur-[140px]"
-      style="background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);"
+      class="absolute top-0 right-0 h-[70vh] w-[70vh] rounded-full opacity-45 blur-[150px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.5), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-0 left-0 h-[55vh] w-[55vh] rounded-full opacity-35 blur-[130px]"
+      style="background: radial-gradient(circle, rgba(107,79,61,0.4), transparent 70%);"
     ></div>
   </div>
 

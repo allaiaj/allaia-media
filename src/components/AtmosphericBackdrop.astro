@@ -1,0 +1,101 @@
+---
+// Global atmospheric layer — fixed full-viewport, sits behind every
+// section. Multiple radial-gradient blobs at different depths, slow
+// mouse parallax, subtle grain. Gives the home page 3D feel because
+// sections with transparent backgrounds reveal it as you scroll.
+---
+
+<div
+  class="atmospheric-backdrop pointer-events-none fixed inset-0 -z-50 overflow-hidden"
+  aria-hidden="true"
+  data-atmospheric
+>
+  <!-- Base — soft cream-to-bone wash so transparent sections reveal a tonal floor -->
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(180deg, #F4EFE7 0%, #F2EDE5 35%, #EFEADF 70%, #EBE4D5 100%);"
+  ></div>
+
+  <!-- Layer 1 — deep blobs (farthest, slowest parallax) -->
+  <div
+    class="atm-blob absolute h-[80vh] w-[80vh] rounded-full blur-[180px] opacity-30"
+    data-atm-depth="35"
+    style="top: 8%; left: -12%; background: radial-gradient(circle, rgba(184,85,66,0.65), transparent 70%);"
+  ></div>
+  <div
+    class="atm-blob absolute h-[75vh] w-[75vh] rounded-full blur-[160px] opacity-25"
+    data-atm-depth="-30"
+    style="top: 38%; right: -10%; background: radial-gradient(circle, rgba(139,157,126,0.6), transparent 70%);"
+  ></div>
+
+  <!-- Layer 2 — mid blobs -->
+  <div
+    class="atm-blob absolute h-[60vh] w-[60vh] rounded-full blur-[140px] opacity-30"
+    data-atm-depth="-22"
+    style="top: 70%; left: 28%; background: radial-gradient(circle, rgba(107,79,61,0.55), transparent 70%);"
+  ></div>
+  <div
+    class="atm-blob absolute h-[55vh] w-[55vh] rounded-full blur-[130px] opacity-28"
+    data-atm-depth="28"
+    style="top: 110%; right: 15%; background: radial-gradient(circle, rgba(254,205,170,0.6), transparent 70%);"
+  ></div>
+  <div
+    class="atm-blob absolute h-[65vh] w-[65vh] rounded-full blur-[140px] opacity-25"
+    data-atm-depth="-18"
+    style="top: 150%; left: -8%; background: radial-gradient(circle, rgba(184,85,66,0.55), transparent 70%);"
+  ></div>
+
+  <!-- Layer 3 — close blobs (most parallax, smaller, more saturated) -->
+  <div
+    class="atm-blob absolute h-[40vh] w-[40vh] rounded-full blur-[120px] opacity-35"
+    data-atm-depth="42"
+    style="top: 200%; right: -5%; background: radial-gradient(circle, rgba(139,157,126,0.55), transparent 70%);"
+  ></div>
+  <div
+    class="atm-blob absolute h-[45vh] w-[45vh] rounded-full blur-[120px] opacity-32"
+    data-atm-depth="-38"
+    style="top: 240%; left: 22%; background: radial-gradient(circle, rgba(184,85,66,0.58), transparent 70%);"
+  ></div>
+  <div
+    class="atm-blob absolute h-[55vh] w-[55vh] rounded-full blur-[140px] opacity-28"
+    data-atm-depth="25"
+    style="top: 290%; right: 30%; background: radial-gradient(circle, rgba(107,79,61,0.55), transparent 70%);"
+  ></div>
+
+  <!-- Subtle film grain over everything -->
+  <div
+    class="absolute inset-0 mix-blend-multiply opacity-[0.04]"
+    style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;);"
+  ></div>
+
+  <!-- Top + bottom edge vignette so sections feel lit -->
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(180deg, rgba(14,13,11,0.04) 0%, transparent 8%, transparent 92%, rgba(14,13,11,0.06) 100%);"
+  ></div>
+</div>
+
+<script>
+  // Subtle mouse-parallax for the deep blobs — adds 3D feel without
+  // distracting. Skipped on touch + reduced-motion.
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches && matchMedia('(pointer: fine)').matches) {
+    const blobs = Array.from(document.querySelectorAll<HTMLElement>('[data-atm-depth]'));
+    if (blobs.length) {
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      window.addEventListener('pointermove', (e) => {
+        mx = (e.clientX / window.innerWidth - 0.5) * 2;
+        my = (e.clientY / window.innerHeight - 0.5) * 2;
+      }, { passive: true });
+      const tick = () => {
+        cx += (mx - cx) * 0.04;
+        cy += (my - cy) * 0.04;
+        blobs.forEach((el) => {
+          const d = Number(el.dataset.atmDepth) || 0;
+          el.style.transform = `translate3d(${cx * d}px, ${cy * d * 0.8}px, 0)`;
+        });
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  }
+</script>
