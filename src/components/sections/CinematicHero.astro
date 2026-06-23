@@ -67,11 +67,11 @@ const scenes = [
       style="perspective: 1500px; perspective-origin: 50% 50%;"
       data-active="0"
     >
-      <!-- Layer 0 — morphing background mesh -->
+      <!-- Layer 0 — morphing background mesh (fades, not snaps) -->
       <div class="hero-bg absolute inset-0" aria-hidden="true">
         {scenes.map((s, i) => (
           <div
-            class="hero-bg-layer absolute inset-0 transition-opacity duration-[1200ms]"
+            class={`hero-bg-layer absolute inset-0${i === 0 ? ' is-active' : ''}`}
             data-scene-bg={i}
             style={`background: ${s.grad};`}
           ></div>
@@ -103,11 +103,11 @@ const scenes = [
         <ellipse cx="220" cy="200" rx="80" ry="42" fill="rgba(255,255,255,0.35)" filter="url(#orbBlur)" />
       </svg>
 
-      <!-- Layer 2 — scene image stack -->
+      <!-- Layer 2 — scene image stack (snap-cuts, not cross-fades) -->
       <div class="hero-scenes absolute inset-0" aria-hidden="true">
         {scenes.map((s, i) => (
           <figure
-            class="hero-scene absolute inset-0"
+            class={`hero-scene absolute inset-0${i === 0 ? ' is-active' : ''}`}
             data-scene={i}
           >
             <img
@@ -137,7 +137,7 @@ const scenes = [
           <div class="relative h-[60vh] sm:h-[58vh] flex items-center">
             {scenes.map((s, i) => (
               <div
-                class="hero-beat absolute inset-0 flex flex-col justify-center"
+                class={`hero-beat absolute inset-0 flex-col justify-center${i === 0 ? ' is-active' : ''}`}
                 data-beat={i}
                 style="transform: translateZ(0);"
               >
@@ -311,35 +311,16 @@ const scenes = [
   }
   .hero-stage * { transform-style: inherit; }
 
-  /* CSS-driven visibility — stage's data-active drives everything.
-     Default state (active="0") is correct even before JS hydrates,
-     and there is no way for two beats to be visible simultaneously. */
-  .hero-scene,
-  .hero-bg-layer,
-  .hero-beat {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  .hero-stage[data-active="0"] .hero-scene[data-scene="0"],
-  .hero-stage[data-active="1"] .hero-scene[data-scene="1"],
-  .hero-stage[data-active="2"] .hero-scene[data-scene="2"],
-  .hero-stage[data-active="3"] .hero-scene[data-scene="3"],
-  .hero-stage[data-active="4"] .hero-scene[data-scene="4"],
-  .hero-stage[data-active="0"] .hero-bg-layer[data-scene-bg="0"],
-  .hero-stage[data-active="1"] .hero-bg-layer[data-scene-bg="1"],
-  .hero-stage[data-active="2"] .hero-bg-layer[data-scene-bg="2"],
-  .hero-stage[data-active="3"] .hero-bg-layer[data-scene-bg="3"],
-  .hero-stage[data-active="4"] .hero-bg-layer[data-scene-bg="4"],
-  .hero-stage[data-active="0"] .hero-beat[data-beat="0"],
-  .hero-stage[data-active="1"] .hero-beat[data-beat="1"],
-  .hero-stage[data-active="2"] .hero-beat[data-beat="2"],
-  .hero-stage[data-active="3"] .hero-beat[data-beat="3"],
-  .hero-stage[data-active="4"] .hero-beat[data-beat="4"] {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .hero-bg-layer { transition: opacity 1000ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+  /* Instant display swap — robust against mobile Safari + Instagram
+     in-app webview, where rapid opacity-transitions on data-attr
+     changes were stacking multiple beats. Snap-cut is the only
+     truly safe primitive across all webviews. */
+  .hero-beat { display: none; pointer-events: none; }
+  .hero-beat.is-active { display: flex; pointer-events: auto; }
+  .hero-scene { display: none; pointer-events: none; }
+  .hero-scene.is-active { display: block; pointer-events: auto; }
+  .hero-bg-layer { opacity: 0; transition: opacity 800ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .hero-bg-layer.is-active { opacity: 1; }
   .hero-scene-img { transition: transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1); }
 
   /* Orb — fixed position, but transform-driven by scroll */
@@ -366,11 +347,11 @@ const scenes = [
     transition: opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
                 transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
   }
-  .hero-stage[data-active="3"] .hero-beat[data-beat="3"] .hero-word { opacity: 1; transform: none; }
-  .hero-stage[data-active="3"] .hero-beat[data-beat="3"] .hero-word:nth-child(1) { transition-delay: 80ms; }
-  .hero-stage[data-active="3"] .hero-beat[data-beat="3"] .hero-word:nth-child(2) { transition-delay: 240ms; }
-  .hero-stage[data-active="3"] .hero-beat[data-beat="3"] .hero-word:nth-child(3) { transition-delay: 400ms; }
-  .hero-stage[data-active="3"] .hero-beat[data-beat="3"] .hero-word:nth-child(4) { transition-delay: 560ms; }
+  .hero-beat.is-active .hero-word { opacity: 1; transform: none; }
+  .hero-beat.is-active .hero-word:nth-child(1) { transition-delay: 80ms; }
+  .hero-beat.is-active .hero-word:nth-child(2) { transition-delay: 240ms; }
+  .hero-beat.is-active .hero-word:nth-child(3) { transition-delay: 400ms; }
+  .hero-beat.is-active .hero-word:nth-child(4) { transition-delay: 560ms; }
 
   /* Floating chips — orbit positions per scene, tweened via JS */
   .hero-chips {
@@ -427,14 +408,16 @@ const scenes = [
     const setActive = (i: number) => {
       if (i === activeIdx) return;
       activeIdx = i;
-      // Single attribute drives every beat/scene/bg-layer via CSS.
-      // No more inline opacity to fight with browser quirks (Instagram
-      // in-app webview was rendering all beats at once when JS-applied
-      // inline styles weren't respected at hydration time).
-      stage.setAttribute('data-active', String(i));
-      stage.setAttribute('data-tone', sceneTones[i] ?? 'warm');
+      // Toggle is-active class on every layer. CSS uses display: none
+      // / display: flex (or block) for snap-instant swapping — no
+      // opacity transitions to get stuck on Instagram's in-app webview.
+      scenes.forEach((el, k) => el.classList.toggle('is-active', k === i));
+      bgLayers.forEach((el, k) => el.classList.toggle('is-active', k === i));
+      beats.forEach((el, k) => el.classList.toggle('is-active', k === i));
       dots.forEach((el, k) => el.classList.toggle('is-active', k === i));
       sceneNs.forEach((el, k) => el.classList.toggle('is-active', k === i));
+      stage.setAttribute('data-active', String(i));
+      stage.setAttribute('data-tone', sceneTones[i] ?? 'warm');
       if (currentN) currentN.textContent = String(i).padStart(2, '0');
     };
 
