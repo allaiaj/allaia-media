@@ -70,13 +70,15 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
                   </p>
                 </div>
               </div>
-              <!-- Real cover photo paints on top once supplied -->
+              <!-- Real cover photo paints on top once supplied
+                   (hidden on error so CSS cover stays visible) -->
               <img
                 src={book.cover}
                 alt={`${book.title} — book cover`}
                 class="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
+                onerror="this.style.display='none'"
               />
             </div>
             <figcaption class="sr-only">{book.title} cover</figcaption>

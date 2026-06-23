@@ -43,13 +43,13 @@ const shortcodeOf = (permalink: string) => {
   </div>
 
   <div class="mx-auto max-w-6xl px-6">
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+    <ul class="reels-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-reels-grid>
       {instagramReels.map((reel, i) => {
         const sc = shortcodeOf(reel.permalink);
         return (
-          <li class="reveal" style={`transition-delay: ${(i % 3) * 70}ms`}>
+          <li class="reveal reel-item" style={`transition-delay: ${(i % 3) * 70}ms`} data-reel-index={i}>
             <div
-              class="relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm shadow-photo group"
+              class="reel-shell relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm shadow-photo group"
               data-reel-shell
               data-reel-shortcode={sc}
             >
@@ -65,16 +65,29 @@ const shortcodeOf = (permalink: string) => {
                   alt=""
                   loading="lazy"
                   decoding="async"
-                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+                  class="reel-poster absolute inset-0 w-full h-full object-cover"
                 />
+                <!-- Bottom vignette -->
                 <div
                   class="absolute inset-0 pointer-events-none"
-                  style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.45) 0%, transparent 60%);"
+                  style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.5) 0%, transparent 60%);"
                   aria-hidden="true"
                 ></div>
+                <!-- LIVE chip — pulses to signal "playing now" feel -->
+                <div class="reel-live absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-2 py-1 rounded-full bg-anthracite/55 backdrop-blur-md">
+                  <span class="relative flex h-1.5 w-1.5">
+                    <span class="absolute inline-flex h-full w-full rounded-full bg-terracotta opacity-75 animate-ping"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-terracotta"></span>
+                  </span>
+                  <span class="text-[0.5625rem] uppercase tracking-[0.18em] text-cream/90 font-medium">Reel</span>
+                </div>
+                <!-- Now-playing progress bar at bottom (animated) -->
+                <span class="reel-progress absolute inset-x-0 bottom-0 h-[3px] bg-cream/15 overflow-hidden" aria-hidden="true">
+                  <span class="reel-progress-fill block h-full w-full origin-left bg-cream/85"></span>
+                </span>
                 <!-- Play affordance -->
                 <span class="absolute inset-0 grid place-items-center">
-                  <span class="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-cream/20 backdrop-blur-md border border-cream/35 grid place-items-center group-hover:bg-cream/35 group-hover:scale-110 transition-all duration-500 ease-editorial">
+                  <span class="reel-play-btn h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-cream/20 backdrop-blur-md border border-cream/35 grid place-items-center transition-all duration-500 ease-editorial">
                     <svg width="20" height="20" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                       <path d="M4 2.5L11 7l-7 4.5v-9Z" fill="#F2EDE5"/>
                     </svg>
@@ -88,6 +101,78 @@ const shortcodeOf = (permalink: string) => {
     </ul>
   </div>
 </section>
+
+<style>
+  /* Slow ken-burns so every poster feels like a paused video */
+  .reel-poster {
+    transform-origin: 50% 50%;
+    animation: reel-kenburns 16s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  .reel-item[data-reel-index="1"] .reel-poster { animation-delay: -3s; }
+  .reel-item[data-reel-index="2"] .reel-poster { animation-delay: -6s; }
+  .reel-item[data-reel-index="3"] .reel-poster { animation-delay: -9s; }
+  .reel-item[data-reel-index="4"] .reel-poster { animation-delay: -12s; }
+  @keyframes reel-kenburns {
+    0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+    50%  { transform: scale(1.07) translate3d(-1.5%, -1%, 0); }
+    100% { transform: scale(1.04) translate3d(1.5%, 1%, 0); }
+  }
+
+  /* Spotlight cycle — one card lifts + glows in turn so the row feels
+     like it's playing through reel after reel. Driven by .is-playing
+     toggled by the script. */
+  .reel-shell {
+    transition:
+      transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .reel-item.is-playing .reel-shell {
+    transform: translateY(-6px) scale(1.012);
+    box-shadow:
+      0 30px 80px -20px rgba(184,85,66,0.55),
+      0 0 0 1px rgba(242,237,229,0.18) inset,
+      0 0 60px -10px rgba(184,85,66,0.45);
+  }
+  .reel-item.is-playing .reel-poster {
+    animation-play-state: running;
+  }
+  .reel-item:not(.is-playing) .reel-poster {
+    filter: brightness(0.88) saturate(0.92);
+    transition: filter 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .reel-item.is-playing .reel-poster {
+    filter: brightness(1.04) saturate(1);
+  }
+
+  /* Animated bottom progress bar — fills left-to-right while is-playing */
+  .reel-progress-fill { transform: scaleX(0); }
+  .reel-item.is-playing .reel-progress-fill {
+    animation: reel-progress 4s linear forwards;
+  }
+  @keyframes reel-progress {
+    0%   { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+
+  /* Play button gentle pulse — feels like the next thing about to fire */
+  .reel-item.is-playing .reel-play-btn {
+    background-color: rgba(242, 237, 229, 0.4);
+    transform: scale(1.08);
+  }
+  .reel-play-btn {
+    animation: reel-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes reel-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(242, 237, 229, 0.25); }
+    50%      { box-shadow: 0 0 0 14px rgba(242, 237, 229, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel-poster, .reel-play-btn, .reel-progress-fill { animation: none !important; }
+    .reel-item.is-playing .reel-shell { transform: none; }
+  }
+</style>
 
 <script>
   // Click-to-play swaps the poster button for IG's embed iframe.
@@ -104,7 +189,53 @@ const shortcodeOf = (permalink: string) => {
       iframe.allowFullscreen = true;
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.style.border = '0';
+      // Stop the spotlight cycle for this card once it's a live iframe
+      shell.closest<HTMLElement>('.reel-item')?.classList.add('is-active-iframe');
       shell.replaceChildren(iframe);
     }, { once: true });
   });
+
+  // Auto-spotlight cycle — every 4s, advance the "playing" card so the
+  // row feels like it's stepping through reels in sequence. Stops on
+  // hover so the user can tap; pauses when the section is off-screen.
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    const grid = document.querySelector<HTMLElement>('[data-reels-grid]');
+    if (grid) {
+      const items = Array.from(grid.querySelectorAll<HTMLElement>('.reel-item'));
+      let idx = 0;
+      let timer: ReturnType<typeof setInterval> | null = null;
+      let hovering = false;
+      let visible = false;
+
+      const step = () => {
+        // Skip items that have already become live iframes
+        let safety = 0;
+        while (items[idx]?.classList.contains('is-active-iframe') && safety < items.length) {
+          idx = (idx + 1) % items.length;
+          safety++;
+        }
+        items.forEach((el, k) => el.classList.toggle('is-playing', k === idx));
+        idx = (idx + 1) % items.length;
+      };
+      const start = () => {
+        if (timer || !visible || hovering) return;
+        step();
+        timer = setInterval(step, 4000);
+      };
+      const stop = () => {
+        if (timer) { clearInterval(timer); timer = null; }
+      };
+
+      grid.addEventListener('pointerenter', () => { hovering = true; stop(); });
+      grid.addEventListener('pointerleave', () => { hovering = false; start(); });
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          visible = e.isIntersecting;
+          if (visible) start(); else { stop(); items.forEach((el) => el.classList.remove('is-playing')); }
+        });
+      }, { threshold: 0.2 });
+      io.observe(grid);
+    }
+  }
 </script>

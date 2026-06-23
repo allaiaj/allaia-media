@@ -65,13 +65,16 @@ const parts = (await getCollection('bookChapters')).sort(
               </p>
             </div>
           </div>
-          <!-- Real cover image painted on top once supplied -->
+          <!-- Real cover image painted on top once supplied (hidden
+               on error so the CSS-rendered cover remains visible
+               instead of the broken-image icon) -->
           <img
             src={book.cover}
             alt="Become Her — debut book cover by Allaia, 2026"
             class="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
             decoding="async"
+            onerror="this.style.display='none'"
           />
         </div>
         <figcaption class="mt-3 flex items-baseline justify-between byline text-ink-mute">
