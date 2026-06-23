@@ -271,11 +271,6 @@ export const instagramReels = [
     likes: 7081,
   },
   {
-    permalink: 'https://www.instagram.com/reel/DXwOfqdM_N0/',
-    poster: '/img/instagram/reel-DXwOfqdM_N0.jpg',
-    likes: 7755,
-  },
-  {
     permalink: 'https://www.instagram.com/reel/DY44G_Gs6rU/',
     poster: '/img/instagram/reel-DY44G_Gs6rU.jpg',
     likes: 9208,

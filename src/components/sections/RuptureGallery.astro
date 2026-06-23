@@ -45,21 +45,17 @@ const works = (await getCollection('artworks'))
       Textured abstract mixed-media — pigment, plaster, oil stick. The pieces hold what the writing cannot.
     </p>
 
-    <!-- Editorial gallery — 2-up + 2-up asymmetric -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-7">
+    <!-- Editorial gallery — clean 2-up grid, no empty cells -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
       {works.map((w, i) => {
-        const col =
-          i === 0 ? 'md:col-span-7 md:row-span-2' :
-          i === 1 ? 'md:col-span-5' :
-          i === 2 ? 'md:col-span-5' :
-          'md:col-span-7';
+        // Vary aspect per piece so the grid has rhythm without holes
         const ratio =
           i === 0 ? 'aspect-[4/5]' :
-          i === 1 ? 'aspect-[5/4]' :
+          i === 1 ? 'aspect-[4/5]' :
           i === 2 ? 'aspect-[4/5]' :
-          'aspect-[5/4]';
+          'aspect-[4/5]';
         return (
-          <figure class={`reveal ${col} group`}>
+          <figure class={`reveal group`}>
             <div class={`relative ${ratio} rounded-[1.25rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo`}>
               <!-- Fallback FIRST so img paints on top -->
               <div
