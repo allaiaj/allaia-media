@@ -29,7 +29,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['"Playfair Display"', '"GT Sectra"', 'Georgia', 'serif'],
+        display: ['"Fraunces"', '"GT Sectra"', 'Georgia', 'serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
       },

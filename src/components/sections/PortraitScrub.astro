@@ -1,9 +1,11 @@
 ---
 // Portrait scrub — sticky pinned scroll-driven portrait reveal.
-// Lives BETWEEN the cinematic hero and the editorial opening.
-// Allaia's face stays here, not on the hero (per her direction).
-// 300vh outer / 100vh sticky inner. Image zooms + parallaxes,
-// pinned text beats reveal as scroll progresses through.
+// Lives between the cinematic hero and the editorial opening.
+// Allaia's face stays here.
+//
+// Desktop: portrait centered, text tower on the left, beats fade through
+// Mobile: portrait full-bleed background with warm scrim, text on top
+// in cream — Vogue cover treatment.
 ---
 
 <section
@@ -11,29 +13,43 @@
   data-portrait-scrub
   aria-label="The woman behind the work"
 >
-  <!-- Outer track — controls scroll length -->
   <div class="ps-track relative" style="height: 320vh;">
     <div
       class="ps-stage sticky top-0 h-screen w-full overflow-hidden"
       style="perspective: 1200px; perspective-origin: 50% 50%;"
     >
-      <!-- Backdrop tonal wash that shifts with progress -->
+      <!-- DESKTOP backdrop wash -->
       <div
-        class="ps-backdrop absolute inset-0 transition-colors duration-[1200ms]"
+        class="ps-backdrop hidden md:block absolute inset-0 transition-colors duration-[1200ms]"
         data-ps-backdrop
         aria-hidden="true"
       ></div>
 
-      <!-- Grain over backdrop -->
+      <!-- MOBILE: full-bleed portrait with dark warm scrim -->
+      <div class="md:hidden absolute inset-0" data-ps-mobile-bg aria-hidden="true">
+        <img
+          src="/img/allaia/avatar.jpg"
+          alt=""
+          class="absolute inset-0 w-full h-full object-cover photo-warm"
+          data-ps-img-mobile
+        />
+        <!-- Tonal warm overlay -->
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(180deg, rgba(14,13,11,0.55) 0%, rgba(14,13,11,0.35) 35%, rgba(14,13,11,0.7) 100%);"
+        ></div>
+      </div>
+
+      <!-- Grain -->
       <div
         class="absolute inset-0 pointer-events-none mix-blend-multiply opacity-[0.06]"
         style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;);"
         aria-hidden="true"
       ></div>
 
-      <!-- Portrait — sits centered, scales + parallaxes on scroll -->
+      <!-- DESKTOP: portrait centered -->
       <figure
-        class="ps-portrait absolute"
+        class="ps-portrait hidden md:block absolute"
         data-ps-portrait
         style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: clamp(280px, 32vw, 460px);"
       >
@@ -47,7 +63,6 @@
             style="object-position: 50% 35%;"
             data-ps-img
           />
-          <!-- Subtle warm vignette over the bottom -->
           <div
             class="absolute inset-0 pointer-events-none"
             style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.45) 0%, transparent 60%);"
@@ -60,10 +75,10 @@
         </figcaption>
       </figure>
 
-      <!-- Text tower — left of portrait, beats fade through -->
+      <!-- TEXT TOWER -->
       <div class="ps-type absolute inset-0 flex items-center pointer-events-none">
-        <div class="mx-auto max-w-6xl px-6 w-full grid lg:grid-cols-[1fr_auto_1fr] gap-8 lg:gap-12 items-center">
-          <!-- LEFT type column -->
+        <div class="mx-auto max-w-6xl px-6 w-full grid md:grid-cols-[1fr_auto_1fr] gap-8 lg:gap-12 items-center">
+          <!-- LEFT type column (DESKTOP) / FULL column (MOBILE) -->
           <div class="ps-type-col relative h-[60vh]">
             {[
               {
@@ -86,25 +101,25 @@
               },
             ].map((b, i) => (
               <div
-                class="ps-beat absolute inset-0 flex flex-col justify-center transition-opacity duration-[800ms]"
+                class="ps-beat absolute inset-0 flex flex-col justify-center transition-opacity duration-[400ms]"
                 data-ps-beat={i}
                 style={`opacity: ${i === 0 ? 1 : 0};`}
               >
-                <p class="eyebrow text-ink-mute mb-5">{b.eyebrow}</p>
-                <h2 class="display-md text-ink leading-[1.06] mb-4">
+                <p class="ps-eyebrow eyebrow mb-5 text-ink-mute md:text-ink-mute">{b.eyebrow}</p>
+                <h2 class="ps-head display-md leading-[1.06] mb-4 text-ink md:text-ink">
                   <span class="block">{b.head}</span>
                   <span class="font-display italic font-medium italic-grad block">{b.italic}</span>
                 </h2>
-                <p class="serif-lg text-ink-soft max-w-prose">{b.body}</p>
+                <p class="ps-body serif-lg max-w-prose text-ink-soft md:text-ink-soft">{b.body}</p>
               </div>
             ))}
           </div>
 
-          <!-- spacer for portrait -->
-          <div class="hidden lg:block" style="width: clamp(300px, 34vw, 480px);"></div>
+          <!-- spacer for portrait (DESKTOP only) -->
+          <div class="hidden md:block" style="width: clamp(300px, 34vw, 480px);"></div>
 
-          <!-- RIGHT column — counter + chapter progress -->
-          <div class="hidden lg:flex flex-col items-end gap-6">
+          <!-- RIGHT column — counter (DESKTOP only) -->
+          <div class="hidden md:flex flex-col items-end gap-6">
             <p class="font-mono text-[11px] tracking-widest text-ink-mute">
               <span data-ps-current>I</span>
               <span class="text-ink/25"> / III</span>
@@ -118,10 +133,21 @@
         </div>
       </div>
 
+      <!-- MOBILE counter row -->
+      <div class="absolute md:hidden top-24 inset-x-6 flex items-center justify-between text-cream pointer-events-none">
+        <p class="font-mono text-[10px] tracking-widest">
+          <span data-ps-current-mobile>I</span>
+          <span class="opacity-50"> / III</span>
+        </p>
+        <p class="micro tracking-[0.22em] uppercase text-[0.5625rem]">The portrait essay</p>
+      </div>
+
       <!-- Bottom rail -->
       <div class="absolute inset-x-0 bottom-6 sm:bottom-8 px-6 sm:px-10 flex items-end justify-between pointer-events-none">
-        <span class="micro tracking-[0.24em] uppercase text-ink-mute">The portrait essay</span>
-        <span class="font-mono text-[11px] tracking-widest text-ink-mute" data-ps-progress>00%</span>
+        <span class="micro tracking-[0.24em] uppercase text-ink-mute hidden md:inline">The portrait essay</span>
+        <span class="micro tracking-[0.22em] uppercase text-cream/65 md:hidden" data-ps-figN-mobile>FIG. 02</span>
+        <span class="font-mono text-[11px] tracking-widest text-ink-mute hidden md:inline" data-ps-progress>00%</span>
+        <span class="font-mono text-[11px] tracking-widest text-cream/55 md:hidden" data-ps-progress-mobile>00%</span>
       </div>
     </div>
   </div>
@@ -141,7 +167,28 @@
     transition: transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
     will-change: transform;
   }
+  [data-ps-img-mobile] {
+    transition: transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+  }
   .ps-dot.is-active { width: 4rem; background: var(--color-terracotta); }
+
+  /* MOBILE — text needs to read on top of the dark portrait scrim */
+  @media (max-width: 767px) {
+    .ps-eyebrow { color: rgba(242, 237, 229, 0.65) !important; }
+    .ps-head { color: var(--color-cream) !important; }
+    .ps-head .italic-grad {
+      background: linear-gradient(135deg, #F2C2A8 0%, #E89878 55%, #C18B68 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .ps-body { color: rgba(242, 237, 229, 0.85) !important; }
+    .ps-type-col {
+      height: 60vh !important;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ps-track { height: 100vh; }
     .ps-beat[data-ps-beat="0"] { opacity: 1 !important; }
@@ -155,13 +202,17 @@
   if (root && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     const track = root.querySelector<HTMLElement>('.ps-track')!;
     const stage = root.querySelector<HTMLElement>('.ps-stage')!;
-    const portrait = root.querySelector<HTMLElement>('[data-ps-portrait]')!;
+    const portrait = root.querySelector<HTMLElement>('[data-ps-portrait]');
     const img = root.querySelector<HTMLElement>('[data-ps-img]');
+    const imgMobile = root.querySelector<HTMLElement>('[data-ps-img-mobile]');
     const beats = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-beat]'));
     const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-dot]'));
     const figN = root.querySelector<HTMLElement>('[data-ps-figN]');
+    const figNMobile = root.querySelector<HTMLElement>('[data-ps-figN-mobile]');
     const curEl = root.querySelector<HTMLElement>('[data-ps-current]');
+    const curMobile = root.querySelector<HTMLElement>('[data-ps-current-mobile]');
     const progressEl = root.querySelector<HTMLElement>('[data-ps-progress]');
+    const progressMobile = root.querySelector<HTMLElement>('[data-ps-progress-mobile]');
 
     const tones = ['default', 'terracotta', 'brown'];
     const romans = ['I', 'II', 'III'];
@@ -175,7 +226,10 @@
       beats.forEach((el, k) => (el.style.opacity = k === i ? '1' : '0'));
       dots.forEach((el, k) => el.classList.toggle('is-active', k === i));
       if (curEl) curEl.textContent = romans[i] ?? 'I';
-      if (figN) figN.textContent = `FIG. 0${i + 2}`;
+      if (curMobile) curMobile.textContent = romans[i] ?? 'I';
+      const fig = `FIG. 0${i + 2}`;
+      if (figN) figN.textContent = fig;
+      if (figNMobile) figNMobile.textContent = fig;
       stage.setAttribute('data-ps-tone', tones[i] ?? 'default');
     };
 
@@ -186,25 +240,32 @@
       const p = total > 0 ? scrolled / total : 0;
       last += (p - last) * 0.14;
 
-      // Beat index — 3 beats over the scroll
       const idx = Math.min(2, Math.floor(last * 3 * 0.999));
       setActive(idx);
 
-      // Portrait — scale + slow drift right as scroll progresses
-      const scale = 1 + last * 0.18;
-      const dx = -last * 60; // gentle pull toward the right column
-      const dy = Math.sin(last * Math.PI * 1.2) * 14;
-      portrait.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${scale})`;
-
-      // Subtle img zoom for ken-burns inside the frame
+      // Desktop portrait — scale + drift
+      if (portrait) {
+        const scale = 1 + last * 0.18;
+        const dx = -last * 60;
+        const dy = Math.sin(last * Math.PI * 1.2) * 14;
+        portrait.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${scale})`;
+      }
       if (img) {
         const imgScale = 1 + last * 0.08;
         const imgY = last * -18;
         img.style.transform = `translateY(${imgY}px) scale(${imgScale})`;
       }
 
-      // Progress %
-      if (progressEl) progressEl.textContent = `${Math.round(last * 100)}%`;
+      // Mobile portrait — ken-burns zoom
+      if (imgMobile) {
+        const ms = 1.05 + last * 0.12;
+        const my = -last * 28;
+        imgMobile.style.transform = `translateY(${my}px) scale(${ms})`;
+      }
+
+      const pct = `${Math.round(last * 100)}%`;
+      if (progressEl) progressEl.textContent = pct;
+      if (progressMobile) progressMobile.textContent = pct;
 
       requestAnimationFrame(tick);
     };

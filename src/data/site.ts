@@ -103,7 +103,8 @@ export const identities = [
 ] as const;
 
 export const navItems = [
-  { label: 'The Studio', href: '/the-studio' },
+  // The Studio → external direct to blacklyne.ai (Allaia's request).
+  { label: 'The Studio', href: 'https://blacklyne.ai/en/', external: true },
   { label: 'Book', href: '/book' },
   { label: 'Brand Collabs', href: '/brand-collabs' },
   { label: 'Coven', href: '/coven' },
@@ -161,9 +162,9 @@ export const architecture = {
     italic: 'underneath.',
   },
   lead:
-    'Twelve weeks of 1:1 work with me. Not a course. Not a community. Not a Sunday-night Loom drop. A weekly call, a private thread, and the slow, deliberate craft of becoming someone who is googled by name.',
+    'Twelve weeks of 1:1 work with me. Not a course. Not a community. Not a Sunday-night Loom drop. A weekly call, a private thread, and the slow, deliberate craft of living your real life — fully, visibly, on your own terms.',
   lead2:
-    'I take four women per cohort. By application — the room only works if everyone in it belongs there.',
+    'By application. The room is kept curated — on purpose.',
   chapters: [
     {
       n: '01',
@@ -187,11 +188,11 @@ export const architecture = {
     },
   ],
   outcomes: [
-    'A positioning sentence you would put on your front door',
-    'A voice that is recognisably yours — no agency house style',
-    'A content rhythm you do not dread on a Sunday night',
-    'Hook plus script library so on-camera stops freezing you',
-    'An audience growth plan tied to your real goals',
+    'A clear positioning — the line a stranger could repeat back',
+    'A voice that is recognisably yours — no house style',
+    'A weekly rhythm you do not dread on a Sunday night',
+    'On-camera ease — scripts, hooks, the inner work behind them',
+    'A real life you actually want to be seen living',
     'A coach in your WhatsApp between calls — that is me',
   ],
   format: { label: 'Format', value: 'Weekly 1:1' },
@@ -200,7 +201,7 @@ export const architecture = {
   access: { label: 'Access', value: 'By application' },
   intake: { label: 'Intake', value: 'Quarterly cohorts' },
   closing:
-    'I keep the room curated so the work can be deep. If we end up sitting across from each other for twelve weeks, I want to know I have earned every minute.',
+    'The work is becoming the woman who lives her real life — fully, visibly, with nothing left to prove. The room is kept curated so the work can go deep.',
   cta: {
     label: 'Apply for The Architecture',
     href: site.stan.application,
@@ -212,9 +213,9 @@ export const coven = {
   eyebrow: 'COMMUNITY · LAUNCHING Q3 2026 · BY APPLICATION',
   heading: 'Coven.',
   lead:
-    'An application-based community for women doing the work. Five hundred women maximum. Launching Q3 2026.',
+    'An application-based community for women already living it — and the women on the edge of it.',
   body:
-    'Coven exists for women who do not need more content — they need company. The kind of room that holds you accountable to the woman you are becoming without performing accountability at you. Phase one is waitlist only.',
+    'Coven exists for women who do not need more content. They need company. A room for the kind of woman who is letting herself be seen and known — without performing either. Phase one is waitlist only.',
   cta: { label: 'Join the waitlist', href: '/coven' },
 };
 

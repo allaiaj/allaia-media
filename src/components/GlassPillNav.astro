@@ -18,6 +18,8 @@ import ArrowUpRight from './icons/ArrowUpRight.astro';
           <li>
             <a
               href={item.href}
+              target={('external' in item && item.external) ? '_blank' : undefined}
+              rel={('external' in item && item.external) ? 'noopener' : undefined}
               class="block px-3 py-2 rounded-full text-nav text-ink/80 hover:text-ink hover:bg-ink/5 transition-colors duration-300 ease-editorial"
             >
               {item.label}
@@ -97,6 +99,8 @@ import ArrowUpRight from './icons/ArrowUpRight.astro';
         <li>
           <a
             href={item.href}
+            target={('external' in item && item.external) ? '_blank' : undefined}
+            rel={('external' in item && item.external) ? 'noopener' : undefined}
             class="group flex items-baseline gap-5 py-4 border-b border-ink/8 hover:pl-2 transition-all duration-300 ease-editorial"
           >
             <span class="text-micro text-ink-mute font-medium tabular-nums">

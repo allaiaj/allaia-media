@@ -1,43 +1,129 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import CovenWaitlist from '@components/sections/CovenWaitlist.astro';
+import { site } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+import Instagram from '@components/icons/Instagram.astro';
 ---
 
 <PageLayout
   title="Coven — waitlist · Q3 2026"
-  description="An application-based community for women doing the work. Five hundred women maximum. Launching Q3 2026."
+  description="An application-based community for women already living it — and the women on the edge of it. Launching Q3 2026."
   eyebrow="Community · launching Q3 2026 · by application"
   heading="Coven."
   italic=""
-  lead="An application-based community for women doing the work. The room rest of the internet does not have permission to be in."
+  lead="An application-based community for women already living it — and the women on the edge of it."
   byline="Waitlist only — Phase 1 · Allaia reviews every application personally"
 >
-  <section class="mx-auto max-w-3xl px-6 mb-16">
-    <p class="reveal serif-lg text-ink-soft mb-7 max-w-prose">
-      Coven exists for women who do not need more content. They need company. The kind of room that holds you accountable to the woman you are becoming without performing accountability at you.
-    </p>
-    <p class="reveal serif-body text-ink-soft mb-7 max-w-prose">
-      Five hundred women maximum. The maximum is non-negotiable — past five hundred, the room is no longer a room. Phase one is waitlist only. Phase two is application-based onboarding through the door, in cohorts of fifty.
-    </p>
+  <!-- Lead split: portrait + opening -->
+  <section class="mx-auto max-w-6xl px-6 mb-20 sm:mb-24">
+    <div class="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-center">
+      <figure class="reveal">
+        <div class="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
+          <img
+            src="/img/instagram/reel-DXwOfqdM_N0.jpg"
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover photo-warm"
+            loading="lazy"
+          />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between byline text-ink-mute">
+          <span class="uppercase tracking-[0.22em] text-[0.625rem]">Allaia</span>
+          <span>FIG. 06</span>
+        </figcaption>
+      </figure>
 
-    <h2 class="reveal display-md mt-16 mb-7">
-      What is <span class="italic-grad">inside</span> the room.
-    </h2>
-    <ul class="space-y-4 mb-10">
+      <div class="reveal">
+        <p class="font-display italic text-[clamp(1.5rem,2.5vw,2rem)] text-brown leading-[1.2] mb-7">
+          A room for the kind of woman who is letting herself be seen and known — without performing either.
+        </p>
+        <p class="serif-lg text-ink-soft mb-6 max-w-prose">
+          Coven exists for women who do not need more content. They need company.
+        </p>
+        <p class="serif-body text-ink-soft mb-6 max-w-prose">
+          Five hundred women, maximum. Past five hundred the room is no longer a room. Phase one is waitlist only. Phase two is application-based onboarding, in cohorts of fifty.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's inside -->
+  <section class="mx-auto max-w-6xl px-6 mb-20 sm:mb-24">
+    <div class="reveal pb-8 mb-12 sm:mb-16 border-b border-ink/10">
+      <p class="eyebrow mb-5">Inside the room</p>
+      <h2 class="display-md max-w-3xl">
+        Quiet company, <span class="italic-grad">on the days that matter.</span>
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-10">
       {[
-        'A weekly diary thread from Allaia — written, not livestreamed.',
-        'Monthly office hours — calls held over Zoom, recorded for the time zones.',
-        'A library of essays, audio entries, and prompt-led journaling exercises.',
-        'A members-only directory — women you would actually want to know, organised by city.',
-        'Pre-release excerpts from the next book before they are public.',
-      ].map((s) => (
-        <li class="flex items-start gap-3 serif-lg text-ink-soft">
-          <span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-terracotta"></span>
-          <span>{s}</span>
-        </li>
+        {
+          n: '01',
+          title: 'A weekly diary',
+          body: 'A long note from Allaia, every Sunday — written, not livestreamed. The kind of letter worth saving.',
+        },
+        {
+          n: '02',
+          title: 'Monthly office hours',
+          body: 'A 90-minute call over Zoom. Recorded for the time zones. Questions answered slowly, in writing, in the room.',
+        },
+        {
+          n: '03',
+          title: 'The library',
+          body: 'Essays, audio entries, journaling prompts — added monthly. The archive grows with you.',
+        },
+        {
+          n: '04',
+          title: 'A directory',
+          body: 'Members-only. Sorted by city. Women you would actually want to meet, when you happen to be in town.',
+        },
+        {
+          n: '05',
+          title: 'Early chapters',
+          body: 'Pre-release excerpts from the next book before they are public. Members read first.',
+        },
+        {
+          n: '06',
+          title: 'A coach in the room',
+          body: 'Allaia inside the room, every day — not on a livestream cadence. Slow, considered, written replies.',
+        },
+      ].map((card, i) => (
+        <article class="reveal group" style={`transition-delay: ${(i % 3) * 60}ms`}>
+          <p class="font-mono text-[10px] tracking-[0.2em] text-ink-mute mb-4">{card.n}</p>
+          <h3 class="font-display text-2xl text-ink mb-3 leading-tight group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+            {card.title}
+          </h3>
+          <p class="serif-body text-ink-soft">{card.body}</p>
+        </article>
       ))}
-    </ul>
+    </div>
+  </section>
+
+  <!-- Pull quote interlude -->
+  <section class="mx-auto max-w-4xl px-6 mb-20 sm:mb-24 text-center">
+    <p class="reveal font-display italic text-[clamp(1.5rem,3vw,2.5rem)] italic-grad leading-[1.18] max-w-3xl mx-auto">
+      "The work is being the woman you are. The room is for the days that asks of you."
+    </p>
+    <p class="reveal byline text-ink-mute mt-6">— from the foreword</p>
   </section>
 
   <CovenWaitlist />
+
+  <!-- Closing -->
+  <section class="mx-auto max-w-3xl px-6 py-16 sm:py-20 text-center">
+    <div class="reveal pt-12 border-t border-ink/10">
+      <p class="serif-lg text-ink-soft mb-8 max-w-prose mx-auto">
+        Coven launches Q3 2026. Waitlist is open now. Each application is read personally.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href={site.instagram} target="_blank" rel="noopener" class="cta-ghost">
+          <Instagram size={13} /> Follow @allaia.power <ArrowUpRight size={12} />
+        </a>
+        <a href={`mailto:${site.email}?subject=Coven%20%E2%80%94%20question`} class="cta-dark">
+          Ask a question <ArrowUpRight size={12} />
+        </a>
+      </div>
+    </div>
+  </section>
 </PageLayout>
