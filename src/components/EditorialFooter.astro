@@ -1,0 +1,133 @@
+---
+import { site, footerNav, newsletter } from '@data/site';
+import Instagram from './icons/Instagram.astro';
+import TikTok from './icons/TikTok.astro';
+import Youtube from './icons/Youtube.astro';
+import ArrowUpRight from './icons/ArrowUpRight.astro';
+
+const year = '2026';
+---
+
+<footer class="relative mt-24 sm:mt-32 bg-bone border-t border-ink/8">
+  <!-- Top: newsletter band (secondary placement) -->
+  <div class="border-b border-ink/8">
+    <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20 grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-20 items-start">
+      <div>
+        <p class="eyebrow mb-4">{newsletter.eyebrow}</p>
+        <h2 class="display-md">
+          {newsletter.heading.pre}{' '}
+          <span class="italic-grad">{newsletter.heading.italic}</span>
+        </h2>
+      </div>
+      <div>
+        <p class="serif-lg text-ink-soft mb-6 max-w-prose">
+          {newsletter.body}
+        </p>
+        <form
+          action="https://allaia.beehiiv.com/subscribe"
+          method="post"
+          class="flex flex-col sm:flex-row gap-3 max-w-md"
+        >
+          <label class="flex-1">
+            <span class="sr-only">Email address</span>
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder={newsletter.placeholder}
+              class="w-full px-5 py-3.5 rounded-full bg-cream border border-ink/12 text-ink placeholder:text-ink-mute focus:border-terracotta focus:outline-none transition-colors duration-300 ease-editorial font-serif text-[1.05rem]"
+            />
+          </label>
+          <button type="submit" class="cta-dark whitespace-nowrap">
+            {newsletter.cta}
+            <ArrowUpRight size={11} />
+          </button>
+        </form>
+        <p class="byline mt-4 text-ink-mute">
+          No funnels. Unsubscribe in one click.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Middle: column nav -->
+  <div class="mx-auto max-w-6xl px-6 py-16">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-10">
+      <div>
+        <p class="eyebrow mb-5">The brand</p>
+        <ul class="space-y-3">
+          {footerNav.brand.map((l) => (
+            <li><a href={l.href} class="serif-lg text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow mb-5">The work</p>
+        <ul class="space-y-3">
+          {footerNav.work.map((l) => (
+            <li><a href={l.href} class="serif-lg text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow mb-5">Channels</p>
+        <ul class="space-y-3">
+          {footerNav.channels.map((l) => (
+            <li><a href={l.href} class="serif-lg text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow mb-5">Find me</p>
+        <ul class="space-y-3 byline text-ink-mute">
+          <li>
+            <a href={site.instagram} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">
+              <Instagram size={14} /> @allaia.power
+            </a>
+          </li>
+          <li>
+            <a href={site.instagramArt} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">
+              <Instagram size={14} /> @allaia.art
+            </a>
+          </li>
+          <li>
+            <a href={site.tiktok} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">
+              <TikTok size={14} /> @allaia.power
+            </a>
+          </li>
+          <li>
+            <a href={site.youtube} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">
+              <Youtube size={16} /> youtube
+            </a>
+          </li>
+          <li class="pt-3 border-t border-ink/8 mt-3">
+            <a href={`mailto:${site.email}`} class="text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">
+              {site.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom: editorial colophon -->
+  <div class="border-t border-ink/8">
+    <div class="mx-auto max-w-6xl px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+        <span class="font-display italic text-xl text-ink leading-none">Allaia</span>
+        <span class="byline text-ink-mute">Know your worth. Then charge it.</span>
+      </div>
+      <div class="byline text-ink-mute flex flex-wrap items-center gap-x-5 gap-y-2">
+        {footerNav.legal.map((l) => (
+          <a href={l.href} class="hover:text-ink transition-colors duration-300 ease-editorial">{l.label}</a>
+        ))}
+        <span class="text-ink/20">·</span>
+        <a href={site.blacklyne} target="_blank" rel="noopener" class="hover:text-ink transition-colors duration-300 ease-editorial inline-flex items-center gap-1.5">
+          Design + dev — Blacklyne <ArrowUpRight size={10} />
+        </a>
+        <span class="text-ink/20">·</span>
+        <span>© {year} ALLAIA Media</span>
+      </div>
+    </div>
+  </div>
+</footer>

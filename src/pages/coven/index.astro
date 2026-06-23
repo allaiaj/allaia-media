@@ -1,0 +1,43 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import CovenWaitlist from '@components/sections/CovenWaitlist.astro';
+---
+
+<PageLayout
+  title="Coven — waitlist · Q3 2026"
+  description="An application-based community for women doing the work. Five hundred women maximum. Launching Q3 2026."
+  eyebrow="Community · launching Q3 2026 · by application"
+  heading="Coven."
+  italic=""
+  lead="An application-based community for women doing the work. The room rest of the internet does not have permission to be in."
+  byline="Waitlist only — Phase 1 · Allaia reviews every application personally"
+>
+  <section class="mx-auto max-w-3xl px-6 mb-16">
+    <p class="reveal serif-lg text-ink-soft mb-7 max-w-prose">
+      Coven exists for women who do not need more content. They need company. The kind of room that holds you accountable to the woman you are becoming without performing accountability at you.
+    </p>
+    <p class="reveal serif-body text-ink-soft mb-7 max-w-prose">
+      Five hundred women maximum. The maximum is non-negotiable — past five hundred, the room is no longer a room. Phase one is waitlist only. Phase two is application-based onboarding through the door, in cohorts of fifty.
+    </p>
+
+    <h2 class="reveal display-md mt-16 mb-7">
+      What is <span class="italic-grad">inside</span> the room.
+    </h2>
+    <ul class="space-y-4 mb-10">
+      {[
+        'A weekly diary thread from Allaia — written, not livestreamed.',
+        'Monthly office hours — calls held over Zoom, recorded for the time zones.',
+        'A library of essays, audio entries, and prompt-led journaling exercises.',
+        'A members-only directory — women you would actually want to know, organised by city.',
+        'Pre-release excerpts from the next book before they are public.',
+      ].map((s) => (
+        <li class="flex items-start gap-3 serif-lg text-ink-soft">
+          <span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-terracotta"></span>
+          <span>{s}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <CovenWaitlist />
+</PageLayout>

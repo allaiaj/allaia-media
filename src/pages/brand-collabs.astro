@@ -1,0 +1,127 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { site } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+import Instagram from '@components/icons/Instagram.astro';
+---
+
+<PageLayout
+  title="Brand collaborations"
+  description="Selective brand partnerships — hotels, fashion, lifestyle. Editorial collaborations, never gifted-content theatre. Reviewed personally."
+  eyebrow="Brand collaborations · 2026"
+  heading="Brand"
+  italic="collaborations."
+  lead="Selective, editorial, paid. Hotels in places I would actually return to. Fashion houses with a point of view. Lifestyle goods I use on slow mornings before the camera is on."
+  byline={`${site.email} · response within a week`}
+>
+  <div class="mx-auto max-w-3xl px-6 space-y-14">
+    <section class="reveal">
+      <p class="serif-lg text-ink-soft max-w-prose mb-6">
+        The work is a personal brand, not an influencer feed — which means partnerships are chosen the way essays are commissioned. A short list per year. Real reach, real positioning, real care.
+      </p>
+      <p class="serif-body text-ink-soft max-w-prose">
+        Every inquiry is read personally. If we're not a fit, I'll say so quickly. If we are, the work usually starts within a fortnight.
+      </p>
+    </section>
+
+    <!-- What I say yes to -->
+    <section class="reveal">
+      <p class="eyebrow mb-5">What I say yes to</p>
+      <h2 class="display-sm mb-7">
+        Editorial. <span class="italic-grad">Considered.</span>
+      </h2>
+      <ul class="space-y-4">
+        {[
+          {
+            kind: 'Hotels & stays',
+            body: 'Independent properties, design-led hotels, Airbnb-style stays in places I would actually return to. Bali, Dubai, the South of France, Tulum, Lisbon.',
+          },
+          {
+            kind: 'Fashion',
+            body: 'Houses and labels with a point of view, not a discount code. Slow seasons, deliberate edits, identity-led campaigns.',
+          },
+          {
+            kind: 'Lifestyle goods',
+            body: 'Skincare, fragrance, home objects I use on slow mornings before the camera is on. Carry-on bags, journals, ceramic things.',
+          },
+          {
+            kind: 'Editorial collaborations',
+            body: 'Long-form pieces with publications and labels — written, shot, or filmed. Never gifted-content theatre.',
+          },
+        ].map((c) => (
+          <li class="grid sm:grid-cols-[12rem_1fr] gap-3 sm:gap-7 pb-5 border-b border-ink/8 last:border-b-0">
+            <span class="font-display italic text-xl text-terracotta">{c.kind}</span>
+            <p class="serif-body text-ink-soft">{c.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Reach + audience -->
+    <section class="reveal pt-12 border-t border-ink/10">
+      <p class="eyebrow mb-5">Reach + audience · last 90 days</p>
+      <h2 class="display-sm mb-7">
+        Real receipts. <span class="italic-grad">No vanity metrics.</span>
+      </h2>
+
+      <div class="grid sm:grid-cols-3 gap-6 mb-10">
+        <div>
+          <p class="byline text-ink-mute mb-2">Views</p>
+          <p class="font-display italic text-3xl text-terracotta">3.4M</p>
+          <p class="byline text-ink-mute mt-2">Instagram</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Unique reach</p>
+          <p class="font-display italic text-3xl text-terracotta">1.74M</p>
+          <p class="byline text-ink-mute mt-2">86.8% non-follower</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Audience</p>
+          <p class="font-display italic text-3xl text-terracotta">86%</p>
+          <p class="byline text-ink-mute mt-2">women, 25–34 majority</p>
+        </div>
+      </div>
+      <p class="byline text-ink-mute">Top cities — Delhi · Bangalore · Dubai · Mumbai · UK · SEA</p>
+    </section>
+
+    <!-- The brief -->
+    <section class="reveal pt-12 border-t border-ink/10">
+      <p class="eyebrow mb-5">When you write</p>
+      <h2 class="display-sm mb-6">
+        Send the <span class="italic-grad">good</span> brief.
+      </h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-6">
+        A line about you, a line about why you reached out, a rough scope and budget range. That's enough to know if we should talk.
+      </p>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <a href={`mailto:${site.email}?subject=Brand%20partnership`} class="cta-dark justify-center !py-5">
+          <span>Brand partnership</span><ArrowUpRight size={12} />
+        </a>
+        <a href={`mailto:${site.email}?subject=Press%20inquiry`} class="cta-ghost justify-center !py-5">
+          <span>Press inquiry</span><ArrowUpRight size={12} />
+        </a>
+      </div>
+      <p class="byline text-ink-mute mt-6">
+        Or DM <a href={site.instagram} target="_blank" rel="noopener" class="text-ink hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-1.5"><Instagram size={11} /> @allaia.power</a> — I read on Monday and Thursday mornings.
+      </p>
+    </section>
+
+    <!-- Past + ongoing (placeholder until Allaia drops a list) -->
+    <section class="reveal pt-12 border-t border-ink/10">
+      <p class="eyebrow mb-5">A short list</p>
+      <h2 class="display-sm mb-6">
+        Past + <span class="italic-grad">ongoing.</span>
+      </h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-7">
+        The full list lives in a deck I'll send on request. A few public ones to anchor the register:
+      </p>
+      <ul class="space-y-3 byline text-ink-mute">
+        <li class="flex items-baseline gap-3 pb-3 border-b border-ink/8">
+          <span class="text-ink">→</span>
+          <span class="text-ink">Names placeholder</span>
+          <span>— supplied in deck on request.</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</PageLayout>

@@ -1,0 +1,183 @@
+---
+// Magazine-grade essay layout for /writing/[slug]
+// Drop cap, pull quote treatment, byline row, sage rules between sections.
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  excerpt: string;
+  publish_date: string;
+  word_count: number;
+  read_time_min: number;
+  pull_quote?: string;
+  location?: string;
+  cover_image?: string;
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+}
+
+const {
+  title,
+  subtitle,
+  excerpt,
+  publish_date,
+  word_count,
+  read_time_min,
+  pull_quote,
+  location,
+  prev,
+  next,
+} = Astro.props;
+
+const dateStr = new Date(publish_date).toLocaleDateString('en-GB', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <article class="pt-32 sm:pt-40 pb-20">
+    <header class="mx-auto max-w-3xl px-6 mb-12 sm:mb-16">
+      <div class="reveal flex items-baseline justify-between byline text-ink-mute mb-12 pb-4 border-b border-ink/10">
+        <span>The diary · entry</span>
+        <a href="/writing" class="hover:text-terracotta transition-colors duration-300 ease-editorial">All entries</a>
+      </div>
+
+      <h1 class="reveal display-md text-ink mb-5 leading-[1.06]">
+        {title}
+      </h1>
+      {subtitle && (
+        <p class="reveal font-display italic text-2xl text-brown leading-tight mb-8">
+          {subtitle}
+        </p>
+      )}
+
+      <div class="reveal flex flex-wrap items-baseline gap-x-5 gap-y-2 byline text-ink-mute pt-6 border-t border-ink/8">
+        <span class="text-ink">By Allaia</span>
+        {location && <><span class="text-ink/20">·</span><span>{location}</span></>}
+        <span class="text-ink/20">·</span>
+        <span>{dateStr}</span>
+        <span class="text-ink/20">·</span>
+        <span>{read_time_min} min read</span>
+        <span class="text-ink/20">·</span>
+        <span>{word_count.toLocaleString()} words</span>
+      </div>
+    </header>
+
+    <div class="prose-essay mx-auto max-w-essay px-6 reveal">
+      <slot />
+    </div>
+
+    {pull_quote && (
+      <aside class="mx-auto max-w-essay px-6 my-16 sm:my-20 reveal">
+        <blockquote class="border-l-2 border-sage pl-6 sm:pl-8">
+          <p class="pullquote italic-grad">"{pull_quote}"</p>
+          <p class="byline text-ink-mute mt-4">— from the entry</p>
+        </blockquote>
+      </aside>
+    )}
+
+    <footer class="mx-auto max-w-essay px-6 mt-16 sm:mt-20 pt-10 border-t border-ink/8">
+      <p class="byline text-ink-mute mb-8">
+        <span class="text-ink">— Allaia.</span>
+        &nbsp;·&nbsp; Allaia.power on Instagram
+        &nbsp;·&nbsp; Become Her — out 2026
+      </p>
+
+      {(prev || next) && (
+        <nav class="grid sm:grid-cols-2 gap-6" aria-label="Adjacent entries">
+          {prev ? (
+            <a href={`/writing/${prev.slug}`} class="group block p-6 rounded-[1rem] border border-ink/8 hover:border-ink/30 transition-all duration-300 ease-editorial">
+              <p class="byline text-ink-mute mb-2">← Previous entry</p>
+              <p class="font-display text-xl text-ink leading-tight group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+                {prev.title}
+              </p>
+            </a>
+          ) : <div></div>}
+          {next ? (
+            <a href={`/writing/${next.slug}`} class="group block p-6 rounded-[1rem] border border-ink/8 hover:border-ink/30 transition-all duration-300 ease-editorial sm:text-right">
+              <p class="byline text-ink-mute mb-2">Next entry →</p>
+              <p class="font-display text-xl text-ink leading-tight group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+                {next.title}
+              </p>
+            </a>
+          ) : <div></div>}
+        </nav>
+      )}
+    </footer>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .prose-essay p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.78;
+    color: var(--color-ink);
+    margin-bottom: 1.5rem;
+  }
+  .prose-essay p:first-of-type::first-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 4.25rem;
+    line-height: 0.85;
+    float: left;
+    margin: 0.25rem 0.65rem 0 0;
+    background: linear-gradient(135deg, var(--color-terracotta), var(--color-terracotta-deep) 60%, var(--color-brown));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .prose-essay h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: 3.5rem 0 1.25rem;
+  }
+  .prose-essay h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--color-brown);
+    margin: 2.5rem 0 1rem;
+  }
+  .prose-essay blockquote {
+    border-left: 2px solid var(--color-sage);
+    padding-left: 1.25rem;
+    margin: 2rem 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    color: var(--color-ink);
+  }
+  .prose-essay hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-sage), transparent);
+    margin: 3rem auto;
+    max-width: 8rem;
+  }
+  .prose-essay em {
+    color: var(--color-brown);
+    font-style: italic;
+  }
+  .prose-essay strong { color: var(--color-ink); font-weight: 600; }
+  .prose-essay a {
+    color: var(--color-terracotta);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(184, 85, 66, 0.35);
+  }
+  .prose-essay a:hover { text-decoration-color: var(--color-terracotta); }
+</style>

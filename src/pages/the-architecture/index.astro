@@ -1,0 +1,43 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Architecture from '@components/sections/Architecture.astro';
+import { architecture } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<PageLayout
+  title="The Architecture — 1:1 coaching by application"
+  description="Twelve weeks of 1:1 work with Allaia. Four women per cohort. By application — the room only works if everyone in it belongs there."
+  eyebrow={architecture.eyebrow}
+  heading={architecture.heading.pre}
+  italic={architecture.heading.italic}
+  lead={architecture.lead}
+  byline="A coaching room kept curated on purpose · by application"
+>
+  <Architecture />
+
+  <section class="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+    <div class="reveal pt-16 border-t border-ink/10">
+      <p class="eyebrow mb-5">A note before you apply</p>
+      <h2 class="display-md mb-6">
+        Who this is <span class="italic-grad">actually</span> for.
+      </h2>
+      <ul class="space-y-4 mb-10">
+        {[
+          'You are building or already running something — and the work is starting to ask you to be a name, not a service.',
+          'You read before you buy. You follow creators for taste, not impulse. You have noticed your audience does the same.',
+          'You have read enough self-help. You are not looking for another framework. You are looking for the architecture.',
+          'You are willing to spend twelve weeks on the unphotogenic Tuesdays of becoming.',
+        ].map((s) => (
+          <li class="flex items-start gap-3 serif-lg text-ink-soft">
+            <span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-terracotta"></span>
+            <span>{s}</span>
+          </li>
+        ))}
+      </ul>
+      <a href={architecture.cta.href} target="_blank" rel="noopener" class="cta-dark">
+        {architecture.cta.label} <ArrowUpRight size={12} />
+      </a>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,53 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import BookAnchor from '@components/sections/BookAnchor.astro';
+import { book } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<PageLayout
+  title="Become Her — out 2026"
+  description="A debut by Allaia. Ninety-one thousand words. Five parts. Twenty-two chapters. Identity-led work for women who are tired of performing."
+  eyebrow={book.meta}
+  heading="Become"
+  italic="her."
+  lead={book.blurb}
+  byline="A debut by Allaia · 2026"
+>
+  <BookAnchor />
+
+  <section class="mx-auto max-w-6xl px-6 py-16 sm:py-24">
+    <div class="reveal grid lg:grid-cols-[1fr_1fr] gap-12 items-center pt-16 border-t border-ink/10">
+      <div>
+        <p class="eyebrow mb-5">Pre-order — Stan Store</p>
+        <h2 class="display-md mb-5">
+          <span class="italic-grad">First edition.</span> Limited print run.
+        </h2>
+        <p class="serif-lg text-ink-soft mb-8 max-w-prose">
+          Ships from 2026. First-edition cover by Allaia. Includes a foreword written for the women already doing the work, and a closing letter written for the women about to begin.
+        </p>
+        <a href={book.cta.href} target="_blank" rel="noopener" class="cta-dark">
+          {book.cta.label} <ArrowUpRight size={12} />
+        </a>
+      </div>
+      <div class="grid grid-cols-2 gap-8">
+        <div>
+          <p class="byline text-ink-mute mb-2">Length</p>
+          <p class="font-display italic text-3xl text-terracotta">91,294 words</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Parts</p>
+          <p class="font-display italic text-3xl text-terracotta">Five</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Chapters</p>
+          <p class="font-display italic text-3xl text-terracotta">Twenty-two</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Release</p>
+          <p class="font-display italic text-3xl text-terracotta">2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>

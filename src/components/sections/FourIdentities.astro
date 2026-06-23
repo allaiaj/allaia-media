@@ -1,0 +1,69 @@
+---
+import { identities } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<section id="identities" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal mb-14 sm:mb-20 grid sm:grid-cols-[1fr_auto] gap-6 sm:gap-12 items-end pb-8 border-b border-ink/10">
+      <div>
+        <p class="eyebrow mb-5">Four expressions · one woman</p>
+        <h2 class="display-lg max-w-3xl">
+          Author. Operator.<br/>Artist. <span class="italic-grad">Creator.</span>
+        </h2>
+      </div>
+      <p class="serif-body text-ink-soft max-w-sm">
+        The four are not separate. They are the same thesis — identity-led work, compounding — wearing four different sets of clothes.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7 lg:gap-8">
+      {identities.map((id, i) => (
+        <a
+          href={id.href}
+          target={id.href.startsWith('http') ? '_blank' : undefined}
+          rel={id.href.startsWith('http') ? 'noopener' : undefined}
+          class="reveal group block"
+          style={`transition-delay: ${i * 70}ms`}
+        >
+          <figure class="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden mb-5 bg-bone paper-grain shadow-photo">
+            <img
+              src={id.image}
+              alt={id.alt}
+              loading="lazy"
+              decoding="async"
+              onerror="this.style.display='none'"
+              class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+            />
+            <!-- Tonal fallback composition keyed to identity -->
+            <div
+              class="absolute inset-0 z-0"
+              style={
+                id.key === 'author' ? 'background: linear-gradient(160deg, #2A2722 0%, #6B4F3D 100%);' :
+                id.key === 'operator' ? 'background: linear-gradient(160deg, #0E0D0B 0%, #2F2A22 100%);' :
+                id.key === 'artist' ? 'background: linear-gradient(160deg, #B85542 0%, #6B4F3D 100%);' :
+                'background: linear-gradient(160deg, #8B9D7E 0%, #6B4F3D 100%);'
+              }
+            ></div>
+            <figcaption class="absolute inset-x-0 bottom-0 p-5 flex items-baseline justify-between text-cream/85 byline">
+              <span class="text-cream/85">{id.figure}</span>
+              <span class="text-cream/85">No. 0{i + 1}</span>
+            </figcaption>
+          </figure>
+
+          <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-2">{id.context}</p>
+          <h3 class="font-display text-3xl sm:text-[2rem] text-ink leading-tight mb-3 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+            {id.label}.
+          </h3>
+          <p class="serif-body text-ink-soft mb-5">
+            {id.body}
+          </p>
+          <span class="inline-flex items-center gap-2 byline text-ink group-hover:gap-3 transition-all duration-300 ease-editorial">
+            {id.cta}
+            <ArrowUpRight size={11} />
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

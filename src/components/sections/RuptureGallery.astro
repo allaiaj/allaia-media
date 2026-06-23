@@ -1,0 +1,91 @@
+---
+// The Rupture — editorial gallery, identity context.
+// NOT a shopfront. No status badges, no "Available / Sold / Enquire",
+// no "collector inquiries" CTAs. Allaia paints — this is where you see
+// the work. If anyone wants to talk about a piece they do it through
+// the usual channels.
+import { getCollection } from 'astro:content';
+import { site } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+import Instagram from '@components/icons/Instagram.astro';
+
+const works = (await getCollection('artworks'))
+  .filter((w) => w.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+---
+
+<section id="art" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40 bg-bone border-y border-ink/8 overflow-hidden">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal grid sm:grid-cols-[1fr_auto] gap-6 sm:gap-12 items-end pb-8 mb-14 sm:mb-16 border-b border-ink/10">
+      <div>
+        <p class="eyebrow mb-5">@allaia.art · the rupture</p>
+        <h2 class="display-lg max-w-2xl">
+          The <span class="italic-grad">Rupture.</span>
+        </h2>
+      </div>
+      <a href={site.instagramArt} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2">
+        <Instagram size={13} /> @allaia.art
+      </a>
+    </div>
+
+    <p class="reveal serif-lg text-ink-soft mb-12 max-w-prose">
+      Textured abstract mixed-media — pigment, plaster, oil stick. The pieces hold what the writing cannot.
+    </p>
+
+    <!-- Editorial gallery — 2-up + 2-up asymmetric -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-7">
+      {works.map((w, i) => {
+        const col =
+          i === 0 ? 'md:col-span-7 md:row-span-2' :
+          i === 1 ? 'md:col-span-5' :
+          i === 2 ? 'md:col-span-5' :
+          'md:col-span-7';
+        const ratio =
+          i === 0 ? 'aspect-[4/5]' :
+          i === 1 ? 'aspect-[5/4]' :
+          i === 2 ? 'aspect-[4/5]' :
+          'aspect-[5/4]';
+        return (
+          <figure class={`reveal ${col} group`}>
+            <div class={`relative ${ratio} rounded-[1.25rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo`}>
+              <img
+                src={w.data.image}
+                alt={w.data.title}
+                loading="lazy"
+                decoding="async"
+                onerror="this.style.display='none'"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+              />
+              <div
+                class="absolute inset-0 z-0"
+                style={
+                  i === 0 ? 'background: radial-gradient(circle at 30% 30%, #8E3D2F 0%, #2A1A14 80%);' :
+                  i === 1 ? 'background: radial-gradient(circle at 70% 30%, #B85542 0%, #6B4F3D 100%);' :
+                  i === 2 ? 'background: radial-gradient(circle at 40% 70%, #F2EDE5 0%, #6B4F3D 100%);' :
+                  'background: radial-gradient(circle at 60% 60%, #8B9D7E 0%, #2A2722 100%);'
+                }
+              ></div>
+            </div>
+            <figcaption class="mt-4 flex items-baseline justify-between gap-4">
+              <div>
+                <h3 class="font-display text-xl text-ink leading-tight">{w.data.title}</h3>
+                <p class="byline text-ink-mute mt-1">{w.data.medium}</p>
+              </div>
+              <p class="byline text-ink-mute whitespace-nowrap">{w.data.year}</p>
+            </figcaption>
+          </figure>
+        );
+      })}
+    </div>
+
+    <div class="reveal mt-14 sm:mt-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-10 border-t border-ink/10">
+      <p class="font-display italic text-xl text-brown max-w-md leading-tight">
+        Painting is part of the practice. The work compounds the writing.
+      </p>
+      <a href="/art" class="cta-dark">
+        See the full collection <ArrowUpRight size={12} />
+      </a>
+    </div>
+  </div>
+</section>

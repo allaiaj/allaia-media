@@ -1,0 +1,146 @@
+---
+// Editorial portrait hero — the cinematic-scroll-scrub-ready front door.
+// JUDGEMENT_CALLS §1: hero video drops in when Allaia supplies footage.
+import { heroBeats } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<section
+  class="relative isolate min-h-[100vh] sm:min-h-[110vh] pt-32 sm:pt-36 pb-20 sm:pb-24 overflow-hidden"
+  data-hero
+>
+  <!-- Warm cream backdrop with parallax bloom -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="absolute top-[15%] left-[5%] h-[55vh] w-[55vh] rounded-full opacity-60 blur-[140px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.35), transparent 70%);"
+      data-parallax="22"
+    ></div>
+    <div
+      class="absolute bottom-[10%] right-[5%] h-[60vh] w-[60vh] rounded-full opacity-50 blur-[150px]"
+      style="background: radial-gradient(circle, rgba(139,157,126,0.4), transparent 70%);"
+      data-parallax="-18"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-[1280px] px-6 grid lg:grid-cols-[1fr_0.95fr] gap-12 lg:gap-20 items-center">
+    <!-- LEFT: type tower -->
+    <div class="relative">
+      <p class="reveal eyebrow mb-7 sm:mb-10">{heroBeats.eyebrow}</p>
+
+      <h1 class="reveal display-xl text-ink mb-7 sm:mb-10">
+        <span class="italic-grad">{heroBeats.wordmark}</span>.
+      </h1>
+
+      <p class="reveal font-display italic font-medium text-ink text-[clamp(1.5rem,3.2vw,2.25rem)] leading-[1.18] tracking-tight max-w-[26ch] mb-7">
+        {heroBeats.tagline}
+      </p>
+
+      <p class="reveal serif-lg text-ink-soft max-w-[32ch] mb-10">
+        Identity-led content for women who are tired of performing — and ready to do the slow, unsexy work of becoming who they actually are underneath.
+      </p>
+
+      <div class="reveal flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-12">
+        {heroBeats.ctas.map((cta) => (
+          <a
+            href={cta.href}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener' : undefined}
+            class={cta.primary ? 'cta-dark' : 'cta-ghost'}
+          >
+            {cta.label}
+            <ArrowUpRight size={12} />
+          </a>
+        ))}
+      </div>
+
+      <p class="reveal byline text-ink-mute flex items-center gap-3">
+        <span class="inline-block h-px w-8 bg-ink-mute/40" aria-hidden="true"></span>
+        {heroBeats.bookCue}
+      </p>
+    </div>
+
+    <!-- RIGHT: editorial portrait card -->
+    <figure class="reveal relative">
+      <div
+        class="relative aspect-[4/5] rounded-[2rem] overflow-hidden paper-grain shadow-photo bg-bone"
+      >
+        <!-- Portrait placeholder — Allaia supplies the real photo. JC §1 -->
+        <img
+          src="/img/allaia/cover-portrait.jpg"
+          alt="Allaia — editorial portrait, warm Bali light, looking off-frame"
+          class="absolute inset-0 w-full h-full object-cover photo-warm"
+          onerror="this.style.display='none'"
+          loading="eager"
+          decoding="async"
+        />
+        <!-- Soft mesh fallback (until real portrait lands) -->
+        <div
+          class="absolute inset-0"
+          style="background:
+            radial-gradient(circle at 30% 25%, rgba(184,85,66,0.45), transparent 55%),
+            radial-gradient(circle at 75% 80%, rgba(107,79,61,0.55), transparent 60%),
+            radial-gradient(circle at 50% 50%, rgba(139,157,126,0.35), transparent 70%),
+            linear-gradient(135deg, #F2EDE5, #E8DDC9);"
+          aria-hidden="true"
+        ></div>
+        <!-- Caption layer over the bottom edge -->
+        <div class="absolute inset-x-0 bottom-0 p-6 sm:p-8 flex items-end justify-between text-cream/85 z-10">
+          <span class="micro tracking-[0.18em] uppercase text-[0.625rem] font-medium">
+            Allaia — Bali, golden hour
+          </span>
+          <span class="micro tracking-[0.18em] uppercase text-[0.625rem] font-medium">
+            FIG. 01
+          </span>
+        </div>
+
+        <!-- Vignette + warm grade -->
+        <div
+          class="absolute inset-0 pointer-events-none"
+          style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.45) 0%, transparent 65%);"
+          aria-hidden="true"
+        ></div>
+      </div>
+
+      <!-- Floating chip annotations -->
+      <div class="absolute -left-3 sm:-left-6 top-10 hidden sm:flex items-center gap-2 bg-bone/85 backdrop-blur-md border border-ink/8 px-3.5 py-2 rounded-full shadow-pill rotate-[-3deg]">
+        <span class="h-1.5 w-1.5 rounded-full bg-terracotta"></span>
+        <span class="byline text-ink">Become Her — 2026</span>
+      </div>
+      <div class="absolute -right-2 sm:-right-6 bottom-24 hidden sm:flex items-center gap-2 bg-bone/85 backdrop-blur-md border border-ink/8 px-3.5 py-2 rounded-full shadow-pill rotate-[2deg]">
+        <span class="h-1.5 w-1.5 rounded-full bg-sage"></span>
+        <span class="byline text-ink">COO — Blacklyne</span>
+      </div>
+    </figure>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-ink-mute" aria-hidden="true">
+    <span class="micro tracking-[0.24em] uppercase">Scroll</span>
+    <span class="block h-10 w-px bg-gradient-to-b from-ink-mute/60 to-transparent"></span>
+  </div>
+</section>
+
+<script>
+  // Subtle pointer-driven parallax on the bloom blobs
+  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
+  if (els.length && matchMedia('(prefers-reduced-motion: no-preference)').matches && matchMedia('(pointer: fine)').matches) {
+    let tx = 0, ty = 0;
+    let cx = 0, cy = 0;
+    const onMove = (e: PointerEvent) => {
+      tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    const tick = () => {
+      cx += (tx - cx) * 0.06;
+      cy += (ty - cy) * 0.06;
+      els.forEach((el) => {
+        const d = Number(el.dataset.parallax) || 0;
+        el.style.transform = `translate3d(${cx * d}px, ${cy * d}px, 0)`;
+      });
+      requestAnimationFrame(tick);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    requestAnimationFrame(tick);
+  }
+</script>

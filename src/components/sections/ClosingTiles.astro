@@ -1,0 +1,43 @@
+---
+import { closingTiles } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<section class="relative py-24 sm:py-32 lg:py-40 bg-bone border-t border-ink/8">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal mb-14 sm:mb-16 max-w-2xl">
+      <p class="eyebrow mb-5">Direct line</p>
+      <h2 class="display-md">
+        The four doors —{' '}
+        <span class="italic-grad">choose one.</span>
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {closingTiles.map((tile, i) => (
+        <a
+          href={tile.href}
+          target={tile.external ? '_blank' : undefined}
+          rel={tile.external ? 'noopener' : undefined}
+          class="reveal group block bg-cream rounded-[1.5rem] p-7 lg:p-8 border border-ink/8 hover:border-ink/30 hover:-translate-y-1 transition-all duration-300 ease-editorial relative overflow-hidden"
+          style={`transition-delay: ${i * 60}ms`}
+        >
+          <div
+            class="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-editorial"
+            style="background: radial-gradient(circle at 50% 0%, rgba(184,85,66,0.06), transparent 70%);"
+            aria-hidden="true"
+          ></div>
+          <p class="byline text-ink-mute mb-6">No. 0{i + 1}</p>
+          <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-3">{tile.eyebrow}</p>
+          <h3 class="font-display text-2xl text-ink mb-3 leading-tight group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+            {tile.title}
+          </h3>
+          <p class="serif-body text-ink-soft mb-7">{tile.sub}</p>
+          <span class="inline-flex items-center gap-2 byline text-ink group-hover:gap-3 transition-all duration-300 ease-editorial">
+            Open <ArrowUpRight size={11} />
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

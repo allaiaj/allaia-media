@@ -1,0 +1,126 @@
+---
+import { architecture } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<section id="the-architecture" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40 bg-bone border-y border-ink/8 overflow-hidden">
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="absolute bottom-0 left-1/3 h-[60vh] w-[60vh] rounded-full opacity-25 blur-[140px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.5), transparent 70%);"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal max-w-3xl mb-14 sm:mb-16">
+      <p class="eyebrow mb-5">{architecture.eyebrow}</p>
+      <h2 class="display-lg">
+        {architecture.heading.pre}{' '}
+        <span class="italic-grad">{architecture.heading.italic}</span>
+      </h2>
+      <p class="serif-lg text-ink-soft mt-7 max-w-prose">{architecture.lead}</p>
+      <p class="serif-body text-ink-soft mt-5 max-w-prose">{architecture.lead2}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.1fr_1fr] gap-0 rounded-[1.75rem] overflow-hidden border border-ink/8 bg-cream">
+      <!-- LEFT: 4-chapter arc -->
+      <div class="reveal p-8 sm:p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-ink/8">
+        <p class="eyebrow mb-8">What you walk into</p>
+        <ol class="space-y-7 relative">
+          <div
+            class="pointer-events-none absolute left-[17px] top-7 bottom-7 w-px hidden sm:block"
+            style="background: linear-gradient(180deg, transparent, var(--color-terracotta) 12%, var(--color-terracotta-deep) 50%, var(--color-brown) 88%, transparent);"
+            aria-hidden="true"
+          ></div>
+          {architecture.chapters.map((c) => (
+            <li class="relative flex gap-5">
+              <span
+                class="flex-none flex h-9 w-9 items-center justify-center rounded-full font-mono text-[0.7rem] tracking-wider text-cream relative z-10"
+                style="background: linear-gradient(135deg, var(--color-terracotta), var(--color-terracotta-deep)); box-shadow: 0 0 0 4px var(--color-cream), 0 8px 18px -4px rgba(184,85,66,0.45);"
+              >
+                {c.n}
+              </span>
+              <div>
+                <p class="byline text-ink-mute mb-1">Chapter {c.n}</p>
+                <h3 class="font-display italic text-[1.75rem] sm:text-[2rem] text-ink mb-2 leading-tight">
+                  <span class="italic-grad">{c.title}</span>
+                </h3>
+                <p class="serif-body text-ink-soft">{c.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <!-- RIGHT: outcomes + access -->
+      <div class="relative p-8 sm:p-10 lg:p-12 text-cream overflow-hidden">
+        <div
+          class="absolute inset-0 z-0"
+          style="background: linear-gradient(160deg, #0E0D0B 0%, #1F1B16 60%, #2A2722 100%);"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="pointer-events-none absolute inset-0 -z-10 opacity-55"
+          style="background: radial-gradient(ellipse 70% 60% at 85% 10%, rgba(184,85,66,0.55), transparent 70%), radial-gradient(ellipse 55% 50% at 10% 90%, rgba(139,157,126,0.4), transparent 70%);"
+          aria-hidden="true"
+        ></div>
+
+        <div class="reveal relative">
+          <p class="text-[0.6875rem] uppercase tracking-[0.24em] text-cream/55 font-medium mb-4">
+            What you walk away with
+          </p>
+          <h3 class="font-display italic text-[2rem] sm:text-[2.5rem] text-cream mb-8 leading-[1.1]">
+            A name. A voice.<br/>A roomful of receipts.
+          </h3>
+
+          <ul class="space-y-3.5 mb-9">
+            {architecture.outcomes.map((o) => (
+              <li class="flex items-start gap-3 serif-body text-cream/85">
+                <span class="mt-[7px] h-1.5 w-1.5 flex-none rounded-full bg-terracotta"></span>
+                <span>{o}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="grid grid-cols-3 gap-3 pb-7 mb-7 border-b border-cream/10">
+            {[architecture.format, architecture.length, architecture.seats].map((m) => (
+              <div>
+                <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45">{m.label}</p>
+                <p class="font-display italic text-xl text-terracotta mt-1.5">{m.value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pb-7 mb-7 border-b border-cream/10">
+            <div>
+              <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45">{architecture.access.label}</p>
+              <p class="font-display italic text-xl text-cream mt-1.5">{architecture.access.value}</p>
+            </div>
+            <div>
+              <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45">{architecture.intake.label}</p>
+              <p class="font-display italic text-base text-cream/85 mt-1.5">{architecture.intake.value}</p>
+            </div>
+          </div>
+
+          <a
+            href={architecture.cta.href}
+            target="_blank"
+            rel="noopener"
+            class="cta-cream w-full sm:w-auto justify-center"
+          >
+            {architecture.cta.label}
+            <ArrowUpRight size={12} />
+          </a>
+          <p class="text-[0.75rem] text-cream/55 mt-4 leading-relaxed">
+            I read every application personally. If we are not a fit, I will point you to someone who is.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="reveal pullquote italic-grad max-w-2xl mx-auto text-center mt-16 sm:mt-20">
+      "{architecture.closing}"
+    </p>
+    <p class="reveal byline text-ink-mute text-center mt-4">— Allaia</p>
+  </div>
+</section>

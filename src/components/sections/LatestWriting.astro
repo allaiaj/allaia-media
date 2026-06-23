@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+const all = await getCollection('writing');
+const featured = all
+  .sort((a, b) => +new Date(b.data.publish_date) - +new Date(a.data.publish_date))
+  .find((e) => e.data.featured) ?? all[0];
+
+const recent = all
+  .filter((e) => e.id !== featured?.id)
+  .sort((a, b) => +new Date(b.data.publish_date) - +new Date(a.data.publish_date))
+  .slice(0, 3);
+---
+
+<section id="writing" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal flex items-baseline justify-between gap-6 mb-14 pb-6 border-b border-ink/10">
+      <div>
+        <p class="eyebrow mb-4">The diary · writing</p>
+        <h2 class="display-md">
+          <span class="italic-grad">Slow</span> writing.
+        </h2>
+      </div>
+      <a href="/writing" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2 whitespace-nowrap">
+        Read all entries <ArrowUpRight size={11} />
+      </a>
+    </div>
+
+    {featured && (
+      <article class="reveal grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-start mb-16 pb-16 border-b border-ink/8">
+        <figure class="relative aspect-[5/6] rounded-[1.5rem] overflow-hidden bg-bone paper-grain shadow-photo">
+          <img
+            src={featured.data.cover_image ?? '/img/writing/featured.jpg'}
+            alt=""
+            class="w-full h-full object-cover photo-warm"
+            loading="lazy"
+            decoding="async"
+            onerror="this.style.display='none'"
+          />
+          <div
+            class="absolute inset-0 z-0"
+            style="background: linear-gradient(150deg, #E8DDC9 0%, #B85542 100%);"
+            aria-hidden="true"
+          ></div>
+          <figcaption class="absolute inset-x-0 bottom-0 p-6 byline text-cream/85 flex items-baseline justify-between">
+            <span>The cover essay</span>
+            <span>FIG. 04</span>
+          </figcaption>
+        </figure>
+
+        <div>
+          <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-4">
+            Featured · {featured.data.location ?? 'Allaia'} · {featured.data.read_time_min} min read
+          </p>
+          <h3 class="display-md mb-5">
+            <a href={`/writing/${featured.id}`} class="text-ink hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+              {featured.data.title}
+            </a>
+          </h3>
+          {featured.data.subtitle && (
+            <p class="font-display italic text-xl text-brown mb-7 leading-tight">
+              {featured.data.subtitle}
+            </p>
+          )}
+          <p class="serif-lg text-ink-soft mb-8 max-w-prose">
+            {featured.data.excerpt}
+          </p>
+          {featured.data.pull_quote && (
+            <blockquote class="border-l-2 border-sage pl-5 mb-9">
+              <p class="font-display italic text-2xl text-ink leading-snug max-w-prose">
+                "{featured.data.pull_quote}"
+              </p>
+            </blockquote>
+          )}
+          <a href={`/writing/${featured.id}`} class="cta-dark">
+            Read the full essay
+            <ArrowUpRight size={12} />
+          </a>
+          <p class="byline text-ink-mute mt-6">
+            {featured.data.word_count.toLocaleString()} words · {new Date(featured.data.publish_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
+          </p>
+        </div>
+      </article>
+    )}
+
+    {recent.length > 0 && (
+      <ul class="grid sm:grid-cols-3 gap-8">
+        {recent.map((e) => (
+          <li class="reveal">
+            <article>
+              <p class="byline text-ink-mute mb-3">
+                {e.data.read_time_min} min · {e.data.location ?? 'Allaia'}
+              </p>
+              <h3 class="font-display text-2xl text-ink mb-3 leading-tight">
+                <a href={`/writing/${e.id}`} class="hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+                  {e.data.title}
+                </a>
+              </h3>
+              <p class="serif-body text-ink-soft mb-4">{e.data.excerpt}</p>
+              <a href={`/writing/${e.id}`} class="byline text-ink hover:gap-3 inline-flex items-center gap-2 transition-all duration-300 ease-editorial">
+                Read entry <ArrowUpRight size={11} />
+              </a>
+            </article>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>

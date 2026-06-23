@@ -1,0 +1,100 @@
+---
+import '@styles/global.css';
+import { site } from '@data/site';
+import GlassPillNav from '@components/GlassPillNav.astro';
+import EditorialFooter from '@components/EditorialFooter.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = site.og.description,
+  image = site.og.image,
+  noindex = false,
+  bodyClass = '',
+} = Astro.props;
+
+const fullTitle = title ? `${title} — ${site.brand}` : site.og.title;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F2EDE5" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, site.url).toString()} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content={site.brand} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, site.url).toString()} />
+
+    <!-- Font preload — only the weights that appear above the fold -->
+    <link rel="preload" href="/fonts/playfair-display-latin-900-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/playfair-display-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <slot name="head" />
+  </head>
+  <body class={`bg-cream text-ink antialiased ${bodyClass}`}>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <GlassPillNav />
+    <main id="main" style="overflow-x: clip;">
+      <slot />
+    </main>
+    <EditorialFooter />
+
+    <!-- Scroll reveal observer -->
+    <script>
+      const reveal = () => {
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', reveal);
+      } else {
+        reveal();
+      }
+    </script>
+  </body>
+</html>

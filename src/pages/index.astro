@@ -1,45 +1,37 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
-import Hero from "../components/Hero.astro";
-import ScrollScrub from "../components/ScrollScrub.astro";
-import Manifesto from "../components/Manifesto.astro";
-import Coaching from "../components/Coaching.astro";
-import BrandCollabs from "../components/BrandCollabs.astro";
-import BlacklyneBridge from "../components/BlacklyneBridge.astro";
-import CaseStudies from "../components/CaseStudies.astro";
-import TestimonialMarquee from "../components/TestimonialMarquee.astro";
-import About from "../components/About.astro";
-import FAQ from "../components/FAQ.astro";
-import CTA from "../components/CTA.astro";
-import Footer from "../components/Footer.astro";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CinematicHero from '@components/sections/CinematicHero.astro';
+import PortraitScrub from '@components/sections/PortraitScrub.astro';
+import EditorialOpening from '@components/sections/EditorialOpening.astro';
+import BookAnchor from '@components/sections/BookAnchor.astro';
+import FourIdentities from '@components/sections/FourIdentities.astro';
+import Architecture from '@components/sections/Architecture.astro';
+import LatestWriting from '@components/sections/LatestWriting.astro';
+import YouTubeFeatured from '@components/sections/YouTubeFeatured.astro';
+import ReelsShowcase from '@components/sections/ReelsShowcase.astro';
+import RuptureGallery from '@components/sections/RuptureGallery.astro';
+import CovenWaitlist from '@components/sections/CovenWaitlist.astro';
+import OperatorSection from '@components/sections/OperatorSection.astro';
+import InstagramGrid from '@components/sections/InstagramGrid.astro';
+import ClosingTiles from '@components/sections/ClosingTiles.astro';
 ---
 
-<Layout>
-  <Nav />
-  <main>
-    <!-- Founder-first, cinematic, aspirational -->
-    <Hero />
-    <ScrollScrub />
-
-    <!-- Personal letter / diary entry -->
-    <Manifesto />
-
-    <!-- The two direct offers from her -->
-    <Coaching />
-    <BrandCollabs />
-
-    <!-- Bridge to Blacklyne for execution work -->
-    <BlacklyneBridge />
-
-    <!-- Proof - quieter now, supporting -->
-    <CaseStudies />
-    <TestimonialMarquee />
-
-    <!-- About + close -->
-    <About />
-    <FAQ />
-    <CTA />
-  </main>
-  <Footer />
-</Layout>
+<BaseLayout
+  title="Author, operator, artist"
+  description="Author of Become Her, out 2026. COO at Blacklyne. Artist at @allaia.art. Identity-led content for women who are tired of performing — and ready to do the slow, unsexy work of becoming who they actually are underneath."
+>
+  <CinematicHero />
+  <PortraitScrub />
+  <EditorialOpening />
+  <BookAnchor />
+  <FourIdentities />
+  <Architecture />
+  <LatestWriting />
+  <YouTubeFeatured />
+  <ReelsShowcase />
+  <RuptureGallery />
+  <CovenWaitlist />
+  <OperatorSection />
+  <InstagramGrid />
+  <ClosingTiles />
+</BaseLayout>

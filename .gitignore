@@ -23,8 +23,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# vercel
-.vercel/
-
-# claude code harness config
+# claude code dev server config
 .claude/

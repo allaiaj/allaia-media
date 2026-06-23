@@ -1,0 +1,37 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('writing');
+  const sorted = entries.sort(
+    (a, b) => +new Date(b.data.publish_date) - +new Date(a.data.publish_date)
+  );
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: i < sorted.length - 1 ? { slug: sorted[i + 1].id, title: sorted[i + 1].data.title } : null,
+      next: i > 0 ? { slug: sorted[i - 1].id, title: sorted[i - 1].data.title } : null,
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ArticleLayout
+  title={entry.data.title}
+  subtitle={entry.data.subtitle}
+  excerpt={entry.data.excerpt}
+  publish_date={entry.data.publish_date}
+  word_count={entry.data.word_count}
+  read_time_min={entry.data.read_time_min}
+  pull_quote={entry.data.pull_quote}
+  location={entry.data.location}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</ArticleLayout>

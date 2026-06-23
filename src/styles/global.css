@@ -1,302 +1,429 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  /* Cleaner SaaS palette - neutral grayscale base + single violet accent */
-  --color-ink-50: #fafafa;
-  --color-ink-100: #f5f5f5;
-  --color-ink-200: #e7e7e7;
-  --color-ink-300: #d4d4d4;
-  --color-ink-400: #a3a3a3;
-  --color-ink-500: #737373;
-  --color-ink-600: #525252;
-  --color-ink-700: #404040;
-  --color-ink-800: #262626;
-  --color-ink-900: #171717;
-  --color-ink-950: #0a0a0a;
+/* =================================================================
+   FONT FACES — self-hosted WOFF2, latin subset, font-display: optional
+   Vendored from @fontsource into /public/fonts/
+   ================================================================= */
 
-  --color-accent: #7c3aed;
-  --color-accent-bright: #a78bfa;
-  --color-accent-deep: #5b21b6;
-  --color-accent-glow: #6366f1;
-  --color-accent-soft: #f3eefe;
-
-  --color-cream: #fafafa;
-  --color-paper: #ffffff;
-
-  /* Display fonts */
-  --font-sans:
-    "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
-  --font-mono:
-    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    monospace;
-
-  /* Custom shadows */
-  --shadow-soft: 0 1px 3px rgb(14 13 10 / 0.04), 0 12px 40px -18px rgb(14 13 10 / 0.1);
-  --shadow-glow: 0 0 80px -20px rgb(124 58 237 / 0.3);
-  --shadow-glow-strong: 0 0 120px -10px rgb(124 58 237 / 0.45);
-
-  /* Animations */
-  --animate-marquee: marquee 40s linear infinite;
-  --animate-marquee-slow: marquee 60s linear infinite;
-  --animate-float: float 8s ease-in-out infinite;
-  --animate-aurora: aurora 20s ease-in-out infinite;
-  --animate-shimmer: shimmer 3s linear infinite;
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: optional;
+  src: url('/fonts/playfair-display-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 700;
+  font-display: optional;
+  src: url('/fonts/playfair-display-latin-700-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 800;
+  font-display: optional;
+  src: url('/fonts/playfair-display-latin-800-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 800;
+  font-display: optional;
+  src: url('/fonts/playfair-display-latin-800-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 900;
+  font-display: optional;
+  src: url('/fonts/playfair-display-latin-900-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 900;
+  font-display: optional;
+  src: url('/fonts/playfair-display-latin-900-italic.woff2') format('woff2');
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 600;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-latin-600-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: optional;
+  src: url('/fonts/inter-latin-600-normal.woff2') format('woff2');
+}
+
+/* =================================================================
+   BASE
+   ================================================================= */
+
+:root {
+  --color-cream: #F2EDE5;
+  --color-bone: #FAF6EE;
+  --color-ink: #1A1A1A;
+  --color-ink-soft: #3A3530;
+  --color-ink-mute: #7A6F62;
+  --color-terracotta: #B85542;
+  --color-terracotta-deep: #8E3D2F;
+  --color-sage: #8B9D7E;
+  --color-brown: #6B4F3D;
+  --color-anthracite: #0E0D0B;
+
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  to {
-    transform: translateX(-50%);
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    /* `clip` (not `hidden`) so children using position: sticky still pin to viewport */
+    overflow-x: clip;
   }
-}
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
+  ::selection {
+    background: rgba(184, 85, 66, 0.85);
+    color: var(--color-cream);
   }
-  50% {
-    transform: translateY(-12px);
+
+  *:focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 4px;
+    border-radius: 4px;
   }
-}
 
-@keyframes aurora {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+  a { color: inherit; text-decoration: none; }
+  img, svg, video { display: block; max-width: 100%; }
+
+  /* Skip link */
+  .skip-link {
+    position: fixed;
+    top: -100%;
+    left: 1rem;
+    z-index: 1000;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: top 200ms var(--ease-editorial);
   }
-  33% {
-    transform: translate(8%, -6%) rotate(20deg) scale(1.1);
+  .skip-link:focus { top: 1rem; }
+}
+
+/* =================================================================
+   DISPLAY UTILITIES
+   ================================================================= */
+
+@layer utilities {
+  .display-xl {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(4rem, 13vw, 12rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
   }
-  66% {
-    transform: translate(-6%, 8%) rotate(-15deg) scale(0.95);
+  .display-lg {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7.5vw, 6rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
   }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+  .display-md {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
   }
-  100% {
-    background-position: 200% 0;
+  .display-sm {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
   }
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
+  .serif-lg {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+    line-height: 1.45;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .serif-body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.0625rem;
+    line-height: 1.78;
   }
-}
 
-/* Base */
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html,
-body {
-  background: var(--color-cream);
-  color: var(--color-ink-900);
-  font-family: var(--font-sans);
-  font-feature-settings: "ss01", "ss02", "cv11";
-  overflow-x: hidden;
-}
-
-::selection {
-  background: var(--color-accent);
-  color: white;
-}
-
-/* Glassmorphism - frosted surfaces over the accent gradient background */
-
-@utility surface {
-  background: rgb(255 255 255 / 0.45);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border: 1px solid rgb(255 255 255 / 0.55);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.95) inset,
-    0 -1px 0 rgb(0 0 0 / 0.04) inset,
-    0 6px 16px -4px rgb(124 58 237 / 0.1),
-    0 24px 50px -16px rgb(124 58 237 / 0.18);
-}
-
-@utility surface-warm {
-  background:
-    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.18), transparent 65%),
-    radial-gradient(circle at 0% 100%, rgba(251, 182, 206, 0.12), transparent 65%),
-    rgb(255 255 255 / 0.45);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border: 1px solid rgb(255 255 255 / 0.6);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.95) inset,
-    0 -1px 0 rgb(0 0 0 / 0.04) inset,
-    0 6px 16px -4px rgb(124 58 237 / 0.12),
-    0 28px 60px -18px rgb(124 58 237 / 0.22);
-}
-
-@utility surface-solid {
-  /* opaque variant when glass over text would hurt readability */
-  background: var(--color-paper);
-  border: 1px solid rgb(0 0 0 / 0.07);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
-}
-
-@utility surface-muted {
-  background: rgb(255 255 255 / 0.35);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgb(255 255 255 / 0.4);
-}
-
-@utility glass-light {
-  background: rgb(255 255 255 / 0.55);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgb(255 255 255 / 0.6);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 4px 12px -2px rgb(124 58 237 / 0.08);
-}
-
-@utility glass-strong {
-  background: rgb(255 255 255 / 0.7);
-  backdrop-filter: blur(28px) saturate(170%);
-  -webkit-backdrop-filter: blur(28px) saturate(170%);
-  border: 1px solid rgb(255 255 255 / 0.7);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.95) inset,
-    0 4px 16px -2px rgb(124 58 237 / 0.1),
-    0 20px 50px -15px rgb(124 58 237 / 0.2);
-}
-
-@utility glass-nav {
-  background: rgb(255 255 255 / 0.65);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgb(255 255 255 / 0.6);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.9) inset,
-    0 4px 16px -4px rgb(124 58 237 / 0.12);
-}
-
-@utility text-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--color-ink-900) 0%,
-    var(--color-ink-700) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  padding-bottom: 0.1em;
-  display: inline-block;
-}
-
-@utility text-gradient-ink {
-  background: linear-gradient(
-    180deg,
-    var(--color-ink-900) 0%,
-    var(--color-ink-700) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  padding-bottom: 0.1em;
-  display: inline-block;
-}
-
-@utility text-gradient-violet {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-deep) 0%,
-    var(--color-accent) 50%,
-    var(--color-accent-glow) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  /* Give descenders (g, y, p, q) room when used with italic + tight line-height */
-  padding-bottom: 0.12em;
-  display: inline-block;
-  line-height: 1.15;
-}
-
-@utility text-gradient-accent {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-deep) 0%,
-    var(--color-accent) 50%,
-    var(--color-accent-glow) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  padding-bottom: 0.1em;
-  display: inline-block;
-}
-
-@utility shimmer-border {
-  background:
-    linear-gradient(var(--color-paper), var(--color-paper)) padding-box,
-    linear-gradient(
-        135deg,
-        var(--color-accent-bright),
-        var(--color-accent-deep),
-        var(--color-accent-glow)
-      )
-      border-box;
-  border: 1.5px solid transparent;
-}
-
-/* Scroll-reveal helpers */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  /* The italic gradient — the brand's signature gesture */
+  .italic-grad {
+    background: linear-gradient(
+      135deg,
+      var(--color-terracotta) 0%,
+      var(--color-terracotta-deep) 55%,
+      var(--color-brown) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Descender-safe — fixes clipping on g/y/p/j/q in italic */
+    display: inline-block;
+    padding-bottom: 0.14em;
+    line-height: 1.15;
+    font-style: italic;
   }
+
+  /* Sage gradient — used very sparingly */
+  .sage-grad {
+    background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-brown) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Glass-pill surface */
+  .glass-pill {
+    background-color: rgba(250, 246, 238, 0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(26, 26, 26, 0.08);
+  }
+
+  /* Editorial paper-grain overlay */
+  .paper-grain {
+    position: relative;
+  }
+  .paper-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+    mix-blend-mode: multiply;
+    opacity: 0.06;
+  }
+
+  /* Subtle warm photo treatment */
+  .photo-warm {
+    filter: saturate(0.95) sepia(0.04) contrast(1.02);
+  }
+
+  /* Reveal-on-scroll */
   .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 900ms var(--ease-editorial),
+                transform 900ms var(--ease-editorial);
+  }
+  .reveal.is-visible {
     opacity: 1;
     transform: none;
   }
-}
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transition: opacity 400ms ease;
+      transform: none;
+    }
+  }
 
-/* Headline kerning */
-.display {
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-}
-.display-tight {
-  letter-spacing: -0.04em;
-  line-height: 0.88;
+  /* Anchor CTAs */
+  .cta-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.5rem;
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    transition: background-color 280ms var(--ease-editorial),
+                transform 280ms var(--ease-editorial);
+  }
+  .cta-dark:hover {
+    background-color: var(--color-anthracite);
+  }
+  .cta-dark svg {
+    transition: transform 280ms var(--ease-editorial);
+  }
+  .cta-dark:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.5rem;
+    background-color: transparent;
+    color: var(--color-ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    border: 1px solid rgba(26, 26, 26, 0.18);
+    transition: border-color 280ms var(--ease-editorial),
+                background-color 280ms var(--ease-editorial),
+                transform 280ms var(--ease-editorial);
+  }
+  .cta-ghost:hover {
+    border-color: rgba(26, 26, 26, 0.4);
+    background-color: var(--color-bone);
+  }
+  .cta-ghost svg {
+    transition: transform 280ms var(--ease-editorial);
+  }
+  .cta-ghost:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  /* Inverted CTAs for anthracite section */
+  .cta-cream {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.5rem;
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    transition: transform 280ms var(--ease-editorial);
+  }
+  .cta-cream:hover {
+    transform: translateY(-1px);
+  }
+
+  .cta-ghost-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.5rem;
+    background-color: transparent;
+    color: var(--color-cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    border: 1px solid rgba(242, 237, 229, 0.22);
+    transition: background-color 280ms var(--ease-editorial),
+                border-color 280ms var(--ease-editorial);
+  }
+  .cta-ghost-dark:hover {
+    background-color: rgba(242, 237, 229, 0.06);
+    border-color: rgba(242, 237, 229, 0.4);
+  }
+
+  /* Section eyebrow */
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+
+  /* Byline row */
+  .byline {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-mute);
+  }
+
+  /* Pull quote */
+  .pullquote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
 }

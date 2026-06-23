@@ -1,0 +1,62 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { site, operator } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<PageLayout
+  title="The studio — COO at Blacklyne"
+  description="Allaia is COO at Blacklyne AI — a premium digital presence and AI search optimization studio shipping across Germany, Dubai, the UK, and the US."
+  eyebrow={operator.eyebrow}
+  heading={operator.heading.pre}
+  italic={operator.heading.italic}
+  lead={operator.body}
+  byline="The personal brand is here · the agency work lives at Blacklyne"
+>
+  <div class="mx-auto max-w-3xl px-6 space-y-10">
+    <section class="reveal">
+      <p class="eyebrow mb-5">The split</p>
+      <h2 class="display-sm mb-5">
+        Why two <span class="italic-grad">brands.</span>
+      </h2>
+      <p class="serif-lg text-ink-soft mb-5 max-w-prose">
+        The personal brand and the studio are not the same product. They share an eye for taste — and one operator — but they answer different briefs.
+      </p>
+      <ul class="space-y-4 mb-7">
+        {[
+          { l: 'Allaia (this site)', r: 'Book, coaching, community, art, and the writing. The work for the women.' },
+          { l: 'Blacklyne (the studio)', r: 'Premium digital presence and AI search optimization for brands. Websites, AEO, content, and ads — built so brands become unmistakable in the AI search era.' },
+        ].map((s) => (
+          <li class="grid sm:grid-cols-[12rem_1fr] gap-3 sm:gap-7 pb-5 border-b border-ink/8 last:border-b-0">
+            <span class="font-display italic text-xl text-terracotta">{s.l}</span>
+            <p class="serif-body text-ink-soft">{s.r}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="reveal pt-10 border-t border-ink/10">
+      <p class="eyebrow mb-5">If you came here to hire the team</p>
+      <h2 class="display-sm mb-6">
+        The studio's <span class="italic-grad">door.</span>
+      </h2>
+      <p class="serif-lg text-ink-soft mb-7 max-w-prose">
+        If you need the build — a website that converts, a Google Business presence that ranks, AI search optimization, social production, or paid acquisition — that work lives at Blacklyne. The brief form is on their site.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href={site.blacklyne} target="_blank" rel="noopener" class="cta-dark">
+          Visit Blacklyne <ArrowUpRight size={12} />
+        </a>
+        <a href={`${site.blacklyne}#contact`} target="_blank" rel="noopener" class="cta-ghost">
+          Brief the studio <ArrowUpRight size={12} />
+        </a>
+      </div>
+    </section>
+
+    <section class="reveal pt-10 border-t border-ink/10">
+      <p class="font-display italic text-2xl text-brown leading-tight max-w-2xl">
+        "Two brands. One taste. Built so the work you need has the right home."
+      </p>
+    </section>
+  </div>
+</PageLayout>

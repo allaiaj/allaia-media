@@ -1,0 +1,118 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import YouTubeFeatured from '@components/sections/YouTubeFeatured.astro';
+import { site, youtubeMore, youtubeShorts } from '@data/site';
+import Youtube from '@components/icons/Youtube.astro';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<BaseLayout
+  title="Watch — readings & essays"
+  description="Long-form readings and essays from Allaia. The diary, aloud."
+>
+  <YouTubeFeatured />
+
+  <!-- More long-form -->
+  <section class="relative py-24 sm:py-32 bg-bone border-t border-ink/8">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal max-w-3xl mb-12 sm:mb-16">
+        <p class="eyebrow mb-5">More from the channel</p>
+        <h2 class="display-md">
+          The diary — <span class="italic-grad">longer reads.</span>
+        </h2>
+        <p class="serif-lg text-ink-soft mt-7 max-w-prose">
+          A few more entries from {site.youtubeHandle}. Slow company for a long drive or a long bath.
+        </p>
+      </div>
+
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-10">
+        {youtubeMore.map((v, i) => (
+          <li class="reveal" style={`transition-delay: ${i * 50}ms`}>
+            <a href={`https://www.youtube.com/watch?v=${v.video_id}`} target="_blank" rel="noopener" class="group block">
+              <figure class="relative aspect-video rounded-[1.25rem] overflow-hidden bg-anthracite paper-grain shadow-photo mb-5">
+                <img
+                  src={v.thumbnail}
+                  alt={v.title}
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                  class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+                />
+                <div
+                  class="absolute inset-0 z-0"
+                  style={
+                    i === 0 ? 'background: linear-gradient(135deg, #6B4F3D 0%, #0E0D0B 100%);' :
+                    i === 1 ? 'background: linear-gradient(135deg, #8B9D7E 0%, #2A2722 100%);' :
+                    'background: linear-gradient(135deg, #B85542 0%, #2A2722 100%);'
+                  }
+                  aria-hidden="true"
+                ></div>
+                <div class="absolute inset-0 grid place-items-center pointer-events-none">
+                  <span class="h-16 w-16 rounded-full bg-cream/90 backdrop-blur grid place-items-center group-hover:scale-105 transition-transform duration-500 ease-editorial">
+                    <Youtube size={26} class="text-ink" />
+                  </span>
+                </div>
+                <div
+                  class="absolute inset-0 pointer-events-none"
+                  style="background: linear-gradient(to top, rgba(14,13,11,0.4), transparent 50%);"
+                ></div>
+              </figure>
+              <h3 class="font-display text-2xl text-ink leading-tight mb-2 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+                {v.title}
+              </h3>
+              <p class="serif-body text-ink-soft">{v.subtitle}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Shorts -->
+  <section class="relative py-24 sm:py-32 overflow-hidden">
+    <div class="mx-auto max-w-6xl px-6 mb-12">
+      <div class="reveal flex items-baseline justify-between gap-6 pb-6 border-b border-ink/10">
+        <div>
+          <p class="eyebrow mb-4">Shorts · the diary in motion</p>
+          <h2 class="display-md max-w-2xl">
+            Six <span class="italic-grad">vertical entries.</span>
+          </h2>
+        </div>
+        <a href={site.youtube} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2 whitespace-nowrap">
+          <Youtube size={13} /> {site.youtubeHandle}
+        </a>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6">
+      <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {youtubeShorts.map((s, i) => (
+          <li class="reveal" style={`transition-delay: ${i * 50}ms`}>
+            <a href={`https://www.youtube.com/shorts/${s.video_id}`} target="_blank" rel="noopener" class="group block">
+              <figure class="relative aspect-[9/16] rounded-[1rem] overflow-hidden bg-anthracite shadow-photo">
+                <img
+                  src={s.thumbnail}
+                  alt={s.caption}
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                  class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1000ms] ease-editorial group-hover:scale-[1.05]"
+                />
+                <div
+                  class="absolute inset-x-0 bottom-0 p-3 text-cream"
+                  style="background: linear-gradient(to top, rgba(14,13,11,0.85), transparent 80%);"
+                >
+                  <p class="font-display italic text-[0.8125rem] leading-snug line-clamp-3">{s.caption}</p>
+                </div>
+              </figure>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-16 pt-10 border-t border-ink/10 text-center">
+      <a href={site.youtube} target="_blank" rel="noopener" class="cta-dark">
+        <Youtube size={14} /> Subscribe — {site.youtubeHandle} <ArrowUpRight size={12} />
+      </a>
+    </div>
+  </section>
+</BaseLayout>

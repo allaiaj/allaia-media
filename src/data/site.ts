@@ -1,418 +1,395 @@
+// Allaia Power — central site data
+// All copy here is verbatim from the brief or written to the voice rules.
+// No fabrication. Every claim is something Allaia has actually done.
+
 export const site = {
-  name: "Allaia Media",
-  domain: "allaiamedia.com",
-  tagline: "The systems behind brands that grow.",
-  description:
-    "Allaia Media builds the unsexy infrastructure - web, ads, content, search - that turns founder-led brands into compounding revenue machines. Month-to-month. No long contracts. No theatre.",
-  cal: "https://cal.com/allaiamedia/discovery",
-  whatsapp: "https://wa.me/447000000000",
-  instagram: "https://instagram.com/allaia.media",
-  email: "hello@allaiamedia.com",
-  markets: ["Dubai", "Bali", "Manila", "London", "New York"],
+  name: 'Allaia',
+  brand: 'Allaia Power',
+  legalEntity: 'ALLAIA Media',
+  domain: 'allaiamedia.com',
+  url: 'https://allaiamedia.com',
+  tagline: 'Know your worth. Then charge it.',
+  positioning:
+    'Identity-led content for women who are tired of performing — and ready to do the slow, unsexy work of becoming who they actually are underneath.',
+
+  cities: ['Dubai', 'Bali'],
+
+  // Stan Store routes (per JUDGEMENT_CALLS §3)
+  stan: {
+    base: 'https://stan.store/allaia',
+    book: 'https://stan.store/allaia',
+    application: 'https://stan.store/allaia',
+  },
+
+  // External brand handles
+  instagram: 'https://instagram.com/allaia.power',
+  instagramArt: 'https://instagram.com/allaia.art',
+  tiktok: 'https://tiktok.com/@allaia.power',
+  youtube: 'https://www.youtube.com/@allaiaj',
+  youtubeHandle: '@allaiaj',
+  youtubeChannelId: 'UCnqP-tsoaQL7K_gUcCd-URQ',
+  youtubeBio:
+    'Psychology. Manifestation. Becoming your highest self. The psychology behind why your life is not changing — and the exact shifts that change everything.',
+  // Featured long-form — Allaia can swap to a different ID anytime.
+  youtubeFeatured: {
+    video_id: 'EN9oUoysqmM',
+    title: 'Modern dating is a scam. And women are paying for it.',
+    description:
+      'Part one of two — the diagnosis. The conversation nobody on the app is willing to start. A long letter, read aloud.',
+    duration: 'Long-form · part 1 of 2',
+    thumbnail: '/img/youtube/EN9oUoysqmM-max.jpg',
+  },
+
+  // Email
+  email: 'allaia@blacklyne.ai',
+
+  // The studio Allaia is COO at — the credibility lever
+  blacklyne: 'https://blacklyne.ai/en',
+
+  // OG / SEO
+  og: {
+    title: 'Allaia — author, operator, artist',
+    description:
+      'Author of Become Her (out 2026). COO at Blacklyne. Artist at @allaia.art. Identity-led content for women who are tired of performing.',
+    image: '/img/og/allaia-og.jpg',
+  },
 };
 
-export const nav = [
-  { label: "Coaching", href: "/#coaching" },
-  { label: "Brand collabs", href: "/#brand-collabs" },
-  { label: "Work", href: "/work" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+export const identities = [
+  {
+    key: 'author',
+    label: 'Author',
+    context: 'Become Her — the foundational work',
+    body: 'A debut. Ninety-one thousand words. Five parts. Twenty-two chapters. The book that holds everything else.',
+    href: '/book',
+    cta: 'Read the book',
+    figure: 'FIG. 01',
+    image: '/img/allaia/identity-author.jpg',
+    alt: 'Allaia with Become Her — the book in her hands, warm interior light',
+  },
+  {
+    key: 'operator',
+    label: 'Operator',
+    context: 'COO at Blacklyne AI',
+    body: 'Premium digital presence and AI search optimization for brands across Germany, Dubai, the UK, and the US. The applied version of what the personal brand teaches.',
+    href: '/the-studio',
+    cta: 'See the studio',
+    figure: 'FIG. 02',
+    image: '/img/allaia/identity-operator.jpg',
+    alt: 'Allaia at the studio — laptop, cream notebook, terracotta light from the window',
+  },
+  {
+    key: 'artist',
+    label: 'Artist',
+    context: 'The Rupture · @allaia.art',
+    body: 'Textured abstract mixed-media — pigment, plaster, oil stick. The pieces hold what the writing cannot.',
+    href: '/art',
+    cta: 'See the work',
+    figure: 'FIG. 03',
+    image: '/img/allaia/identity-artist.jpg',
+    alt: 'Allaia in studio with The Rupture canvases — warm tones, working with her hands',
+  },
+  {
+    key: 'creator',
+    label: 'Creator',
+    context: '@allaia.power',
+    body: 'Twenty-four thousand on Instagram. Thirty-two thousand on TikTok. Three-point-four million views in ninety days, most of it reaching women who do not yet follow.',
+    href: site.instagram,
+    cta: 'Follow on Instagram',
+    figure: 'FIG. 04',
+    image: '/img/allaia/identity-creator.jpg',
+    alt: 'Allaia at golden hour in Bali, on camera, mid-thought',
+  },
+] as const;
 
-export const footerNav = [
-  { group: "Studio", links: [
-    { label: "Services", href: "/services" },
-    { label: "Pricing", href: "/pricing" },
-    { label: "Work", href: "/work" },
-    { label: "About", href: "/about" },
-  ]},
-  { group: "Trust", links: [
-    { label: "Reviews", href: "/reviews" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Contact", href: "/contact" },
-  ]},
-  { group: "Legal", links: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Imprint", href: "/imprint" },
-  ]},
-];
+export const navItems = [
+  { label: 'The Studio', href: '/the-studio' },
+  { label: 'Book', href: '/book' },
+  { label: 'Brand Collabs', href: '/brand-collabs' },
+  { label: 'Coven', href: '/coven' },
+  { label: 'About', href: '/about' },
+] as const;
 
-// All 8 sites in a uniform 4-up grid. Same aspect ratio, same device,
-// same size - cleaner read than the previous mixed bento.
-export const work = [
-  {
-    slug: "ayahs-beauty",
-    url: "ayahs-beauty-greenford.pages.dev",
-    title: "Ayahs Beauty",
-    label: "Laser, lashes & advanced facials · Greenford",
-    device: "desktop" as const,
-    featured: true,
-  },
-  {
-    slug: "neolution",
-    url: "neolution-face-and-body.pages.dev",
-    title: "Neolution Face & Body",
-    label: "Aesthetic clinic · Isle of Dogs",
-    device: "desktop" as const,
-  },
-  {
-    slug: "nurse-vella",
-    url: "nurse-vella-loughton.pages.dev",
-    title: "Nurse Vella Skin & Beauty",
-    label: "Aesthetic clinic · Woodford Green",
-    device: "desktop" as const,
-  },
-  {
-    slug: "dulci-beauty",
-    url: "dulci-beauty-dagenham.pages.dev",
-    title: "Dulci Beauty & Trend",
-    label: "Aesthetic clinic · Dagenham",
-    device: "desktop" as const,
-  },
-  {
-    slug: "bare-essence",
-    url: "bare-essence-leyton.pages.dev",
-    title: "Bare Essence Skin Clinic",
-    label: "Electrolysis · Leyton",
-    device: "desktop" as const,
-  },
-  {
-    slug: "prisca-skincare",
-    url: "demo-priscas-skincare.pages.dev",
-    title: "Prisca's Skincare",
-    label: "Personalised skin treatments · Hounslow",
-    device: "desktop" as const,
-  },
-  {
-    slug: "maisy-rose",
-    url: "maisyrose-flowers-collier-row.pages.dev",
-    title: "Maisy Rose Flowers",
-    label: "Florist since 1993 · Collier Row",
-    device: "desktop" as const,
-  },
-  {
-    slug: "simply-pizza",
-    url: "simply-pizza-ilford.pages.dev",
-    title: "Simply Pizza",
-    label: "Plant-forward pizza · Ilford",
-    device: "desktop" as const,
-  },
-];
+export const heroBeats = {
+  eyebrow: 'AUTHOR · COO · ARTIST · DUBAI + BALI',
+  wordmark: 'Allaia',
+  tagline: site.tagline,
+  bookCue: 'Become her — out 2026',
+  ctas: [
+    { label: 'Read the book', href: site.stan.book, primary: true, external: true },
+    { label: 'Apply for The Architecture', href: site.stan.application, primary: false, external: true },
+  ],
+};
 
-export const services = [
-  {
-    n: "01",
-    title: "Website Build",
-    sub: "Sites built to sell, not to win awards.",
-    body: "Conversion-first builds on a modern stack - fast load, mobile-first, SEO-ready. Strategy, copy, design, dev, launch - one operator, one day. Hosting, maintenance, edits, and uptime included while the retainer is active. Cancel any month - site stays live as long as the retainer runs.",
-    price: "from $499",
-    cadence: "monthly · cancel anytime",
-    timeline: "1 day",
-    deliverables: [
-      "Brand & narrative",
-      "Wireframe & UX",
-      "Design & dev",
-      "Hosting + uptime + edits",
-    ],
-  },
-  {
-    n: "02",
-    title: "Google Business Profile",
-    sub: "The map pin that actually pulls customers.",
-    body: "Optimised profile, on-going posts, review engine, citation cleanup. Local search that ranks where it counts.",
-    price: "from $199",
-    cadence: "monthly · no lock-in",
-    timeline: "30 days to rank",
-    deliverables: [
-      "Profile optimisation",
-      "Review automation",
-      "Weekly posts",
-      "Citation cleanup",
-    ],
-  },
-  {
-    n: "03",
-    title: "Meta Ads",
-    sub: "Full-funnel paid that pays for itself.",
-    body: "Creative strategy, video editing, audience architecture, weekly iteration. Three-month minimum so the data actually compounds.",
-    price: "from $399",
-    cadence: "monthly · ad spend separate",
-    timeline: "3 mo minimum",
-    deliverables: [
-      "Creative direction",
-      "Funnel architecture",
-      "Daily optimisation",
-      "Weekly reporting",
-    ],
-  },
-  {
-    n: "04",
-    title: "Social Media",
-    sub: "A feed you don't have to think about.",
-    body: "AI-assisted content production with human taste on top. Reels, posts, captions, DMs - your social runs itself.",
-    price: "from $799",
-    cadence: "monthly · posts, reels, captions",
-    timeline: "live in 14 days",
-    deliverables: [
-      "Strategy & calendar",
-      "Reels & shorts",
-      "Caption & DM ops",
-      "Community management",
-    ],
-  },
-  {
-    n: "05",
-    title: "Personal Brand Coaching",
-    sub: "Build a name before you build a product.",
-    body: "1:1 coaching for creators, consultants and professionals building their personal brand from scratch. Niche, positioning, voice, content cadence - everything you need to become someone in your space.",
-    price: "Bespoke",
-    cadence: "Pricing on request",
-    timeline: "first call in 24h",
-    deliverables: [
-      "Niche & positioning",
-      "Weekly 1:1 strategy call",
-      "Content blueprint & hooks",
-      "Audience growth playbook",
-    ],
-  },
-];
+export const editorialOpening = {
+  eyebrow: 'A LETTER FROM THE EDITOR',
+  lead: 'Allaia.',
+  sub: 'Author. Operator. Artist. Creator.',
+  body: 'Mainly between Dubai and Bali, building a life that moves on its own terms — and writing it down for the women doing the same.',
+  body2:
+    'The work this site references is identity-led. Slow. Quietly compounding. There is no thirty-day transformation here. There is a book, a community, a coaching room kept small on purpose, and an art practice that holds what the writing cannot.',
+  ctas: [
+    { label: 'Become Her — out 2026', href: '/book', primary: true },
+    { label: 'Apply for The Architecture', href: site.stan.application, primary: false, external: true },
+  ],
+};
 
-export const process = [
-  {
-    n: "01",
-    title: "Discovery",
-    duration: "30 minutes",
-    body: "One honest call. We map your numbers, your offer, your bottleneck. No deck, no pitch.",
+// Become Her — the book anchor
+export const book = {
+  title: 'Become Her',
+  subtitle: 'A debut — out 2026',
+  meta: 'OUT 2026 · 91,294 WORDS · 22 CHAPTERS',
+  cover: '/img/book/become-her-cover.jpg',
+  blurb:
+    'Identity-led work for women who are tired of performing. Five parts. Twenty-two chapters. The foundational work behind everything else on this site.',
+  endorsement: {
+    quote:
+      'The work is becoming who you are about to be. This book is the long letter for the women already doing it — and the slow first read for the women who are about to begin.',
+    attribution: '— From the foreword',
   },
-  {
-    n: "02",
-    title: "Proposal",
-    duration: "48 hours",
-    body: "A one-page plan. Exactly what we'd build, what it costs, what you'd see in 90 days. Approve or walk.",
+  cta: {
+    label: 'Read the book',
+    href: site.stan.book,
   },
-  {
-    n: "03",
-    title: "Build",
-    duration: "7 to 30 days",
-    body: "We ship. You review on Loom. Real assets, real campaigns, real launches - not endless decks.",
-  },
-  {
-    n: "04",
-    title: "Scale",
-    duration: "month over month",
-    body: "We iterate against your KPIs. Stack new channels only when the existing ones are paid back.",
-  },
-];
+};
 
-export const testimonials = [
-  {
-    quote:
-      "We had a Squarespace site nobody could find. Six weeks later we're booked four weeks out. Allaia didn't sell us magic - they sold us a system.",
-    name: "Dr. Lina M.",
-    role: "Founder, Smile Studio",
-    market: "Dubai",
-    span: "lg:col-span-2 lg:row-span-2",
+// The Architecture — 1:1 coaching offer
+export const architecture = {
+  eyebrow: '1:1 COACHING · 12 WEEKS · BY APPLICATION',
+  heading: {
+    pre: 'For the women building it',
+    italic: 'underneath.',
   },
-  {
-    quote:
-      "First agency that didn't try to sell me a retainer the size of a mortgage.",
-    name: "Marcus K.",
-    role: "Owner, Marcus & Co Barbers",
-    market: "London",
-    span: "",
+  lead:
+    'Twelve weeks of 1:1 work with me. Not a course. Not a community. Not a Sunday-night Loom drop. A weekly call, a private thread, and the slow, deliberate craft of becoming someone who is googled by name.',
+  lead2:
+    'I take four women per cohort. By application — the room only works if everyone in it belongs there.',
+  chapters: [
+    {
+      n: '01',
+      title: 'Position',
+      body: 'Who you are. Who you serve. What you stand for. We get the sentence right — the one a stranger could repeat back to a friend and have it land.',
+    },
+    {
+      n: '02',
+      title: 'Voice',
+      body: 'How you sound on the page, on camera, in the DMs. Not a brand voice doc — your actual voice, dialled up.',
+    },
+    {
+      n: '03',
+      title: 'Rhythm',
+      body: 'A weekly cadence that ships content without draining you. Hooks, scripts, the diary entries you have been afraid to publish.',
+    },
+    {
+      n: '04',
+      title: 'Receipts',
+      body: 'Six months in: the audience that is actually paying attention, the inbound that is actually qualified, the name that is actually being googled.',
+    },
+  ],
+  outcomes: [
+    'A positioning sentence you would put on your front door',
+    'A voice that is recognisably yours — no agency house style',
+    'A content rhythm you do not dread on a Sunday night',
+    'Hook plus script library so on-camera stops freezing you',
+    'An audience growth plan tied to your real goals',
+    'A coach in your WhatsApp between calls — that is me',
+  ],
+  format: { label: 'Format', value: 'Weekly 1:1' },
+  length: { label: 'Length', value: '12 weeks' },
+  seats: { label: 'Seats', value: '4 / cohort' },
+  access: { label: 'Access', value: 'By application' },
+  intake: { label: 'Intake', value: 'Quarterly cohorts' },
+  closing:
+    'I keep the room curated so the work can be deep. If we end up sitting across from each other for twelve weeks, I want to know I have earned every minute.',
+  cta: {
+    label: 'Apply for The Architecture',
+    href: site.stan.application,
   },
-  {
-    quote:
-      "Our Meta ROAS went from 1.2 to 4.8 in eight weeks. They actually look at the data.",
-    name: "Priya R.",
-    role: "Founder, Glow Skin Lab",
-    market: "Manila",
-    span: "lg:col-span-2",
-  },
-  {
-    quote:
-      "Communication is unreal. WhatsApp reply in minutes, not days.",
-    name: "Sven A.",
-    role: "Director, Coastal Wellness",
-    market: "Bali",
-    span: "",
-  },
-  {
-    quote: "Booked 32 new patients in our first six weeks. The funnel just works.",
-    name: "Dr. Aaron M.",
-    role: "Principal Dentist, Clear Aligners HK",
-    market: "Hong Kong",
-    span: "",
-  },
-  {
-    quote:
-      "I was tired of agencies that 'crushed it' on slides but couldn't show me a single new client. Allaia showed me fourteen by month two.",
-    name: "Karim S.",
-    role: "Founder, Athletica Mile End",
-    market: "London",
-    span: "lg:col-span-2",
-  },
-  {
-    quote:
-      "They told us not to run ads yet. Saved us four figures. That's when I knew.",
-    name: "Hannah T.",
-    role: "Founder, Vert Studio",
-    market: "New York",
-    span: "",
-  },
-  {
-    quote:
-      "Their content team makes me sound smarter than I am. Bookings up 3x.",
-    name: "Rina A.",
-    role: "Principal, RA Consulting",
-    market: "Singapore",
-    span: "",
-  },
-  {
-    quote:
-      "If you're a founder who hates being handled by an agency, hire these. They actually treat you like a peer.",
-    name: "Marc B.",
-    role: "Owner, Marc B Photography",
-    market: "Berlin",
-    span: "lg:col-span-2 lg:row-span-2",
-  },
-  {
-    quote: "We sold out our pre-launch in eleven days. Pre-launch.",
-    name: "Talia G.",
-    role: "Founder, Maven Skincare",
-    market: "Tel Aviv",
-    span: "",
-  },
-  {
-    quote: "First agency that didn't try to upsell me on month two.",
-    name: "Olivia R.",
-    role: "Founder, Bloom Studio",
-    market: "New York",
-    span: "",
-  },
-  {
-    quote:
-      "From dead Instagram to twelve thousand engaged followers in four months. Real ones.",
-    name: "Dion P.",
-    role: "Founder, Forge Athletic",
-    market: "Sydney",
-    span: "lg:col-span-2",
-  },
-];
+};
 
-export const caseStudies = [
-  {
-    n: "01",
-    slug: "simply-pizza",
-    brand: "Simply Pizza",
-    industry: "Hand-made pizza · plant-forward",
-    market: "Ilford, East London",
-    timeline: "Built in 1 day",
-    problem:
-      "New restaurant opening with no online presence, competing for orders against chain delivery apps that take 30% commission.",
-    approach: [
-      "Editorial site with the menu front-and-centre and a 'three pizzas, done right' positioning",
-      "Google Business Profile from scratch + automated review collection",
-      "WhatsApp ordering channel so loyal locals bypass the delivery-app fees entirely",
-    ],
-    metrics: [
-      { v: "Sold out", l: "launch weekend" },
-      { v: "4.9", l: "across 100+ Google reviews" },
-      { v: "60%", l: "of orders direct (no commission)" },
-    ],
-    quote:
-      "Allaia made our small place feel intentional. Locals know us now - and most order direct.",
-    quoteBy: "Owner, Simply Pizza",
-    accent: "peach",
-  },
-  {
-    n: "02",
-    slug: "prisca-skincare",
-    brand: "Prisca's Skincare",
-    industry: "Personalised skin treatments",
-    market: "Hounslow, West London",
-    timeline: "Built in 8 days",
-    problem:
-      "Premium skin clinic with no website, growing an Instagram following but losing serious clients to competitors who looked the part online.",
-    approach: [
-      "Editorial site featuring Kanupriya's expertise + treatment library",
-      "Niche positioning around 'personalised skin treatments by Kanupriya Bakshi'",
-      "Consultation lead form + WhatsApp triage so enquiries get answered in hours, not days",
-    ],
-    metrics: [
-      { v: "+50%", l: "qualified consultations / month" },
-      { v: "Page 1", l: "for personalised skin treatments Hounslow" },
-      { v: "5x", l: "weekly consultations Q1" },
-    ],
-    quote:
-      "Allaia turned my Instagram following into actual paying clients. The site does the qualifying for me.",
-    quoteBy: "Kanupriya Bakshi, Founder",
-    accent: "pink",
-  },
-  {
-    n: "03",
-    slug: "ayahs-beauty",
-    brand: "Ayahs Beauty",
-    industry: "Laser, lashes & advanced facials",
-    market: "Greenford, West London",
-    timeline: "Built in 1 day",
-    problem:
-      "Just qualified, no online presence. Walk-ins only, owner handling admin between clients.",
-    approach: [
-      "Conversion-first build with editorial-style hero + treatment menu",
-      "Google Business Profile from scratch, review automation, weekly posts",
-      "WhatsApp booking flow trained into the owner's daily workflow",
-    ],
-    metrics: [
-      { v: "+42%", l: "bookings in 30 days" },
-      { v: "#1", l: "for ‘laser hair removal Greenford’" },
-      { v: "5.0", l: "across 60+ reviews" },
-    ],
-    quote:
-      "Allaia made me look established before I felt established. Now I'm booked four weeks out.",
-    quoteBy: "Ayah, Founder",
-    accent: "violet",
-  },
-];
+// Coven — community waitlist (Q3 2026)
+export const coven = {
+  eyebrow: 'COMMUNITY · LAUNCHING Q3 2026 · BY APPLICATION',
+  heading: 'Coven.',
+  lead:
+    'An application-based community for women doing the work. Five hundred women maximum. Launching Q3 2026.',
+  body:
+    'Coven exists for women who do not need more content — they need company. The kind of room that holds you accountable to the woman you are becoming without performing accountability at you. Phase one is waitlist only.',
+  cta: { label: 'Join the waitlist', href: '/coven' },
+};
 
-export const faqs = [
-  {
-    q: "How is this different from a normal agency?",
-    a: "Normal agencies sell hours and decks. We sell outcomes built on systems. One operator runs your account end-to-end, you talk to a human on WhatsApp, and you can cancel any month (except Meta, where 3 months is the minimum because the data needs time to compound).",
+// The Operator — anthracite section, COO at Blacklyne
+export const operator = {
+  eyebrow: 'OPERATOR · COO AT BLACKLYNE AI',
+  heading: {
+    pre: 'The applied',
+    italic: 'version.',
   },
-  {
-    q: "Do you guarantee results?",
-    a: "No serious operator guarantees results - if they do, run. What we guarantee is the system: clear KPIs, weekly iteration, transparent reporting, and honest conversations when something isn't working. So far that's translated to 100% retention.",
-  },
-  {
-    q: "Why so much cheaper than other agencies?",
-    a: "Because we use AI for the parts AI is good at (production, copy variants, research), and humans for the parts that matter (strategy, taste, judgement). The pricing reflects the leaner stack - not a worse output.",
-  },
-  {
-    q: "Can I start with just one service?",
-    a: "Yes - and we usually recommend it. The Stack Smart approach is: prove one channel, then layer on. We will never upsell you into something your business cannot absorb yet.",
-  },
-  {
-    q: "Where are you based?",
-    a: "We're fully remote with operators in five markets - Dubai, Bali, Manila, London, New York. Your account runs in your timezone, not ours.",
-  },
-  {
-    q: "What if I already have a website?",
-    a: "Great - we audit it for free on the discovery call. If it's converting, we leave it alone and focus on traffic. If it's not, we'll tell you honestly.",
-  },
-];
+  body:
+    'Beyond the personal brand, I run Blacklyne AI as Chief Operating Officer. A premium digital presence and AI search optimization studio operating across Germany, Dubai, the United Kingdom, and the United States. Helping brands become unmistakable in the AI search era. The same identity-led thesis I teach women, shipping at scale across four countries.',
+  cta: { label: 'Visit Blacklyne', href: site.blacklyne, external: true },
+};
 
-export const logos = [
-  "Smile Studio",
-  "Glow Skin Lab",
-  "Marcus & Co",
-  "Vert Studio",
-  "Coastal Wellness",
-  "Atelier Nine",
-  "North Wood",
-  "Maison Eight",
-  "Lumen Clinic",
-  "Studio Foxtrot",
-  "Hale & Co",
-  "The Bright Room",
-];
+// Instagram Reels — the diary in motion, with real view counts.
+// IG won't let me scrape post URLs, so these are slots Allaia fills in.
+// To wire a reel: paste the post URL from your IG (the part ending in
+// /reel/SHORTCODE/) into `permalink`. The IG embed widget renders the
+// full reel card with view + like counts inline. Update the captions
+// to match.
+//
+// Example: 'https://www.instagram.com/reel/C8sXyZ9aBcD/'
+export const instagramReels = [
+  {
+    permalink: 'https://www.instagram.com/reel/DYe7mNNsztZ/',
+    caption: 'From @allaia.power — recent.',
+  },
+  // Slots 2–6 waiting on Allaia for more reel URLs.
+  // Format: paste the share-menu URL (must end in /reel/SHORTCODE/).
+  {
+    permalink: 'https://www.instagram.com/reel/DWk5dvejGdm/',
+    caption: 'From @allaia.power.',
+  },
+  {
+    permalink: 'https://www.instagram.com/reel/DZTyZlzMrJO/',
+    caption: 'From @allaia.power.',
+  },
+  {
+    permalink: 'https://www.instagram.com/reel/DZTtOngsOBG/',
+    caption: 'From @allaia.power.',
+  },
+  {
+    permalink: 'https://www.instagram.com/reel/DXwOfqdM_N0/',
+    caption: 'From @allaia.power.',
+  },
+  {
+    permalink: 'https://www.instagram.com/reel/DY44G_Gs6rU/',
+    caption: 'From @allaia.power.',
+  },
+] as const;
+
+// YouTube Shorts — kept as a secondary surface on /watch.
+// Used when IG embeds aren't loaded (cookie consent, etc.).
+export const youtubeShorts = [
+  {
+    video_id: '2SlojnJ92gY',
+    caption: 'Act like HER. Daily.',
+    thumbnail: '/img/youtube/2SlojnJ92gY-max.jpg',
+  },
+  {
+    video_id: 'kMmCqM4_fM8',
+    caption: 'The woman who puts herself first is not selfish. She is finally available.',
+    thumbnail: '/img/youtube/kMmCqM4_fM8-max.jpg',
+  },
+  {
+    video_id: 'BOnSE7mpYFM',
+    caption: 'Freedom is not a fantasy. It is a decision.',
+    thumbnail: '/img/youtube/BOnSE7mpYFM-max.jpg',
+  },
+  {
+    video_id: 'gs2cF51OcBg',
+    caption: 'Turning the pain into wisdom.',
+    thumbnail: '/img/youtube/gs2cF51OcBg-max.jpg',
+  },
+  {
+    video_id: 'hfOlRVhgGU8',
+    caption: 'Reminder — you are that girl.',
+    thumbnail: '/img/youtube/hfOlRVhgGU8-max.jpg',
+  },
+  {
+    video_id: 'UVjpuW2JLFA',
+    caption: 'Where you should put your energy.',
+    thumbnail: '/img/youtube/UVjpuW2JLFA-max.jpg',
+  },
+] as const;
+
+// More long-form videos for /watch — three after the featured.
+export const youtubeMore = [
+  {
+    video_id: 'wjcdFmLD6XM',
+    title: 'Modern dating is a scam — part 2 of 2.',
+    subtitle: 'The part nobody on the app is willing to say.',
+    thumbnail: '/img/youtube/wjcdFmLD6XM-max.jpg',
+  },
+  {
+    video_id: 'w2JdvsGhlDw',
+    title: 'Ten things classy women never do.',
+    subtitle: 'On how to be feminine without performing femininity.',
+    thumbnail: '/img/youtube/w2JdvsGhlDw-max.jpg',
+  },
+  {
+    video_id: 'iXBB7NciydM',
+    title: 'Read the caption.',
+    subtitle: 'A short note on the structures that keep us asleep.',
+    thumbnail: '/img/youtube/iXBB7NciydM-max.jpg',
+  },
+] as const;
+
+// Newsletter
+export const newsletter = {
+  eyebrow: 'THE WORK · IN YOUR INBOX',
+  heading: {
+    pre: 'Slow writing.',
+    italic: 'Occasional.',
+  },
+  body:
+    'No funnels. No "limited time only" subject lines. The kind of email worth reading on a Sunday morning, on a balcony, with no agenda.',
+  placeholder: 'your email address',
+  cta: 'Subscribe',
+};
+
+// Closing CTA tiles
+export const closingTiles = [
+  {
+    eyebrow: 'THE BOOK',
+    title: 'Become Her',
+    sub: 'Out 2026 — pre-order opens via Stan',
+    href: site.stan.book,
+    external: true,
+  },
+  {
+    eyebrow: 'COACHING',
+    title: 'The Architecture',
+    sub: 'Twelve weeks, four seats — by application',
+    href: site.stan.application,
+    external: true,
+  },
+  {
+    eyebrow: 'COMMUNITY',
+    title: 'Coven',
+    sub: 'Five hundred women — Q3 2026 · waitlist',
+    href: '/coven',
+    external: false,
+  },
+  {
+    eyebrow: 'INSTAGRAM',
+    title: '@allaia.power',
+    sub: 'The diary, in motion',
+    href: site.instagram,
+    external: true,
+  },
+] as const;
+
+export const footerNav = {
+  brand: [
+    { label: 'The Studio', href: '/the-studio' },
+    { label: 'Book', href: '/book' },
+    { label: 'Brand Collabs', href: '/brand-collabs' },
+    { label: 'Coven', href: '/coven' },
+  ],
+  work: [
+    { label: 'Writing', href: '/writing' },
+    { label: 'Art', href: '/art' },
+    { label: 'Watch', href: '/watch' },
+    { label: 'About', href: '/about' },
+  ],
+  channels: [
+    { label: 'Newsletter', href: '/newsletter' },
+    { label: 'The Architecture (1:1)', href: '/the-architecture' },
+    { label: 'Press inquiries', href: '/brand-collabs' },
+    { label: 'Contact', href: '/contact' },
+  ],
+  legal: [
+    { label: 'Privacy', href: '/privacy' },
+    { label: 'Imprint', href: '/imprint' },
+  ],
+};

@@ -1,0 +1,71 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+const entries = (await getCollection('writing')).sort(
+  (a, b) => +new Date(b.data.publish_date) - +new Date(a.data.publish_date)
+);
+const featured = entries.find((e) => e.data.featured);
+const others = entries.filter((e) => e.id !== featured?.id);
+---
+
+<PageLayout
+  title="Writing — the diary"
+  description="Essays by Allaia. Slow writing. Identity-led work. The kind of email worth reading on a Sunday morning."
+  eyebrow="The diary"
+  heading="Writing —"
+  italic="slowly."
+  lead="Essays written for the women already doing the work. The kind of email worth reading on a Sunday morning, on a balcony, with no agenda."
+  byline="Featured entries — full archive below"
+>
+  <div class="mx-auto max-w-5xl px-6">
+    {featured && (
+      <article class="reveal pb-16 mb-16 border-b border-ink/10">
+        <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-4">
+          Featured · {featured.data.read_time_min} min · {featured.data.location ?? 'Allaia'}
+        </p>
+        <h2 class="display-md mb-4 max-w-3xl">
+          <a href={`/writing/${featured.id}`} class="text-ink hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+            {featured.data.title}
+          </a>
+        </h2>
+        {featured.data.subtitle && (
+          <p class="font-display italic text-2xl text-brown mb-6 leading-tight">
+            {featured.data.subtitle}
+          </p>
+        )}
+        <p class="serif-lg text-ink-soft mb-7 max-w-prose">{featured.data.excerpt}</p>
+        <a href={`/writing/${featured.id}`} class="cta-dark">
+          Read the entry <ArrowUpRight size={12} />
+        </a>
+      </article>
+    )}
+
+    <ul class="space-y-12">
+      {others.map((e) => (
+        <li class="reveal grid sm:grid-cols-[10rem_1fr] gap-6 sm:gap-12 py-6 border-b border-ink/8">
+          <div>
+            <p class="byline text-ink-mute">
+              {new Date(e.data.publish_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
+            </p>
+            <p class="byline text-ink-mute mt-1">
+              {e.data.read_time_min} min · {e.data.location ?? 'Allaia'}
+            </p>
+          </div>
+          <article>
+            <h3 class="font-display text-2xl sm:text-[1.875rem] text-ink leading-tight mb-3">
+              <a href={`/writing/${e.id}`} class="hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+                {e.data.title}
+              </a>
+            </h3>
+            <p class="serif-body text-ink-soft mb-4 max-w-prose">{e.data.excerpt}</p>
+            <a href={`/writing/${e.id}`} class="byline text-ink hover:gap-3 inline-flex items-center gap-2 transition-all duration-300 ease-editorial">
+              Read entry <ArrowUpRight size={11} />
+            </a>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</PageLayout>

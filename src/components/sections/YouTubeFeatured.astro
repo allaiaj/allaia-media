@@ -1,0 +1,132 @@
+---
+// YouTube featured — pulls Allaia's real featured video from site.ts.
+// Click-to-play poster: shows the actual maxres thumbnail until play tapped,
+// then loads the youtube-nocookie iframe. Faster LCP, no tracker until interact.
+import { site } from '@data/site';
+import Youtube from '@components/icons/Youtube.astro';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+const v = site.youtubeFeatured;
+const watchHref = `https://www.youtube.com/watch?v=${v.video_id}`;
+---
+
+<section id="watch" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40 bg-anthracite text-cream overflow-hidden">
+  <!-- Warm wash so the dark section feels like an editorial spread, not a black hole -->
+  <div class="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
+    <div
+      class="absolute top-1/3 right-[-10%] h-[60vh] w-[60vh] rounded-full blur-[140px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.55), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-[-20%] left-[-5%] h-[55vh] w-[55vh] rounded-full blur-[140px]"
+      style="background: radial-gradient(circle, rgba(139,157,126,0.35), transparent 70%);"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6 relative">
+    <div class="reveal grid sm:grid-cols-[1fr_auto] gap-6 sm:gap-12 items-end mb-12 sm:mb-16 pb-6 border-b border-cream/10">
+      <div>
+        <p class="text-[0.6875rem] uppercase tracking-[0.24em] text-sage font-medium mb-4">
+          Watch · the featured essay
+        </p>
+        <h2 class="display-md text-cream max-w-2xl">
+          The diary,
+          <span class="font-display italic font-medium bg-gradient-to-r from-terracotta via-terracotta-deep to-brown bg-clip-text text-transparent" style="padding-bottom: 0.12em;">read aloud.</span>
+        </h2>
+      </div>
+      <a href={site.youtube} target="_blank" rel="noopener" class="byline text-cream/55 hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2 whitespace-nowrap">
+        <Youtube size={14} /> {site.youtubeHandle}
+      </a>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-start">
+      <!-- Cinematic 16:9 player — click-to-play poster swaps in the iframe -->
+      <figure class="reveal relative">
+        <div
+          class="relative aspect-video rounded-[1.5rem] overflow-hidden shadow-anthracite ring-1 ring-cream/10"
+          style="box-shadow: 0 60px 160px -40px rgba(184,85,66,0.45), 0 0 0 1px rgba(242,237,229,0.08) inset;"
+          data-yt-shell
+          data-yt-id={v.video_id}
+        >
+          <button
+            type="button"
+            class="absolute inset-0 w-full h-full group cursor-pointer"
+            aria-label={`Play: ${v.title}`}
+            data-yt-play
+          >
+            <img
+              src={v.thumbnail}
+              alt={v.title}
+              loading="eager"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.03]"
+            />
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style="background: linear-gradient(to top, rgba(14,13,11,0.55) 0%, rgba(14,13,11,0.1) 30%, transparent 60%);"
+              aria-hidden="true"
+            ></div>
+            <span class="absolute inset-0 grid place-items-center">
+              <span class="h-20 w-20 rounded-full bg-cream/95 backdrop-blur grid place-items-center group-hover:scale-110 transition-transform duration-500 ease-editorial shadow-anthracite">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                  <path d="M8 5.5L20 13l-12 7.5v-15Z" fill="#1A1A1A"/>
+                </svg>
+              </span>
+            </span>
+            <span class="absolute bottom-5 left-5 right-5 flex items-end justify-between text-cream/85">
+              <span class="micro tracking-[0.22em] uppercase font-medium">{v.duration}</span>
+              <span class="micro tracking-[0.22em] uppercase font-medium">{site.youtubeHandle}</span>
+            </span>
+          </button>
+        </div>
+        <figcaption class="mt-4 flex items-baseline justify-between byline text-cream/55">
+          <span>From the channel — {site.youtubeHandle}</span>
+          <span>FIG. 06</span>
+        </figcaption>
+      </figure>
+
+      <!-- Side meta -->
+      <div class="reveal">
+        <p class="text-[0.6875rem] uppercase tracking-[0.22em] text-cream/45 mb-4">Featured · long-form</p>
+        <h3 class="font-display text-cream text-[clamp(1.75rem,2.6vw,2.5rem)] leading-tight mb-5">
+          {v.title}
+        </h3>
+        <p class="serif-lg text-cream/75 mb-7 max-w-prose">
+          {v.description}
+        </p>
+        <dl class="space-y-3 byline text-cream/55 mb-9 pt-5 border-t border-cream/10">
+          <div class="flex gap-4"><dt class="w-24 text-cream">Channel</dt><dd>{site.youtubeHandle}</dd></div>
+          <div class="flex gap-4"><dt class="w-24 text-cream">Length</dt><dd>{v.duration}</dd></div>
+          <div class="flex gap-4"><dt class="w-24 text-cream">Mode</dt><dd>Read aloud — long-form</dd></div>
+        </dl>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href={watchHref} target="_blank" rel="noopener" class="cta-cream">
+            Watch on YouTube <ArrowUpRight size={12} />
+          </a>
+          <a href={site.youtube} target="_blank" rel="noopener" class="cta-ghost-dark">
+            Subscribe <ArrowUpRight size={12} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Click-to-play — swap the poster button for the nocookie iframe.
+  document.querySelectorAll<HTMLElement>('[data-yt-shell]').forEach((shell) => {
+    const btn = shell.querySelector<HTMLButtonElement>('[data-yt-play]');
+    const id = shell.getAttribute('data-yt-id');
+    if (!btn || !id) return;
+    btn.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'absolute inset-0 w-full h-full';
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white`;
+      iframe.title = btn.getAttribute('aria-label') ?? 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      shell.replaceChildren(iframe);
+    }, { once: true });
+  });
+</script>

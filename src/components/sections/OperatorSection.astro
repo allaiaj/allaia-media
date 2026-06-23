@@ -1,0 +1,74 @@
+---
+import { operator } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<section id="operator" class="relative scroll-mt-28 py-12 sm:py-20">
+  <div class="mx-auto max-w-6xl px-6">
+    <article class="reveal relative overflow-hidden rounded-[2rem] bg-anthracite text-cream paper-grain shadow-anthracite">
+      <!-- Accent washes -->
+      <div
+        class="pointer-events-none absolute inset-0 opacity-55"
+        style="background: radial-gradient(ellipse 60% 70% at 85% 10%, rgba(184,85,66,0.5), transparent 70%), radial-gradient(ellipse 55% 60% at 12% 90%, rgba(139,157,126,0.4), transparent 70%);"
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 p-8 sm:p-12 lg:p-16">
+        <div>
+          <p class="text-[0.6875rem] uppercase tracking-[0.24em] text-sage font-medium mb-5">
+            {operator.eyebrow}
+          </p>
+          <h2 class="font-display text-cream text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.04] tracking-[-0.025em] font-medium">
+            {operator.heading.pre}{' '}
+            <span class="font-display italic text-terracotta">{operator.heading.italic}</span>
+          </h2>
+
+          <p class="serif-lg text-cream/80 mt-8 max-w-prose">
+            {operator.body}
+          </p>
+
+          <div class="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <a href={operator.cta.href} target="_blank" rel="noopener" class="cta-cream">
+              {operator.cta.label}
+              <ArrowUpRight size={12} />
+            </a>
+            <a href="/the-studio" class="cta-ghost-dark">
+              The handoff explained
+              <ArrowUpRight size={12} />
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: data slats -->
+        <div class="lg:border-l lg:border-cream/10 lg:pl-12 grid grid-cols-2 gap-x-8 gap-y-10 self-center">
+          <div>
+            <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45 mb-2">Role</p>
+            <p class="font-display italic text-2xl text-cream">COO</p>
+          </div>
+          <div>
+            <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45 mb-2">Studio</p>
+            <p class="font-display italic text-2xl text-cream">Blacklyne AI</p>
+          </div>
+          <div>
+            <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45 mb-2">Markets</p>
+            <p class="font-display italic text-xl text-cream/85 leading-tight">
+              DE · AE<br/>UK · US
+            </p>
+          </div>
+          <div>
+            <p class="text-[0.625rem] uppercase tracking-[0.18em] text-cream/45 mb-2">Discipline</p>
+            <p class="font-display italic text-xl text-cream/85 leading-tight">
+              Premium digital + AI search
+            </p>
+          </div>
+          <div class="col-span-2 pt-7 border-t border-cream/10">
+            <p class="font-display italic text-cream/85 text-lg leading-snug">
+              "Helping brands become unmistakable in the AI search era."
+            </p>
+            <p class="byline text-cream/45 mt-3">— Blacklyne, masthead</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

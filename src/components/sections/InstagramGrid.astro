@@ -1,0 +1,78 @@
+---
+import Instagram from '@components/icons/Instagram.astro';
+import { site } from '@data/site';
+
+// Editorial masonry — placeholder shells. Allaia supplies 8–12 curated posts.
+type PostKind = 'post' | 'carousel' | 'reel';
+type Post = { id: number; caption: string; kind: PostKind; grad: string };
+const posts: Post[] = [
+  { id: 1, caption: 'On the wound becoming wisdom — a slow Sunday.', kind: 'post', grad: 'linear-gradient(160deg, #B85542 0%, #2A2722 100%)' },
+  { id: 2, caption: 'A page from Become Her. The chapter your highlighter never recovers from.', kind: 'carousel', grad: 'linear-gradient(160deg, #2A2722 0%, #6B4F3D 100%)' },
+  { id: 3, caption: 'The discipline is the architecture. Not the mood.', kind: 'post', grad: 'linear-gradient(160deg, #8B9D7E 0%, #6B4F3D 100%)' },
+  { id: 4, caption: 'Bali, afternoon, after the call.', kind: 'post', grad: 'linear-gradient(160deg, #6B4F3D 0%, #1A1A1A 100%)' },
+  { id: 5, caption: 'Soulmates are not similarity. They are resonance.', kind: 'carousel', grad: 'linear-gradient(160deg, #B85542 0%, #6B4F3D 100%)' },
+  { id: 6, caption: 'The middle is the part nobody filters.', kind: 'post', grad: 'linear-gradient(160deg, #2A2722 0%, #B85542 100%)' },
+  { id: 7, caption: 'A short note on the studio side. COO at Blacklyne.', kind: 'post', grad: 'linear-gradient(160deg, #0E0D0B 0%, #2F2A22 100%)' },
+  { id: 8, caption: 'Rupture No. IV — sage. The new piece this month.', kind: 'post', grad: 'linear-gradient(160deg, #8B9D7E 0%, #2A2722 100%)' },
+];
+
+const kindLabel: Record<PostKind, string> = { post: 'POST', carousel: 'CAROUSEL', reel: 'REEL' };
+---
+
+<section class="relative py-24 sm:py-32 lg:py-40">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal flex items-baseline justify-between gap-6 mb-14 pb-6 border-b border-ink/10">
+      <div>
+        <p class="eyebrow mb-4">Recent · @allaia.power</p>
+        <h2 class="display-md max-w-2xl">
+          The <span class="italic-grad">feed</span>, lightly curated.
+        </h2>
+      </div>
+      <a href={site.instagram} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2">
+        <Instagram size={13} /> Follow on Instagram
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      {posts.map((p, i) => (
+        <a
+          href={site.instagram}
+          target="_blank"
+          rel="noopener"
+          class="reveal group block"
+          style={`transition-delay: ${(i % 4) * 60}ms`}
+        >
+          <figure class="relative aspect-square rounded-[1rem] overflow-hidden bg-bone shadow-photo">
+            <img
+              src={`/img/instagram/post-${String(p.id).padStart(2, '0')}.jpg`}
+              alt={p.caption}
+              loading="lazy"
+              decoding="async"
+              onerror="this.style.display='none'"
+              class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1000ms] ease-editorial group-hover:scale-[1.05]"
+            />
+            <div
+              class="absolute inset-0 z-0"
+              style={`background: ${p.grad};`}
+              aria-hidden="true"
+            ></div>
+
+            <div class="absolute top-3 left-3 bg-anthracite/55 backdrop-blur-md px-2 py-0.5 rounded-full text-[0.5625rem] uppercase tracking-[0.18em] text-cream font-medium">
+              {kindLabel[p.kind]}
+            </div>
+
+            <!-- Hover caption layer -->
+            <div class="absolute inset-x-0 bottom-0 p-4 text-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-editorial">
+              <p class="font-display italic text-sm leading-snug line-clamp-3">{p.caption}</p>
+            </div>
+            <div
+              class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-editorial"
+              style="background: linear-gradient(to top, rgba(14,13,11,0.75), transparent 50%);"
+              aria-hidden="true"
+            ></div>
+          </figure>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
