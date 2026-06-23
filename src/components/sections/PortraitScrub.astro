@@ -1,22 +1,48 @@
 ---
-// Portrait scrub — sticky pinned scroll-driven portrait reveal.
-// Lives between the cinematic hero and the editorial opening.
-// Allaia's face stays here.
+// Portrait scrub — sticky pinned section between the cinematic hero
+// and the editorial opening. Three different portraits cycle through
+// as the user scrolls, one per beat. No more growing-zoom on the
+// portrait container; just subtle ken-burns inside the frame.
 //
-// Desktop: portrait centered, text tower on the left, beats fade through
-// Mobile: portrait full-bleed background with warm scrim, text on top
-// in cream — Vogue cover treatment.
+// Desktop: clean 2-column grid — text left, portrait right
+// Mobile : photo full-bleed background with warm scrim, text on top
+
+const beats = [
+  {
+    eyebrow: 'THE WORK',
+    head: 'An author.',
+    italic: 'A coach.',
+    body: 'The work is identity-led. The room is kept small — on purpose.',
+    photo: '/img/instagram/reel-DWk5dvejGdm.jpg',
+    figure: 'FIG. 02',
+  },
+  {
+    eyebrow: 'THE PRACTICE',
+    head: 'A studio.',
+    italic: 'A canvas.',
+    body: 'A studio at scale. A practice that runs slow. Each expression carries the same thesis.',
+    photo: '/img/instagram/reel-DYe7mNNsztZ.jpg',
+    figure: 'FIG. 03',
+  },
+  {
+    eyebrow: 'THE THESIS',
+    head: 'Four expressions.',
+    italic: 'One thesis.',
+    body: 'What compounds is identity. Performance does not.',
+    photo: '/img/instagram/reel-DY44G_Gs6rU.jpg',
+    figure: 'FIG. 04',
+  },
+];
 ---
 
 <section
   class="portrait-scrub relative bg-bone"
   data-portrait-scrub
-  aria-label="The woman behind the work"
+  aria-label="Three portraits — the work, the practice, the thesis"
 >
   <div class="ps-track relative" style="height: 320vh;">
     <div
       class="ps-stage sticky top-0 h-screen w-full overflow-hidden"
-      style="perspective: 1200px; perspective-origin: 50% 50%;"
     >
       <!-- DESKTOP backdrop wash -->
       <div
@@ -25,127 +51,141 @@
         aria-hidden="true"
       ></div>
 
-      <!-- MOBILE: full-bleed portrait with dark warm scrim -->
-      <div class="md:hidden absolute inset-0" data-ps-mobile-bg aria-hidden="true">
-        <img
-          src="/img/allaia/avatar.jpg"
-          alt=""
-          class="absolute inset-0 w-full h-full object-cover photo-warm"
-          data-ps-img-mobile
-        />
-        <!-- Tonal warm overlay -->
+      <!-- MOBILE: portrait stack full-bleed with scrim -->
+      <div class="md:hidden absolute inset-0" aria-hidden="true">
+        {beats.map((b, i) => (
+          <div
+            class="ps-mobile-photo absolute inset-0 transition-opacity duration-[500ms]"
+            data-ps-mobile-photo={i}
+            style={`opacity: ${i === 0 ? 1 : 0};`}
+          >
+            <img
+              src={b.photo}
+              alt=""
+              loading={i === 0 ? 'eager' : 'lazy'}
+              class="ps-mobile-img absolute inset-0 w-full h-full object-cover photo-warm"
+            />
+          </div>
+        ))}
+        <!-- Dark warm scrim so text reads -->
         <div
           class="absolute inset-0"
-          style="background: linear-gradient(180deg, rgba(14,13,11,0.55) 0%, rgba(14,13,11,0.35) 35%, rgba(14,13,11,0.7) 100%);"
+          style="background: linear-gradient(180deg, rgba(14,13,11,0.55) 0%, rgba(14,13,11,0.35) 40%, rgba(14,13,11,0.75) 100%);"
         ></div>
       </div>
 
-      <!-- Grain -->
+      <!-- Grain overlay -->
       <div
         class="absolute inset-0 pointer-events-none mix-blend-multiply opacity-[0.06]"
         style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;);"
         aria-hidden="true"
       ></div>
 
-      <!-- DESKTOP: portrait centered -->
-      <figure
-        class="ps-portrait hidden md:block absolute"
-        data-ps-portrait
-        style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: clamp(280px, 32vw, 460px);"
-      >
-        <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-photo bg-anthracite-warm paper-grain">
-          <img
-            src="/img/allaia/avatar.jpg"
-            alt="Allaia — portrait"
-            loading="lazy"
-            decoding="async"
-            class="absolute inset-0 w-full h-full object-cover photo-warm"
-            style="object-position: 50% 35%;"
-            data-ps-img
-          />
-          <div
-            class="absolute inset-0 pointer-events-none"
-            style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.45) 0%, transparent 60%);"
-            aria-hidden="true"
-          ></div>
-        </div>
-        <figcaption class="mt-3 flex items-baseline justify-between byline text-ink-mute px-1">
-          <span class="uppercase tracking-[0.22em] text-[0.625rem]">Allaia</span>
-          <span data-ps-figN>FIG. 02</span>
-        </figcaption>
-      </figure>
-
-      <!-- TEXT TOWER -->
-      <div class="ps-type absolute inset-0 flex items-center pointer-events-none">
-        <div class="mx-auto max-w-6xl px-6 w-full grid md:grid-cols-[1fr_auto_1fr] gap-8 lg:gap-12 items-center">
-          <!-- LEFT type column (DESKTOP) / FULL column (MOBILE) -->
-          <div class="ps-type-col relative h-[60vh]">
-            {[
-              {
-                eyebrow: 'THE WORK',
-                head: 'An author.',
-                italic: 'A coach.',
-                body: 'The work is identity-led. The room is kept small — on purpose.',
-              },
-              {
-                eyebrow: 'THE PRACTICE',
-                head: 'A studio.',
-                italic: 'A canvas.',
-                body: 'A studio at scale. A practice that runs slow. Each expression carries the same thesis.',
-              },
-              {
-                eyebrow: 'THE THESIS',
-                head: 'Four expressions.',
-                italic: 'One thesis.',
-                body: 'What compounds is identity. Performance does not.',
-              },
-            ].map((b, i) => (
+      <!-- DESKTOP CONTENT — clean 2-column grid, no absolute overlap -->
+      <div class="absolute inset-0 hidden md:flex items-center pointer-events-none">
+        <div class="mx-auto max-w-[1280px] px-10 lg:px-16 w-full grid grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-center">
+          <!-- LEFT: text beats stack (one shows at a time) -->
+          <div class="relative h-[60vh] max-w-xl">
+            {beats.map((b, i) => (
               <div
                 class="ps-beat absolute inset-0 flex flex-col justify-center transition-opacity duration-[400ms]"
                 data-ps-beat={i}
                 style={`opacity: ${i === 0 ? 1 : 0};`}
               >
-                <p class="ps-eyebrow eyebrow mb-5 text-ink-mute md:text-ink-mute">{b.eyebrow}</p>
-                <h2 class="ps-head display-md leading-[1.06] mb-4 text-ink md:text-ink">
+                <p class="eyebrow text-ink-mute mb-6">{b.eyebrow}</p>
+                <h2 class="display-md text-ink leading-[1.06] mb-5">
                   <span class="block">{b.head}</span>
                   <span class="font-display italic font-medium italic-grad block">{b.italic}</span>
                 </h2>
-                <p class="ps-body serif-lg max-w-prose text-ink-soft md:text-ink-soft">{b.body}</p>
+                <p class="serif-lg text-ink-soft max-w-prose">{b.body}</p>
               </div>
             ))}
           </div>
 
-          <!-- spacer for portrait (DESKTOP only) -->
-          <div class="hidden md:block" style="width: clamp(300px, 34vw, 480px);"></div>
-
-          <!-- RIGHT column — counter (DESKTOP only) -->
-          <div class="hidden md:flex flex-col items-end gap-6">
-            <p class="font-mono text-[11px] tracking-widest text-ink-mute">
-              <span data-ps-current>I</span>
-              <span class="text-ink/25"> / III</span>
-            </p>
-            <div class="flex flex-col gap-2 items-end">
-              {[0, 1, 2].map((i) => (
-                <span class="ps-dot block h-px w-10 bg-ink/15 transition-all duration-500" data-ps-dot={i}></span>
-              ))}
-            </div>
+          <!-- RIGHT: portrait stack — 3 photos cross-fade per beat -->
+          <div class="relative justify-self-center w-full max-w-[420px]">
+            <figure class="relative">
+              <div class="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
+                {beats.map((b, i) => (
+                  <div
+                    class="ps-photo absolute inset-0 transition-opacity duration-[500ms]"
+                    data-ps-photo={i}
+                    style={`opacity: ${i === 0 ? 1 : 0};`}
+                  >
+                    <img
+                      src={b.photo}
+                      alt=""
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      class="ps-photo-img absolute inset-0 w-full h-full object-cover photo-warm"
+                      style="object-position: 50% 30%;"
+                    />
+                  </div>
+                ))}
+                <!-- Bottom vignette -->
+                <div
+                  class="absolute inset-0 pointer-events-none"
+                  style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.4) 0%, transparent 60%);"
+                  aria-hidden="true"
+                ></div>
+              </div>
+              <figcaption class="mt-3 flex items-baseline justify-between byline text-ink-mute">
+                <span class="uppercase tracking-[0.22em] text-[0.625rem]">Allaia</span>
+                <span data-ps-figN>FIG. 02</span>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
 
-      <!-- MOBILE counter row -->
-      <div class="absolute md:hidden top-24 inset-x-6 flex items-center justify-between text-cream pointer-events-none">
+      <!-- MOBILE CONTENT — text on top of the scrim'd photo -->
+      <div class="md:hidden absolute inset-0 flex flex-col justify-end pb-24 px-6 pointer-events-none">
+        <div class="relative h-[40vh]">
+          {beats.map((b, i) => (
+            <div
+              class="ps-mobile-beat absolute inset-0 flex flex-col justify-end transition-opacity duration-[400ms]"
+              data-ps-mobile-beat={i}
+              style={`opacity: ${i === 0 ? 1 : 0};`}
+            >
+              <p class="text-[0.625rem] uppercase tracking-[0.24em] text-cream/65 font-medium mb-4">{b.eyebrow}</p>
+              <h2 class="font-display text-cream leading-[1.04] mb-4" style="font-size: clamp(2rem, 7vw, 2.75rem); letter-spacing: -0.025em;">
+                <span class="block">{b.head}</span>
+                <span class="font-display italic font-medium block" style="background: linear-gradient(135deg, #F2C2A8 0%, #E89878 55%, #C18B68 100%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 0.14em;">
+                  {b.italic}
+                </span>
+              </h2>
+              <p class="font-serif text-cream/85 text-[1.0625rem] leading-[1.55] max-w-prose">{b.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- DESKTOP rail: Roman + dots -->
+      <div class="hidden md:flex absolute top-1/2 right-8 lg:right-12 -translate-y-1/2 flex-col items-end gap-6 pointer-events-none">
+        <p class="font-mono text-[11px] tracking-widest text-ink-mute">
+          <span data-ps-current>I</span>
+          <span class="text-ink/25"> / III</span>
+        </p>
+        <div class="flex flex-col gap-2 items-end">
+          {[0, 1, 2].map((i) => (
+            <span class="ps-dot block h-px w-10 bg-ink/15 transition-all duration-500" data-ps-dot={i}></span>
+          ))}
+        </div>
+      </div>
+
+      <!-- MOBILE counter row top -->
+      <div class="md:hidden absolute top-24 inset-x-6 flex items-center justify-between text-cream pointer-events-none">
         <p class="font-mono text-[10px] tracking-widest">
           <span data-ps-current-mobile>I</span>
           <span class="opacity-50"> / III</span>
         </p>
-        <p class="micro tracking-[0.22em] uppercase text-[0.5625rem]">The portrait essay</p>
+        <p class="text-[0.5625rem] uppercase tracking-[0.22em]">The portrait essay</p>
       </div>
 
       <!-- Bottom rail -->
       <div class="absolute inset-x-0 bottom-6 sm:bottom-8 px-6 sm:px-10 flex items-end justify-between pointer-events-none">
-        <span class="micro tracking-[0.24em] uppercase text-ink-mute hidden md:inline">The portrait essay</span>
-        <span class="micro tracking-[0.22em] uppercase text-cream/65 md:hidden" data-ps-figN-mobile>FIG. 02</span>
+        <span class="text-[0.625rem] uppercase tracking-[0.24em] text-ink-mute hidden md:inline">The portrait essay</span>
+        <span class="text-[0.625rem] uppercase tracking-[0.22em] text-cream/55 md:hidden" data-ps-figN-mobile>FIG. 02</span>
         <span class="font-mono text-[11px] tracking-widest text-ink-mute hidden md:inline" data-ps-progress>00%</span>
         <span class="font-mono text-[11px] tracking-widest text-cream/55 md:hidden" data-ps-progress-mobile>00%</span>
       </div>
@@ -157,43 +197,35 @@
   .ps-backdrop {
     background: linear-gradient(160deg, #FAF6EE 0%, #F2EDE5 40%, #E8DDC9 100%);
   }
-  .ps-stage[data-ps-tone="terracotta"] .ps-backdrop {
-    background: linear-gradient(160deg, #F2EDE5 0%, #E8C9B7 60%, #B85542 130%);
+  .ps-stage[data-ps-tone="warm"] .ps-backdrop {
+    background: linear-gradient(160deg, #F2EDE5 0%, #E8C9B7 60%, #C7A48D 130%);
   }
   .ps-stage[data-ps-tone="brown"] .ps-backdrop {
-    background: linear-gradient(160deg, #F2EDE5 0%, #C7A48D 40%, #6B4F3D 100%);
+    background: linear-gradient(160deg, #F2EDE5 0%, #C7A48D 40%, #8E6F58 100%);
   }
-  .ps-portrait {
+  /* Subtle ken-burns INSIDE the frame — not on the container */
+  .ps-photo-img,
+  .ps-mobile-img {
     transition: transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    will-change: transform;
-  }
-  [data-ps-img-mobile] {
-    transition: transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1);
     will-change: transform;
   }
   .ps-dot.is-active { width: 4rem; background: var(--color-terracotta); }
 
-  /* MOBILE — text needs to read on top of the dark portrait scrim */
-  @media (max-width: 767px) {
-    .ps-eyebrow { color: rgba(242, 237, 229, 0.65) !important; }
-    .ps-head { color: var(--color-cream) !important; }
-    .ps-head .italic-grad {
-      background: linear-gradient(135deg, #F2C2A8 0%, #E89878 55%, #C18B68 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .ps-body { color: rgba(242, 237, 229, 0.85) !important; }
-    .ps-type-col {
-      height: 60vh !important;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .ps-track { height: 100vh; }
-    .ps-beat[data-ps-beat="0"] { opacity: 1 !important; }
-    .ps-beat:not([data-ps-beat="0"]) { opacity: 0 !important; }
-    .ps-portrait { transition: none !important; }
+    .ps-beat[data-ps-beat="0"],
+    .ps-mobile-beat[data-ps-mobile-beat="0"],
+    .ps-photo[data-ps-photo="0"],
+    .ps-mobile-photo[data-ps-mobile-photo="0"] {
+      opacity: 1 !important;
+    }
+    .ps-beat:not([data-ps-beat="0"]),
+    .ps-mobile-beat:not([data-ps-mobile-beat="0"]),
+    .ps-photo:not([data-ps-photo="0"]),
+    .ps-mobile-photo:not([data-ps-mobile-photo="0"]) {
+      opacity: 0 !important;
+    }
+    .ps-photo-img, .ps-mobile-img { transition: none !important; }
   }
 </style>
 
@@ -202,10 +234,12 @@
   if (root && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     const track = root.querySelector<HTMLElement>('.ps-track')!;
     const stage = root.querySelector<HTMLElement>('.ps-stage')!;
-    const portrait = root.querySelector<HTMLElement>('[data-ps-portrait]');
-    const img = root.querySelector<HTMLElement>('[data-ps-img]');
-    const imgMobile = root.querySelector<HTMLElement>('[data-ps-img-mobile]');
     const beats = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-beat]'));
+    const beatsMobile = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-mobile-beat]'));
+    const photos = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-photo]'));
+    const photoImgs = Array.from(root.querySelectorAll<HTMLElement>('.ps-photo-img'));
+    const photosMobile = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-mobile-photo]'));
+    const mobileImgs = Array.from(root.querySelectorAll<HTMLElement>('.ps-mobile-img'));
     const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-ps-dot]'));
     const figN = root.querySelector<HTMLElement>('[data-ps-figN]');
     const figNMobile = root.querySelector<HTMLElement>('[data-ps-figN-mobile]');
@@ -214,8 +248,9 @@
     const progressEl = root.querySelector<HTMLElement>('[data-ps-progress]');
     const progressMobile = root.querySelector<HTMLElement>('[data-ps-progress-mobile]');
 
-    const tones = ['default', 'terracotta', 'brown'];
+    const tones = ['default', 'warm', 'brown'];
     const romans = ['I', 'II', 'III'];
+    const figs = ['FIG. 02', 'FIG. 03', 'FIG. 04'];
 
     let last = 0;
     let activeIdx = -1;
@@ -224,12 +259,14 @@
       if (i === activeIdx) return;
       activeIdx = i;
       beats.forEach((el, k) => (el.style.opacity = k === i ? '1' : '0'));
+      beatsMobile.forEach((el, k) => (el.style.opacity = k === i ? '1' : '0'));
+      photos.forEach((el, k) => (el.style.opacity = k === i ? '1' : '0'));
+      photosMobile.forEach((el, k) => (el.style.opacity = k === i ? '1' : '0'));
       dots.forEach((el, k) => el.classList.toggle('is-active', k === i));
       if (curEl) curEl.textContent = romans[i] ?? 'I';
       if (curMobile) curMobile.textContent = romans[i] ?? 'I';
-      const fig = `FIG. 0${i + 2}`;
-      if (figN) figN.textContent = fig;
-      if (figNMobile) figNMobile.textContent = fig;
+      if (figN) figN.textContent = figs[i] ?? 'FIG. 02';
+      if (figNMobile) figNMobile.textContent = figs[i] ?? 'FIG. 02';
       stage.setAttribute('data-ps-tone', tones[i] ?? 'default');
     };
 
@@ -243,25 +280,14 @@
       const idx = Math.min(2, Math.floor(last * 3 * 0.999));
       setActive(idx);
 
-      // Desktop portrait — scale + drift
-      if (portrait) {
-        const scale = 1 + last * 0.18;
-        const dx = -last * 60;
-        const dy = Math.sin(last * Math.PI * 1.2) * 14;
-        portrait.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${scale})`;
-      }
-      if (img) {
-        const imgScale = 1 + last * 0.08;
-        const imgY = last * -18;
-        img.style.transform = `translateY(${imgY}px) scale(${imgScale})`;
-      }
-
-      // Mobile portrait — ken-burns zoom
-      if (imgMobile) {
-        const ms = 1.05 + last * 0.12;
-        const my = -last * 28;
-        imgMobile.style.transform = `translateY(${my}px) scale(${ms})`;
-      }
+      // Local progress within current scene → drives a subtle ken-burns
+      // INSIDE the active photo frame only. Other photos sit still.
+      const localP = (last * 3) - idx;
+      const scale = 1.02 + Math.max(0, Math.min(1, localP)) * 0.04;
+      const dy = -localP * 8;
+      const tf = `translateY(${dy}px) scale(${scale})`;
+      if (photoImgs[idx]) photoImgs[idx].style.transform = tf;
+      if (mobileImgs[idx]) mobileImgs[idx].style.transform = `translateY(${dy * 1.5}px) scale(${scale + 0.02})`;
 
       const pct = `${Math.round(last * 100)}%`;
       if (progressEl) progressEl.textContent = pct;

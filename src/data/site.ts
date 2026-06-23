@@ -72,10 +72,10 @@ export const identities = [
     label: 'Operator',
     context: 'COO · Blacklyne',
     body: 'A studio shipping across four countries. The applied version of the work.',
-    href: '/the-studio',
+    href: 'https://blacklyne.ai/en/',
     cta: 'The studio',
     figure: 'FIG. 02',
-    image: '/img/instagram/reel-DXwOfqdM_N0.jpg',
+    image: '/img/instagram/reel-DZTyZlzMrJO.jpg',
     alt: '',
   },
   {
