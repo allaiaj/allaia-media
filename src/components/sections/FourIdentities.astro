@@ -54,7 +54,13 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
         // dominant cards. Author + Artist sit in the accent slots.
         const dominant = i === 1 || i === 3;
         const col = dominant ? 'lg:col-span-2' : 'lg:col-span-1';
-        const aspect = dominant ? 'aspect-[5/3] lg:aspect-[5/3]' : 'aspect-[4/5]';
+        // Mobile-first aspect: dominants are TALL (read as bigger when
+        // every card is full-width). Accents are square (read smaller).
+        // Desktop flips back to the magazine spread — dominants get the
+        // landscape 5:3 across 2 columns, accents take the 4:5 single col.
+        const aspect = dominant
+          ? 'aspect-[4/5] lg:aspect-[5/3]'
+          : 'aspect-square lg:aspect-[4/5]';
         const overlayJustify = dominant ? 'justify-between' : 'justify-end';
         return (
           <a
@@ -116,7 +122,7 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
                 </p>
                 <h3
                   class="font-display leading-[1.0] mb-4 text-cream group-hover:text-terracotta transition-colors duration-500 ease-editorial"
-                  style={`font-size: clamp(${dominant ? '2.5rem' : '2rem'}, ${dominant ? '4.5vw' : '3vw'}, ${dominant ? '4rem' : '3rem'}); letter-spacing: -0.03em;`}
+                  style={`font-size: clamp(${dominant ? '2.75rem' : '1.75rem'}, ${dominant ? '5vw' : '3vw'}, ${dominant ? '4.5rem' : '2.75rem'}); letter-spacing: -0.035em;`}
                 >
                   {id.label}.
                 </h3>
