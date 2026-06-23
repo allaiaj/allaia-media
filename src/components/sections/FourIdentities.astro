@@ -1,10 +1,14 @@
 ---
+// Asymmetric magazine-spread identities. Cards 01 + 03 are dominant
+// (col-span-2), 02 + 04 are accent — gives the section a Vogue-cover
+// rhythm instead of a flat 4-up grid. Each card has overlay text on
+// the photo + subtle 3D tilt on hover.
 import { identities } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 ---
 
 <section id="identities" class="relative scroll-mt-28 py-28 sm:py-36 lg:py-44 overflow-hidden">
-  <!-- Ambient atmospheric layers -->
+  <!-- Atmospheric layers -->
   <div class="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
     <div
       class="absolute top-0 right-1/4 h-[55vh] w-[55vh] rounded-full blur-[140px]"
@@ -41,44 +45,35 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
       </div>
     </div>
 
-    <!-- Cinema-strip identity cards — each photo gets its own dramatic frame -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+    <!-- Magazine-spread asymmetric layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8" data-identity-grid>
       {identities.map((id, i) => {
         const isExternal = id.href.startsWith('http');
-        // Vary card heights for cinema-strip rhythm
-        const liftClass =
-          i === 1 ? 'lg:translate-y-12' :
-          i === 3 ? 'lg:translate-y-12' :
-          '';
+        // 01 + 03 = dominant (col-span-2). 02 + 04 = accent
+        const dominant = i === 0 || i === 2;
+        const col = dominant ? 'lg:col-span-2' : 'lg:col-span-1';
+        const aspect = dominant ? 'aspect-[5/3] lg:aspect-[5/3]' : 'aspect-[4/5]';
+        const overlayJustify = dominant ? 'justify-between' : 'justify-end';
         return (
           <a
             href={id.href}
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noopener' : undefined}
-            class={`reveal group block ${liftClass}`}
-            style={`transition-delay: ${i * 90}ms`}
+            class={`identity-card reveal group block ${col}`}
+            data-identity-card
+            style={`transition-delay: ${i * 80}ms`}
           >
-            <!-- Massive index numeral as marginalia -->
-            <div class="flex items-baseline justify-between mb-4">
-              <span
-                class="font-display italic font-medium leading-none italic-grad"
-                style="font-size: clamp(2.5rem, 3.5vw, 3.75rem); letter-spacing: -0.04em; padding-bottom: 0.1em;"
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mute">
-                {id.figure}
-              </span>
-            </div>
-
-            <figure class="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden mb-6 bg-bone paper-grain shadow-photo">
+            <figure
+              class={`relative ${aspect} rounded-[1.5rem] overflow-hidden shadow-photo bg-anthracite-warm paper-grain transition-transform duration-700 ease-editorial`}
+              data-identity-figure
+            >
               <img
                 src={id.image}
                 alt={id.alt}
                 loading="lazy"
                 decoding="async"
                 onerror="this.style.display='none'"
-                class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1400ms] ease-editorial group-hover:scale-[1.06]"
+                class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1600ms] ease-editorial group-hover:scale-[1.06]"
               />
               <!-- Tonal fallback if image missing -->
               <div
@@ -91,37 +86,72 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
                 }
               ></div>
 
-              <!-- Bottom vignette + hover glow -->
+              <!-- Dark gradient overlay for text legibility -->
               <div
-                class="absolute inset-0 pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-500"
-                style="background: linear-gradient(to top, rgba(14,13,11,0.5) 0%, transparent 45%);"
+                class="absolute inset-0 pointer-events-none"
+                style="background: linear-gradient(180deg, rgba(14,13,11,0.25) 0%, transparent 30%, transparent 55%, rgba(14,13,11,0.78) 100%);"
                 aria-hidden="true"
               ></div>
 
-              <!-- Editorial frame caption inside photo -->
-              <figcaption class="absolute inset-x-0 bottom-0 p-5 flex items-baseline justify-between text-cream/85 byline">
-                <span class="uppercase tracking-[0.22em] text-[0.625rem] font-medium">{id.label}</span>
-                <span class="uppercase tracking-[0.22em] text-[0.625rem] font-medium">No. {String(i + 1).padStart(2, '0')}</span>
-              </figcaption>
-            </figure>
+              <!-- TOP-LEFT: huge italic numeral + figure ID -->
+              <div class="absolute top-5 left-6 right-6 flex items-baseline justify-between text-cream">
+                <span
+                  class="font-display italic font-medium leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
+                  style="font-size: clamp(2.75rem, 5vw, 4.5rem); letter-spacing: -0.04em; padding-bottom: 0.1em;"
+                >
+                  {String(i + 1).padStart(2, '0')}.
+                </span>
+                <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-cream/75 mt-2">
+                  {id.figure}
+                </span>
+              </div>
 
-            <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-3">{id.context}</p>
-            <h3
-              class="font-display text-ink leading-[1.08] mb-4 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial"
-              style="font-size: clamp(1.5rem, 2.2vw, 2rem); letter-spacing: -0.022em;"
-            >
-              {id.label}.
-            </h3>
-            <p class="serif-body text-ink-soft mb-6 leading-relaxed">
-              {id.body}
-            </p>
-            <span class="inline-flex items-center gap-2 byline text-ink group-hover:gap-3 transition-all duration-300 ease-editorial">
-              {id.cta}
-              <ArrowUpRight size={11} />
-            </span>
+              <!-- BOTTOM: identity text overlay -->
+              <div class={`absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-10 flex flex-col ${overlayJustify} text-cream`}>
+                <p class="text-[0.6875rem] uppercase tracking-[0.28em] text-cream/75 font-medium mb-3">
+                  {id.context}
+                </p>
+                <h3
+                  class="font-display leading-[1.0] mb-4 text-cream group-hover:text-terracotta transition-colors duration-500 ease-editorial"
+                  style={`font-size: clamp(${dominant ? '2.5rem' : '2rem'}, ${dominant ? '4.5vw' : '3vw'}, ${dominant ? '4rem' : '3rem'}); letter-spacing: -0.03em;`}
+                >
+                  {id.label}.
+                </h3>
+                <p class={`font-serif text-cream/85 leading-[1.5] mb-5 max-w-prose ${dominant ? 'text-[1.0625rem] sm:text-[1.125rem]' : 'text-[0.9375rem]'}`}>
+                  {id.body}
+                </p>
+                <span class="inline-flex items-center gap-2 text-[0.75rem] tracking-[0.1em] text-cream font-medium group-hover:gap-3 transition-all duration-300 ease-editorial">
+                  {id.cta}
+                  <span class="grid place-items-center h-6 w-6 rounded-full bg-cream/15 backdrop-blur-md border border-cream/20">
+                    <ArrowUpRight size={10} class="text-cream" />
+                  </span>
+                </span>
+              </div>
+            </figure>
           </a>
         );
       })}
     </div>
   </div>
 </section>
+
+<script>
+  // Subtle 3D tilt on identity-card hover — gives the cards real depth.
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches && matchMedia('(pointer: fine)').matches) {
+    const cards = document.querySelectorAll<HTMLElement>('[data-identity-card]');
+    cards.forEach((card) => {
+      const figure = card.querySelector<HTMLElement>('[data-identity-figure]');
+      if (!figure) return;
+      const maxTilt = 4;
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        figure.style.transform = `perspective(1500px) rotateY(${px * maxTilt}deg) rotateX(${-py * maxTilt}deg) translateZ(0)`;
+      });
+      card.addEventListener('pointerleave', () => {
+        figure.style.transform = '';
+      });
+    });
+  }
+</script>

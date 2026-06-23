@@ -32,12 +32,12 @@ export const site = {
     'Psychology. Manifestation. Becoming your highest self. The psychology behind why your life is not changing — and the exact shifts that change everything.',
   // Featured long-form — Allaia can swap to a different ID anytime.
   youtubeFeatured: {
-    video_id: 'EN9oUoysqmM',
-    title: 'Modern dating is a scam. And women are paying for it.',
+    video_id: '2OgR9fYThrw',
+    title: 'How to quantum leap to a new reality.',
     description:
-      'Part one of two — the diagnosis. The conversation nobody on the app is willing to start. A long letter, read aloud.',
-    duration: 'Long-form · part 1 of 2',
-    thumbnail: '/img/youtube/EN9oUoysqmM-max.jpg',
+      'The deepest entry on the channel — twenty-two minutes on the exact shifts that move a life from where it is to where you have already pictured it. Slow, deliberate, identity-led.',
+    duration: 'Long-form · 22 min',
+    thumbnail: '/img/youtube/2OgR9fYThrw-max.jpg',
   },
 
   // Email
@@ -64,7 +64,7 @@ export const identities = [
     href: '/book',
     cta: 'The book',
     figure: 'FIG. 01',
-    image: '/img/instagram/reel-DZTyZlzMrJO.jpg',
+    image: '/img/portraits/DV2vp-hiJzx.jpg',
     alt: '',
   },
   {
@@ -75,7 +75,7 @@ export const identities = [
     href: 'https://blacklyne.ai/en/',
     cta: 'Visit Blacklyne',
     figure: 'FIG. 02',
-    image: '/img/instagram/reel-DZTyZlzMrJO.jpg',
+    image: '/img/portraits/DXdmLBNFHa8.jpg',
     alt: '',
   },
   {
@@ -86,7 +86,7 @@ export const identities = [
     href: '/art',
     cta: 'The work',
     figure: 'FIG. 03',
-    image: '/img/instagram/reel-DZTtOngsOBG.jpg',
+    image: '/img/art/DZXMu3ljwuS.jpg',
     alt: '',
   },
   {
@@ -97,7 +97,7 @@ export const identities = [
     href: site.instagram,
     cta: 'Instagram',
     figure: 'FIG. 04',
-    image: '/img/instagram/reel-DWk5dvejGdm.jpg',
+    image: '/img/portraits/DWlfa4-lOuC.jpg',
     alt: '',
   },
 ] as const;
@@ -320,8 +320,14 @@ export const youtubeShorts = [
 // More long-form videos for /watch — three after the featured.
 export const youtubeMore = [
   {
+    video_id: 'EN9oUoysqmM',
+    title: 'Modern dating is a scam — part 1.',
+    subtitle: 'The diagnosis. The conversation nobody on the app is willing to start.',
+    thumbnail: '/img/youtube/EN9oUoysqmM-max.jpg',
+  },
+  {
     video_id: 'wjcdFmLD6XM',
-    title: 'Modern dating is a scam — part 2 of 2.',
+    title: 'Modern dating is a scam — part 2.',
     subtitle: 'The part nobody on the app is willing to say.',
     thumbnail: '/img/youtube/wjcdFmLD6XM-max.jpg',
   },
@@ -330,12 +336,6 @@ export const youtubeMore = [
     title: 'Ten things classy women never do.',
     subtitle: 'On how to be feminine without performing femininity.',
     thumbnail: '/img/youtube/w2JdvsGhlDw-max.jpg',
-  },
-  {
-    video_id: 'iXBB7NciydM',
-    title: 'Read the caption.',
-    subtitle: 'A short note on the structures that keep us asleep.',
-    thumbnail: '/img/youtube/iXBB7NciydM-max.jpg',
   },
 ] as const;
 
@@ -392,9 +392,8 @@ export const footerNav = {
     { label: 'Coven', href: '/coven' },
   ],
   work: [
-    { label: 'Writing', href: '/writing' },
-    { label: 'Art', href: '/art' },
     { label: 'Watch', href: '/watch' },
+    { label: 'Art', href: '/art' },
     { label: 'About', href: '/about' },
   ],
   channels: [
