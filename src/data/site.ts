@@ -69,11 +69,11 @@ export const identities = [
   },
   {
     key: 'operator',
-    label: 'Operator',
+    label: 'I build brands',
     context: 'COO · Blacklyne',
-    body: 'A studio shipping across four countries. The applied version of the work.',
+    body: 'Six years in marketing. Four years building companies. A studio shipping across four countries.',
     href: 'https://blacklyne.ai/en/',
-    cta: 'The studio',
+    cta: 'Visit Blacklyne',
     figure: 'FIG. 02',
     image: '/img/instagram/reel-DZTyZlzMrJO.jpg',
     alt: '',
@@ -223,12 +223,18 @@ export const coven = {
 export const operator = {
   eyebrow: 'OPERATOR · COO AT BLACKLYNE AI',
   heading: {
-    pre: 'The applied',
-    italic: 'version.',
+    pre: 'I build',
+    italic: 'brands.',
   },
   body:
-    'Beyond the personal brand, I run Blacklyne AI as Chief Operating Officer. A premium digital presence and AI search optimization studio operating across Germany, Dubai, the United Kingdom, and the United States. Helping brands become unmistakable in the AI search era. The same identity-led thesis I teach women, shipping at scale across four countries.',
+    'Six years in marketing. Four years building companies. I run Blacklyne AI as Chief Operating Officer — a premium digital presence and AI search optimization studio shipping across Germany, Dubai, the United Kingdom, and the United States. Helping brands become unmistakable in the AI search era. The same identity-led thesis I teach women, shipping at scale across four countries.',
   cta: { label: 'Visit Blacklyne', href: site.blacklyne, external: true },
+  stats: [
+    { label: 'In marketing', value: '6 years' },
+    { label: 'As entrepreneur', value: '4 years' },
+    { label: 'Markets', value: 'DE · AE · UK · US' },
+    { label: 'Role', value: 'COO' },
+  ],
 };
 
 // Instagram Reels — the diary in motion, with real view counts.
