@@ -1,18 +1,11 @@
 ---
-// Reels — clean editorial cards, NOW inline-playable. Click a card →
-// the cover frame swaps in the Instagram embed iframe and the reel
-// plays without leaving the page.
-// Mute by default (browser autoplay rules) — user can unmute inside
-// the IG embed. Each card has a small "Open on Instagram" footnote
-// for the audience that wants to leave a comment / like.
-import { site, instagramReels } from '@data/site';
-
-// Each permalink ends in /reel/SHORTCODE/. Pull the shortcode out so
-// we can build the embed iframe src directly.
-const shortcodeOf = (permalink: string) => {
-  const m = permalink.match(/\/reel\/([A-Za-z0-9_-]+)/);
-  return m ? m[1] : '';
-};
+// "The diary, in motion" — Allaia's vertical content, now using
+// YouTube Shorts embeds for TRUE inline playback. IG embeds only
+// show a poster + "View on Instagram" link (they intentionally
+// don't autoplay from external sites). YT Shorts embed plays
+// inline like any normal YouTube video.
+import { site, youtubeShorts } from '@data/site';
+import Youtube from '@components/icons/Youtube.astro';
 ---
 
 <section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
@@ -36,77 +29,81 @@ const shortcodeOf = (permalink: string) => {
           The <span class="italic-grad">diary</span>, in motion.
         </h2>
       </div>
-      <a href={site.instagram} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial whitespace-nowrap">
-        @allaia.power
+      <a href={site.youtube} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial whitespace-nowrap inline-flex items-center gap-2">
+        <Youtube size={13} /> {site.youtubeHandle}
       </a>
     </div>
     <p class="reveal serif-body text-ink-soft max-w-prose mt-6">
-      Tap a reel to play it here — no jumping out to Instagram.
+      Tap any short to play it right here — no jumping out to YouTube.
     </p>
   </div>
 
   <div class="mx-auto max-w-6xl px-6">
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-      {instagramReels.map((reel, i) => {
-        const sc = shortcodeOf(reel.permalink);
-        return (
-          <li class="reveal" style={`transition-delay: ${(i % 3) * 70}ms`}>
-            <div
-              class="relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm shadow-photo group"
-              data-reel-shell
-              data-reel-shortcode={sc}
+      {youtubeShorts.map((short, i) => (
+        <li class="reveal" style={`transition-delay: ${(i % 3) * 70}ms`}>
+          <div
+            class="relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm shadow-photo group"
+            data-yt-shell
+            data-yt-id={short.video_id}
+          >
+            <!-- Poster — visible until tap -->
+            <button
+              type="button"
+              class="absolute inset-0 w-full h-full cursor-pointer"
+              aria-label={`Play short: ${short.caption}`}
+              data-yt-play
             >
-              <!-- Poster (cover frame) — visible until tap -->
-              <button
-                type="button"
-                class="absolute inset-0 w-full h-full group cursor-pointer"
-                aria-label="Play reel"
-                data-reel-play
-              >
-                <img
-                  src={reel.poster}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
-                />
-                <div
-                  class="absolute inset-0 pointer-events-none"
-                  style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.45) 0%, transparent 60%);"
-                  aria-hidden="true"
-                ></div>
-                <!-- Play affordance — scales with the card -->
-                <span class="absolute inset-0 grid place-items-center">
-                  <span class="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-cream/20 backdrop-blur-md border border-cream/35 grid place-items-center group-hover:bg-cream/35 group-hover:scale-110 transition-all duration-500 ease-editorial">
-                    <svg width="20" height="20" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <path d="M4 2.5L11 7l-7 4.5v-9Z" fill="#F2EDE5"/>
-                    </svg>
-                  </span>
+              <img
+                src={short.thumbnail}
+                alt={short.caption}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+              />
+              <div
+                class="absolute inset-0 pointer-events-none"
+                style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.55) 0%, transparent 60%);"
+                aria-hidden="true"
+              ></div>
+              <!-- Play affordance -->
+              <span class="absolute inset-0 grid place-items-center">
+                <span class="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-cream/20 backdrop-blur-md border border-cream/35 grid place-items-center group-hover:bg-cream/35 group-hover:scale-110 transition-all duration-500 ease-editorial">
+                  <svg width="20" height="20" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M4 2.5L11 7l-7 4.5v-9Z" fill="#F2EDE5"/>
+                  </svg>
                 </span>
-              </button>
-            </div>
-          </li>
-        );
-      })}
+              </span>
+              <!-- Caption -->
+              <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6 text-cream pointer-events-none">
+                <p class="font-display italic text-base sm:text-lg leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                  {short.caption}
+                </p>
+              </div>
+            </button>
+          </div>
+        </li>
+      ))}
     </ul>
   </div>
 </section>
 
 <script>
-  // Click-to-play: swap the poster button for the IG embed iframe.
-  document.querySelectorAll<HTMLElement>('[data-reel-shell]').forEach((shell) => {
-    const btn = shell.querySelector<HTMLButtonElement>('[data-reel-play]');
-    const sc = shell.getAttribute('data-reel-shortcode');
-    if (!btn || !sc) return;
+  // Click-to-play — true inline YouTube playback. The YouTube
+  // embed (unlike Instagram's) actually plays the video right
+  // there with autoplay=1 instead of redirecting out.
+  document.querySelectorAll<HTMLElement>('[data-yt-shell]').forEach((shell) => {
+    const btn = shell.querySelector<HTMLButtonElement>('[data-yt-play]');
+    const id = shell.getAttribute('data-yt-id');
+    if (!btn || !id) return;
     btn.addEventListener('click', () => {
       const iframe = document.createElement('iframe');
       iframe.className = 'absolute inset-0 w-full h-full';
-      iframe.src = `https://www.instagram.com/reel/${sc}/embed/`;
-      iframe.title = 'Instagram reel';
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; web-share; fullscreen';
-      iframe.allowFullscreen = true;
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white&loop=1&playlist=${id}`;
+      iframe.title = btn.getAttribute('aria-label') ?? 'YouTube short';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      iframe.style.border = '0';
+      iframe.allowFullscreen = true;
       shell.replaceChildren(iframe);
     }, { once: true });
   });
