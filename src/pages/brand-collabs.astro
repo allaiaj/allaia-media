@@ -1,8 +1,13 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { site } from '@data/site';
+import { site, instagramReels } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 import Instagram from '@components/icons/Instagram.astro';
+
+const totalLikes = instagramReels.reduce((s, r) => s + r.likes, 0);
+const topReel = [...instagramReels].sort((a, b) => b.likes - a.likes)[0];
+const avgLikes = Math.round(totalLikes / instagramReels.length);
+const fmt = (n: number) => n.toLocaleString('en-GB');
 ---
 
 <PageLayout
@@ -82,6 +87,59 @@ import Instagram from '@components/icons/Instagram.astro';
         </div>
       </div>
       <p class="byline text-ink-mute">Top cities — Delhi · Bangalore · Dubai · Mumbai · UK · SEA</p>
+    </section>
+
+    <!-- Recent reels — the receipts -->
+    <section class="reveal pt-12 border-t border-ink/10">
+      <p class="eyebrow mb-5">Recent reels — the receipts</p>
+      <h2 class="display-sm mb-7">
+        The reach, <span class="italic-grad">on the record.</span>
+      </h2>
+
+      <div class="grid sm:grid-cols-3 gap-6 mb-10">
+        <div>
+          <p class="byline text-ink-mute mb-2">Likes (last six)</p>
+          <p class="font-display italic text-3xl text-terracotta">{fmt(totalLikes)}</p>
+          <p class="byline text-ink-mute mt-2">Across six recent reels</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Top reel</p>
+          <p class="font-display italic text-3xl text-terracotta">{fmt(topReel.likes)}</p>
+          <p class="byline text-ink-mute mt-2">On a single piece</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Average</p>
+          <p class="font-display italic text-3xl text-terracotta">{fmt(avgLikes)}</p>
+          <p class="byline text-ink-mute mt-2">Likes per reel</p>
+        </div>
+      </div>
+
+      <ul class="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">
+        {instagramReels.map((reel) => (
+          <li>
+            <a href={reel.permalink} target="_blank" rel="noopener" class="group block">
+              <figure class="relative aspect-[9/16] rounded-[0.625rem] overflow-hidden bg-anthracite-warm shadow-photo">
+                <img
+                  src={reel.poster}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] ease-editorial group-hover:scale-[1.05]"
+                />
+                <div class="absolute inset-x-0 bottom-0 p-2 text-cream"
+                  style="background: linear-gradient(to top, rgba(14,13,11,0.85), transparent 80%);"
+                >
+                  <p class="text-[0.6875rem] font-medium tracking-wider">{fmt(reel.likes)}</p>
+                </div>
+              </figure>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="byline text-ink-mute mt-6">
+        Live reels with view counts at <a href={site.instagram} target="_blank" rel="noopener" class="text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">@allaia.power</a>.
+      </p>
     </section>
 
     <!-- The brief -->

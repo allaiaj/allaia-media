@@ -14,14 +14,14 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 const scenes = [
   {
     n: '00',
-    eyebrow: 'A debut · 2026',
+    eyebrow: 'A debut · forthcoming',
     image: '/img/allaia/scene-00.jpg',
     grad: 'radial-gradient(ellipse at 50% 40%, rgba(184,85,66,0.55) 0%, transparent 55%), linear-gradient(180deg, #0E0D0B 0%, #1A1A1A 100%)',
     bgTone: 'dark',
   },
   {
     n: '01',
-    eyebrow: 'AUTHOR · COO · ARTIST · DUBAI + BALI',
+    eyebrow: 'AUTHOR · OPERATOR · ARTIST',
     // No face on hero — kept face out per Allaia's note;
     // the portrait scrub below the hero carries her.
     image: '/img/allaia/scene-01-placeholder.jpg',
@@ -30,21 +30,21 @@ const scenes = [
   },
   {
     n: '02',
-    eyebrow: 'A QUIET MANIFESTO',
-    image: '/img/allaia/scene-02.jpg',
+    eyebrow: 'A quiet manifesto',
+    image: '/img/instagram/reel-DXwOfqdM_N0.jpg',
     grad: 'radial-gradient(ellipse at 70% 30%, rgba(254,205,170,0.7), transparent 60%), radial-gradient(ellipse at 25% 75%, rgba(184,85,66,0.55), transparent 60%), linear-gradient(160deg, #FAF6EE 0%, #B85542 130%)',
     bgTone: 'warm',
   },
   {
     n: '03',
-    eyebrow: 'FOUR EXPRESSIONS · ONE WOMAN',
+    eyebrow: 'FOUR EXPRESSIONS · ONE THESIS',
     image: '/img/allaia/scene-03.jpg',
     grad: 'radial-gradient(circle at 20% 30%, rgba(139,157,126,0.55), transparent 50%), radial-gradient(circle at 80% 70%, rgba(184,85,66,0.55), transparent 55%), linear-gradient(135deg, #F2EDE5 0%, #6B4F3D 110%)',
     bgTone: 'mid',
   },
   {
     n: '04',
-    eyebrow: 'OUT 2026 · STAN STORE',
+    eyebrow: 'A debut — forthcoming',
     image: '/img/book/become-her-cover.jpg',
     grad: 'radial-gradient(ellipse at 50% 50%, rgba(184,85,66,0.6) 0%, transparent 55%), linear-gradient(160deg, #1A1A1A 0%, #2A2722 100%)',
     bgTone: 'dark',
@@ -143,7 +143,7 @@ const scenes = [
                 {i === 0 && (
                   <div class="text-center">
                     <p class="text-[0.6875rem] uppercase tracking-[0.32em] text-cream/55 mb-10 font-medium" data-letter-stagger>
-                      A DEBUT · BY ALLAIA · 2026
+                      A DEBUT · BY ALLAIA
                     </p>
                     <h1
                       class="font-display text-cream leading-[0.92]"
@@ -170,7 +170,7 @@ const scenes = [
                       <span class="italic-grad">Allaia.</span>
                     </h2>
                     <p class="font-display italic text-ink/85 text-[clamp(1.25rem,2vw,1.625rem)] mt-7 max-w-[28ch]">
-                      An author. A coach. A studio. An art practice.<br/>One woman.
+                      Author. Operator. Artist.<br/>One thesis.
                     </p>
                   </div>
                 )}
@@ -187,7 +187,7 @@ const scenes = [
                       <span class="font-display italic font-medium italic-grad block">Then charge it.</span>
                     </h2>
                     <p class="serif-lg text-ink-soft mt-8 max-w-prose">
-                      Identity-led content for women tired of performing — and ready to do the slow, unsexy work of becoming who they actually are underneath.
+                      The work is slow, unphotogenic, and quietly compounding. The room is kept curated — on purpose.
                     </p>
                   </div>
                 )}
@@ -206,7 +206,7 @@ const scenes = [
                       <span class="hero-word block opacity-0">Creator.</span>
                     </h2>
                     <p class="font-display italic text-brown text-[clamp(1.125rem,1.6vw,1.375rem)] mt-7 max-w-md leading-snug">
-                      Four expressions of the same thesis — identity-led work compounds; performance does not.
+                      What compounds is identity. Performance does not.
                     </p>
                   </div>
                 )}
@@ -227,7 +227,7 @@ const scenes = [
                       </span>
                     </h2>
                     <p class="font-display italic text-cream/80 mt-8 text-[clamp(1rem,1.5vw,1.25rem)]">
-                      Become Her — the debut, out 2026.
+                      Become Her — the debut.
                     </p>
                     <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
                       <a href={site.stan.book} target="_blank" rel="noopener" class="cta-cream">

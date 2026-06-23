@@ -1,85 +1,63 @@
 ---
-// Instagram Reels — the real ones, with real view counts.
-// Uses Instagram's official embed: each reel renders as the full
-// IG card (video player, caption, like + view count, account link).
-// The IG embed.js script is loaded once on the page and processes
-// every blockquote.instagram-media element.
-//
-// To swap in real reels, edit src/data/site.ts → instagramReels.
+// Reels — clean editorial cards. No IG logo. No like count. No
+// engagement chrome. Just the cover frame, a play affordance, and
+// a tap that opens the reel on IG. The proof (likes/reach) lives
+// on /brand-collabs.
 import { site, instagramReels } from '@data/site';
-import Instagram from '@components/icons/Instagram.astro';
-import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 ---
 
-<section class="relative py-24 sm:py-32 lg:py-40 bg-cream overflow-hidden">
+<section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
   <div class="mx-auto max-w-6xl px-6 mb-12 sm:mb-16">
     <div class="reveal flex items-baseline justify-between gap-6 pb-6 border-b border-ink/10">
       <div>
-        <p class="eyebrow mb-4">Reels · @allaia.power</p>
+        <p class="eyebrow mb-4">In motion</p>
         <h2 class="display-md max-w-2xl">
-          The diary, <span class="italic-grad">in motion.</span>
+          The <span class="italic-grad">diary</span>, in motion.
         </h2>
       </div>
-      <a href={site.instagram} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2 whitespace-nowrap">
-        <Instagram size={13} /> Follow
+      <a href={site.instagram} target="_blank" rel="noopener" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial whitespace-nowrap">
+        @allaia.power
       </a>
     </div>
-    <p class="reveal serif-body text-ink-soft max-w-prose mt-7">
-      Live from Instagram — the embed below pulls each reel directly from <a href={site.instagram} target="_blank" rel="noopener" class="text-ink hover:text-terracotta transition-colors duration-300 ease-editorial underline decoration-ink/20 underline-offset-4">@allaia.power</a>, with the real view + like counts on the card.
-    </p>
   </div>
 
   <div class="mx-auto max-w-6xl px-6">
-    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {instagramReels.map((reel, i) => {
-        const isPending = reel.permalink.includes('REPLACE_WITH');
-        return (
-          <li class="reveal" style={`transition-delay: ${(i % 3) * 80}ms`}>
-            {isPending ? (
-              <div class="aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-bone border border-dashed border-ink/15 grid place-items-center p-6 text-center">
-                <div>
-                  <p class="byline text-ink-mute mb-3">Slot 0{i + 1}</p>
-                  <p class="font-display italic text-xl text-brown leading-snug mb-2">Pending reel URL.</p>
-                  <p class="serif-body text-ink-mute">{reel.caption}</p>
-                </div>
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+      {instagramReels.map((reel, i) => (
+        <li class="reveal" style={`transition-delay: ${(i % 6) * 50}ms`}>
+          <a
+            href={reel.permalink}
+            target="_blank"
+            rel="noopener"
+            class="group block"
+            aria-label="Open reel on Instagram"
+          >
+            <figure class="relative aspect-[9/16] rounded-[1rem] overflow-hidden bg-anthracite-warm shadow-photo">
+              <img
+                src={reel.poster}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+              />
+              <!-- Subtle warm grade -->
+              <div
+                class="absolute inset-0 pointer-events-none"
+                style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.45) 0%, transparent 60%);"
+                aria-hidden="true"
+              ></div>
+              <!-- Play affordance — quiet, centered -->
+              <div class="absolute inset-0 grid place-items-center pointer-events-none">
+                <span class="h-12 w-12 rounded-full bg-cream/15 backdrop-blur-md border border-cream/30 grid place-items-center group-hover:bg-cream/30 group-hover:scale-110 transition-all duration-500 ease-editorial">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M4 2.5L11 7l-7 4.5v-9Z" fill="#F2EDE5"/>
+                  </svg>
+                </span>
               </div>
-            ) : (
-              <div class="relative bg-bone rounded-[1.25rem] overflow-hidden shadow-photo">
-                <blockquote
-                  class="instagram-media w-full !min-w-0 !my-0"
-                  data-instgrm-permalink={reel.permalink}
-                  data-instgrm-version="14"
-                  style="background:#FFF; border:0; margin:0; padding:0; width:100%;"
-                >
-                  <div class="p-6">
-                    <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-3">Loading reel · 0{i + 1}</p>
-                    <p class="font-display italic text-lg text-ink leading-snug mb-4">{reel.caption}</p>
-                    <a
-                      href={reel.permalink}
-                      target="_blank"
-                      rel="noopener"
-                      class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-2"
-                    >
-                      Open on Instagram <ArrowUpRight size={11} />
-                    </a>
-                  </div>
-                </blockquote>
-              </div>
-            )}
-          </li>
-        );
-      })}
+            </figure>
+          </a>
+        </li>
+      ))}
     </ul>
-
-    <div class="reveal mt-12 sm:mt-16 pt-10 border-t border-ink/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-      <p class="font-display italic text-xl text-brown leading-tight max-w-md">
-        Posted weekly. Reach numbers are the receipts.
-      </p>
-      <a href={site.instagram} target="_blank" rel="noopener" class="cta-dark">
-        <Instagram size={14} /> Follow @allaia.power <ArrowUpRight size={12} />
-      </a>
-    </div>
   </div>
 </section>
-
-<script is:inline async src="//www.instagram.com/embed.js"></script>

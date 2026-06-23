@@ -10,7 +10,7 @@ export const site = {
   url: 'https://allaiamedia.com',
   tagline: 'Know your worth. Then charge it.',
   positioning:
-    'Identity-led content for women who are tired of performing — and ready to do the slow, unsexy work of becoming who they actually are underneath.',
+    'Identity-led work for women building it underneath. Slow, deliberate, quietly compounding.',
 
   cities: ['Dubai', 'Bali'],
 
@@ -48,9 +48,9 @@ export const site = {
 
   // OG / SEO
   og: {
-    title: 'Allaia — author, operator, artist',
+    title: 'Allaia',
     description:
-      'Author of Become Her (out 2026). COO at Blacklyne. Artist at @allaia.art. Identity-led content for women who are tired of performing.',
+      'Author. Operator. Artist. Identity-led work — slow, deliberate, quietly compounding.',
     image: '/img/og/allaia-og.jpg',
   },
 };
@@ -59,46 +59,46 @@ export const identities = [
   {
     key: 'author',
     label: 'Author',
-    context: 'Become Her — the foundational work',
-    body: 'A debut. Ninety-one thousand words. Five parts. Twenty-two chapters. The book that holds everything else.',
+    context: 'Become Her',
+    body: 'A debut. Five parts. The book that holds everything else.',
     href: '/book',
-    cta: 'Read the book',
+    cta: 'The book',
     figure: 'FIG. 01',
-    image: '/img/allaia/identity-author.jpg',
-    alt: 'Allaia with Become Her — the book in her hands, warm interior light',
+    image: '/img/instagram/reel-DZTyZlzMrJO.jpg',
+    alt: '',
   },
   {
     key: 'operator',
     label: 'Operator',
-    context: 'COO at Blacklyne AI',
-    body: 'Premium digital presence and AI search optimization for brands across Germany, Dubai, the UK, and the US. The applied version of what the personal brand teaches.',
+    context: 'COO · Blacklyne',
+    body: 'A studio shipping across four countries. The applied version of the work.',
     href: '/the-studio',
-    cta: 'See the studio',
+    cta: 'The studio',
     figure: 'FIG. 02',
-    image: '/img/allaia/identity-operator.jpg',
-    alt: 'Allaia at the studio — laptop, cream notebook, terracotta light from the window',
+    image: '/img/instagram/reel-DXwOfqdM_N0.jpg',
+    alt: '',
   },
   {
     key: 'artist',
     label: 'Artist',
-    context: 'The Rupture · @allaia.art',
-    body: 'Textured abstract mixed-media — pigment, plaster, oil stick. The pieces hold what the writing cannot.',
+    context: '@allaia.art · The Rupture',
+    body: 'Mixed-media on canvas. The pieces hold what the writing cannot.',
     href: '/art',
-    cta: 'See the work',
+    cta: 'The work',
     figure: 'FIG. 03',
-    image: '/img/allaia/identity-artist.jpg',
-    alt: 'Allaia in studio with The Rupture canvases — warm tones, working with her hands',
+    image: '/img/instagram/reel-DZTtOngsOBG.jpg',
+    alt: '',
   },
   {
     key: 'creator',
     label: 'Creator',
     context: '@allaia.power',
-    body: 'Twenty-four thousand on Instagram. Thirty-two thousand on TikTok. Three-point-four million views in ninety days, most of it reaching women who do not yet follow.',
+    body: 'A diary in motion. Posted on the days the work allows.',
     href: site.instagram,
-    cta: 'Follow on Instagram',
+    cta: 'Instagram',
     figure: 'FIG. 04',
-    image: '/img/allaia/identity-creator.jpg',
-    alt: 'Allaia at golden hour in Bali, on camera, mid-thought',
+    image: '/img/instagram/reel-DWk5dvejGdm.jpg',
+    alt: '',
   },
 ] as const;
 
@@ -111,26 +111,26 @@ export const navItems = [
 ] as const;
 
 export const heroBeats = {
-  eyebrow: 'AUTHOR · COO · ARTIST · DUBAI + BALI',
+  eyebrow: 'AUTHOR · OPERATOR · ARTIST',
   wordmark: 'Allaia',
   tagline: site.tagline,
-  bookCue: 'Become her — out 2026',
+  bookCue: 'Become her — a debut',
   ctas: [
-    { label: 'Read the book', href: site.stan.book, primary: true, external: true },
-    { label: 'Apply for The Architecture', href: site.stan.application, primary: false, external: true },
+    { label: 'The book', href: site.stan.book, primary: true, external: true },
+    { label: 'The Architecture', href: site.stan.application, primary: false, external: true },
   ],
 };
 
 export const editorialOpening = {
-  eyebrow: 'A LETTER FROM THE EDITOR',
+  eyebrow: 'A letter from the editor',
   lead: 'Allaia.',
-  sub: 'Author. Operator. Artist. Creator.',
-  body: 'Mainly between Dubai and Bali, building a life that moves on its own terms — and writing it down for the women doing the same.',
+  sub: 'Author. Operator. Artist.',
+  body: 'A life built to move on its own terms — and written down for the women building one of their own.',
   body2:
-    'The work this site references is identity-led. Slow. Quietly compounding. There is no thirty-day transformation here. There is a book, a community, a coaching room kept small on purpose, and an art practice that holds what the writing cannot.',
+    'The work is identity-led. Slow. Quietly compounding. A book, a community, a coaching room kept curated, and a canvas practice that holds what the writing cannot.',
   ctas: [
-    { label: 'Become Her — out 2026', href: '/book', primary: true },
-    { label: 'Apply for The Architecture', href: site.stan.application, primary: false, external: true },
+    { label: 'The book', href: '/book', primary: true },
+    { label: 'The Architecture', href: site.stan.application, primary: false, external: true },
   ],
 };
 
@@ -238,32 +238,40 @@ export const operator = {
 // to match.
 //
 // Example: 'https://www.instagram.com/reel/C8sXyZ9aBcD/'
+// IG reels — clean editorial cards. The cover frame is fetched from
+// instagram and lives in /public/img/instagram/. We show the frame +
+// a quiet caption + a play icon. The like counts are NOT shown here
+// (they belong to /brand-collabs as proof). Tap → opens the reel on IG.
 export const instagramReels = [
   {
     permalink: 'https://www.instagram.com/reel/DYe7mNNsztZ/',
-    caption: 'From @allaia.power — recent.',
+    poster: '/img/instagram/reel-DYe7mNNsztZ.jpg',
+    likes: 49111,
   },
-  // Slots 2–6 waiting on Allaia for more reel URLs.
-  // Format: paste the share-menu URL (must end in /reel/SHORTCODE/).
   {
     permalink: 'https://www.instagram.com/reel/DWk5dvejGdm/',
-    caption: 'From @allaia.power.',
+    poster: '/img/instagram/reel-DWk5dvejGdm.jpg',
+    likes: 9083,
   },
   {
     permalink: 'https://www.instagram.com/reel/DZTyZlzMrJO/',
-    caption: 'From @allaia.power.',
+    poster: '/img/instagram/reel-DZTyZlzMrJO.jpg',
+    likes: 7835,
   },
   {
     permalink: 'https://www.instagram.com/reel/DZTtOngsOBG/',
-    caption: 'From @allaia.power.',
+    poster: '/img/instagram/reel-DZTtOngsOBG.jpg',
+    likes: 7081,
   },
   {
     permalink: 'https://www.instagram.com/reel/DXwOfqdM_N0/',
-    caption: 'From @allaia.power.',
+    poster: '/img/instagram/reel-DXwOfqdM_N0.jpg',
+    likes: 7755,
   },
   {
     permalink: 'https://www.instagram.com/reel/DY44G_Gs6rU/',
-    caption: 'From @allaia.power.',
+    poster: '/img/instagram/reel-DY44G_Gs6rU.jpg',
+    likes: 9208,
   },
 ] as const;
 
