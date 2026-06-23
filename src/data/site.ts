@@ -123,7 +123,7 @@ export const heroBeats = {
 };
 
 export const editorialOpening = {
-  eyebrow: 'A letter from the editor',
+  eyebrow: 'A message from Allaia',
   lead: 'Allaia.',
   sub: 'Author. Operator. Artist.',
   body: 'A life built to move on its own terms — and written down for the women building one of their own.',

@@ -1,6 +1,12 @@
 ---
 import { editorialOpening } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+// Pull the first letter dynamically so the drop cap always matches
+// the body's actual opening letter (fixes the stale "M" that hung
+// around after the body copy was rewritten).
+const firstLetter = editorialOpening.body.trim().charAt(0);
+const bodyRest = editorialOpening.body.trim().slice(1);
 ---
 
 <section class="relative py-24 sm:py-32 lg:py-40 border-t border-ink/8">
@@ -38,8 +44,8 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
       </p>
 
       <p class="reveal serif-lg text-ink-soft mb-6 max-w-prose">
-        <span class="float-left font-display italic font-black text-7xl leading-[0.85] mr-3 mt-1 italic-grad">M</span>
-        {editorialOpening.body.replace(/^M/, 'ainly')}
+        <span class="float-left font-display italic font-black text-7xl leading-[0.85] mr-3 mt-1 italic-grad">{firstLetter}</span>
+        {bodyRest}
       </p>
       <p class="reveal serif-lg text-ink-soft mb-10 max-w-prose">
         {editorialOpening.body2}
