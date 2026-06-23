@@ -8,11 +8,11 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 
 <BaseLayout
   title="Watch — readings & essays"
-  description="Long-form readings and essays from Allaia. The diary, aloud."
+  description="Long-form readings and essays from Allaia. The diary, aloud. Playable inline."
 >
   <YouTubeFeatured />
 
-  <!-- More long-form -->
+  <!-- More long-form — click to play inline -->
   <section class="relative py-24 sm:py-32 bg-bone border-t border-ink/8">
     <div class="mx-auto max-w-6xl px-6">
       <div class="reveal max-w-3xl mb-12 sm:mb-16">
@@ -21,21 +21,30 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
           The diary — <span class="italic-grad">longer reads.</span>
         </h2>
         <p class="serif-lg text-ink-soft mt-7 max-w-prose">
-          A few more entries from {site.youtubeHandle}. Slow company for a long drive or a long bath.
+          Tap to play here — no jumping out to YouTube.
         </p>
       </div>
 
       <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-10">
         {youtubeMore.map((v, i) => (
           <li class="reveal" style={`transition-delay: ${i * 50}ms`}>
-            <a href={`https://www.youtube.com/watch?v=${v.video_id}`} target="_blank" rel="noopener" class="group block">
-              <figure class="relative aspect-video rounded-[1.25rem] overflow-hidden bg-anthracite paper-grain shadow-photo mb-5">
+            <div
+              class="relative aspect-video rounded-[1.25rem] overflow-hidden bg-anthracite paper-grain shadow-photo mb-5"
+              data-yt-shell
+              data-yt-id={v.video_id}
+            >
+              <button
+                type="button"
+                class="absolute inset-0 w-full h-full group cursor-pointer"
+                aria-label={`Play: ${v.title}`}
+                data-yt-play
+              >
                 <img
                   src={v.thumbnail}
                   alt={v.title}
                   loading="lazy"
                   onerror="this.style.display='none'"
-                  class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+                  class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.05]"
                 />
                 <div
                   class="absolute inset-0 z-0"
@@ -46,28 +55,30 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
                   }
                   aria-hidden="true"
                 ></div>
-                <div class="absolute inset-0 grid place-items-center pointer-events-none">
-                  <span class="h-16 w-16 rounded-full bg-cream/90 backdrop-blur grid place-items-center group-hover:scale-105 transition-transform duration-500 ease-editorial">
-                    <Youtube size={26} class="text-ink" />
+                <span class="absolute inset-0 grid place-items-center">
+                  <span class="h-16 w-16 rounded-full bg-cream/95 backdrop-blur grid place-items-center group-hover:scale-105 transition-transform duration-500 ease-editorial shadow-anthracite">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path d="M6 4l10 6-10 6V4Z" fill="#1A1A1A"/>
+                    </svg>
                   </span>
-                </div>
+                </span>
                 <div
                   class="absolute inset-0 pointer-events-none"
                   style="background: linear-gradient(to top, rgba(14,13,11,0.4), transparent 50%);"
                 ></div>
-              </figure>
-              <h3 class="font-display text-2xl text-ink leading-tight mb-2 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
-                {v.title}
-              </h3>
-              <p class="serif-body text-ink-soft">{v.subtitle}</p>
-            </a>
+              </button>
+            </div>
+            <h3 class="font-display text-2xl text-ink leading-tight mb-2">
+              {v.title}
+            </h3>
+            <p class="serif-body text-ink-soft">{v.subtitle}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <!-- Shorts -->
+  <!-- Shorts — also click-to-play -->
   <section class="relative py-24 sm:py-32 overflow-hidden">
     <div class="mx-auto max-w-6xl px-6 mb-12">
       <div class="reveal flex items-baseline justify-between gap-6 pb-6 border-b border-ink/10">
@@ -87,8 +98,17 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
       <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {youtubeShorts.map((s, i) => (
           <li class="reveal" style={`transition-delay: ${i * 50}ms`}>
-            <a href={`https://www.youtube.com/shorts/${s.video_id}`} target="_blank" rel="noopener" class="group block">
-              <figure class="relative aspect-[9/16] rounded-[1rem] overflow-hidden bg-anthracite shadow-photo">
+            <div
+              class="relative aspect-[9/16] rounded-[1rem] overflow-hidden bg-anthracite shadow-photo group"
+              data-yt-shell
+              data-yt-id={s.video_id}
+            >
+              <button
+                type="button"
+                class="absolute inset-0 w-full h-full cursor-pointer"
+                aria-label={`Play short: ${s.caption}`}
+                data-yt-play
+              >
                 <img
                   src={s.thumbnail}
                   alt={s.caption}
@@ -96,14 +116,21 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
                   onerror="this.style.display='none'"
                   class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1000ms] ease-editorial group-hover:scale-[1.05]"
                 />
+                <span class="absolute inset-0 grid place-items-center">
+                  <span class="h-11 w-11 rounded-full bg-cream/18 backdrop-blur-md border border-cream/30 grid place-items-center group-hover:bg-cream/35 group-hover:scale-110 transition-all duration-500 ease-editorial">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M4 2.5L11 7l-7 4.5v-9Z" fill="#F2EDE5"/>
+                    </svg>
+                  </span>
+                </span>
                 <div
                   class="absolute inset-x-0 bottom-0 p-3 text-cream"
                   style="background: linear-gradient(to top, rgba(14,13,11,0.85), transparent 80%);"
                 >
                   <p class="font-display italic text-[0.8125rem] leading-snug line-clamp-3">{s.caption}</p>
                 </div>
-              </figure>
-            </a>
+              </button>
+            </div>
           </li>
         ))}
       </ul>
@@ -116,3 +143,24 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Shared click-to-play: poster button → YouTube nocookie iframe.
+  // Same script logic as YouTubeFeatured but reused across every
+  // [data-yt-shell] on the page.
+  document.querySelectorAll<HTMLElement>('[data-yt-shell]').forEach((shell) => {
+    const btn = shell.querySelector<HTMLButtonElement>('[data-yt-play]');
+    const id = shell.getAttribute('data-yt-id');
+    if (!btn || !id) return;
+    btn.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'absolute inset-0 w-full h-full';
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white`;
+      iframe.title = btn.getAttribute('aria-label') ?? 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      shell.replaceChildren(iframe);
+    }, { once: true });
+  });
+</script>
