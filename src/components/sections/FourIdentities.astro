@@ -3,67 +3,125 @@ import { identities } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 ---
 
-<section id="identities" class="relative scroll-mt-28 py-24 sm:py-32 lg:py-40">
-  <div class="mx-auto max-w-6xl px-6">
-    <div class="reveal mb-14 sm:mb-20 grid sm:grid-cols-[1fr_auto] gap-6 sm:gap-12 items-end pb-8 border-b border-ink/10">
+<section id="identities" class="relative scroll-mt-28 py-28 sm:py-36 lg:py-44 overflow-hidden">
+  <!-- Ambient atmospheric layers -->
+  <div class="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
+    <div
+      class="absolute top-0 right-1/4 h-[55vh] w-[55vh] rounded-full blur-[140px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.32), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-0 left-1/4 h-[50vh] w-[50vh] rounded-full blur-[130px]"
+      style="background: radial-gradient(circle, rgba(139,157,126,0.28), transparent 70%);"
+    ></div>
+  </div>
+
+  <div class="relative mx-auto max-w-[1320px] px-6 lg:px-10">
+    <!-- Section header -->
+    <div class="reveal mb-20 sm:mb-28 grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-20 items-end pb-10 border-b border-ink/10">
       <div>
-        <p class="eyebrow mb-5">Four expressions · one thesis</p>
-        <h2 class="display-lg max-w-3xl">
-          Author. Operator.<br/>Artist. <span class="italic-grad">Creator.</span>
+        <p class="font-mono text-[10px] tracking-[0.32em] uppercase text-ink-mute mb-6">Issue · 026 / Chapter II</p>
+        <h2
+          class="font-display font-medium leading-[1.0] text-ink"
+          style="font-size: clamp(2.75rem, 7.5vw, 6rem); letter-spacing: -0.045em;"
+        >
+          <span class="block">Author.</span>
+          <span class="block">Operator.</span>
+          <span class="block italic-grad">Artist.</span>
+          <span class="block">Creator.</span>
         </h2>
       </div>
-      <p class="serif-body text-ink-soft max-w-sm">
-        What compounds is identity. Performance does not.
-      </p>
+      <div class="lg:pb-3">
+        <p class="font-display italic text-2xl sm:text-3xl text-brown leading-[1.18] max-w-md">
+          Four expressions of the same thesis.
+        </p>
+        <p class="serif-lg text-ink-soft mt-7 max-w-md">
+          What compounds is identity. Performance does not.
+        </p>
+      </div>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7 lg:gap-8">
-      {identities.map((id, i) => (
-        <a
-          href={id.href}
-          target={id.href.startsWith('http') ? '_blank' : undefined}
-          rel={id.href.startsWith('http') ? 'noopener' : undefined}
-          class="reveal group block"
-          style={`transition-delay: ${i * 70}ms`}
-        >
-          <figure class="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden mb-5 bg-bone paper-grain shadow-photo">
-            <img
-              src={id.image}
-              alt={id.alt}
-              loading="lazy"
-              decoding="async"
-              onerror="this.style.display='none'"
-              class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
-            />
-            <!-- Tonal fallback composition keyed to identity -->
-            <div
-              class="absolute inset-0 z-0"
-              style={
-                id.key === 'author' ? 'background: linear-gradient(160deg, #2A2722 0%, #6B4F3D 100%);' :
-                id.key === 'operator' ? 'background: linear-gradient(160deg, #0E0D0B 0%, #2F2A22 100%);' :
-                id.key === 'artist' ? 'background: linear-gradient(160deg, #B85542 0%, #6B4F3D 100%);' :
-                'background: linear-gradient(160deg, #8B9D7E 0%, #6B4F3D 100%);'
-              }
-            ></div>
-            <figcaption class="absolute inset-x-0 bottom-0 p-5 flex items-baseline justify-between text-cream/85 byline">
-              <span class="text-cream/85">{id.figure}</span>
-              <span class="text-cream/85">No. 0{i + 1}</span>
-            </figcaption>
-          </figure>
+    <!-- Cinema-strip identity cards — each photo gets its own dramatic frame -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      {identities.map((id, i) => {
+        const isExternal = id.href.startsWith('http');
+        // Vary card heights for cinema-strip rhythm
+        const liftClass =
+          i === 1 ? 'lg:translate-y-12' :
+          i === 3 ? 'lg:translate-y-12' :
+          '';
+        return (
+          <a
+            href={id.href}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener' : undefined}
+            class={`reveal group block ${liftClass}`}
+            style={`transition-delay: ${i * 90}ms`}
+          >
+            <!-- Massive index numeral as marginalia -->
+            <div class="flex items-baseline justify-between mb-4">
+              <span
+                class="font-display italic font-medium leading-none italic-grad"
+                style="font-size: clamp(2.5rem, 3.5vw, 3.75rem); letter-spacing: -0.04em; padding-bottom: 0.1em;"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mute">
+                {id.figure}
+              </span>
+            </div>
 
-          <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-2">{id.context}</p>
-          <h3 class="font-display text-3xl sm:text-[2rem] text-ink leading-tight mb-3 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
-            {id.label}.
-          </h3>
-          <p class="serif-body text-ink-soft mb-5">
-            {id.body}
-          </p>
-          <span class="inline-flex items-center gap-2 byline text-ink group-hover:gap-3 transition-all duration-300 ease-editorial">
-            {id.cta}
-            <ArrowUpRight size={11} />
-          </span>
-        </a>
-      ))}
+            <figure class="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden mb-6 bg-bone paper-grain shadow-photo">
+              <img
+                src={id.image}
+                alt={id.alt}
+                loading="lazy"
+                decoding="async"
+                onerror="this.style.display='none'"
+                class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1400ms] ease-editorial group-hover:scale-[1.06]"
+              />
+              <!-- Tonal fallback if image missing -->
+              <div
+                class="absolute inset-0 z-0"
+                style={
+                  id.key === 'author' ? 'background: linear-gradient(160deg, #2A2722 0%, #6B4F3D 100%);' :
+                  id.key === 'operator' ? 'background: linear-gradient(160deg, #0E0D0B 0%, #2F2A22 100%);' :
+                  id.key === 'artist' ? 'background: linear-gradient(160deg, #B85542 0%, #6B4F3D 100%);' :
+                  'background: linear-gradient(160deg, #8B9D7E 0%, #6B4F3D 100%);'
+                }
+              ></div>
+
+              <!-- Bottom vignette + hover glow -->
+              <div
+                class="absolute inset-0 pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                style="background: linear-gradient(to top, rgba(14,13,11,0.5) 0%, transparent 45%);"
+                aria-hidden="true"
+              ></div>
+
+              <!-- Editorial frame caption inside photo -->
+              <figcaption class="absolute inset-x-0 bottom-0 p-5 flex items-baseline justify-between text-cream/85 byline">
+                <span class="uppercase tracking-[0.22em] text-[0.625rem] font-medium">{id.label}</span>
+                <span class="uppercase tracking-[0.22em] text-[0.625rem] font-medium">No. {String(i + 1).padStart(2, '0')}</span>
+              </figcaption>
+            </figure>
+
+            <p class="micro tracking-[0.22em] uppercase text-ink-mute mb-3">{id.context}</p>
+            <h3
+              class="font-display text-ink leading-[1.08] mb-4 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial"
+              style="font-size: clamp(1.5rem, 2.2vw, 2rem); letter-spacing: -0.022em;"
+            >
+              {id.label}.
+            </h3>
+            <p class="serif-body text-ink-soft mb-6 leading-relaxed">
+              {id.body}
+            </p>
+            <span class="inline-flex items-center gap-2 byline text-ink group-hover:gap-3 transition-all duration-300 ease-editorial">
+              {id.cta}
+              <ArrowUpRight size={11} />
+            </span>
+          </a>
+        );
+      })}
     </div>
   </div>
 </section>

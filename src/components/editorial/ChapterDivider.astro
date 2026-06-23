@@ -1,0 +1,99 @@
+---
+// Editorial chapter divider — massive italic Roman numeral + chapter
+// title. Used as visual punctuation between major sections to give
+// the home page a magazine-grade rhythm (Issue 026 → Ch. I → Ch. II
+// kind of pacing).
+interface Props {
+  numeral: string;       // 'I' / 'II' / 'III' / 'IV'
+  eyebrow?: string;      // 'CHAPTER ONE'
+  title: string;         // 'The work.'
+  italic?: string;       // 'The room kept curated.'
+  body?: string;         // optional dek
+  tone?: 'light' | 'dark';
+}
+const { numeral, eyebrow, title, italic, body, tone = 'light' } = Astro.props;
+
+const isDark = tone === 'dark';
+---
+
+<section
+  class={`relative py-28 sm:py-36 lg:py-44 overflow-hidden ${isDark ? 'bg-anthracite text-cream' : 'bg-bone text-ink'}`}
+>
+  <!-- Ambient wash -->
+  <div class="pointer-events-none absolute inset-0 -z-0 opacity-60" aria-hidden="true">
+    {isDark ? (
+      <>
+        <div
+          class="absolute -top-20 -right-32 h-[60vh] w-[60vh] rounded-full blur-[140px]"
+          style="background: radial-gradient(circle, rgba(184,85,66,0.5), transparent 70%);"
+        ></div>
+        <div
+          class="absolute -bottom-32 -left-20 h-[55vh] w-[55vh] rounded-full blur-[140px]"
+          style="background: radial-gradient(circle, rgba(139,157,126,0.35), transparent 70%);"
+        ></div>
+      </>
+    ) : (
+      <>
+        <div
+          class="absolute top-0 right-1/4 h-[55vh] w-[55vh] rounded-full blur-[130px]"
+          style="background: radial-gradient(circle, rgba(184,85,66,0.28), transparent 70%);"
+        ></div>
+        <div
+          class="absolute bottom-0 left-0 h-[45vh] w-[45vh] rounded-full blur-[120px]"
+          style="background: radial-gradient(circle, rgba(139,157,126,0.25), transparent 70%);"
+        ></div>
+      </>
+    )}
+  </div>
+
+  <!-- Grain overlay -->
+  <div
+    class="absolute inset-0 pointer-events-none mix-blend-multiply opacity-[0.05]"
+    style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative mx-auto max-w-[1280px] px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[0.7fr_1.3fr] gap-8 lg:gap-16 items-end">
+      <!-- Massive Roman numeral as watermark -->
+      <div class="reveal">
+        <span
+          class="block font-display italic font-medium leading-[0.78]"
+          style={`font-size: clamp(7rem, 22vw, 22rem); letter-spacing: -0.06em; color: transparent; background: linear-gradient(135deg, ${isDark ? 'rgba(184,85,66,0.95)' : 'rgba(184,85,66,0.9)'} 0%, ${isDark ? 'rgba(142,61,47,0.8)' : 'rgba(142,61,47,0.55)'} 55%, ${isDark ? 'rgba(107,79,61,0.65)' : 'rgba(107,79,61,0.35)'} 100%); -webkit-background-clip: text; background-clip: text; padding-bottom: 0.1em;`}
+        >
+          {numeral}.
+        </span>
+      </div>
+
+      <!-- Chapter content -->
+      <div class="reveal lg:pt-16 lg:pb-10">
+        {eyebrow && (
+          <p
+            class={`text-[0.6875rem] uppercase tracking-[0.32em] mb-7 font-medium ${isDark ? 'text-sage' : 'text-ink-mute'}`}
+          >
+            {eyebrow}
+          </p>
+        )}
+        <h2
+          class={`font-display font-medium leading-[1.02] tracking-[-0.025em] ${isDark ? 'text-cream' : 'text-ink'}`}
+          style="font-size: clamp(2.5rem, 6vw, 4.5rem);"
+        >
+          <span class="block">{title}</span>
+          {italic && (
+            <span class="block font-display italic font-medium italic-grad">{italic}</span>
+          )}
+        </h2>
+        {body && (
+          <p
+            class={`serif-lg mt-7 max-w-prose ${isDark ? 'text-cream/75' : 'text-ink-soft'}`}
+          >
+            {body}
+          </p>
+        )}
+      </div>
+    </div>
+
+    <!-- Editorial rule -->
+    <div class={`mt-16 sm:mt-20 h-px ${isDark ? 'bg-cream/10' : 'bg-ink/10'}`}></div>
+  </div>
+</section>

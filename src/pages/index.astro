@@ -3,6 +3,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import CinematicHero from '@components/sections/CinematicHero.astro';
 import PortraitScrub from '@components/sections/PortraitScrub.astro';
 import EditorialOpening from '@components/sections/EditorialOpening.astro';
+import ChapterDivider from '@components/editorial/ChapterDivider.astro';
+import PullQuoteInterlude from '@components/editorial/PullQuoteInterlude.astro';
 import BookAnchor from '@components/sections/BookAnchor.astro';
 import BookStanEmbed from '@components/sections/BookStanEmbed.astro';
 import FourIdentities from '@components/sections/FourIdentities.astro';
@@ -24,15 +26,59 @@ import ClosingTiles from '@components/sections/ClosingTiles.astro';
   <CinematicHero />
   <PortraitScrub />
   <EditorialOpening />
+
+  <ChapterDivider
+    numeral="I"
+    eyebrow="CHAPTER ONE · THE FOUNDATIONAL WORK"
+    title="The book."
+    italic="Slow letter, for the women already at it."
+    body="Five parts. Twenty-two chapters. The work everything else is downstream of."
+  />
+
   <BookAnchor />
   <BookStanEmbed />
+
+  <ChapterDivider
+    numeral="II"
+    eyebrow="CHAPTER TWO · THE FOUR EXPRESSIONS"
+    title="The work."
+    italic="Four expressions. One thesis."
+    body="Author. Operator. Artist. Creator. The four held together by a single line — identity is what compounds, performance does not."
+  />
+
   <FourIdentities />
   <OperatorSection />
+
+  <ChapterDivider
+    numeral="III"
+    eyebrow="CHAPTER THREE · THE ROOM"
+    title="The room."
+    italic="Curated, on purpose."
+    body="The 1:1 coaching room is small. The community is by application. The diary is for the women already doing the work — and the ones on the edge of it."
+    tone="dark"
+  />
+
   <Architecture />
+
+  <PullQuoteInterlude
+    quote="The work is becoming the woman you are already about to be."
+    attribution="From the diary"
+    tone="cream"
+  />
+
   <LatestWriting />
   <YouTubeFeatured />
   <ReelsShowcase />
   <RuptureGallery />
+
+  <ChapterDivider
+    numeral="IV"
+    eyebrow="CHAPTER FOUR · THE ROOM AHEAD"
+    title="What is next."
+    italic="A coven, in waiting."
+    body="A community for the women living it — and the ones about to. Application-based. Launching slowly."
+  />
+
   <CovenWaitlist />
   <InstagramGrid />
   <ClosingTiles />
