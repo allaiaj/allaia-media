@@ -50,7 +50,9 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
       {identities.map((id, i) => {
         const isExternal = id.href.startsWith('http');
         // 01 + 03 = dominant (col-span-2). 02 + 04 = accent
-        const dominant = i === 0 || i === 2;
+        // Per Allaia: Operator (i=1) and Creator (i=3) are the
+        // dominant cards. Author + Artist sit in the accent slots.
+        const dominant = i === 1 || i === 3;
         const col = dominant ? 'lg:col-span-2' : 'lg:col-span-1';
         const aspect = dominant ? 'aspect-[5/3] lg:aspect-[5/3]' : 'aspect-[4/5]';
         const overlayJustify = dominant ? 'justify-between' : 'justify-end';
@@ -67,24 +69,25 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
               class={`relative ${aspect} rounded-[1.5rem] overflow-hidden shadow-photo bg-anthracite-warm paper-grain transition-transform duration-700 ease-editorial`}
               data-identity-figure
             >
-              <img
-                src={id.image}
-                alt={id.alt}
-                loading="lazy"
-                decoding="async"
-                onerror="this.style.display='none'"
-                class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1600ms] ease-editorial group-hover:scale-[1.06]"
-              />
-              <!-- Tonal fallback if image missing -->
+              <!-- Tonal fallback FIRST in DOM so it sits behind the img -->
               <div
-                class="absolute inset-0 z-0"
+                class="absolute inset-0"
                 style={
                   id.key === 'author' ? 'background: linear-gradient(160deg, #2A2722 0%, #6B4F3D 100%);' :
                   id.key === 'operator' ? 'background: linear-gradient(160deg, #0E0D0B 0%, #2F2A22 100%);' :
                   id.key === 'artist' ? 'background: linear-gradient(160deg, #B85542 0%, #6B4F3D 100%);' :
                   'background: linear-gradient(160deg, #8B9D7E 0%, #6B4F3D 100%);'
                 }
+                aria-hidden="true"
               ></div>
+              <!-- Real photo painted on top of the fallback -->
+              <img
+                src={id.image}
+                alt={id.alt}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover photo-warm transition-transform duration-[1600ms] ease-editorial group-hover:scale-[1.06]"
+              />
 
               <!-- Dark gradient overlay for text legibility -->
               <div
