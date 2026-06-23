@@ -125,10 +125,10 @@ export const heroBeats = {
 export const editorialOpening = {
   eyebrow: 'A message from Allaia',
   lead: 'Allaia.',
-  sub: 'Author. Operator. Artist.',
-  body: 'A life built to move on its own terms — and written down for the women building one of their own.',
+  sub: 'Author. Operator. Artist. Free spirit.',
+  body: 'A free spirit, in motion. A life built between Dubai and Bali, between the studio and the canvas, between the rooms that ask of me. Written down for the women building one of their own.',
   body2:
-    'The work is identity-led. Slow. Quietly compounding. A book, a community, a coaching room kept curated, and a canvas practice that holds what the writing cannot.',
+    'The work is identity-led. Slow. Quietly compounding. A book, a community, a coaching room kept curated, and a life that moves on its own terms — because the women who buy from me are not buying an offer, they are buying the proof.',
   ctas: [
     { label: 'The book', href: '/book', primary: true },
     { label: 'The Architecture', href: site.stan.application, primary: false, external: true },
