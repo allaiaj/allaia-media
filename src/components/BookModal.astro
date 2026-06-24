@@ -1,0 +1,235 @@
+---
+// Become Her popup — appears a few seconds after the page loads
+// with the cover + a Stan Store CTA. Closes via X / backdrop tap /
+// ESC. localStorage remembers a close so it doesn't keep popping up
+// (auto-expires after 7 days so it can reach a return visitor again).
+import { book, site } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<div
+  class="book-modal fixed inset-0 z-[80] hidden items-center justify-center px-4 sm:px-6"
+  data-book-modal
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="book-modal-title"
+>
+  <!-- Backdrop -->
+  <button
+    type="button"
+    class="absolute inset-0 w-full h-full bg-anthracite/55 backdrop-blur-md cursor-pointer"
+    aria-label="Close"
+    data-book-modal-close
+  ></button>
+
+  <!-- Modal card -->
+  <div
+    class="book-modal-card relative w-full max-w-[920px] max-h-[92vh] overflow-y-auto rounded-[1.75rem] shadow-anthracite"
+    style="background: linear-gradient(160deg, #0E0D0B 0%, #1F1B16 60%, #2A2722 100%);"
+    data-book-modal-card
+  >
+    <!-- Warm wash inside the card -->
+    <div
+      class="pointer-events-none absolute inset-0 opacity-60"
+      style="background: radial-gradient(ellipse 60% 60% at 80% 10%, rgba(184,85,66,0.55), transparent 70%), radial-gradient(ellipse 55% 55% at 10% 95%, rgba(139,157,126,0.35), transparent 70%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Close button (top right) -->
+    <button
+      type="button"
+      aria-label="Close"
+      data-book-modal-close
+      class="absolute top-4 right-4 sm:top-5 sm:right-5 z-10 grid place-items-center h-10 w-10 rounded-full bg-cream/12 backdrop-blur-md border border-cream/20 text-cream hover:bg-cream/25 hover:scale-110 transition-all duration-300 ease-editorial"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="relative grid sm:grid-cols-[1fr_1.1fr] gap-0">
+      <!-- LEFT: cover -->
+      <div class="relative p-7 sm:p-9 lg:p-11 flex items-center justify-center">
+        <figure class="relative w-full max-w-[240px] sm:max-w-[260px]">
+          <div
+            class="relative aspect-[2/3] rounded-[0.875rem] overflow-hidden bg-anthracite"
+            style="box-shadow: 0 32px 80px -16px rgba(184,85,66,0.55), 0 0 0 1px rgba(242,237,229,0.08) inset;"
+          >
+            <!-- CSS cover (matches Allaia's design) -->
+            <div class="absolute inset-0" style="background: #18181A;" aria-hidden="true">
+              <div
+                class="absolute inset-0 opacity-[0.18] mix-blend-screen"
+                style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;);"
+              ></div>
+              <div class="absolute top-0 inset-x-0 pt-3 px-3">
+                <div class="flex items-start justify-between text-cream text-[0.4375rem] tracking-[0.15em] uppercase font-medium leading-[1.3]">
+                  <span class="max-w-[40%]">For the woman<br/>who's done performing</span>
+                  <span class="self-center">2026</span>
+                  <span class="self-start">Allaia Power</span>
+                </div>
+                <div class="mt-2 h-px bg-cream/35"></div>
+              </div>
+              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 px-3 text-center">
+                <h3 class="font-sans font-black text-cream leading-[0.92] tracking-tight" style="font-size: clamp(1.5rem, 3.5vw, 2.25rem);">
+                  <span class="block">BECOME</span>
+                  <span class="block">HER</span>
+                </h3>
+                <p class="mt-3 font-display italic text-cream/85 leading-snug text-[0.625rem] max-w-[10rem] mx-auto">
+                  On the dethroning of the persona and the recovery of the Self.
+                </p>
+              </div>
+              <div class="absolute bottom-4 inset-x-0 text-center">
+                <p class="font-sans font-black text-cream tracking-[0.18em] text-[0.5625rem]">
+                  ALLAIA POWER
+                </p>
+              </div>
+            </div>
+            <!-- Real cover if file exists -->
+            <img
+              src={book.cover}
+              alt=""
+              loading="eager"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover"
+              onerror="this.style.display='none'"
+            />
+          </div>
+        </figure>
+      </div>
+
+      <!-- RIGHT: copy + CTA -->
+      <div class="relative p-7 sm:p-9 lg:p-11 flex flex-col justify-center text-cream">
+        <p class="text-[0.625rem] uppercase tracking-[0.28em] text-sage font-medium mb-4">
+          A debut · 2026
+        </p>
+        <h2
+          id="book-modal-title"
+          class="font-display font-medium leading-[1.04] mb-5"
+          style="font-size: clamp(2rem, 5vw, 3.25rem); letter-spacing: -0.025em;"
+        >
+          <span class="block">Stop waiting</span>
+          <span class="block font-display italic font-medium bg-gradient-to-br from-terracotta via-terracotta-deep to-brown bg-clip-text text-transparent" style="padding-bottom: 0.14em;">
+            on someday.
+          </span>
+        </h2>
+
+        <p class="font-display italic text-cream/85 text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-snug mb-7 max-w-md">
+          Become the woman who already lives the life you want.
+        </p>
+
+        <p class="font-serif text-cream/80 leading-[1.6] mb-8 max-w-md text-[1.0625rem]">
+          {book.blurb}
+        </p>
+
+        <a
+          href={site.stan.book}
+          target="_blank"
+          rel="noopener"
+          class="cta-cream group inline-flex w-full sm:w-auto items-center justify-center"
+          data-book-modal-cta
+        >
+          <span class="grid place-items-center h-5 w-5 rounded-full bg-ink text-cream font-display italic font-black text-[0.625rem] leading-none mr-1.5">s</span>
+          <span>Read the book on Stan</span>
+          <ArrowUpRight size={12} class="ml-1.5 transition-transform group-hover:translate-x-0.5" />
+        </a>
+
+        <p class="text-[0.6875rem] text-cream/45 mt-4">
+          Opens at <span class="text-cream/70">{site.stan.book.replace('https://', '')}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Open state — driven by data-state="open" on .book-modal */
+  .book-modal {
+    opacity: 0;
+    transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .book-modal[data-state="open"] {
+    display: flex;
+    opacity: 1;
+  }
+  .book-modal-card {
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+    transition:
+      transform 480ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .book-modal[data-state="open"] .book-modal-card {
+    transform: none;
+    opacity: 1;
+    transition-delay: 80ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .book-modal, .book-modal-card { transition: none !important; }
+  }
+</style>
+
+<script>
+  const KEY = 'allaia_book_modal_dismissed_at';
+  const EXPIRY_DAYS = 7;
+  const DELAY_MS = 2500;
+
+  const modal = document.querySelector<HTMLElement>('[data-book-modal]');
+  if (modal) {
+    let dismissedAt: number | null = null;
+    try {
+      const v = localStorage.getItem(KEY);
+      dismissedAt = v ? parseInt(v, 10) : null;
+    } catch { /* localStorage blocked — show anyway */ }
+
+    const fresh = dismissedAt && performance.now() === performance.now()
+      ? (dismissedAt + EXPIRY_DAYS * 86400000) > Number(new Date(document.lastModified))
+      : false;
+
+    const recentlyDismissed = (() => {
+      if (!dismissedAt) return false;
+      const ageMs = EXPIRY_DAYS * 86400000;
+      // Use a monotonic-ish reference: compare against build/document time
+      const ref = Number(new Date(document.lastModified)) || 0;
+      return dismissedAt > 0 && (ref - dismissedAt) < ageMs;
+    })();
+
+    const open = () => {
+      modal.setAttribute('data-state', 'open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      modal.removeAttribute('data-state');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      try { localStorage.setItem(KEY, String(Date.now())); } catch { /* ignore */ }
+      setTimeout(() => { modal.style.display = 'none'; }, 360);
+    };
+
+    // Wire up close triggers
+    modal.querySelectorAll<HTMLElement>('[data-book-modal-close]').forEach((b) => {
+      b.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('data-state') === 'open') close();
+    });
+    modal.querySelector<HTMLElement>('[data-book-modal-cta]')?.addEventListener('click', () => {
+      // Close on CTA click too so it doesn't reappear after they leave for Stan
+      try { localStorage.setItem(KEY, String(Date.now())); } catch { /* ignore */ }
+    });
+
+    // Honest dismissal check using stored timestamp vs now
+    const reallyRecentlyDismissed = (() => {
+      if (!dismissedAt) return false;
+      const nowMs = Date.now();
+      return (nowMs - dismissedAt) < EXPIRY_DAYS * 86400000;
+    })();
+
+    if (!reallyRecentlyDismissed) {
+      // Make sure flex isn't suppressed by initial display:none
+      modal.style.display = '';
+      setTimeout(open, DELAY_MS);
+    }
+  }
+</script>

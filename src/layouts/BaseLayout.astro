@@ -3,6 +3,7 @@ import '@styles/global.css';
 import { site } from '@data/site';
 import GlassPillNav from '@components/GlassPillNav.astro';
 import AtmosphericBackdrop from '@components/AtmosphericBackdrop.astro';
+import BookModal from '@components/BookModal.astro';
 import EditorialFooter from '@components/EditorialFooter.astro';
 
 interface Props {
@@ -70,6 +71,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
       <slot />
     </main>
     <EditorialFooter />
+    <BookModal />
 
     <!-- Scroll reveal observer -->
     <script>
