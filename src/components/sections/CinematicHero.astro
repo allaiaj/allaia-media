@@ -311,17 +311,46 @@ const scenes = [
   }
   .hero-stage * { transform-style: inherit; }
 
-  /* Instant display swap — robust against mobile Safari + Instagram
-     in-app webview, where rapid opacity-transitions on data-attr
-     changes were stacking multiple beats. Snap-cut is the only
-     truly safe primitive across all webviews. */
-  .hero-beat { display: none; pointer-events: none; }
-  .hero-beat.is-active { display: flex; pointer-events: auto; }
-  .hero-scene { display: none; pointer-events: none; }
-  .hero-scene.is-active { display: block; pointer-events: auto; }
-  .hero-bg-layer { opacity: 0; transition: opacity 800ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+  /* Smooth cross-fades across all layers — scenes, beats, bg gradients.
+     Each layer stays absolutely positioned so they stack; inactive ones
+     fade to opacity 0 and pointer-events: none. Transitions tuned long
+     enough to feel buttery, short enough that scroll-scrubbing through
+     the scene index never feels lagged. */
+  .hero-beat {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition:
+      opacity 720ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .hero-beat.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  .hero-scene {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity;
+  }
+  .hero-scene.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hero-bg-layer {
+    opacity: 0;
+    transition: opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity;
+  }
   .hero-bg-layer.is-active { opacity: 1; }
-  .hero-scene-img { transition: transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+  /* Ken-burns transform on the active scene runs every frame from JS —
+     no CSS transition or the per-frame updates would jitter. */
+  .hero-scene-img {
+    will-change: transform;
+  }
 
   /* Orb — fixed position, but transform-driven by scroll */
   .hero-orb {
@@ -408,9 +437,8 @@ const scenes = [
     const setActive = (i: number) => {
       if (i === activeIdx) return;
       activeIdx = i;
-      // Toggle is-active class on every layer. CSS uses display: none
-      // / display: flex (or block) for snap-instant swapping — no
-      // opacity transitions to get stuck on Instagram's in-app webview.
+      // Cross-fade swap — every layer's CSS handles the opacity
+      // transition. Smooth across all modern WebView builds.
       scenes.forEach((el, k) => el.classList.toggle('is-active', k === i));
       bgLayers.forEach((el, k) => el.classList.toggle('is-active', k === i));
       beats.forEach((el, k) => el.classList.toggle('is-active', k === i));
@@ -432,7 +460,9 @@ const scenes = [
       const total = rect.height - window.innerHeight;
       const scrolled = Math.min(Math.max(-rect.top, 0), total);
       const progress = total > 0 ? scrolled / total : 0;
-      lastProgress += (progress - lastProgress) * 0.16;
+      // Softer lerp = buttery scroll, less snap. 0.12 is the sweet
+      // spot between "follows the wheel" and "drifts beautifully".
+      lastProgress += (progress - lastProgress) * 0.12;
 
       // 5 scenes — index from progress (with overlap window)
       const idx = Math.min(sceneCount - 1, Math.floor(lastProgress * sceneCount * 0.999));
@@ -445,14 +475,22 @@ const scenes = [
       cMouseX += (mouseX - cMouseX) * 0.06;
       cMouseY += (mouseY - cMouseY) * 0.06;
 
-      // Active scene image — Ken Burns + parallax
-      const activeImg = scenes[idx]?.querySelector<HTMLElement>('.hero-scene-img');
-      if (activeImg) {
-        const scale = 1.08 - localP * 0.05; // gentle zoom-out across the scene
+      // Every scene's image — ken-burns + parallax continuously, even
+      // off-screen. Means the outgoing scene keeps moving as it fades
+      // out (no frozen still mid-transition) and the incoming one is
+      // already in motion when it lights up.
+      scenes.forEach((sceneEl, k) => {
+        const img = sceneEl.querySelector<HTMLElement>('.hero-scene-img');
+        if (!img) return;
+        // Each scene gets its own localP slice based on the global
+        // progress — so all scenes are "at the right frame" for their
+        // segment of the scroll track.
+        const sliceP = Math.min(1, Math.max(0, lastProgress * sceneCount - k));
+        const scale = 1.08 - sliceP * 0.05;
         const dx = cMouseX * 14;
-        const dy = cMouseY * 10 - localP * 30;
-        activeImg.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
-      }
+        const dy = cMouseY * 10 - sliceP * 30;
+        img.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
+      });
 
       // Orb — rotates around the stage as scenes progress
       if (orb) {
