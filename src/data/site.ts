@@ -101,7 +101,7 @@ export const identities = [
     href: 'https://blacklyne.ai/en/',
     cta: 'Visit Blacklyne',
     figure: 'FIG. 02',
-    image: '/img/portraits/DXdmLBNFHa8.jpg',
+    image: '/img/portraits/DWlfa4-lOuC.jpg',
     alt: '',
   },
   {
@@ -123,7 +123,7 @@ export const identities = [
     href: site.instagram,
     cta: 'Instagram',
     figure: 'FIG. 04',
-    image: '/img/portraits/DWlfa4-lOuC.jpg',
+    image: '/img/portraits/DXdmLBNFHa8.jpg',
     alt: '',
   },
 ] as const;
