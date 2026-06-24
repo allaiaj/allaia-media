@@ -169,15 +169,14 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 </style>
 
 <script>
-  const KEY = 'allaia_studio_modal_dismissed';
-  const DELAY_MS = 2400;
+  // Studio modal: ALWAYS pops on this page. Per Allaia — the Blacklyne
+  // popup should appear on every visit (no session suppression), since
+  // the studio page is itself a campaign for blacklyne.ai. Closing it
+  // dismisses only the current view; a refresh or re-visit re-opens it.
+  const DELAY_MS = 2200;
 
   const modal = document.querySelector<HTMLElement>('[data-studio-modal]');
   if (modal) {
-    let dismissedThisSession = false;
-    try { dismissedThisSession = sessionStorage.getItem(KEY) === '1'; } catch { /* allow */ }
-    const force = new URLSearchParams(location.search).get('popup') === '1';
-
     const open = () => {
       modal.style.display = '';
       modal.setAttribute('data-state', 'open');
@@ -188,7 +187,6 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
       modal.removeAttribute('data-state');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
       setTimeout(() => { modal.style.display = 'none'; }, 360);
     };
 
@@ -198,14 +196,11 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.getAttribute('data-state') === 'open') close();
     });
+    // CTA clicks just close it (no suppression flag — re-visit re-opens).
     modal.querySelectorAll<HTMLElement>('[data-studio-modal-cta]').forEach((a) => {
-      a.addEventListener('click', () => {
-        try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
-      });
+      a.addEventListener('click', close);
     });
 
-    if (force || !dismissedThisSession) {
-      setTimeout(open, DELAY_MS);
-    }
+    setTimeout(open, DELAY_MS);
   }
 </script>

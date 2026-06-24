@@ -174,11 +174,28 @@
     font-size: 1.0625rem;
     line-height: 1.7;
     font-feature-settings: 'kern', 'liga', 'calt';
-    /* iOS Safari momentum scroll breaks when body has overflow:clip AND
-       <main> also clips. Keep the overflow constraint on <main> only
-       (set inline in BaseLayout) and leave body to scroll natively. */
+    /* Body left to scroll natively (no overflow constraint). Horizontal
+       overflow is contained on <main> via .main-clip — see below. */
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: none;
+  }
+
+  /* <main> must contain horizontal overflow (PortraitScrub / hero rails
+     drift off-screen by design) without breaking sticky scroll-scrub
+     inside it. `overflow: hidden` would solve the overflow but turns
+     <main> into a scroll container — which kills position: sticky for
+     every descendant, including CinematicHero's 500vh scrub and
+     PortraitScrub's pinned stage. `overflow: clip` does the same
+     containment without creating a scroll container — sticky still
+     walks up to the body/html and pins correctly. iOS 16+ / Chromium
+     109+ / Firefox 115+ support clip; older browsers fall back to
+     visible, which means a faint horizontal scrollbar may appear on
+     ancient phones — strictly preferable to a broken vertical scroll. */
+  .main-clip {
+    overflow-x: clip;
+  }
+  @supports not (overflow-x: clip) {
+    .main-clip { overflow-x: hidden; }
   }
 
   ::selection {
