@@ -7,7 +7,29 @@
    Vendored from @fontsource into /public/fonts/
    ================================================================= */
 
-/* Display face — Fraunces (softer, more readable than Playfair Display) */
+/* Display face — Instrument Serif. Thin, refined, editorial — what
+   premium magazines (and Pitch, Linear, Vercel, Pitchfork) use now.
+   Single regular + italic; the discipline of one weight is the
+   classiness Allaia asked for. Heavier brand moments fall back to
+   Cormorant Garamond 600, which is on the page already. */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/instrument-serif-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+}
+
+/* Fraunces kept available behind `font-fraunces` for the few places
+   (book covers, hero monogram) that need a chiseler — but no longer
+   the default display family. */
 @font-face {
   font-family: 'Fraunces';
   font-style: normal;
@@ -197,32 +219,32 @@
 
 @layer utilities {
   .display-xl {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 900;
-    font-size: clamp(4rem, 13vw, 12rem);
-    line-height: 0.96;
-    letter-spacing: -0.045em;
-  }
-  .display-lg {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 800;
-    font-size: clamp(3rem, 7.5vw, 6rem);
-    line-height: 1.02;
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(4.25rem, 14vw, 13rem);
+    line-height: 0.94;
     letter-spacing: -0.035em;
   }
+  .display-lg {
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 7.8vw, 6.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.028em;
+  }
   .display-md {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
-    line-height: 1.06;
-    letter-spacing: -0.025em;
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.25rem, 5.2vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
   }
   .display-sm {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    line-height: 1.12;
-    letter-spacing: -0.02em;
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.75rem, 3.6vw, 2.875rem);
+    line-height: 1.1;
+    letter-spacing: -0.018em;
   }
   .serif-lg {
     font-family: 'Cormorant Garamond', Georgia, serif;

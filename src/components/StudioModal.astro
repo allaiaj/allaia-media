@@ -64,7 +64,7 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
         </span>
       </h2>
 
-      <!-- "Browser-window" preview of blacklyne.ai -->
+      <!-- Real browser-framed preview of blacklyne.ai -->
       <a
         href={site.blacklyne}
         target="_blank"
@@ -86,35 +86,24 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
           <ArrowUpRight size={12} class="text-cream/60 group-hover:text-cream transition-colors duration-300 ease-editorial" />
         </div>
 
-        <!-- Preview canvas -->
-        <div class="relative aspect-[16/9] overflow-hidden" style="background: #0E0D0B;">
-          <!-- Atmospheric blooms -->
+        <!-- Real Blacklyne homepage screenshot — captured at 1440×900 @2x -->
+        <div class="relative aspect-[16/10] overflow-hidden bg-anthracite">
+          <img
+            src="/img/studio/blacklyne-preview.jpg"
+            alt="Blacklyne — the studio's homepage"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[1400ms] ease-editorial group-hover:scale-[1.025]"
+          />
+          <!-- Top-edge gloss to seat it in the dark card -->
           <div
-            class="absolute inset-0 opacity-70"
-            style="background: radial-gradient(ellipse 60% 60% at 75% 20%, rgba(184,85,66,0.45), transparent 60%), radial-gradient(ellipse 50% 50% at 15% 90%, rgba(139,157,126,0.35), transparent 60%);"
+            class="absolute inset-x-0 top-0 h-8 pointer-events-none"
+            style="background: linear-gradient(to bottom, rgba(14,13,11,0.18), transparent);"
+            aria-hidden="true"
           ></div>
-          <!-- Faint grid -->
-          <div
-            class="absolute inset-0 opacity-[0.06]"
-            style="background-image: linear-gradient(0deg, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 56px 56px;"
-          ></div>
-
-          <div class="relative h-full grid place-items-center p-6 sm:p-10 text-center">
-            <div>
-              <p class="text-[0.5625rem] uppercase tracking-[0.32em] text-cream/55 mb-4">Blacklyne</p>
-              <p class="font-display italic text-[clamp(1.5rem,3.2vw,2.5rem)] text-cream leading-[1.04] mb-3">
-                The site that closes.<br/>
-                The brand AI recommends.
-              </p>
-              <p class="text-[0.6875rem] uppercase tracking-[0.18em] text-cream/55">
-                Berlin · Dubai · New York
-              </p>
-            </div>
-          </div>
-
-          <!-- Hover lift -->
+          <!-- Bottom hover-lift bar -->
           <span
-            class="absolute inset-x-0 bottom-0 px-5 py-3 flex items-center justify-between text-[0.6875rem] uppercase tracking-[0.16em] text-cream/85 transition-transform duration-500 ease-editorial group-hover:-translate-y-1"
+            class="absolute inset-x-0 bottom-0 px-5 py-3 flex items-center justify-between text-[0.6875rem] uppercase tracking-[0.16em] text-cream/90 transition-transform duration-500 ease-editorial group-hover:-translate-y-1"
             style="background: linear-gradient(to top, rgba(14,13,11,0.9), transparent);"
           >
             <span>Tap to open the site</span>

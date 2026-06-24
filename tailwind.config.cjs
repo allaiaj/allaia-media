@@ -29,7 +29,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['"Fraunces"', '"GT Sectra"', 'Georgia', 'serif'],
+        // Display headers — Instrument Serif. Thin, refined, editorial.
+        display: ['"Instrument Serif"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        // Fraunces kept around for the rare brand moment (book covers, etc).
+        fraunces: ['"Fraunces"', 'Georgia', 'serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
       },
