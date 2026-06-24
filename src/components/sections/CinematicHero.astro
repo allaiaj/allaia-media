@@ -316,19 +316,27 @@ const scenes = [
      fade to opacity 0 and pointer-events: none. Transitions tuned long
      enough to feel buttery, short enough that scroll-scrubbing through
      the scene index never feels lagged. */
+  /* Text beats use an ASYMMETRIC transition so two beats never overlap.
+     Outgoing beat fades out fast (260ms, no delay), incoming beat
+     waits 280ms then fades in (380ms). Total swap window ≈ 660ms,
+     but the outgoing is fully invisible before the incoming starts
+     to appear — clean letterforms throughout. */
   .hero-beat {
     opacity: 0;
     pointer-events: none;
     transform: translateY(8px);
     transition:
-      opacity 720ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      opacity 260ms cubic-bezier(0.22, 0.61, 0.36, 1) 0ms,
+      transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1) 0ms;
     will-change: opacity, transform;
   }
   .hero-beat.is-active {
     opacity: 1;
     pointer-events: auto;
     transform: none;
+    transition:
+      opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1) 280ms,
+      transform 480ms cubic-bezier(0.22, 0.61, 0.36, 1) 280ms;
   }
   .hero-scene {
     opacity: 0;
