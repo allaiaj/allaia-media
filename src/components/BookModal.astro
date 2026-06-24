@@ -178,31 +178,25 @@ const isAboutPage = path === '/about' || path === '/about/';
 </style>
 
 <script>
-  const KEY = 'allaia_book_modal_dismissed_at';
-  const EXPIRY_DAYS = 7;
+  // Per-session suppression only. Once the user closes the modal in
+  // this tab/session, it stays closed until they refresh or open a
+  // new visit. This is an active book campaign — long-lived suppression
+  // makes the popup invisible to anyone who tested it once.
+  const KEY = 'allaia_book_modal_dismissed';
   const DELAY_MS = 2500;
 
   const modal = document.querySelector<HTMLElement>('[data-book-modal]');
   if (modal) {
-    let dismissedAt: number | null = null;
+    let dismissedThisSession = false;
     try {
-      const v = localStorage.getItem(KEY);
-      dismissedAt = v ? parseInt(v, 10) : null;
-    } catch { /* localStorage blocked — show anyway */ }
+      dismissedThisSession = sessionStorage.getItem(KEY) === '1';
+    } catch { /* sessionStorage blocked — show anyway */ }
 
-    const fresh = dismissedAt && performance.now() === performance.now()
-      ? (dismissedAt + EXPIRY_DAYS * 86400000) > Number(new Date(document.lastModified))
-      : false;
-
-    const recentlyDismissed = (() => {
-      if (!dismissedAt) return false;
-      const ageMs = EXPIRY_DAYS * 86400000;
-      // Use a monotonic-ish reference: compare against build/document time
-      const ref = Number(new Date(document.lastModified)) || 0;
-      return dismissedAt > 0 && (ref - dismissedAt) < ageMs;
-    })();
+    // Optional force-show: append ?popup=1 to the URL to bypass suppression.
+    const force = new URLSearchParams(location.search).get('popup') === '1';
 
     const open = () => {
+      modal.style.display = '';
       modal.setAttribute('data-state', 'open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -211,11 +205,10 @@ const isAboutPage = path === '/about' || path === '/about/';
       modal.removeAttribute('data-state');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      try { localStorage.setItem(KEY, String(Date.now())); } catch { /* ignore */ }
+      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
       setTimeout(() => { modal.style.display = 'none'; }, 360);
     };
 
-    // Wire up close triggers
     modal.querySelectorAll<HTMLElement>('[data-book-modal-close]').forEach((b) => {
       b.addEventListener('click', close);
     });
@@ -223,20 +216,10 @@ const isAboutPage = path === '/about' || path === '/about/';
       if (e.key === 'Escape' && modal.getAttribute('data-state') === 'open') close();
     });
     modal.querySelector<HTMLElement>('[data-book-modal-cta]')?.addEventListener('click', () => {
-      // Close on CTA click too so it doesn't reappear after they leave for Stan
-      try { localStorage.setItem(KEY, String(Date.now())); } catch { /* ignore */ }
+      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
     });
 
-    // Honest dismissal check using stored timestamp vs now
-    const reallyRecentlyDismissed = (() => {
-      if (!dismissedAt) return false;
-      const nowMs = Date.now();
-      return (nowMs - dismissedAt) < EXPIRY_DAYS * 86400000;
-    })();
-
-    if (!reallyRecentlyDismissed) {
-      // Make sure flex isn't suppressed by initial display:none
-      modal.style.display = '';
+    if (force || !dismissedThisSession) {
       setTimeout(open, DELAY_MS);
     }
   }

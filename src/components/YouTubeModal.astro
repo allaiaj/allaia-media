@@ -134,18 +134,19 @@ const f = site.youtubeFeatured;
 </style>
 
 <script>
-  const KEY = 'allaia_yt_modal_dismissed_at';
-  const EXPIRY_MS = 7 * 86400000;
+  // Per-session suppression. Once closed in this tab it stays closed
+  // until refresh / new visit — same logic as BookModal.
+  const KEY = 'allaia_yt_modal_dismissed';
   const DELAY_MS = 2200;
 
   const modal = document.querySelector<HTMLElement>('[data-yt-modal]');
   if (modal) {
-    let dismissedAt: number | null = null;
+    let dismissedThisSession = false;
     try {
-      const v = localStorage.getItem(KEY);
-      dismissedAt = v ? parseInt(v, 10) : null;
-    } catch { /* localStorage blocked — show anyway */ }
-    const recentlyDismissed = dismissedAt && (Date.now() - dismissedAt) < EXPIRY_MS;
+      dismissedThisSession = sessionStorage.getItem(KEY) === '1';
+    } catch { /* sessionStorage blocked — show anyway */ }
+
+    const force = new URLSearchParams(location.search).get('popup') === '1';
 
     const player = modal.querySelector<HTMLElement>('[data-yt-player]');
     let iframe: HTMLIFrameElement | null = null;
@@ -176,8 +177,7 @@ const f = site.youtubeFeatured;
       modal.removeAttribute('data-state');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      try { localStorage.setItem(KEY, String(Date.now())); } catch { /* ignore */ }
-      // Tear down iframe so the video actually stops
+      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
       if (iframe) {
         iframe.remove();
         iframe = null;
@@ -192,10 +192,10 @@ const f = site.youtubeFeatured;
       if (e.key === 'Escape' && modal.getAttribute('data-state') === 'open') close();
     });
     modal.querySelector<HTMLElement>('[data-yt-modal-open]')?.addEventListener('click', () => {
-      try { localStorage.setItem(KEY, String(Date.now())); } catch { /* ignore */ }
+      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
     });
 
-    if (!recentlyDismissed) {
+    if (force || !dismissedThisSession) {
       setTimeout(open, DELAY_MS);
     }
   }
