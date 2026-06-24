@@ -247,25 +247,9 @@ const scenes = [
         </div>
       </div>
 
-      <!-- Layer 5 — floating 3D chips -->
-      <div class="hero-chips absolute pointer-events-none" data-chip-a aria-hidden="true">
-        <div class="glass-pill px-3.5 py-2 rounded-full shadow-pill rotate-[-3deg] flex items-center gap-2">
-          <span class="h-1.5 w-1.5 rounded-full bg-terracotta"></span>
-          <span class="byline text-ink">Become Her — 2026</span>
-        </div>
-      </div>
-      <div class="hero-chips absolute pointer-events-none" data-chip-b aria-hidden="true">
-        <div class="glass-pill px-3.5 py-2 rounded-full shadow-pill rotate-[2deg] flex items-center gap-2">
-          <span class="h-1.5 w-1.5 rounded-full bg-sage"></span>
-          <span class="byline text-ink">COO — Blacklyne</span>
-        </div>
-      </div>
-      <div class="hero-chips absolute pointer-events-none" data-chip-c aria-hidden="true">
-        <div class="glass-pill px-3.5 py-2 rounded-full shadow-pill rotate-[-1deg] flex items-center gap-2">
-          <span class="h-1.5 w-1.5 rounded-full bg-brown"></span>
-          <span class="byline text-ink">The Rupture — @allaia.art</span>
-        </div>
-      </div>
+      <!-- Floating credential chips removed — Allaia: "they make
+           the hero look messy." Identity is carried in the
+           scrubbed text beats instead. -->
 
       <!-- Layer 6 — progress rail + scene index -->
       <div class="hero-progress absolute left-6 sm:left-10 top-1/2 -translate-y-1/2 flex flex-col gap-2 hidden md:flex" data-progress aria-hidden="true">
@@ -444,16 +428,6 @@ const scenes = [
     }
   }
 
-  /* Floating chips — orbit positions per scene, tweened via JS */
-  .hero-chips {
-    transform-style: preserve-3d;
-    transition: transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1),
-                opacity 700ms ease;
-  }
-  [data-chip-a] { top: 18%; left: 8%; }
-  [data-chip-b] { top: 22%; right: 9%; }
-  [data-chip-c] { bottom: 22%; left: 18%; }
-
   /* Progress dot states */
   .hero-dot.is-active { width: 2.5rem; background: var(--color-terracotta); }
   .hero-sceneN.is-active { color: var(--color-terracotta); }
@@ -468,7 +442,7 @@ const scenes = [
   @media (prefers-reduced-motion: reduce) {
     .hero-track { height: 100vh; }
     .hero-stage { position: relative; }
-    .hero-scene, .hero-bg-layer, .hero-beat, .hero-orb, .hero-chips { transition: none; }
+    .hero-scene, .hero-bg-layer, .hero-beat, .hero-orb { transition: none; }
     .hero-word { opacity: 1 !important; transform: none !important; }
   }
 </style>
@@ -488,9 +462,6 @@ const scenes = [
     const sceneNs = Array.from(root.querySelectorAll<HTMLElement>('[data-sceneN]'));
     const currentN = root.querySelector<HTMLElement>('[data-current-n]');
     const orb = root.querySelector<HTMLElement>('[data-orb]');
-    const chipA = root.querySelector<HTMLElement>('[data-chip-a]');
-    const chipB = root.querySelector<HTMLElement>('[data-chip-b]');
-    const chipC = root.querySelector<HTMLElement>('[data-chip-c]');
 
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fine = matchMedia('(pointer: fine)').matches;
@@ -566,23 +537,6 @@ const scenes = [
         orb.style.top = '50%';
         // Orb visibility — pulls back during beat 3 (identities)
         orb.style.opacity = idx === 3 ? '0.45' : '0.85';
-      }
-
-      // Chips — orbit, fade out on beat 0 and 4 (dark scenes need less furniture)
-      const fadeChips = idx === 0 || idx === 4 ? '0' : '1';
-      const chipDX = cMouseX * 16;
-      const chipDY = cMouseY * 12;
-      if (chipA) {
-        chipA.style.opacity = fadeChips;
-        chipA.style.transform = `translate3d(${chipDX}px, ${chipDY - localP * 18}px, ${20 - localP * 60}px) rotate(-3deg)`;
-      }
-      if (chipB) {
-        chipB.style.opacity = fadeChips;
-        chipB.style.transform = `translate3d(${-chipDX * 1.2}px, ${chipDY * 1.4 + localP * 22}px, ${-30 + localP * 50}px) rotate(2deg)`;
-      }
-      if (chipC) {
-        chipC.style.opacity = fadeChips;
-        chipC.style.transform = `translate3d(${chipDX * 0.6}px, ${-chipDY + localP * 12}px, ${10}px) rotate(-1deg)`;
       }
 
       // Subtle stage perspective shift on mouse
