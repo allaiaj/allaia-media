@@ -389,42 +389,59 @@ const scenes = [
   .hero-beat.is-active .hero-word:nth-child(3) { transition-delay: 500ms; }
   .hero-beat.is-active .hero-word:nth-child(4) { transition-delay: 580ms; }
 
-  /* Mobile — TEXT BEATS SNAP INSTANTLY. No transition.
-     The asymmetric fade approach worked mathematically but on iOS
-     touch-scroll, momentum keeps firing setActive() calls in rapid
-     succession, and any non-zero fade duration leaves a window
-     where two beats' letterforms read on top of each other. The
-     only fix that holds under arbitrary flick-then-flick scroll
-     behaviour is instant text swap.
+  /* Mobile — preserve the scrub feel WITHOUT the overlap.
+     Trick: the outgoing direction (is-active → base) has NO
+     transition, so a deactivating beat snaps invisible the
+     instant setActive() fires. The incoming direction (base →
+     is-active) keeps a smooth opacity fade so a fresh beat
+     melts into view as the user scrolls.
 
-     Photos + background gradients still cross-fade (200ms) — they
-     sit behind, so a quick melt reads as intentional cinema rather
-     than ghosted text. */
+     Net effect: as you scrub, the current beat fades up
+     smoothly (still feels like a scrub), but the previous beat
+     vanishes immediately so two letterforms can never share
+     pixels. No overlap window regardless of how many
+     setActive() calls iOS momentum-scroll fires in quick
+     succession.
+
+     Photos + bg gradients also still cross-fade (220ms) — they
+     sit behind, so a quick melt reads as cinema. */
   @media (max-width: 768px) {
-    .hero-beat,
+    /* Outgoing — snap instantly to invisible */
+    .hero-beat {
+      opacity: 0;
+      transform: none;
+      transition: none;
+    }
+    /* Incoming — fade in smoothly */
     .hero-beat.is-active {
-      transition: none !important;
-      transform: none !important;
+      opacity: 1;
+      transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
-    .hero-beat { opacity: 0; }
-    .hero-beat.is-active { opacity: 1; }
 
-    .hero-word,
+    .hero-word {
+      opacity: 0;
+      transform: none;
+      transition: none;
+      transition-delay: 0ms;
+    }
     .hero-beat.is-active .hero-word {
-      transition: none !important;
-      transform: none !important;
-      transition-delay: 0ms !important;
+      opacity: 1;
+      transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
-    .hero-word { opacity: 0; }
-    .hero-beat.is-active .hero-word { opacity: 1; }
+    /* Drop the staggered delays on mobile — they multiply the
+       overlap risk for almost no read on a 6.1" screen. */
+    .hero-beat.is-active .hero-word:nth-child(1),
+    .hero-beat.is-active .hero-word:nth-child(2),
+    .hero-beat.is-active .hero-word:nth-child(3),
+    .hero-beat.is-active .hero-word:nth-child(4) {
+      transition-delay: 0ms;
+    }
 
-    /* Photos + bg gradients can fade — they're behind the text and
-       a quick melt reads as cinema, not overlap. */
     .hero-scene {
-      transition: opacity 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     .hero-bg-layer {
-      transition: opacity 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
   }
 
