@@ -27,7 +27,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -67,7 +67,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <a href="#main" class="skip-link">Skip to content</a>
     <AtmosphericBackdrop />
     <GlassPillNav />
-    <main id="main" style="overflow-x: clip;">
+    <main id="main" style="overflow-x: hidden;">
       <slot />
     </main>
     <EditorialFooter />

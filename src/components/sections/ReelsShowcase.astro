@@ -180,18 +180,52 @@ import Instagram from '@components/icons/Instagram.astro';
     });
 
     if (!reduced && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          const shell = entry.target as HTMLElement;
-          if (entry.isIntersecting) {
-            ensureIframe(shell);
-            postCommand(shell, 'playVideo');
-          } else if (shell.classList.contains('has-iframe')) {
-            postCommand(shell, 'pauseVideo');
+      // Mobile: only ONE iframe live at a time. 6 video pipelines
+      // running together crushes mid-range phones — pick the card
+      // most-visible in the viewport, pause the rest. Desktop keeps
+      // the original behaviour (everything in view plays).
+      const isMobile = matchMedia('(max-width: 768px)').matches;
+
+      if (isMobile) {
+        let currentShell: HTMLElement | null = null;
+        const ratios = new Map<HTMLElement, number>();
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            ratios.set(entry.target as HTMLElement, entry.intersectionRatio);
+          });
+          // Pick the most-visible card; if nothing's >40% visible, no one plays.
+          let best: HTMLElement | null = null;
+          let bestR = 0;
+          ratios.forEach((r, el) => {
+            if (r > bestR) { best = el; bestR = r; }
+          });
+          const winner = bestR > 0.4 ? best : null;
+          if (winner !== currentShell) {
+            if (currentShell && currentShell.classList.contains('has-iframe')) {
+              postCommand(currentShell, 'pauseVideo');
+            }
+            currentShell = winner;
+            if (winner) {
+              ensureIframe(winner);
+              postCommand(winner, 'playVideo');
+            }
           }
-        });
-      }, { threshold: 0.35 });
-      shells.forEach((s) => io.observe(s));
+        }, { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] });
+        shells.forEach((s) => io.observe(s));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const shell = entry.target as HTMLElement;
+            if (entry.isIntersecting) {
+              ensureIframe(shell);
+              postCommand(shell, 'playVideo');
+            } else if (shell.classList.contains('has-iframe')) {
+              postCommand(shell, 'pauseVideo');
+            }
+          });
+        }, { threshold: 0.35 });
+        shells.forEach((s) => io.observe(s));
+      }
     } else {
       // No IO or reduced motion: leave posters as-is, no autoplay
     }

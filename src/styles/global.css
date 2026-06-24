@@ -152,8 +152,11 @@
     font-size: 1.0625rem;
     line-height: 1.7;
     font-feature-settings: 'kern', 'liga', 'calt';
-    /* `clip` (not `hidden`) so children using position: sticky still pin to viewport */
-    overflow-x: clip;
+    /* iOS Safari momentum scroll breaks when body has overflow:clip AND
+       <main> also clips. Keep the overflow constraint on <main> only
+       (set inline in BaseLayout) and leave body to scroll natively. */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
   }
 
   ::selection {
