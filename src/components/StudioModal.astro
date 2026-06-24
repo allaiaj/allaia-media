@@ -1,0 +1,222 @@
+---
+// Blacklyne preview popup — appears a couple seconds after the
+// Studio page opens. A "browser-window" framed preview of the
+// Blacklyne brand pill + tagline + a single big CTA into
+// blacklyne.ai. Per-session suppression (sessionStorage), forcible
+// via ?popup=1.
+import { site } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<div
+  class="studio-modal fixed inset-0 z-[85] hidden items-center justify-center px-4 sm:px-6"
+  data-studio-modal
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="studio-modal-title"
+>
+  <!-- Backdrop -->
+  <button
+    type="button"
+    class="absolute inset-0 w-full h-full bg-anthracite/65 backdrop-blur-md cursor-pointer"
+    aria-label="Close"
+    data-studio-modal-close
+  ></button>
+
+  <!-- Modal card -->
+  <div
+    class="studio-modal-card relative w-full max-w-[920px] max-h-[92vh] overflow-y-auto rounded-[1.5rem] shadow-anthracite"
+    style="background: linear-gradient(160deg, #0A0A0C 0%, #14140F 60%, #1F1B16 100%);"
+    data-studio-modal-card
+  >
+    <!-- Warm wash -->
+    <div
+      class="pointer-events-none absolute inset-0 opacity-55"
+      style="background: radial-gradient(ellipse 60% 60% at 80% 10%, rgba(184,85,66,0.5), transparent 70%), radial-gradient(ellipse 55% 55% at 10% 95%, rgba(139,157,126,0.35), transparent 70%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Close -->
+    <button
+      type="button"
+      aria-label="Close"
+      data-studio-modal-close
+      class="absolute top-4 right-4 sm:top-5 sm:right-5 z-10 grid place-items-center h-10 w-10 rounded-full bg-cream/12 backdrop-blur-md border border-cream/20 text-cream hover:bg-cream/25 hover:scale-110 transition-all duration-300 ease-editorial"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="relative p-6 sm:p-8 lg:p-10 text-cream">
+      <p class="text-[0.625rem] uppercase tracking-[0.28em] text-cream/55 font-medium mb-3">
+        The studio · live
+      </p>
+      <h2
+        id="studio-modal-title"
+        class="font-display font-medium leading-[1.02] mb-6"
+        style="font-size: clamp(1.875rem, 4.2vw, 2.875rem); letter-spacing: -0.025em;"
+      >
+        <span class="block">Be seen. Be named.</span>
+        <span class="block font-display italic bg-gradient-to-br from-terracotta via-terracotta-deep to-brown bg-clip-text text-transparent" style="padding-bottom: 0.14em;">
+          Be chosen.
+        </span>
+      </h2>
+
+      <!-- "Browser-window" preview of blacklyne.ai -->
+      <a
+        href={site.blacklyne}
+        target="_blank"
+        rel="noopener"
+        class="block group rounded-[0.875rem] overflow-hidden border border-cream/12 hover:border-cream/25 transition-colors duration-300 ease-editorial"
+        data-studio-modal-cta
+        aria-label="Open blacklyne.ai"
+      >
+        <!-- Browser chrome -->
+        <div class="flex items-center gap-2 px-4 py-3 bg-cream/8 border-b border-cream/10">
+          <span class="flex gap-1.5" aria-hidden="true">
+            <span class="h-2.5 w-2.5 rounded-full bg-cream/25"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-cream/25"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-cream/25"></span>
+          </span>
+          <span class="ml-3 flex-1 px-3 py-1 rounded-full bg-cream/10 text-[0.625rem] tracking-[0.08em] text-cream/70 truncate">
+            blacklyne.ai/en
+          </span>
+          <ArrowUpRight size={12} class="text-cream/60 group-hover:text-cream transition-colors duration-300 ease-editorial" />
+        </div>
+
+        <!-- Preview canvas -->
+        <div class="relative aspect-[16/9] overflow-hidden" style="background: #0E0D0B;">
+          <!-- Atmospheric blooms -->
+          <div
+            class="absolute inset-0 opacity-70"
+            style="background: radial-gradient(ellipse 60% 60% at 75% 20%, rgba(184,85,66,0.45), transparent 60%), radial-gradient(ellipse 50% 50% at 15% 90%, rgba(139,157,126,0.35), transparent 60%);"
+          ></div>
+          <!-- Faint grid -->
+          <div
+            class="absolute inset-0 opacity-[0.06]"
+            style="background-image: linear-gradient(0deg, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 56px 56px;"
+          ></div>
+
+          <div class="relative h-full grid place-items-center p-6 sm:p-10 text-center">
+            <div>
+              <p class="text-[0.5625rem] uppercase tracking-[0.32em] text-cream/55 mb-4">Blacklyne</p>
+              <p class="font-display italic text-[clamp(1.5rem,3.2vw,2.5rem)] text-cream leading-[1.04] mb-3">
+                The site that closes.<br/>
+                The brand AI recommends.
+              </p>
+              <p class="text-[0.6875rem] uppercase tracking-[0.18em] text-cream/55">
+                Berlin · Dubai · New York
+              </p>
+            </div>
+          </div>
+
+          <!-- Hover lift -->
+          <span
+            class="absolute inset-x-0 bottom-0 px-5 py-3 flex items-center justify-between text-[0.6875rem] uppercase tracking-[0.16em] text-cream/85 transition-transform duration-500 ease-editorial group-hover:-translate-y-1"
+            style="background: linear-gradient(to top, rgba(14,13,11,0.9), transparent);"
+          >
+            <span>Tap to open the site</span>
+            <span class="inline-flex items-center gap-1.5">Open <ArrowUpRight size={11} /></span>
+          </span>
+        </div>
+      </a>
+
+      <p class="font-serif text-cream/75 leading-[1.6] mt-6 max-w-prose text-[0.9375rem] sm:text-base">
+        Premium digital presence + AI search optimisation. Built so a high-value customer commits in the first five seconds — and the brand is the one ChatGPT, Perplexity, and Google name out loud.
+      </p>
+
+      <div class="mt-6 sm:mt-7 flex flex-col sm:flex-row gap-3">
+        <a
+          href={site.blacklyne}
+          target="_blank"
+          rel="noopener"
+          class="cta-cream group inline-flex items-center justify-center"
+          data-studio-modal-cta
+        >
+          <span>Visit blacklyne.ai</span>
+          <ArrowUpRight size={12} class="ml-1.5 transition-transform group-hover:translate-x-0.5" />
+        </a>
+        <a
+          href={`${site.blacklyne}/#contact`}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-1.5 px-5 py-3 text-[0.8125rem] text-cream/70 hover:text-cream transition-colors duration-300 ease-editorial"
+          data-studio-modal-cta
+        >
+          <span>Brief the studio</span>
+          <ArrowUpRight size={11} />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .studio-modal {
+    opacity: 0;
+    transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .studio-modal[data-state="open"] {
+    display: flex;
+    opacity: 1;
+  }
+  .studio-modal-card {
+    transform: translateY(20px) scale(0.97);
+    opacity: 0;
+    transition:
+      transform 480ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .studio-modal[data-state="open"] .studio-modal-card {
+    transform: none;
+    opacity: 1;
+    transition-delay: 80ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .studio-modal, .studio-modal-card { transition: none !important; }
+  }
+</style>
+
+<script>
+  const KEY = 'allaia_studio_modal_dismissed';
+  const DELAY_MS = 2400;
+
+  const modal = document.querySelector<HTMLElement>('[data-studio-modal]');
+  if (modal) {
+    let dismissedThisSession = false;
+    try { dismissedThisSession = sessionStorage.getItem(KEY) === '1'; } catch { /* allow */ }
+    const force = new URLSearchParams(location.search).get('popup') === '1';
+
+    const open = () => {
+      modal.style.display = '';
+      modal.setAttribute('data-state', 'open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      modal.removeAttribute('data-state');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
+      setTimeout(() => { modal.style.display = 'none'; }, 360);
+    };
+
+    modal.querySelectorAll<HTMLElement>('[data-studio-modal-close]').forEach((b) => {
+      b.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('data-state') === 'open') close();
+    });
+    modal.querySelectorAll<HTMLElement>('[data-studio-modal-cta]').forEach((a) => {
+      a.addEventListener('click', () => {
+        try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
+      });
+    });
+
+    if (force || !dismissedThisSession) {
+      setTimeout(open, DELAY_MS);
+    }
+  }
+</script>

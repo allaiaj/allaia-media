@@ -10,10 +10,12 @@ import { book, site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 
 const path = Astro.url.pathname.replace(/\/+$/, '');
-const isAboutPage = path === '/about' || path === '/about/';
+// Suppress on pages that run their own popup so the user never
+// sees two modals stacked on first visit.
+const ownsItsModal = path === '/about' || path === '/the-studio';
 ---
 
-{!isAboutPage && (
+{!ownsItsModal && (
 
 <div
   class="book-modal fixed inset-0 z-[80] hidden items-center justify-center px-4 sm:px-6"

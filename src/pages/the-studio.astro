@@ -1,62 +1,180 @@
 ---
-import PageLayout from '@layouts/PageLayout.astro';
-import { site, operator } from '@data/site';
+// The Studio — a page that highlights what Blacklyne does and pops
+// a Blacklyne preview modal a few seconds in. The personal-brand
+// register stays editorial, but the content is hard ops: three
+// services, proof receipts, geography, and a single door to
+// blacklyne.ai for the actual brief.
+import BaseLayout from '@layouts/BaseLayout.astro';
+import StudioModal from '@components/StudioModal.astro';
+import { site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 ---
 
-<PageLayout
-  title="The studio — COO at Blacklyne"
-  description="Allaia is COO at Blacklyne AI — a premium digital presence and AI search optimization studio shipping across Germany, Dubai, the UK, and the US."
-  eyebrow={operator.eyebrow}
-  heading={operator.heading.pre}
-  italic={operator.heading.italic}
-  lead={operator.body}
-  byline="The personal brand is here · the agency work lives at Blacklyne"
+<BaseLayout
+  title="The Studio — COO at Blacklyne"
+  description="Allaia is COO at Blacklyne — premium digital presence + AI search optimization. Be seen. Be named. Be chosen. Across Germany, Dubai, and New York."
 >
-  <div class="mx-auto max-w-3xl px-6 space-y-10">
-    <section class="reveal">
-      <p class="eyebrow mb-5">The split</p>
-      <h2 class="display-sm mb-5">
-        Why two <span class="italic-grad">brands.</span>
-      </h2>
-      <p class="serif-lg text-ink-soft mb-5 max-w-prose">
-        The personal brand and the studio are not the same product. They share an eye for taste — and one operator — but they answer different briefs.
-      </p>
-      <ul class="space-y-4 mb-7">
-        {[
-          { l: 'Allaia (this site)', r: 'Book, coaching, community, art, and the writing. The work for the women.' },
-          { l: 'Blacklyne (the studio)', r: 'Premium digital presence and AI search optimization for brands. Websites, AEO, content, and ads — built so brands become unmistakable in the AI search era.' },
-        ].map((s) => (
-          <li class="grid sm:grid-cols-[12rem_1fr] gap-3 sm:gap-7 pb-5 border-b border-ink/8 last:border-b-0">
-            <span class="font-display italic text-xl text-terracotta">{s.l}</span>
-            <p class="serif-body text-ink-soft">{s.r}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+  <!-- Hero -->
+  <section class="relative pt-32 sm:pt-40 pb-20 sm:pb-24 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <div
+        class="absolute top-0 right-1/4 h-[55vh] w-[55vh] rounded-full opacity-30 blur-[140px]"
+        style="background: radial-gradient(circle, rgba(184,85,66,0.45), transparent 70%);"
+      ></div>
+      <div
+        class="absolute bottom-0 left-1/3 h-[50vh] w-[50vh] rounded-full opacity-25 blur-[130px]"
+        style="background: radial-gradient(circle, rgba(139,157,126,0.45), transparent 70%);"
+      ></div>
+    </div>
 
-    <section class="reveal pt-10 border-t border-ink/10">
-      <p class="eyebrow mb-5">If you came here to hire the team</p>
-      <h2 class="display-sm mb-6">
-        The studio's <span class="italic-grad">door.</span>
-      </h2>
-      <p class="serif-lg text-ink-soft mb-7 max-w-prose">
-        If you need the build — a website that converts, a Google Business presence that ranks, AI search optimization, social production, or paid acquisition — that work lives at Blacklyne. The brief form is on their site.
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal flex items-center gap-3 mb-7">
+        <span class="h-1.5 w-1.5 rounded-full bg-terracotta animate-pulse"></span>
+        <p class="text-[0.6875rem] uppercase tracking-[0.3em] text-terracotta-deep font-medium">
+          The studio · blacklyne.ai
+        </p>
+      </div>
+
+      <h1 class="reveal display-xl leading-[0.94] max-w-5xl mb-10">
+        Be seen. Be named.<br/>
+        <span class="italic-grad">Be chosen.</span>
+      </h1>
+
+      <p class="reveal font-display italic text-[clamp(1.5rem,2.6vw,2rem)] text-brown leading-[1.2] mb-7 max-w-3xl">
+        The studio I run with Konstantin — Blacklyne builds the authority that makes a brand the obvious choice across every surface the market sees you.
       </p>
-      <div class="flex flex-col sm:flex-row gap-3">
+      <p class="reveal serif-lg text-ink-soft max-w-prose mb-9">
+        Websites that close. AI search so the brand is the one ChatGPT names. A careers funnel that brings in the people you actually want. One brand a week since 2024.
+      </p>
+
+      <div class="reveal flex flex-col sm:flex-row gap-3">
         <a href={site.blacklyne} target="_blank" rel="noopener" class="cta-dark">
           Visit Blacklyne <ArrowUpRight size={12} />
         </a>
-        <a href={`${site.blacklyne}#contact`} target="_blank" rel="noopener" class="cta-ghost">
+        <a href={`${site.blacklyne}/#contact`} target="_blank" rel="noopener" class="cta-ghost">
           Brief the studio <ArrowUpRight size={12} />
         </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="reveal pt-10 border-t border-ink/10">
-      <p class="font-display italic text-2xl text-brown leading-tight max-w-2xl">
-        "Two brands. One taste. Built so the work you need has the right home."
+  <!-- Three services -->
+  <section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+    <div class="mx-auto max-w-6xl px-6 mb-14 sm:mb-20">
+      <div class="reveal pb-6 border-b border-ink/10">
+        <p class="eyebrow mb-5">What we build</p>
+        <h2 class="display-md max-w-3xl">
+          Three surfaces. <span class="italic-grad">One outcome.</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6 space-y-7 sm:space-y-10">
+      {[
+        {
+          n: '01',
+          eyebrow: 'Webdesign',
+          tagline: 'The site that closes for you.',
+          body: 'Custom-engineered, never templated. Built so a high-value customer commits in the first five seconds — and the site loads under 0.7 seconds doing it. Mobile-first, designed in the editorial register the brand actually deserves.',
+          metric: '162 live sites',
+          metricLabel: 'Shipped to date',
+        },
+        {
+          n: '02',
+          eyebrow: 'AI search',
+          tagline: 'The brand the AI recommends.',
+          body: 'Structured for ChatGPT, Perplexity, and Google to name you out loud. Schema, llms.txt, Google Business + Maps maintained the way Yelp pages used to be. Answer-engine optimisation built into every surface — so when the prompt is asked, you are the answer.',
+          metric: '+47%',
+          metricLabel: 'Inquiries in 90 days',
+        },
+        {
+          n: '03',
+          eyebrow: 'Talent branding',
+          tagline: 'The people you actually want.',
+          body: 'A careers page that reads like the rest of the brand. Recruitment ads that hit the right candidates, not the cheapest ones. An application funnel built to filter for fit before the first call.',
+          metric: '3.4×',
+          metricLabel: 'Applications, vs baseline',
+        },
+      ].map((s) => (
+        <article class="reveal group">
+          <div class="grid lg:grid-cols-[1fr_2fr] gap-6 lg:gap-12 p-7 sm:p-9 lg:p-11 rounded-[1.5rem] border border-ink/10 bg-bone hover:border-ink/20 transition-colors duration-500 ease-editorial">
+            <div>
+              <p class="font-mono text-[11px] tracking-[0.22em] text-ink-mute mb-4">{s.n} · {s.eyebrow}</p>
+              <h3 class="font-display italic text-[clamp(1.875rem,3vw,2.5rem)] leading-[1.05] mb-7 max-w-md">
+                <span class="italic-grad">{s.tagline}</span>
+              </h3>
+              <div class="flex items-baseline gap-3 pt-5 border-t border-ink/10">
+                <p class="font-display italic text-3xl text-terracotta">{s.metric}</p>
+                <p class="byline text-ink-mute">{s.metricLabel}</p>
+              </div>
+            </div>
+            <div class="lg:pl-8 lg:border-l border-ink/10">
+              <p class="serif-lg text-ink-soft max-w-prose">{s.body}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Proof + geography -->
+  <section class="relative py-24 sm:py-32 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <div
+        class="absolute top-1/3 right-0 h-[50vh] w-[50vh] rounded-full opacity-25 blur-[140px]"
+        style="background: radial-gradient(circle, rgba(184,85,66,0.45), transparent 70%);"
+      ></div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal pb-6 border-b border-ink/10 mb-12">
+        <p class="eyebrow mb-5">The receipts</p>
+        <h2 class="display-md max-w-3xl">
+          Build-first. <span class="italic-grad">Always.</span>
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-10 mb-16">
+        {[
+          { v: '162', l: 'Live sites' },
+          { v: '4.8 / 5', l: 'Trustpilot · across 160 + businesses' },
+          { v: '1 / week', l: 'Cadence, since 2024' },
+          { v: '3 cities', l: 'Berlin · Dubai · New York' },
+        ].map((m) => (
+          <div class="reveal">
+            <p class="font-display italic text-4xl sm:text-5xl text-terracotta leading-none mb-3">{m.v}</p>
+            <p class="byline text-ink-mute">{m.l}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="reveal pullquote italic-grad max-w-3xl">
+        "You do not have to take our word for it — that is exactly why we build first."
       </p>
-    </section>
-  </div>
-</PageLayout>
+      <p class="reveal byline text-ink-mute mt-4">— the studio principle</p>
+    </div>
+  </section>
+
+  <!-- The door -->
+  <section class="relative py-24 sm:py-32 overflow-hidden">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <p class="reveal eyebrow mb-5">When you are ready</p>
+      <h2 class="reveal display-md mb-7">
+        The studio's <span class="italic-grad">door.</span>
+      </h2>
+      <p class="reveal serif-lg text-ink-soft mb-10 max-w-2xl mx-auto">
+        If you need the build — the website, the AI presence, the careers funnel, or all three — the brief form is on blacklyne.ai. One brand a week. We take the next available slot.
+      </p>
+      <div class="reveal flex flex-col sm:flex-row gap-3 justify-center">
+        <a href={site.blacklyne} target="_blank" rel="noopener" class="cta-dark">
+          Open blacklyne.ai <ArrowUpRight size={12} />
+        </a>
+        <a href={`${site.blacklyne}/#contact`} target="_blank" rel="noopener" class="cta-ghost">
+          Brief the studio <ArrowUpRight size={12} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <StudioModal />
+</BaseLayout>

@@ -129,10 +129,12 @@ export const identities = [
 ] as const;
 
 export const navItems = [
-  // The Studio → external direct to blacklyne.ai (Allaia's request).
-  { label: 'The Studio', href: 'https://blacklyne.ai/en/', external: true },
+  // The Studio → the in-site page that highlights Blacklyne + pops a
+  // preview modal. The page itself CTAs to blacklyne.ai.
+  { label: 'The Studio', href: '/the-studio' },
   { label: 'Book', href: '/book' },
   { label: 'Brand Collabs', href: '/brand-collabs' },
+  { label: 'Press', href: '/press' },
   { label: 'Coven', href: '/coven' },
   { label: 'About', href: '/about' },
 ] as const;
@@ -431,6 +433,27 @@ export const closingTiles = [
   },
 ] as const;
 
+// Press features — selected pieces about Allaia. The home page surfaces
+// the first one; the dedicated /press page shows the full list.
+export const pressFeatures = [
+  {
+    outlet: 'Gulf Magazine',
+    section: 'Lifestyle',
+    date: '2026-05-14',
+    dateLabel: 'May 2026',
+    author: 'Akshat Kanitkar',
+    readingTime: '4 min read',
+    headline:
+      'Luise Allaiaj Expands ALLAIA Media Across Dubai and US Markets',
+    dek:
+      'A rising entrepreneur whose journey reflects discipline, early responsibility, and a strong focus on building across industries.',
+    pull:
+      'Rather than building short-term campaigns, her focus is on intellectual property, systems, and assets that can compound.',
+    href: 'https://gulfmagazine.co/luise-allaiaj-expands-allaia-media-across-dubai/',
+    image: '/img/press/gulf-magazine.png',
+  },
+] as const;
+
 export const footerNav = {
   brand: [
     { label: 'The Studio', href: '/the-studio' },
@@ -441,12 +464,13 @@ export const footerNav = {
   work: [
     { label: 'Watch', href: '/watch' },
     { label: 'Art', href: '/art' },
+    { label: 'Press', href: '/press' },
     { label: 'About', href: '/about' },
   ],
   channels: [
     { label: 'Newsletter', href: '/newsletter' },
     { label: 'The Architecture (1:1)', href: '/the-architecture' },
-    { label: 'Press inquiries', href: '/brand-collabs' },
+    { label: 'Press inquiries', href: '/press' },
     { label: 'Contact', href: '/contact' },
   ],
   legal: [

@@ -1,0 +1,105 @@
+---
+// Press features section — surfaces selected articles about Allaia.
+// Used on the home page (compact) and linked from the dedicated /press
+// page. Optional `compact` prop trims to the top item for the home.
+import { pressFeatures } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const items = compact ? pressFeatures.slice(0, 1) : pressFeatures;
+---
+
+<section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="absolute top-1/4 right-1/4 h-[40vh] w-[40vh] rounded-full opacity-25 blur-[120px]"
+      style="background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);"
+    ></div>
+    <div
+      class="absolute bottom-1/4 left-1/4 h-[40vh] w-[40vh] rounded-full opacity-22 blur-[120px]"
+      style="background: radial-gradient(circle, rgba(139,157,126,0.4), transparent 70%);"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="reveal flex items-baseline justify-between gap-6 pb-6 border-b border-ink/10 mb-12 sm:mb-16">
+      <div>
+        <p class="eyebrow mb-4">Press · selected</p>
+        <h2 class="display-md max-w-3xl">
+          On the <span class="italic-grad">record.</span>
+        </h2>
+      </div>
+      {compact && (
+        <a href="/press" class="byline text-ink-mute hover:text-terracotta transition-colors duration-300 ease-editorial whitespace-nowrap inline-flex items-center gap-1.5">
+          All features <ArrowUpRight size={11} />
+        </a>
+      )}
+    </div>
+
+    <div class="space-y-10 sm:space-y-14">
+      {items.map((p, i) => (
+        <article class="reveal group" style={`transition-delay: ${i * 70}ms`}>
+          <a
+            href={p.href}
+            target="_blank"
+            rel="noopener"
+            class="block rounded-[1.5rem] overflow-hidden border border-ink/10 bg-bone hover:border-ink/20 transition-all duration-500 ease-editorial"
+          >
+            <div class="grid lg:grid-cols-[1.05fr_1.1fr] gap-0">
+              <!-- Image -->
+              <figure class="relative aspect-[16/10] lg:aspect-auto overflow-hidden bg-anthracite-warm">
+                <img
+                  src={p.image}
+                  alt={`${p.headline} — ${p.outlet}`}
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.04]"
+                />
+                <div
+                  class="absolute inset-0 pointer-events-none"
+                  style="background: linear-gradient(to top, rgba(14,13,11,0.55), transparent 60%);"
+                  aria-hidden="true"
+                ></div>
+                <!-- Outlet pill -->
+                <div class="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-cream/85 backdrop-blur-md">
+                  <span class="h-1.5 w-1.5 rounded-full bg-terracotta"></span>
+                  <span class="text-[0.625rem] uppercase tracking-[0.22em] text-ink font-medium">
+                    {p.outlet}
+                  </span>
+                </div>
+              </figure>
+
+              <!-- Content -->
+              <div class="p-7 sm:p-9 lg:p-11 flex flex-col justify-center">
+                <p class="byline text-ink-mute mb-5">
+                  {p.dateLabel} · {p.section} · {p.readingTime}
+                </p>
+                <h3 class="font-display text-[clamp(1.625rem,2.6vw,2.25rem)] leading-[1.1] text-ink mb-5 group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
+                  {p.headline}
+                </h3>
+                <p class="serif-body text-ink-soft mb-6 max-w-prose">
+                  {p.dek}
+                </p>
+                <p class="font-display italic text-brown text-lg sm:text-xl leading-snug mb-8 max-w-prose border-l-2 border-terracotta/40 pl-4">
+                  "{p.pull}"
+                </p>
+                <div class="flex items-baseline justify-between pt-5 border-t border-ink/10">
+                  <p class="byline text-ink-mute">
+                    By {p.author}
+                  </p>
+                  <span class="inline-flex items-center gap-1.5 text-ink group-hover:gap-2.5 transition-all duration-300 ease-editorial">
+                    <span class="font-medium text-sm">Read in full</span>
+                    <ArrowUpRight size={12} />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
