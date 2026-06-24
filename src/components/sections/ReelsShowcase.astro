@@ -1,15 +1,20 @@
 ---
-// Reels — Allaia's actual IG reels (the ones she sent). The cover
-// frame is shown as a poster; on tap, the IG embed iframe swaps in.
-// The IG embed iframe plays the video right there once you tap the
-// play button inside it.
-import { site, instagramReels } from '@data/site';
+// The diary, in motion — six of Allaia's vertical shorts that
+// actually autoplay (muted + looped) when they scroll into view.
+// Uses YouTube Shorts embeds because IG iframe doesn't permit
+// autoplay from external sites. Same vertical content she
+// cross-posts on @allaia.power.
+//
+// Performance:
+// - Iframes only load when the section enters the viewport
+//   (IntersectionObserver below the fold).
+// - When the section scrolls out, iframes pause via postMessage
+//   so we don't keep video pipelines active.
+// - Posters are shown until the iframe is ready, so the layout
+//   never reflows.
+import { site, youtubeShorts } from '@data/site';
+import Youtube from '@components/icons/Youtube.astro';
 import Instagram from '@components/icons/Instagram.astro';
-
-const shortcodeOf = (permalink: string) => {
-  const m = permalink.match(/\/reel\/([A-Za-z0-9_-]+)/);
-  return m ? m[1] : '';
-};
 ---
 
 <section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
@@ -28,7 +33,7 @@ const shortcodeOf = (permalink: string) => {
   <div class="mx-auto max-w-6xl px-6 mb-12 sm:mb-16">
     <div class="reveal flex items-baseline justify-between gap-6 pb-6 border-b border-ink/10">
       <div>
-        <p class="eyebrow mb-4">Reels · @allaia.power</p>
+        <p class="eyebrow mb-4">In motion · {site.youtubeHandle}</p>
         <h2 class="display-md max-w-2xl">
           The <span class="italic-grad">diary</span>, in motion.
         </h2>
@@ -38,204 +43,157 @@ const shortcodeOf = (permalink: string) => {
       </a>
     </div>
     <p class="reveal serif-body text-ink-soft max-w-prose mt-6">
-      Tap any reel to play it here.
+      Playing silently. Tap any short to unmute.
     </p>
   </div>
 
   <div class="mx-auto max-w-6xl px-6">
-    <ul class="reels-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-reels-grid>
-      {instagramReels.map((reel, i) => {
-        const sc = shortcodeOf(reel.permalink);
-        return (
-          <li class="reveal reel-item" style={`transition-delay: ${(i % 3) * 70}ms`} data-reel-index={i}>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-shorts-grid>
+      {youtubeShorts.slice(0, 6).map((short, i) => (
+        <li class="reveal" style={`transition-delay: ${(i % 3) * 70}ms`}>
+          <div
+            class="short-shell relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm shadow-photo group"
+            data-short-shell
+            data-short-id={short.video_id}
+          >
+            <!-- Poster — visible until iframe loads -->
+            <img
+              src={short.thumbnail}
+              alt={short.caption}
+              loading="lazy"
+              decoding="async"
+              class="short-poster absolute inset-0 w-full h-full object-cover"
+            />
+            <!-- Bottom vignette + caption -->
             <div
-              class="reel-shell relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm shadow-photo group"
-              data-reel-shell
-              data-reel-shortcode={sc}
+              class="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-[2] pointer-events-none text-cream"
+              style="background: linear-gradient(to top, rgba(14,13,11,0.75) 0%, transparent 80%);"
             >
-              <!-- Poster — visible until tap -->
-              <button
-                type="button"
-                class="absolute inset-0 w-full h-full cursor-pointer"
-                aria-label="Play reel"
-                data-reel-play
-              >
-                <img
-                  src={reel.poster}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  class="reel-poster absolute inset-0 w-full h-full object-cover"
-                />
-                <!-- Bottom vignette -->
-                <div
-                  class="absolute inset-0 pointer-events-none"
-                  style="background: radial-gradient(ellipse at 50% 100%, rgba(14,13,11,0.5) 0%, transparent 60%);"
-                  aria-hidden="true"
-                ></div>
-                <!-- LIVE chip — pulses to signal "playing now" feel -->
-                <div class="reel-live absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-2 py-1 rounded-full bg-anthracite/55 backdrop-blur-md">
-                  <span class="relative flex h-1.5 w-1.5">
-                    <span class="absolute inline-flex h-full w-full rounded-full bg-terracotta opacity-75 animate-ping"></span>
-                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-terracotta"></span>
-                  </span>
-                  <span class="text-[0.5625rem] uppercase tracking-[0.18em] text-cream/90 font-medium">Reel</span>
-                </div>
-                <!-- Now-playing progress bar at bottom (animated) -->
-                <span class="reel-progress absolute inset-x-0 bottom-0 h-[3px] bg-cream/15 overflow-hidden" aria-hidden="true">
-                  <span class="reel-progress-fill block h-full w-full origin-left bg-cream/85"></span>
-                </span>
-                <!-- Play affordance -->
-                <span class="absolute inset-0 grid place-items-center">
-                  <span class="reel-play-btn h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-cream/20 backdrop-blur-md border border-cream/35 grid place-items-center transition-all duration-500 ease-editorial">
-                    <svg width="20" height="20" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <path d="M4 2.5L11 7l-7 4.5v-9Z" fill="#F2EDE5"/>
-                    </svg>
-                  </span>
-                </span>
-              </button>
+              <p class="font-display italic text-base sm:text-lg leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                {short.caption}
+              </p>
             </div>
-          </li>
-        );
-      })}
+            <!-- LIVE chip -->
+            <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-[2] flex items-center gap-1.5 px-2 py-1 rounded-full bg-anthracite/55 backdrop-blur-md pointer-events-none">
+              <span class="relative flex h-1.5 w-1.5">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-terracotta opacity-75 animate-ping"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-terracotta"></span>
+              </span>
+              <span class="text-[0.5625rem] uppercase tracking-[0.18em] text-cream/90 font-medium">Live</span>
+            </div>
+            <!-- Tap-to-unmute hint, hidden once iframe is interactive -->
+            <button
+              type="button"
+              class="short-unmute absolute top-3 right-3 sm:top-4 sm:right-4 z-[3] flex items-center gap-1.5 px-2 py-1 rounded-full bg-cream/20 backdrop-blur-md border border-cream/30 text-cream text-[0.5625rem] uppercase tracking-[0.18em] font-medium hover:bg-cream/35 transition-colors duration-300 ease-editorial"
+              data-short-unmute
+              aria-label="Tap to unmute and open"
+            >
+              <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M3 5h2l3-2.5v9L5 9H3V5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                <path d="M10 5l3 4M13 5l-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              Unmute
+            </button>
+          </div>
+        </li>
+      ))}
     </ul>
+
+    <div class="reveal mt-10 flex items-center justify-center">
+      <a href={site.youtube} target="_blank" rel="noopener" class="cta-dark">
+        <Youtube size={14} /> {site.youtubeHandle}
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
-  /* Slow ken-burns so every poster feels like a paused video */
-  .reel-poster {
+  /* Slow ken-burns on the poster until the iframe paints */
+  .short-poster {
     transform-origin: 50% 50%;
-    animation: reel-kenburns 16s ease-in-out infinite alternate;
-    will-change: transform;
+    animation: short-kenburns 18s ease-in-out infinite alternate;
+    transition: opacity 600ms ease;
   }
-  .reel-item[data-reel-index="1"] .reel-poster { animation-delay: -3s; }
-  .reel-item[data-reel-index="2"] .reel-poster { animation-delay: -6s; }
-  .reel-item[data-reel-index="3"] .reel-poster { animation-delay: -9s; }
-  .reel-item[data-reel-index="4"] .reel-poster { animation-delay: -12s; }
-  @keyframes reel-kenburns {
+  @keyframes short-kenburns {
     0%   { transform: scale(1.02) translate3d(0, 0, 0); }
-    50%  { transform: scale(1.07) translate3d(-1.5%, -1%, 0); }
-    100% { transform: scale(1.04) translate3d(1.5%, 1%, 0); }
+    100% { transform: scale(1.07) translate3d(-1.5%, -1%, 0); }
   }
+  .short-shell.is-playing .short-poster { opacity: 0; }
 
-  /* Spotlight cycle — one card lifts + glows in turn so the row feels
-     like it's playing through reel after reel. Driven by .is-playing
-     toggled by the script. */
-  .reel-shell {
-    transition:
-      transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      box-shadow 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  .reel-item.is-playing .reel-shell {
-    transform: translateY(-6px) scale(1.012);
-    box-shadow:
-      0 30px 80px -20px rgba(184,85,66,0.55),
-      0 0 0 1px rgba(242,237,229,0.18) inset,
-      0 0 60px -10px rgba(184,85,66,0.45);
-  }
-  .reel-item.is-playing .reel-poster {
-    animation-play-state: running;
-  }
-  .reel-item:not(.is-playing) .reel-poster {
-    filter: brightness(0.88) saturate(0.92);
-    transition: filter 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  .reel-item.is-playing .reel-poster {
-    filter: brightness(1.04) saturate(1);
-  }
-
-  /* Animated bottom progress bar — fills left-to-right while is-playing */
-  .reel-progress-fill { transform: scaleX(0); }
-  .reel-item.is-playing .reel-progress-fill {
-    animation: reel-progress 4s linear forwards;
-  }
-  @keyframes reel-progress {
-    0%   { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
-  }
-
-  /* Play button gentle pulse — feels like the next thing about to fire */
-  .reel-item.is-playing .reel-play-btn {
-    background-color: rgba(242, 237, 229, 0.4);
-    transform: scale(1.08);
-  }
-  .reel-play-btn {
-    animation: reel-pulse 2.6s ease-in-out infinite;
-  }
-  @keyframes reel-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(242, 237, 229, 0.25); }
-    50%      { box-shadow: 0 0 0 14px rgba(242, 237, 229, 0); }
+  /* Hide the unmute pill once iframe is live and user opens YT */
+  .short-shell.has-iframe .short-unmute {
+    background-color: rgba(242, 237, 229, 0.35);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .reel-poster, .reel-play-btn, .reel-progress-fill { animation: none !important; }
-    .reel-item.is-playing .reel-shell { transform: none; }
+    .short-poster { animation: none !important; }
   }
 </style>
 
 <script>
-  // Click-to-play swaps the poster button for IG's embed iframe.
-  document.querySelectorAll<HTMLElement>('[data-reel-shell]').forEach((shell) => {
-    const btn = shell.querySelector<HTMLButtonElement>('[data-reel-play]');
-    const sc = shell.getAttribute('data-reel-shortcode');
-    if (!btn || !sc) return;
-    btn.addEventListener('click', () => {
+  // In-viewport autoplay. Only inject the YouTube iframe once the
+  // card is intersected (saves a ton of bandwidth + main-thread
+  // work above the fold). Pause iframes that scroll out so we don't
+  // keep multiple video pipelines hot.
+  const shells = Array.from(document.querySelectorAll<HTMLElement>('[data-short-shell]'));
+  if (shells.length) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ensureIframe = (shell: HTMLElement) => {
+      if (shell.classList.contains('has-iframe')) return;
+      const id = shell.getAttribute('data-short-id');
+      if (!id) return;
       const iframe = document.createElement('iframe');
-      iframe.className = 'absolute inset-0 w-full h-full';
-      iframe.src = `https://www.instagram.com/reel/${sc}/embed/`;
-      iframe.title = 'Instagram reel';
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; web-share; fullscreen';
-      iframe.allowFullscreen = true;
+      iframe.className = 'absolute inset-0 w-full h-full z-[1]';
+      // mute=1 + playsinline=1 = browser-allowed autoplay
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&playsinline=1&color=white&enablejsapi=1`;
+      iframe.title = shell.querySelector('img')?.alt ?? 'Short';
+      iframe.setAttribute('frameborder', '0');
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
       iframe.style.border = '0';
-      // Stop the spotlight cycle for this card once it's a live iframe
-      shell.closest<HTMLElement>('.reel-item')?.classList.add('is-active-iframe');
-      shell.replaceChildren(iframe);
-    }, { once: true });
-  });
+      // Insert iframe BEHIND the caption/chip/unmute layers (z-[1])
+      shell.insertBefore(iframe, shell.firstChild);
+      shell.classList.add('has-iframe', 'is-playing');
+    };
 
-  // Auto-spotlight cycle — every 4s, advance the "playing" card so the
-  // row feels like it's stepping through reels in sequence. Stops on
-  // hover so the user can tap; pauses when the section is off-screen.
-  if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-    const grid = document.querySelector<HTMLElement>('[data-reels-grid]');
-    if (grid) {
-      const items = Array.from(grid.querySelectorAll<HTMLElement>('.reel-item'));
-      let idx = 0;
-      let timer: ReturnType<typeof setInterval> | null = null;
-      let hovering = false;
-      let visible = false;
+    const postCommand = (shell: HTMLElement, func: 'pauseVideo' | 'playVideo' | 'unMute') => {
+      const iframe = shell.querySelector<HTMLIFrameElement>('iframe');
+      iframe?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func, args: [] }),
+        '*'
+      );
+    };
 
-      const step = () => {
-        // Skip items that have already become live iframes
-        let safety = 0;
-        while (items[idx]?.classList.contains('is-active-iframe') && safety < items.length) {
-          idx = (idx + 1) % items.length;
-          safety++;
+    // Tap-to-unmute (and pop to YouTube proper for full-volume control)
+    shells.forEach((shell) => {
+      const id = shell.getAttribute('data-short-id');
+      const btn = shell.querySelector<HTMLButtonElement>('[data-short-unmute]');
+      btn?.addEventListener('click', () => {
+        if (shell.classList.contains('has-iframe')) {
+          postCommand(shell, 'unMute');
         }
-        items.forEach((el, k) => el.classList.toggle('is-playing', k === idx));
-        idx = (idx + 1) % items.length;
-      };
-      const start = () => {
-        if (timer || !visible || hovering) return;
-        step();
-        timer = setInterval(step, 4000);
-      };
-      const stop = () => {
-        if (timer) { clearInterval(timer); timer = null; }
-      };
+        // Open the short on YouTube in a new tab so volume is interactive
+        if (id) window.open(`https://www.youtube.com/shorts/${id}`, '_blank', 'noopener');
+      });
+    });
 
-      grid.addEventListener('pointerenter', () => { hovering = true; stop(); });
-      grid.addEventListener('pointerleave', () => { hovering = false; start(); });
-
+    if (!reduced && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          visible = e.isIntersecting;
-          if (visible) start(); else { stop(); items.forEach((el) => el.classList.remove('is-playing')); }
+        entries.forEach((entry) => {
+          const shell = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            ensureIframe(shell);
+            postCommand(shell, 'playVideo');
+          } else if (shell.classList.contains('has-iframe')) {
+            postCommand(shell, 'pauseVideo');
+          }
         });
-      }, { threshold: 0.2 });
-      io.observe(grid);
+      }, { threshold: 0.35 });
+      shells.forEach((s) => io.observe(s));
+    } else {
+      // No IO or reduced motion: leave posters as-is, no autoplay
     }
   }
 </script>

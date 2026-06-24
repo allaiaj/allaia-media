@@ -364,11 +364,11 @@ export const closingTiles = [
     external: true,
   },
   {
-    eyebrow: 'COMMUNITY',
-    title: 'Coven',
-    sub: 'Five hundred women — Q3 2026 · waitlist',
-    href: '/coven',
-    external: false,
+    eyebrow: 'THE STUDIO',
+    title: 'Blacklyne',
+    sub: 'Premium digital + AI search · across four countries',
+    href: 'https://blacklyne.ai/en/',
+    external: true,
   },
   {
     eyebrow: 'INSTAGRAM',
