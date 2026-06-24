@@ -1,5 +1,6 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
+import YouTubeModal from '@components/YouTubeModal.astro';
 import { getCollection } from 'astro:content';
 import { site, identities } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
@@ -124,10 +125,12 @@ const chapters = (await getCollection('biographyChapters')).sort(
         <a href={site.stan.book} target="_blank" rel="noopener" class="cta-dark">
           Read Become Her <ArrowUpRight size={12} />
         </a>
-        <a href={site.stan.application} target="_blank" rel="noopener" class="cta-ghost">
+        <a href={site.stan.application} class="cta-ghost">
           Apply for The Architecture <ArrowUpRight size={12} />
         </a>
       </div>
     </aside>
   </div>
+
+  <YouTubeModal />
 </PageLayout>

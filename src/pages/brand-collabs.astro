@@ -1,75 +1,38 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { site, instagramReels } from '@data/site';
+import { site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 import Instagram from '@components/icons/Instagram.astro';
-
-const totalLikes = instagramReels.reduce((s, r) => s + r.likes, 0);
-const topReel = [...instagramReels].sort((a, b) => b.likes - a.likes)[0];
-const avgLikes = Math.round(totalLikes / instagramReels.length);
-const fmt = (n: number) => n.toLocaleString('en-GB');
 ---
 
 <PageLayout
   title="Brand collaborations"
-  description="Selective brand partnerships — hotels, fashion, lifestyle. Editorial collaborations, never gifted-content theatre. Reviewed personally."
+  description="Selective brand partnerships — hotels, fashion, lifestyle. Editorial collaborations, paid only. Reach out personally via Instagram."
   eyebrow="Brand collaborations · 2026"
   heading="Brand"
   italic="collaborations."
-  lead="Selective, editorial, paid. Hotels in places I would actually return to. Fashion houses with a point of view. Lifestyle goods I use on slow mornings before the camera is on."
-  byline={`${site.email} · response within a week`}
+  lead="Selective, editorial, paid. A short list per year — hotels in places I would actually return to, houses with a point of view, lifestyle goods I use on slow mornings before the camera is on."
+  byline="By personal inquiry · response within a week"
 >
-  <div class="mx-auto max-w-3xl px-6 space-y-14">
+  <div class="mx-auto max-w-3xl px-6 space-y-16">
+    <!-- The register -->
     <section class="reveal">
       <p class="serif-lg text-ink-soft max-w-prose mb-6">
-        The work is a personal brand, not an influencer feed — which means partnerships are chosen the way essays are commissioned. A short list per year. Real reach, real positioning, real care.
+        The work is a personal brand, not an influencer feed — which means partnerships are chosen the way essays are commissioned. Editorial, considered, paid.
       </p>
       <p class="serif-body text-ink-soft max-w-prose">
-        Every inquiry is read personally. If we're not a fit, I'll say so quickly. If we are, the work usually starts within a fortnight.
+        Every inquiry is read personally. The fastest way to reach me is a direct message on Instagram.
       </p>
     </section>
 
-    <!-- What I say yes to -->
-    <section class="reveal">
-      <p class="eyebrow mb-5">What I say yes to</p>
-      <h2 class="display-sm mb-7">
-        Editorial. <span class="italic-grad">Considered.</span>
-      </h2>
-      <ul class="space-y-4">
-        {[
-          {
-            kind: 'Hotels & stays',
-            body: 'Independent properties, design-led hotels, Airbnb-style stays in places I would actually return to. Bali, Dubai, the South of France, Tulum, Lisbon.',
-          },
-          {
-            kind: 'Fashion',
-            body: 'Houses and labels with a point of view, not a discount code. Slow seasons, deliberate edits, identity-led campaigns.',
-          },
-          {
-            kind: 'Lifestyle goods',
-            body: 'Skincare, fragrance, home objects I use on slow mornings before the camera is on. Carry-on bags, journals, ceramic things.',
-          },
-          {
-            kind: 'Editorial collaborations',
-            body: 'Long-form pieces with publications and labels — written, shot, or filmed. Never gifted-content theatre.',
-          },
-        ].map((c) => (
-          <li class="grid sm:grid-cols-[12rem_1fr] gap-3 sm:gap-7 pb-5 border-b border-ink/8 last:border-b-0">
-            <span class="font-display italic text-xl text-terracotta">{c.kind}</span>
-            <p class="serif-body text-ink-soft">{c.body}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <!-- Reach + audience -->
+    <!-- Audience receipts -->
     <section class="reveal pt-12 border-t border-ink/10">
       <p class="eyebrow mb-5">Reach + audience · last 90 days</p>
       <h2 class="display-sm mb-7">
         Real receipts. <span class="italic-grad">No vanity metrics.</span>
       </h2>
 
-      <div class="grid sm:grid-cols-3 gap-6 mb-10">
+      <div class="grid sm:grid-cols-3 gap-6 mb-6">
         <div>
           <p class="byline text-ink-mute mb-2">Views</p>
           <p class="font-display italic text-3xl text-terracotta">3.4M</p>
@@ -89,97 +52,24 @@ const fmt = (n: number) => n.toLocaleString('en-GB');
       <p class="byline text-ink-mute">Top cities — Delhi · Bangalore · Dubai · Mumbai · UK · SEA</p>
     </section>
 
-    <!-- Recent reels — the receipts -->
+    <!-- The single CTA — DM on Instagram -->
     <section class="reveal pt-12 border-t border-ink/10">
-      <p class="eyebrow mb-5">Recent reels — the receipts</p>
-      <h2 class="display-sm mb-7">
-        The reach, <span class="italic-grad">on the record.</span>
-      </h2>
-
-      <div class="grid sm:grid-cols-3 gap-6 mb-10">
-        <div>
-          <p class="byline text-ink-mute mb-2">Likes (last six)</p>
-          <p class="font-display italic text-3xl text-terracotta">{fmt(totalLikes)}</p>
-          <p class="byline text-ink-mute mt-2">Across six recent reels</p>
-        </div>
-        <div>
-          <p class="byline text-ink-mute mb-2">Top reel</p>
-          <p class="font-display italic text-3xl text-terracotta">{fmt(topReel.likes)}</p>
-          <p class="byline text-ink-mute mt-2">On a single piece</p>
-        </div>
-        <div>
-          <p class="byline text-ink-mute mb-2">Average</p>
-          <p class="font-display italic text-3xl text-terracotta">{fmt(avgLikes)}</p>
-          <p class="byline text-ink-mute mt-2">Likes per reel</p>
-        </div>
-      </div>
-
-      <ul class="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">
-        {instagramReels.map((reel) => (
-          <li>
-            <a href={reel.permalink} target="_blank" rel="noopener" class="group block">
-              <figure class="relative aspect-[9/16] rounded-[0.625rem] overflow-hidden bg-anthracite-warm shadow-photo">
-                <img
-                  src={reel.poster}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] ease-editorial group-hover:scale-[1.05]"
-                />
-                <div class="absolute inset-x-0 bottom-0 p-2 text-cream"
-                  style="background: linear-gradient(to top, rgba(14,13,11,0.85), transparent 80%);"
-                >
-                  <p class="text-[0.6875rem] font-medium tracking-wider">{fmt(reel.likes)}</p>
-                </div>
-              </figure>
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <p class="byline text-ink-mute mt-6">
-        Live reels with view counts at <a href={site.instagram} target="_blank" rel="noopener" class="text-ink hover:text-terracotta transition-colors duration-300 ease-editorial">@allaia.power</a>.
-      </p>
-    </section>
-
-    <!-- The brief -->
-    <section class="reveal pt-12 border-t border-ink/10">
-      <p class="eyebrow mb-5">When you write</p>
+      <p class="eyebrow mb-5">To work together</p>
       <h2 class="display-sm mb-6">
-        Send the <span class="italic-grad">good</span> brief.
+        Send a <span class="italic-grad">direct message.</span>
       </h2>
-      <p class="serif-body text-ink-soft max-w-prose mb-6">
-        A line about you, a line about why you reached out, a rough scope and budget range. That's enough to know if we should talk.
+      <p class="serif-body text-ink-soft max-w-prose mb-8">
+        A line about you, a line about why you reached out, a rough scope and budget range. That is enough to know if we should talk. Press inquiries welcome.
       </p>
-      <div class="grid sm:grid-cols-2 gap-5">
-        <a href={`mailto:${site.email}?subject=Brand%20partnership`} class="cta-dark justify-center !py-5">
-          <span>Brand partnership</span><ArrowUpRight size={12} />
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href={site.instagram} target="_blank" rel="noopener" class="cta-dark justify-center !py-5">
+          <Instagram size={13} /> <span>DM @allaia.power</span> <ArrowUpRight size={12} />
         </a>
-        <a href={`mailto:${site.email}?subject=Press%20inquiry`} class="cta-ghost justify-center !py-5">
-          <span>Press inquiry</span><ArrowUpRight size={12} />
+        <a href={`mailto:${site.email}?subject=Brand%20partnership`} class="cta-ghost justify-center !py-5">
+          <span>Or by email</span> <ArrowUpRight size={12} />
         </a>
       </div>
-      <p class="byline text-ink-mute mt-6">
-        Or DM <a href={site.instagram} target="_blank" rel="noopener" class="text-ink hover:text-terracotta transition-colors duration-300 ease-editorial inline-flex items-center gap-1.5"><Instagram size={11} /> @allaia.power</a> — I read on Monday and Thursday mornings.
-      </p>
-    </section>
-
-    <!-- Past + ongoing (placeholder until Allaia drops a list) -->
-    <section class="reveal pt-12 border-t border-ink/10">
-      <p class="eyebrow mb-5">A short list</p>
-      <h2 class="display-sm mb-6">
-        Past + <span class="italic-grad">ongoing.</span>
-      </h2>
-      <p class="serif-body text-ink-soft max-w-prose mb-7">
-        The full list lives in a deck I'll send on request. A few public ones to anchor the register:
-      </p>
-      <ul class="space-y-3 byline text-ink-mute">
-        <li class="flex items-baseline gap-3 pb-3 border-b border-ink/8">
-          <span class="text-ink">→</span>
-          <span class="text-ink">Names placeholder</span>
-          <span>— supplied in deck on request.</span>
-        </li>
-      </ul>
     </section>
   </div>
 </PageLayout>

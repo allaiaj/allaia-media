@@ -3,9 +3,17 @@
 // with the cover + a Stan Store CTA. Closes via X / backdrop tap /
 // ESC. localStorage remembers a close so it doesn't keep popping up
 // (auto-expires after 7 days so it can reach a return visitor again).
+//
+// Hidden on /about — that page runs the YouTube quantum-leap modal
+// instead, and stacking two modals on first visit would be hostile.
 import { book, site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+const path = Astro.url.pathname.replace(/\/+$/, '');
+const isAboutPage = path === '/about' || path === '/about/';
 ---
+
+{!isAboutPage && (
 
 <div
   class="book-modal fixed inset-0 z-[80] hidden items-center justify-center px-4 sm:px-6"
@@ -233,3 +241,4 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
     }
   }
 </script>
+)}

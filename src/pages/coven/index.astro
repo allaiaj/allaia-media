@@ -1,129 +1,463 @@
 ---
-import PageLayout from '@layouts/PageLayout.astro';
-import CovenWaitlist from '@components/sections/CovenWaitlist.astro';
+// Coven — mystical, magical, 3D. Coming soon.
+// Standalone visual register: midnight palette, a dimensional CSS moon,
+// floating glass orbs at three depth tiers, a constellation field, parallax
+// on the moon and orbs tracking the cursor. Minimal copy on purpose —
+// the room is not a feature list, it's a frequency. Maybe fifty women per
+// city, when the room opens.
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 import Instagram from '@components/icons/Instagram.astro';
 ---
 
-<PageLayout
-  title="Coven — waitlist · Q3 2026"
-  description="An application-based community for women already living it — and the women on the edge of it. Launching Q3 2026."
-  eyebrow="Community · launching Q3 2026 · by application"
-  heading="Coven."
-  italic=""
-  lead="An application-based community for women already living it — and the women on the edge of it."
-  byline="Waitlist only — Phase 1 · Allaia reviews every application personally"
+<BaseLayout
+  title="Coven — coming soon"
+  description="A private room — coming. For the women already living it. Maybe fifty women per city. A signal, not a launch."
+  noindex={false}
+  bodyClass="coven-page"
 >
-  <!-- Lead split: portrait + opening -->
-  <section class="mx-auto max-w-6xl px-6 mb-20 sm:mb-24">
-    <div class="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-center">
-      <figure class="reveal">
-        <div class="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
-          <img
-            src="/img/instagram/reel-DWk5dvejGdm.jpg"
-            alt=""
-            class="absolute inset-0 w-full h-full object-cover photo-warm"
-            loading="lazy"
-          />
+  <main class="coven-canvas relative overflow-hidden text-cream">
+    <!-- Deep cosmos background -->
+    <div class="coven-cosmos pointer-events-none absolute inset-0 -z-30" aria-hidden="true"></div>
+    <!-- Aurora drift -->
+    <div class="coven-aurora pointer-events-none absolute inset-0 -z-20" aria-hidden="true">
+      <span class="aurora aurora-a"></span>
+      <span class="aurora aurora-b"></span>
+      <span class="aurora aurora-c"></span>
+    </div>
+    <!-- Constellation field — fine stars, parallax depth -->
+    <div class="coven-stars pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <div class="star-layer star-layer-far"></div>
+      <div class="star-layer star-layer-mid"></div>
+      <div class="star-layer star-layer-near"></div>
+    </div>
+
+    <!-- Hero: huge italic Coven + 3D moon -->
+    <section class="relative min-h-[100svh] flex items-center px-6 pt-32 pb-20">
+      <div class="mx-auto max-w-7xl w-full relative">
+        <!-- 3D moon — dimensional CSS sphere with radial gradient + craters + halo -->
+        <div class="coven-moon-wrap absolute" data-coven-parallax data-parallax-depth="0.05">
+          <div class="coven-moon" aria-hidden="true">
+            <div class="moon-halo"></div>
+            <div class="moon-body">
+              <div class="moon-shading"></div>
+              <div class="moon-craters">
+                <span class="crater" style="top:18%; left:24%; width:14%; height:14%;"></span>
+                <span class="crater" style="top:34%; left:62%; width:9%; height:9%;"></span>
+                <span class="crater" style="top:58%; left:30%; width:11%; height:11%;"></span>
+                <span class="crater" style="top:46%; left:50%; width:6%; height:6%;"></span>
+                <span class="crater" style="top:72%; left:60%; width:8%; height:8%;"></span>
+                <span class="crater" style="top:24%; left:48%; width:5%; height:5%;"></span>
+              </div>
+              <div class="moon-terminator"></div>
+              <div class="moon-glow"></div>
+            </div>
+          </div>
         </div>
-        <figcaption class="mt-3 flex items-baseline justify-between byline text-ink-mute">
-          <span class="uppercase tracking-[0.22em] text-[0.625rem]">Allaia</span>
-          <span>FIG. 06</span>
-        </figcaption>
-      </figure>
 
-      <div class="reveal">
-        <p class="font-display italic text-[clamp(1.5rem,2.5vw,2rem)] text-brown leading-[1.2] mb-7">
-          A room for the kind of woman who is letting herself be seen and known — without performing either.
+        <!-- Floating glass orbs — three depth tiers -->
+        <span class="orb orb-1" data-coven-parallax data-parallax-depth="0.12" aria-hidden="true"></span>
+        <span class="orb orb-2" data-coven-parallax data-parallax-depth="0.08" aria-hidden="true"></span>
+        <span class="orb orb-3" data-coven-parallax data-parallax-depth="0.04" aria-hidden="true"></span>
+
+        <!-- Editorial chrome -->
+        <div class="relative z-10 max-w-3xl">
+          <div class="reveal flex items-center gap-3 mb-10">
+            <span class="h-1.5 w-1.5 rounded-full animate-pulse-slow" style="background:#D4AF6C;"></span>
+            <p class="text-[0.6875rem] uppercase tracking-[0.32em] text-gold-soft font-medium">
+              A signal · not a launch
+            </p>
+          </div>
+
+          <h1 class="reveal coven-display font-display font-medium italic leading-[0.86] mb-12">
+            Coven<span class="coven-dot">.</span>
+          </h1>
+
+          <p class="reveal font-display italic text-[clamp(1.5rem,3vw,2.25rem)] text-cream/85 leading-[1.18] mb-9 max-w-2xl">
+            A room for the women already&nbsp;living it.<br/>
+            A frequency, kept&nbsp;private.
+          </p>
+
+          <p class="reveal serif-lg text-cream/65 max-w-prose mb-10">
+            Maybe fifty women per city. No more, on purpose.
+            Quiet company in person. A long table, a long letter,
+            and the long arc of being known — without performing it.
+          </p>
+
+          <div class="reveal flex flex-col sm:flex-row gap-3">
+            <a href={site.instagram} target="_blank" rel="noopener" class="cta-gold">
+              <Instagram size={13} /> <span>Whisper @allaia.power</span> <ArrowUpRight size={12} />
+            </a>
+            <span class="byline text-cream/45 self-center sm:ml-2">
+              Doors open when they open.
+            </span>
+          </div>
+        </div>
+
+        <!-- Mast-row of city pulses, dim & rotating attention -->
+        <div class="reveal absolute hidden lg:flex flex-col gap-5 top-1/3 right-0 text-right">
+          <p class="text-[0.625rem] uppercase tracking-[0.32em] text-cream/40">In waiting</p>
+          <ul class="space-y-3 font-display italic text-cream/70 text-lg leading-none">
+            <li>Dubai</li>
+            <li>Bali</li>
+            <li>London</li>
+            <li>Mumbai</li>
+            <li class="text-cream/35">— more</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sigil row + threshold copy -->
+    <section class="relative px-6 py-24 sm:py-32">
+      <div class="mx-auto max-w-4xl text-center">
+        <div class="reveal flex justify-center gap-7 sm:gap-12 mb-12 text-gold/85">
+          <!-- Sigils — geometric and quiet, hand-drawn feel -->
+          <svg width="44" height="44" viewBox="0 0 60 60" fill="none" aria-hidden="true" class="sigil">
+            <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="30" cy="30" r="14" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+            <path d="M30 8 V52 M8 30 H52" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+          </svg>
+          <svg width="44" height="44" viewBox="0 0 60 60" fill="none" aria-hidden="true" class="sigil">
+            <path d="M30 6 L52 44 H8 Z" stroke="currentColor" stroke-width="0.8" opacity="0.65"/>
+            <circle cx="30" cy="32" r="6" fill="currentColor" opacity="0.5"/>
+          </svg>
+          <svg width="44" height="44" viewBox="0 0 60 60" fill="none" aria-hidden="true" class="sigil">
+            <circle cx="30" cy="30" r="20" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
+            <path d="M30 10 a20 20 0 0 1 0 40" stroke="currentColor" stroke-width="0.6" opacity="0.55"/>
+            <circle cx="30" cy="30" r="3" fill="currentColor" opacity="0.7"/>
+          </svg>
+        </div>
+
+        <p class="reveal font-display italic text-[clamp(1.5rem,2.5vw,2rem)] text-cream/85 leading-[1.2] mb-6 max-w-2xl mx-auto">
+          The door opens when the room is ready.<br/>
+          Not before.
         </p>
-        <p class="serif-lg text-ink-soft mb-6 max-w-prose">
-          Coven exists for women who do not need more content. They need company.
-        </p>
-        <p class="serif-body text-ink-soft mb-6 max-w-prose">
-          Five hundred women, maximum. Past five hundred the room is no longer a room. Phase one is waitlist only. Phase two is application-based onboarding, in cohorts of fifty.
+        <p class="reveal serif-body text-cream/55 max-w-prose mx-auto">
+          When the first city is set, the women already in the diary will be the first to know.
         </p>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
+</BaseLayout>
 
-  <!-- What's inside -->
-  <section class="mx-auto max-w-6xl px-6 mb-20 sm:mb-24">
-    <div class="reveal pb-8 mb-12 sm:mb-16 border-b border-ink/10">
-      <p class="eyebrow mb-5">Inside the room</p>
-      <h2 class="display-md max-w-3xl">
-        Quiet company, <span class="italic-grad">on the days that matter.</span>
-      </h2>
-    </div>
+<style>
+  /* The Coven page lifts itself out of the cream layout register and
+     into a midnight world. Body class lets us override cream defaults. */
+  :global(body.coven-page) {
+    background: #07060A;
+    color: #F2EDE5;
+  }
+  :global(body.coven-page main) {
+    background: transparent;
+  }
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-10">
-      {[
-        {
-          n: '01',
-          title: 'A weekly diary',
-          body: 'A long note from Allaia, every Sunday — written, not livestreamed. The kind of letter worth saving.',
-        },
-        {
-          n: '02',
-          title: 'Monthly office hours',
-          body: 'A 90-minute call over Zoom. Recorded for the time zones. Questions answered slowly, in writing, in the room.',
-        },
-        {
-          n: '03',
-          title: 'The library',
-          body: 'Essays, audio entries, journaling prompts — added monthly. The archive grows with you.',
-        },
-        {
-          n: '04',
-          title: 'A directory',
-          body: 'Members-only. Sorted by city. Women you would actually want to meet, when you happen to be in town.',
-        },
-        {
-          n: '05',
-          title: 'Early chapters',
-          body: 'Pre-release excerpts from the next book before they are public. Members read first.',
-        },
-        {
-          n: '06',
-          title: 'A coach in the room',
-          body: 'Allaia inside the room, every day — not on a livestream cadence. Slow, considered, written replies.',
-        },
-      ].map((card, i) => (
-        <article class="reveal group" style={`transition-delay: ${(i % 3) * 60}ms`}>
-          <p class="font-mono text-[10px] tracking-[0.2em] text-ink-mute mb-4">{card.n}</p>
-          <h3 class="font-display text-2xl text-ink mb-3 leading-tight group-hover:text-terracotta-deep transition-colors duration-300 ease-editorial">
-            {card.title}
-          </h3>
-          <p class="serif-body text-ink-soft">{card.body}</p>
-        </article>
-      ))}
-    </div>
-  </section>
+  .coven-canvas { background: transparent; }
 
-  <!-- Pull quote interlude -->
-  <section class="mx-auto max-w-4xl px-6 mb-20 sm:mb-24 text-center">
-    <p class="reveal font-display italic text-[clamp(1.5rem,3vw,2.5rem)] italic-grad leading-[1.18] max-w-3xl mx-auto">
-      "The work is being the woman you are. The room is for the days that asks of you."
-    </p>
-    <p class="reveal byline text-ink-mute mt-6">— from the foreword</p>
-  </section>
+  /* Cosmos — deep gradient, lifted with a subtle warmth top-right */
+  .coven-cosmos {
+    background:
+      radial-gradient(ellipse 70% 50% at 80% -10%, rgba(184,85,66,0.18), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 10% 110%, rgba(94,68,124,0.22), transparent 60%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, #0E0A1E 0%, #07060A 70%);
+  }
 
-  <CovenWaitlist />
+  /* Aurora drift — three slow-moving blooms */
+  .coven-aurora { mix-blend-mode: screen; opacity: 0.65; }
+  .aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(140px);
+    will-change: transform;
+  }
+  .aurora-a {
+    width: 60vmax; height: 60vmax;
+    top: -20%; left: -10%;
+    background: radial-gradient(circle, rgba(140,108,200,0.55), transparent 70%);
+    animation: aurora-drift-1 40s ease-in-out infinite alternate;
+  }
+  .aurora-b {
+    width: 55vmax; height: 55vmax;
+    bottom: -20%; right: -10%;
+    background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);
+    animation: aurora-drift-2 48s ease-in-out infinite alternate;
+  }
+  .aurora-c {
+    width: 50vmax; height: 50vmax;
+    top: 30%; left: 35%;
+    background: radial-gradient(circle, rgba(212,175,108,0.18), transparent 70%);
+    animation: aurora-drift-3 60s ease-in-out infinite alternate;
+  }
+  @keyframes aurora-drift-1 {
+    from { transform: translate3d(-3%, -2%, 0) rotate(0deg); }
+    to   { transform: translate3d(8%, 5%, 0) rotate(8deg); }
+  }
+  @keyframes aurora-drift-2 {
+    from { transform: translate3d(2%, 3%, 0) rotate(0deg); }
+    to   { transform: translate3d(-6%, -4%, 0) rotate(-10deg); }
+  }
+  @keyframes aurora-drift-3 {
+    from { transform: translate3d(-5%, 2%, 0) scale(1); }
+    to   { transform: translate3d(6%, -3%, 0) scale(1.08); }
+  }
 
-  <!-- Closing -->
-  <section class="mx-auto max-w-3xl px-6 py-16 sm:py-20 text-center">
-    <div class="reveal pt-12 border-t border-ink/10">
-      <p class="serif-lg text-ink-soft mb-8 max-w-prose mx-auto">
-        Coven launches Q3 2026. Waitlist is open now. Each application is read personally.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href={site.instagram} target="_blank" rel="noopener" class="cta-ghost">
-          <Instagram size={13} /> Follow @allaia.power <ArrowUpRight size={12} />
-        </a>
-        <a href={`mailto:${site.email}?subject=Coven%20%E2%80%94%20question`} class="cta-dark">
-          Ask a question <ArrowUpRight size={12} />
-        </a>
-      </div>
-    </div>
-  </section>
-</PageLayout>
+  /* Constellations — three star layers at different depths */
+  .star-layer {
+    position: absolute; inset: 0;
+    background-repeat: repeat;
+    opacity: 0.7;
+    animation: starshift 240s linear infinite;
+  }
+  .star-layer-far {
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.6) 50%, transparent 60%),
+      radial-gradient(1px 1px at 28% 73%, rgba(255,255,255,0.4) 50%, transparent 60%),
+      radial-gradient(1px 1px at 47% 36%, rgba(255,255,255,0.55) 50%, transparent 60%),
+      radial-gradient(1px 1px at 71% 12%, rgba(255,255,255,0.45) 50%, transparent 60%),
+      radial-gradient(1px 1px at 84% 66%, rgba(255,255,255,0.6) 50%, transparent 60%),
+      radial-gradient(1px 1px at 92% 90%, rgba(255,255,255,0.5) 50%, transparent 60%),
+      radial-gradient(1px 1px at 6% 88%, rgba(255,255,255,0.5) 50%, transparent 60%);
+    background-size: 1200px 900px;
+    opacity: 0.55;
+  }
+  .star-layer-mid {
+    background-image:
+      radial-gradient(1.5px 1.5px at 22% 30%, rgba(255,255,255,0.85) 50%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 58% 60%, rgba(255,225,160,0.7) 50%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 78% 25%, rgba(255,255,255,0.7) 50%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 38% 80%, rgba(255,255,255,0.8) 50%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 88% 48%, rgba(255,225,160,0.6) 50%, transparent 60%);
+    background-size: 900px 700px;
+    opacity: 0.75;
+    animation-duration: 160s;
+  }
+  .star-layer-near {
+    background-image:
+      radial-gradient(2px 2px at 14% 60%, rgba(255,255,255,1) 50%, transparent 60%),
+      radial-gradient(2px 2px at 66% 14%, rgba(255,225,160,0.95) 50%, transparent 60%),
+      radial-gradient(2px 2px at 30% 88%, rgba(255,255,255,0.9) 50%, transparent 60%);
+    background-size: 700px 540px;
+    opacity: 0.95;
+    animation-duration: 100s;
+  }
+  @keyframes starshift {
+    from { background-position: 0 0; }
+    to   { background-position: -1200px -900px; }
+  }
+
+  /* 3D moon — dimensional sphere with halo, lit from upper-left,
+     terminator on the lower-right, soft craters. */
+  .coven-moon-wrap {
+    top: clamp(-2rem, 4vw, 4rem);
+    right: clamp(-3rem, -2vw, 0rem);
+    width: clamp(220px, 32vw, 460px);
+    aspect-ratio: 1;
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
+  }
+  .coven-moon {
+    position: relative; width: 100%; height: 100%;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+  .moon-halo {
+    position: absolute; inset: -28%;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(238,222,182,0.32) 0%, rgba(238,222,182,0.18) 28%, transparent 56%);
+    filter: blur(20px);
+    animation: moon-halo-pulse 7s ease-in-out infinite alternate;
+  }
+  .moon-body {
+    position: absolute; inset: 0;
+    border-radius: 9999px;
+    background:
+      radial-gradient(circle at 32% 28%, #FBF3DC 0%, #F0E2B9 18%, #D9C49A 38%, #8B7458 64%, #4A3D31 88%, #2A2118 100%);
+    box-shadow:
+      inset -32px -36px 80px rgba(8,4,16,0.85),
+      inset 22px 26px 60px rgba(255,240,200,0.18),
+      0 0 60px rgba(238,222,182,0.18);
+    overflow: hidden;
+    transform: translateZ(0);
+    animation: moon-rotate 56s linear infinite;
+  }
+  .moon-shading {
+    position: absolute; inset: 0;
+    border-radius: 9999px;
+    background:
+      radial-gradient(circle at 70% 78%, rgba(8,4,16,0.4) 0%, transparent 35%),
+      radial-gradient(circle at 30% 22%, rgba(255,240,200,0.18) 0%, transparent 32%);
+    pointer-events: none;
+  }
+  .moon-craters { position: absolute; inset: 0; }
+  .crater {
+    position: absolute;
+    border-radius: 9999px;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,240,200,0.18) 0%, transparent 38%),
+      radial-gradient(circle at 60% 70%, rgba(8,4,16,0.45) 0%, rgba(8,4,16,0) 60%);
+    box-shadow: inset 0 0 6px rgba(8,4,16,0.4);
+  }
+  .moon-terminator {
+    position: absolute; inset: 0;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, transparent 50%, rgba(7,6,10,0.55) 88%, rgba(7,6,10,0.85) 100%);
+    pointer-events: none;
+  }
+  .moon-glow {
+    position: absolute; inset: -8%;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 32% 28%, rgba(255,240,200,0.35), transparent 35%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+  @keyframes moon-rotate {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes moon-halo-pulse {
+    0%   { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0.95; transform: scale(1.05); }
+  }
+
+  /* Floating glass orbs */
+  .orb {
+    position: absolute;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.55), rgba(140,108,200,0.25) 40%, rgba(7,6,10,0.0) 70%);
+    box-shadow:
+      0 30px 70px rgba(140,108,200,0.35),
+      inset 8px 12px 30px rgba(255,255,255,0.18),
+      inset -6px -8px 28px rgba(7,6,10,0.55);
+    filter: blur(0.2px);
+    animation: orb-float 14s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  .orb-1 {
+    width: clamp(80px, 11vw, 160px); height: clamp(80px, 11vw, 160px);
+    bottom: clamp(8%, 12vh, 18%); left: clamp(46%, 50vw, 56%);
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.55), rgba(184,85,66,0.32) 40%, transparent 70%);
+    box-shadow:
+      0 30px 70px rgba(184,85,66,0.4),
+      inset 8px 12px 30px rgba(255,255,255,0.2),
+      inset -6px -8px 28px rgba(7,6,10,0.55);
+    animation-duration: 12s;
+  }
+  .orb-2 {
+    width: clamp(50px, 7vw, 96px); height: clamp(50px, 7vw, 96px);
+    top: clamp(36%, 38vh, 46%); left: clamp(6%, 12vw, 14%);
+    animation-duration: 16s; animation-delay: -3s;
+  }
+  .orb-3 {
+    width: clamp(40px, 5vw, 70px); height: clamp(40px, 5vw, 70px);
+    top: clamp(58%, 62vh, 70%); right: clamp(18%, 22vw, 28%);
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.55), rgba(212,175,108,0.4) 40%, transparent 70%);
+    box-shadow:
+      0 24px 60px rgba(212,175,108,0.4),
+      inset 6px 10px 24px rgba(255,255,255,0.22),
+      inset -5px -6px 24px rgba(7,6,10,0.5);
+    animation-duration: 18s; animation-delay: -6s;
+  }
+  @keyframes orb-float {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(8%, -6%, 0); }
+  }
+
+  /* Display word — huge, italic, with terracotta-gold gradient on dot */
+  .coven-display {
+    font-size: clamp(5rem, 14vw, 11rem);
+    letter-spacing: -0.035em;
+    color: #F2EDE5;
+    text-shadow: 0 24px 80px rgba(140,108,200,0.4);
+  }
+  .coven-display .coven-dot {
+    background: linear-gradient(135deg, #EED9A8, #C99B5B 60%, #B85542);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+
+  /* Sigils */
+  .sigil {
+    color: #D4AF6C;
+    animation: sigil-spin 80s linear infinite;
+    filter: drop-shadow(0 0 12px rgba(212,175,108,0.25));
+  }
+  .sigil:nth-child(2) { animation-duration: 110s; animation-direction: reverse; }
+  .sigil:nth-child(3) { animation-duration: 95s; }
+  @keyframes sigil-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* Gold CTA */
+  .cta-gold {
+    display: inline-flex; align-items: center; gap: 0.625rem;
+    padding: 0.875rem 1.4rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #EED9A8 0%, #C99B5B 60%, #8C5E3A 100%);
+    color: #0A0612;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: -0.005em;
+    box-shadow:
+      0 12px 30px rgba(201,155,91,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 320ms;
+  }
+  .cta-gold:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 18px 40px rgba(201,155,91,0.5),
+      inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+  .text-gold-soft { color: #D4AF6C; }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.4); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora, .star-layer, .orb, .moon-body, .moon-halo, .sigil, .animate-pulse-slow,
+    .coven-moon-wrap[data-coven-parallax] { animation: none !important; }
+  }
+
+  @media (max-width: 640px) {
+    .coven-moon-wrap {
+      top: -8%; right: -22%;
+      width: 78vw;
+    }
+  }
+</style>
+
+<script>
+  // Subtle cursor parallax — moon + orbs drift slightly with mouse.
+  // Tiny multiplier per element (data-parallax-depth).
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    const els = Array.from(document.querySelectorAll<HTMLElement>('[data-coven-parallax]'));
+    if (els.length) {
+      let raf = 0;
+      let tx = 0, ty = 0;
+      const onMove = (e: PointerEvent) => {
+        const cx = (e.clientX / window.innerWidth) - 0.5;
+        const cy = (e.clientY / window.innerHeight) - 0.5;
+        tx = cx; ty = cy;
+        if (!raf) raf = requestAnimationFrame(apply);
+      };
+      const apply = () => {
+        raf = 0;
+        els.forEach((el) => {
+          const d = parseFloat(el.getAttribute('data-parallax-depth') || '0.05');
+          const x = (tx * d * 100).toFixed(2);
+          const y = (ty * d * 100).toFixed(2);
+          el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        });
+      };
+      window.addEventListener('pointermove', onMove, { passive: true });
+    }
+  }
+</script>

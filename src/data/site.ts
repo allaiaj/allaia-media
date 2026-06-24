@@ -15,10 +15,36 @@ export const site = {
   cities: ['Dubai', 'Bali'],
 
   // Stan Store routes (per JUDGEMENT_CALLS §3)
+  // Note: `application` is now an email-based mailto, not a Stan link.
+  // Stan houses the book + free downloads only — coaching applications
+  // come straight to Allaia's inbox.
   stan: {
     base: 'https://stan.store/allaia',
     book: 'https://stan.store/allaia',
-    application: 'https://stan.store/allaia',
+    application:
+      'mailto:allaia@blacklyne.ai' +
+      '?subject=' + encodeURIComponent('Application — The Architecture') +
+      '&body=' + encodeURIComponent(
+        [
+          'Hi Allaia,',
+          '',
+          'I would like to apply for The Architecture.',
+          '',
+          'Name —',
+          'Instagram —',
+          'Where I am based —',
+          '',
+          'What I am building, in a sentence —',
+          '',
+          'Where I am right now (the real version, not the LinkedIn one) —',
+          '',
+          'What has felt blocked, hard, or unspeakable —',
+          '',
+          'Why now —',
+          '',
+          'Thank you.',
+        ].join('\n')
+      ),
   },
 
   // External brand handles
@@ -204,7 +230,33 @@ export const architecture = {
     'The work is becoming the woman who lives her real life — fully, visibly, with nothing left to prove. The room is kept curated so the work can go deep.',
   cta: {
     label: 'Apply for The Architecture',
-    href: site.stan.application,
+    // Mailto application — Allaia reads and replies personally.
+    // Body template prompts the applicant for the things she needs
+    // to make a real decision: who, where, what they're building.
+    href:
+      'mailto:allaia@blacklyne.ai' +
+      '?subject=' + encodeURIComponent('Application — The Architecture') +
+      '&body=' + encodeURIComponent(
+        [
+          'Hi Allaia,',
+          '',
+          'I would like to apply for The Architecture.',
+          '',
+          'Name —',
+          'Instagram —',
+          'Where I am based —',
+          '',
+          'What I am building, in a sentence —',
+          '',
+          'Where I am right now (the real version, not the LinkedIn one) —',
+          '',
+          'What has felt blocked, hard, or unspeakable —',
+          '',
+          'Why now —',
+          '',
+          'Thank you.',
+        ].join('\n')
+      ),
   },
 };
 
