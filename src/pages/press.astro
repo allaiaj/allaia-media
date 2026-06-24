@@ -8,32 +8,38 @@ import Instagram from '@components/icons/Instagram.astro';
 
 <PageLayout
   title="Press"
-  description="Selected press features and interviews on Allaia — the entrepreneur, author, and operator behind Allaia Media."
-  eyebrow="Press · selected features"
+  description="Press features, interviews and podcast appearances featuring Allaia — author, operator, and COO at Blacklyne. To invite her on, the contact details are below."
+  eyebrow="Press · features and interviews"
   heading="On the"
   italic="record."
-  lead="Selected pieces. The longer trail lives on email — write if you are writing."
-  byline="For press inquiries · DM @allaia.power or email allaia@blacklyne.ai"
+  lead="Features, interviews, and podcast appearances. If you write for a publication, host a podcast, are putting together a profile, or want me on a panel — the door is open below."
+  byline="To invite Allaia on · DM @allaia.power or email allaia@blacklyne.ai"
 >
   <PressFeatures />
 
-  <section class="mx-auto max-w-3xl px-6 pt-8 pb-16 sm:pb-20">
+  <section class="mx-auto max-w-3xl px-6 pt-8 pb-20 sm:pb-28">
     <div class="reveal pt-12 border-t border-ink/10">
-      <p class="eyebrow mb-5">For press</p>
+      <p class="eyebrow mb-5">To invite me on</p>
       <h2 class="display-sm mb-6">
-        Interviews + <span class="italic-grad">profiles.</span>
+        Interviews. Podcasts. <span class="italic-grad">Profiles.</span>
       </h2>
-      <p class="serif-body text-ink-soft mb-7 max-w-prose">
-        Profiles, podcasts, panels. A line about the publication, a sense of the angle, and a rough timeline is enough to start the conversation. I respond personally within a week.
+      <p class="serif-lg text-ink-soft mb-5 max-w-prose">
+        If you are a journalist, podcast host, editor, or producer — write to me directly. The fastest way is a DM on Instagram; email also works.
+      </p>
+      <p class="serif-body text-ink-soft mb-9 max-w-prose">
+        A line about the publication or show, a sense of the angle, and a rough timeline is enough to start the conversation. I read every inquiry personally and reply within a week.
       </p>
       <div class="flex flex-col sm:flex-row gap-3">
         <a href={site.instagram} target="_blank" rel="noopener" class="cta-dark">
           <Instagram size={13} /> DM @allaia.power <ArrowUpRight size={12} />
         </a>
         <a href={`mailto:${site.email}?subject=Press%20inquiry`} class="cta-ghost">
-          Or by email <ArrowUpRight size={12} />
+          Email allaia@blacklyne.ai <ArrowUpRight size={12} />
         </a>
       </div>
+      <p class="byline text-ink-mute mt-7">
+        Topics I'm happy to speak on — entrepreneurship and operating at scale, building a personal brand without performing, identity-led marketing, AI-era brand visibility, the woman-founder rooms, the work behind <em>Become Her</em>.
+      </p>
     </div>
   </section>
 </PageLayout>
