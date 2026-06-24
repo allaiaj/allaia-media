@@ -389,42 +389,42 @@ const scenes = [
   .hero-beat.is-active .hero-word:nth-child(3) { transition-delay: 500ms; }
   .hero-beat.is-active .hero-word:nth-child(4) { transition-delay: 580ms; }
 
-  /* Mobile — tighten everything. Mobile flick scroll fires multiple
-     setActive() calls in 100-200ms; the desktop's 660ms swap window
-     is much longer than that, so any words mid-fade overlap with the
-     next beat. Shorten to ~300ms total per swap. */
+  /* Mobile — TEXT BEATS SNAP INSTANTLY. No transition.
+     The asymmetric fade approach worked mathematically but on iOS
+     touch-scroll, momentum keeps firing setActive() calls in rapid
+     succession, and any non-zero fade duration leaves a window
+     where two beats' letterforms read on top of each other. The
+     only fix that holds under arbitrary flick-then-flick scroll
+     behaviour is instant text swap.
+
+     Photos + background gradients still cross-fade (200ms) — they
+     sit behind, so a quick melt reads as intentional cinema rather
+     than ghosted text. */
   @media (max-width: 768px) {
-    .hero-beat {
-      transition:
-        opacity 140ms cubic-bezier(0.22, 0.61, 0.36, 1) 0ms,
-        transform 140ms cubic-bezier(0.22, 0.61, 0.36, 1) 0ms;
-    }
+    .hero-beat,
     .hero-beat.is-active {
-      transition:
-        opacity 280ms cubic-bezier(0.22, 0.61, 0.36, 1) 160ms,
-        transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1) 160ms;
+      transition: none !important;
+      transform: none !important;
     }
-    .hero-word {
-      transition:
-        opacity 120ms cubic-bezier(0.22, 0.61, 0.36, 1) 0ms,
-        transform 120ms cubic-bezier(0.22, 0.61, 0.36, 1) 0ms;
-    }
+    .hero-beat { opacity: 0; }
+    .hero-beat.is-active { opacity: 1; }
+
+    .hero-word,
     .hero-beat.is-active .hero-word {
-      transition:
-        opacity 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
-        transform 300ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: none !important;
+      transform: none !important;
+      transition-delay: 0ms !important;
     }
-    .hero-beat.is-active .hero-word:nth-child(1) { transition-delay: 200ms; }
-    .hero-beat.is-active .hero-word:nth-child(2) { transition-delay: 260ms; }
-    .hero-beat.is-active .hero-word:nth-child(3) { transition-delay: 320ms; }
-    .hero-beat.is-active .hero-word:nth-child(4) { transition-delay: 380ms; }
-    /* Scene cross-fade also tightened — mobile can't afford the long
-       photo melt; it just reads as ghosting. */
+    .hero-word { opacity: 0; }
+    .hero-beat.is-active .hero-word { opacity: 1; }
+
+    /* Photos + bg gradients can fade — they're behind the text and
+       a quick melt reads as cinema, not overlap. */
     .hero-scene {
-      transition: opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     .hero-bg-layer {
-      transition: opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
   }
 
