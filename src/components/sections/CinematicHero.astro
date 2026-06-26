@@ -397,23 +397,29 @@ const scenes = [
      - Incoming beat: smooth 320ms opacity fade for the scrub feel.
      - Photos + bg gradients still cross-fade behind the text. */
   @media (max-width: 768px) {
+    /* CSS fallback for first render before JS hydrates: inactive
+       beats are visibility: hidden too, not just opacity 0. */
     .hero-beat {
       opacity: 0;
+      visibility: hidden;
       transform: none;
       transition: none;
     }
     .hero-beat.is-active {
       opacity: 1;
+      visibility: visible;
       transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     .hero-word {
       opacity: 0;
+      visibility: hidden;
       transform: none;
       transition: none;
       transition-delay: 0ms;
     }
     .hero-beat.is-active .hero-word {
       opacity: 1;
+      visibility: visible;
       transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     /* Stagger delays neutralised on mobile — they widen the overlap
@@ -478,38 +484,39 @@ const scenes = [
       scenes.forEach((el, k) => el.classList.toggle('is-active', k === i));
       bgLayers.forEach((el, k) => el.classList.toggle('is-active', k === i));
 
-      // BEATS — explicit JS snap-out on mobile.
+      // BEATS — hard mobile snap-out via visibility: hidden.
       //
-      // On iOS, momentum scroll fires setActive() in rapid succession.
-      // Pure CSS `transition: none` on the deactivating selector is not
-      // honoured reliably mid-flick — Safari treats the in-flight fade
-      // as still running and you get two beats visible together. Force
-      // it: inline `opacity: 0` + `transition: none` BEFORE removing
-      // the is-active class, flush via offsetHeight, then clear inline
-      // styles next frame so the incoming beat's CSS fade can run
-      // normally. The outgoing beat is provably invisible at frame 0.
-      // Desktop unchanged — its register can afford the cross-fade.
+      // Opacity transitions + force-reflow weren't enough on iOS
+      // during momentum scroll — Safari was painting stale frames
+      // where the outgoing beat was still partly visible. visibility:
+      // hidden is a harder guarantee: a hidden element is excluded
+      // from paint entirely, regardless of any in-flight transition
+      // or paint timing. On reactivation we clear visibility and let
+      // the CSS .is-active rule run its 320ms opacity fade.
+      // Desktop unchanged.
       if (isMobile) {
         beats.forEach((el, k) => {
           if (k === i) {
-            el.style.transition = '';
+            el.style.visibility = '';
             el.style.opacity = '';
+            el.style.transition = '';
             el.classList.add('is-active');
-            // Also wipe any inline snap-out on the inner .hero-word
-            // children left from this beat being deactivated earlier.
             el.querySelectorAll<HTMLElement>('.hero-word').forEach((w) => {
-              w.style.transition = '';
+              w.style.visibility = '';
               w.style.opacity = '';
+              w.style.transition = '';
             });
           } else if (el.classList.contains('is-active')) {
-            // Outgoing — slam to invisible immediately.
+            // Outgoing — hard-hide, can't paint.
             el.style.transition = 'none';
             el.style.opacity = '0';
+            el.style.visibility = 'hidden';
             el.querySelectorAll<HTMLElement>('.hero-word').forEach((w) => {
               w.style.transition = 'none';
               w.style.opacity = '0';
+              w.style.visibility = 'hidden';
             });
-            void el.offsetHeight; // force reflow → commit the style
+            void el.offsetHeight;
             el.classList.remove('is-active');
           } else {
             el.classList.remove('is-active');
