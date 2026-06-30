@@ -594,9 +594,16 @@ const scenes = [
       stage.style.perspectiveOrigin = `${50 + cMouseX * 6}% ${50 + cMouseY * 6}%`;
     };
 
+    // Pause the rAF when the hero is offscreen — saves a constant
+    // 60fps work loop while the user is reading the rest of the page,
+    // which also reduces main-thread contention with the browser's
+    // scroll thread (the source of mobile "scroll jumps back" reports).
+    let inView = true;
+    let rafId = 0;
+
     const tick = () => {
       update();
-      requestAnimationFrame(tick);
+      if (inView) rafId = requestAnimationFrame(tick);
     };
 
     // Init
@@ -604,13 +611,28 @@ const scenes = [
     stage.setAttribute('data-tone', sceneTones[0]);
 
     if (!reduced) {
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
       if (fine) {
         window.addEventListener('pointermove', (e) => {
           mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
           mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         }, { passive: true });
       }
+      // Stop running when the hero scrolls past — restart when it
+      // re-enters. rootMargin 50% means we resume slightly before the
+      // user reaches the hero again on a scroll-up.
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !inView) {
+            inView = true;
+            rafId = requestAnimationFrame(tick);
+          } else if (!e.isIntersecting && inView) {
+            inView = false;
+            if (rafId) cancelAnimationFrame(rafId);
+          }
+        });
+      }, { rootMargin: '50% 0px' });
+      io.observe(root);
     } else {
       // Reduced motion — pin to scene 1 (the brand name)
       setActive(1);

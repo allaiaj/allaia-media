@@ -73,6 +73,17 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <EditorialFooter />
     <BookModal />
 
+    <!-- Disable browser scroll-restoration BEFORE first paint.
+         iOS Safari otherwise auto-adjusts scrollY when content above
+         the user's position loads/shifts (lazy images, late fonts),
+         which reads as "scroll suddenly jumped back". Setting manual
+         lets the page own its scroll state. -->
+    <script is:inline>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    </script>
+
     <!-- Scroll reveal observer -->
     <script>
       const reveal = () => {

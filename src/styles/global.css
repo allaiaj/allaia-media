@@ -165,6 +165,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Belt + suspenders for the iOS overscroll rubber-band — body
+       has it too but specifying on html catches some edge cases
+       where the body isn't the scrolling element. */
+    overscroll-behavior-y: none;
   }
 
   body {

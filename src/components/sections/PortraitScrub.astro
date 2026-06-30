@@ -270,6 +270,14 @@ const beats = [
       stage.setAttribute('data-ps-tone', tones[i] ?? 'default');
     };
 
+    // Only run the rAF while the section is on-screen. Two infinite
+    // rAF loops (this one + the hero's) running together on iOS cause
+    // measurable scroll jank, and contribute to the "page jumps back
+    // up" reports — the heavy main-thread per-frame work fights with
+    // the browser's scroll thread. IO pauses us when offscreen.
+    let inView = false;
+    let rafId = 0;
+
     const tick = () => {
       const rect = track.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
@@ -293,10 +301,22 @@ const beats = [
       if (progressEl) progressEl.textContent = pct;
       if (progressMobile) progressMobile.textContent = pct;
 
-      requestAnimationFrame(tick);
+      if (inView) rafId = requestAnimationFrame(tick);
     };
 
     setActive(0);
-    requestAnimationFrame(tick);
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !inView) {
+          inView = true;
+          rafId = requestAnimationFrame(tick);
+        } else if (!e.isIntersecting && inView) {
+          inView = false;
+          if (rafId) cancelAnimationFrame(rafId);
+        }
+      });
+    }, { rootMargin: '50% 0px' });
+    io.observe(root);
   }
 </script>
