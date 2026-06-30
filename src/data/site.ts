@@ -16,8 +16,8 @@ export const site = {
 
   // Stan Store routes (per JUDGEMENT_CALLS §3)
   // Note: `application` is now an email-based mailto, not a Stan link.
-  // Stan houses the book + free downloads only — coaching applications
-  // come straight to Allaia's inbox.
+  // Stan houses the book + free downloads only — private-practice
+  // applications come straight to Allaia's inbox.
   stan: {
     base: 'https://stan.store/allaia',
     book: 'https://stan.store/allaia',
@@ -156,7 +156,7 @@ export const editorialOpening = {
   sub: 'Author. Operator. Artist. Free spirit.',
   body: 'A free spirit, in motion. A life built between Dubai and Bali, between the studio and the canvas, between the rooms that ask of me. Written down for the women building one of their own.',
   body2:
-    'The work is identity-led. Slow. Quietly compounding. A book, a community, a coaching room kept curated, and a life that moves on its own terms — because the women who buy from me are not buying an offer, they are buying the proof.',
+    'The work is identity-led. Slow. Quietly compounding. A book, a community, a private practice kept curated, and a life that moves on its own terms — because the women who buy from me are not buying an offer, they are buying the proof.',
   ctas: [
     { label: 'The book', href: '/book', primary: true },
     { label: 'The Architecture', href: site.stan.application, primary: false, external: true },
@@ -182,9 +182,9 @@ export const book = {
   },
 };
 
-// The Architecture — 1:1 coaching offer
+// The Architecture — 1:1 private practice
 export const architecture = {
-  eyebrow: '1:1 COACHING · 12 WEEKS · BY APPLICATION',
+  eyebrow: '1:1 PRACTICE · 12 WEEKS · BY APPLICATION',
   heading: {
     pre: 'For the women building it',
     italic: 'underneath.',
@@ -221,7 +221,7 @@ export const architecture = {
     'A weekly rhythm you do not dread on a Sunday night',
     'On-camera ease — scripts, hooks, the inner work behind them',
     'A real life you actually want to be seen living',
-    'A coach in your WhatsApp between calls — that is me',
+    'In your WhatsApp between calls — that is me',
   ],
   format: { label: 'Format', value: 'Weekly 1:1' },
   length: { label: 'Length', value: '12 weeks' },
@@ -411,7 +411,7 @@ export const closingTiles = [
     external: true,
   },
   {
-    eyebrow: 'COACHING',
+    eyebrow: '1:1 PRACTICE',
     title: 'The Architecture',
     sub: 'Twelve weeks, four seats — by application',
     href: site.stan.application,

@@ -63,7 +63,7 @@ const testimonials = defineCollection({
     name: z.string(),
     role: z.string().optional(),
     location: z.string(),
-    type: z.enum(['coaching', 'reader', 'community', 'partnership']),
+    type: z.enum(['practice', 'reader', 'community', 'partnership']),
     featured: z.boolean().default(false),
   }),
 });
