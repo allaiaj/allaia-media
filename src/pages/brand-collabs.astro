@@ -1,0 +1,223 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { site } from '@data/site';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+import Instagram from '@components/icons/Instagram.astro';
+
+// Top-performing films — from Instagram Insights, ranked by engagement.
+const topVids = [
+  { img: '/img/collabs/best1.jpg', views: '619K', title: 'Escape The Matrix', er: '11.1%', a: ['51.2K', 'Likes'], b: ['10.9K', 'Saves'], href: 'https://www.instagram.com/reel/DYe7mNNsztZ/' },
+  { img: '/img/collabs/best2.jpg', views: '540K', title: 'Which one are you?', er: '5.7%', a: ['18.3K', 'Shares'], b: ['11K', 'Likes'], href: 'https://www.instagram.com/reel/DVk_FqaDKjT/' },
+  { img: '/img/collabs/best3.jpg', views: '212K', title: 'She’s a dangerous breed', er: '9.5%', a: ['9.6K', 'Shares'], b: ['9.1K', 'Likes'], href: 'https://www.instagram.com/reel/DWk5dvejGdm/' },
+];
+
+const moreVids = [
+  { img: '/img/collabs/DVWZkB9CNfh.jpg', views: '260K', title: 'Competency is the standard', href: 'https://www.instagram.com/reel/DVWZkB9CNfh/' },
+  { img: '/img/collabs/DZTtOngsOBG.jpg', views: '221K', title: 'On high standards', href: 'https://www.instagram.com/reel/DZTtOngsOBG/' },
+  { img: '/img/collabs/DVeBLwTD_Vs.jpg', views: '193K', title: 'Living in Dubai', href: 'https://www.instagram.com/reel/DVeBLwTD_Vs/' },
+  { img: '/img/collabs/DZTyZlzMrJO.jpg', views: '151K', title: 'You are not your record', href: 'https://www.instagram.com/reel/DZTyZlzMrJO/' },
+  { img: '/img/collabs/DXwOfqdM_N0.jpg', views: '144K', title: 'The most expensive thing you can wear', href: 'https://www.instagram.com/reel/DXwOfqdM_N0/' },
+  { img: '/img/collabs/DY44G_Gs6rU.jpg', views: '133K', title: 'You’re THAT girl', href: 'https://www.instagram.com/reel/DY44G_Gs6rU/' },
+  { img: '/img/collabs/DZuN-7BMM-v.jpg', views: '129K', title: 'Divine femininity', href: 'https://www.instagram.com/reel/DZuN-7BMM-v/' },
+  { img: '/img/collabs/DVoRu4mD4x-.jpg', views: '128K', title: 'Say something positive', href: 'https://www.instagram.com/reel/DVoRu4mD4x-/' },
+  { img: '/img/collabs/DZ9eoxeMeEL.jpg', views: '93K', title: 'The power of keeping to yourself', href: 'https://www.instagram.com/reel/DZ9eoxeMeEL/' },
+  { img: '/img/collabs/DZClhdhs7l7.jpg', views: '86K', title: 'Dinner at Ferro Ubud', href: 'https://www.instagram.com/reel/DZClhdhs7l7/' },
+  { img: '/img/collabs/DVi81w7Euqt.jpg', views: '76K', title: 'On uncertainty', href: 'https://www.instagram.com/reel/DVi81w7Euqt/' },
+  { img: '/img/collabs/DWdaXwVDP97.jpg', views: '73K', title: 'As long as you don’t try me', href: 'https://www.instagram.com/reel/DWdaXwVDP97/' },
+  { img: '/img/collabs/DZheN1usVSX.jpg', views: '72K', title: 'Nothing casual in my world', href: 'https://www.instagram.com/reel/DZheN1usVSX/' },
+  { img: '/img/collabs/DWWc7c4iBsO.jpg', views: '70K', title: 'Says who?', href: 'https://www.instagram.com/reel/DWWc7c4iBsO/' },
+  { img: '/img/collabs/DWiLJd-jKed.jpg', views: '67K', title: 'My fiery women', href: 'https://www.instagram.com/reel/DWiLJd-jKed/' },
+  { img: '/img/collabs/DZ2wUWgsrun.jpg', views: '57K', title: 'The right one', href: 'https://www.instagram.com/reel/DZ2wUWgsrun/' },
+  { img: '/img/collabs/DXjGCtWjGYk.jpg', views: '56K', title: 'Elegance is a mindset', href: 'https://www.instagram.com/reel/DXjGCtWjGYk/' },
+  { img: '/img/collabs/DZMr2wxs_47.jpg', views: '51K', title: 'She puts herself first', href: 'https://www.instagram.com/reel/DZMr2wxs_47/' },
+  { img: '/img/collabs/DV5zoz6COoG.jpg', views: '42K', title: 'Only Dubai expats relate', href: 'https://www.instagram.com/reel/DV5zoz6COoG/' },
+  { img: '/img/collabs/DYv4c-YMHFR.jpg', views: '40K', title: 'The love you give', href: 'https://www.instagram.com/reel/DYv4c-YMHFR/' },
+  { img: '/img/collabs/DZzFKFYM2wg.jpg', views: '37K', title: 'For my fellow fairies', href: 'https://www.instagram.com/reel/DZzFKFYM2wg/' },
+];
+
+const values = [
+  { title: 'Feminine power', body: 'My audience trusts me to point them toward what is worth their money. A natural home for brands speaking to women’s strength and softness.' },
+  { title: 'Somatic healing', body: 'Nervous-system, breath and body work that wellness, supplement and mindfulness partners slot into without it ever feeling like an ad.' },
+  { title: 'Wellness & movement', body: 'Fitness as devotion, not punishment. The right fit for activewear, equipment and performance-nutrition brands.' },
+  { title: 'The soft life', body: 'Slow mornings, deep rest, intentional living — the exact aesthetic lifestyle, travel and home brands want to live inside.' },
+  { title: 'Clean eating', body: 'Whole-food nourishment that makes food, drink and supplement brands read as self-respect, not a sponsorship.' },
+  { title: 'Beautymaxxing', body: 'Skin, glow and daily ritual — a believable, high-intent stage for beauty and skincare launches.' },
+];
+
+const services = [
+  { n: '01', title: 'Instagram Reel', desc: 'Your product woven into my world, concept to post. Native storytelling my audience trusts enough to act on.' },
+  { n: '02', title: 'TikTok', desc: 'Story-first short-form built to be saved and shared — the format that turns discovery into demand for you.' },
+  { n: '03', title: 'UGC / Content licensing', desc: 'Editorial-grade footage and stills you own outright and can run as paid ads. My aesthetic, your channels.' },
+  { n: '04', title: 'Campaign / Ambassadorship', desc: 'Multi-platform, multi-month partnerships priced to your goals. Where the real brand-building happens.' },
+];
+---
+
+<PageLayout
+  title="Brand collaborations"
+  description="Selective, editorial brand partnerships — wellness, beauty and lifestyle. Real reach, real engagement, paid only."
+  eyebrow="Brand collaborations · 2026"
+  heading="Content that"
+  italic="travels."
+  lead="I help wellness, beauty and lifestyle brands reach women who actually buy — through content that feels like devotion, not advertising. Selective, editorial, paid."
+  byline="By personal inquiry · response within a week"
+>
+  <!-- Register + portrait -->
+  <div class="mx-auto max-w-6xl px-6">
+    <section class="reveal grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <figure class="relative">
+        <div class="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
+          <img src="/img/portraits/DV2vp-hiJzx.jpg" alt="Allaia Power" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        </div>
+      </figure>
+      <div>
+        <p class="eyebrow mb-5">The register</p>
+        <h2 class="display-sm mb-6">Not an influencer feed. <span class="italic-grad">A point of view.</span></h2>
+        <p class="serif-lg text-ink-soft max-w-prose mb-5">
+          Partnerships are chosen the way essays are commissioned — editorial, considered, paid. If your product genuinely belongs in a slow, intentional, feminine life, my audience is already primed to want it.
+        </p>
+        <p class="serif-body text-ink-mute max-w-prose">Dubai &amp; Bali · always in transit · read personally, every time.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Most-watched -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Most-watched · this year</p>
+      <h2 class="display-sm mb-4">The three that <span class="italic-grad">travelled furthest.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        My highest-engagement films — not reach bought, reach earned. Tap any to watch the original.
+      </p>
+      <div class="grid sm:grid-cols-3 gap-5">
+        {topVids.map((v) => (
+          <a href={v.href} target="_blank" rel="noopener" class="group block">
+            <div class="relative aspect-[9/16] rounded-[1.25rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
+              <img src={v.img} alt={v.title} loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.04]" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"></div>
+              <span class="absolute right-4 top-4 rounded-full bg-cream/90 px-2.5 py-1 text-micro font-medium text-ink">{v.er} ER</span>
+              <p class="absolute left-4 top-4 font-display italic text-3xl text-white/95">{v.views}</p>
+              <div class="absolute inset-x-0 bottom-0 p-4">
+                <p class="byline text-white/70 mb-1">Instagram · views</p>
+                <p class="font-display text-white text-lg leading-tight">{v.title}</p>
+              </div>
+            </div>
+            <div class="mt-3 grid grid-cols-2 gap-3">
+              <div><p class="font-display text-2xl text-ink">{v.a[0]}</p><p class="byline text-ink-mute">{v.a[1]}</p></div>
+              <div><p class="font-display text-2xl text-ink">{v.b[0]}</p><p class="byline text-ink-mute">{v.b[1]}</p></div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- The library -->
+    <section class="reveal pt-16 mt-16 border-t border-ink/10">
+      <p class="eyebrow mb-5">The library</p>
+      <h2 class="display-sm mb-4">More from the feed.</h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        Not one lucky hit — a steady run of films landing six figures. A sample below; the rest lives on Instagram.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {moreVids.map((v) => (
+          <a href={v.href} target="_blank" rel="noopener" class="group block">
+            <div class="relative aspect-[9/16] rounded-[1.1rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
+              <img src={v.img} alt={v.title} loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.05]" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"></div>
+              <span class="absolute left-3 top-3 rounded-full bg-cream/90 px-2.5 py-1 text-micro font-medium text-ink">{v.views}</span>
+              <p class="absolute inset-x-0 bottom-0 p-3 font-display text-white text-sm leading-tight">{v.title}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="mt-10">
+        <a href={site.instagram} target="_blank" rel="noopener" class="cta-ghost">
+          <Instagram size={13} /> <span>See it all on Instagram</span> <ArrowUpRight size={12} />
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Receipts -->
+  <div class="mx-auto max-w-3xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Reach + audience · last 90 days</p>
+      <h2 class="display-sm mb-7">Real receipts. <span class="italic-grad">No vanity metrics.</span></h2>
+      <div class="grid sm:grid-cols-3 gap-6 mb-6">
+        <div>
+          <p class="byline text-ink-mute mb-2">Views</p>
+          <p class="font-display italic text-3xl text-terracotta">3.4M</p>
+          <p class="byline text-ink-mute mt-2">Instagram</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Unique reach</p>
+          <p class="font-display italic text-3xl text-terracotta">1.74M</p>
+          <p class="byline text-ink-mute mt-2">86.8% non-follower</p>
+        </div>
+        <div>
+          <p class="byline text-ink-mute mb-2">Audience</p>
+          <p class="font-display italic text-3xl text-terracotta">86%</p>
+          <p class="byline text-ink-mute mt-2">women, 25–34 majority</p>
+        </div>
+      </div>
+      <p class="byline text-ink-mute">Top cities — Delhi · Bangalore · Dubai · Mumbai · UK · SEA</p>
+    </section>
+  </div>
+
+  <!-- What I stand for -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Why brands work with me</p>
+      <h2 class="display-sm mb-10 max-w-2xl">I don’t sell you attention. I lend you <span class="italic-grad">trust</span> my audience already gives me.</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-9">
+        {values.map((v) => (
+          <div class="border-t border-ink/10 pt-5">
+            <h3 class="font-display text-xl text-ink mb-2">{v.title}</h3>
+            <p class="serif-body text-ink-soft">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- Ways to partner -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Ways to partner</p>
+      <h2 class="display-sm mb-4">Built to scope.</h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        Starting points, not a menu. Most partnerships are built to brief — send yours and I’ll return a tailored quote.
+      </p>
+      <div class="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+        {services.map((s) => (
+          <div class="border-t border-ink/10 pt-5 flex items-start justify-between gap-6">
+            <div>
+              <p class="byline text-terracotta mb-2">{s.n}</p>
+              <h3 class="font-display text-2xl text-ink mb-2">{s.title}</h3>
+              <p class="serif-body text-ink-soft max-w-md">{s.desc}</p>
+            </div>
+            <p class="font-display italic text-lg text-ink-mute whitespace-nowrap pt-6">On request</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- CTA -->
+  <div class="mx-auto max-w-3xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">To work together</p>
+      <h2 class="display-sm mb-6">Send a <span class="italic-grad">direct message.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-8">
+        A line about you, a line about why you reached out, a rough scope and budget range. That is enough to know if we should talk. Press inquiries welcome.
+      </p>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href={site.instagram} target="_blank" rel="noopener" class="cta-dark justify-center !py-5">
+          <Instagram size={13} /> <span>DM @allaia.power</span> <ArrowUpRight size={12} />
+        </a>
+        <a href={`mailto:${site.email}?subject=Brand%20partnership`} class="cta-ghost justify-center !py-5">
+          <span>Or by email</span> <ArrowUpRight size={12} />
+        </a>
+      </div>
+    </section>
+  </div>
+</PageLayout>
