@@ -81,7 +81,7 @@ const deliverables = [
   heading="Let’s put your product"
   italic="in front of women who buy."
   lead="If you run a wellness, beauty or lifestyle brand, here is the short version: I make content that women save and send to their friends — and when your product lives inside it, it reads as a recommendation, not an ad. Selective, editorial, paid."
-  byline="By personal inquiry · I read and reply to every one within a week"
+  byline="Built to this size in 4 months · by personal inquiry · I reply within a week"
 >
   <!-- ── Collage intro — who you'd work with ── -->
   <div class="mx-auto max-w-6xl px-6">
@@ -98,8 +98,8 @@ const deliverables = [
           <p class="byline text-ink-mute mt-1">views · 90 days</p>
         </div>
         <div class="collage-chip chip-er">
-          <p class="font-display italic text-2xl text-terracotta leading-none">11.1%</p>
-          <p class="byline text-ink-mute mt-1">peak engagement</p>
+          <p class="font-display italic text-2xl text-terracotta leading-none">4 months</p>
+          <p class="byline text-ink-mute mt-1">to build all of this</p>
         </div>
       </div>
       <div>
@@ -175,6 +175,26 @@ const deliverables = [
       <p class="serif-lg text-ink-soft max-w-xl mx-auto mt-6">
         — and 86.8% of them don’t follow me yet. That is your product being discovered, not just seen by the same crowd twice.
       </p>
+    </section>
+  </div>
+
+  <!-- ── Growth proof — 4 months ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center">
+      <div class="growth-figure rounded-[1.75rem] px-10 py-12 text-center">
+        <p class="font-display italic text-terracotta leading-none" style="font-size: clamp(5rem, 10vw, 8.5rem);">4</p>
+        <p class="text-micro uppercase tracking-[0.18em] text-ink font-medium mt-2">months · that’s all it took</p>
+      </div>
+      <div>
+        <p class="eyebrow mb-5">Why that matters to you</p>
+        <h2 class="display-sm mb-6">Everything on this page was built in <span class="italic-grad">four months.</span></h2>
+        <p class="serif-lg text-ink-soft max-w-prose mb-5">
+          The reach, the engagement, the library of six-figure films — four months of work, not four years. That tells you two things: this is not luck, it is a strategy that works on today’s algorithm. And the momentum you would be buying into is still accelerating, not plateauing.
+        </p>
+        <p class="serif-body text-ink-soft max-w-prose">
+          Partner now and your product rides the steepest part of the curve — the same system that grew this brand, pointed at yours.
+        </p>
+      </div>
     </section>
   </div>
 
@@ -420,6 +440,15 @@ const deliverables = [
     border: 1px solid rgba(28, 26, 23, 0.07);
   }
   .big-number { font-size: clamp(4.5rem, 14vw, 11rem); }
+
+  /* ── Growth figure ── */
+  .growth-figure {
+    background:
+      radial-gradient(90% 90% at 50% 100%, rgba(184, 85, 66, 0.14), transparent 60%),
+      rgba(28, 26, 23, 0.035);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    min-width: min(320px, 100%);
+  }
 
   /* ── Deliverables + steps ── */
   .deliver-row {
