@@ -12,6 +12,7 @@ interface Props {
   image?: string;
   noindex?: boolean;
   bodyClass?: string;
+  showNewsletter?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   image = site.og.image,
   noindex = false,
   bodyClass = '',
+  showNewsletter = true,
 } = Astro.props;
 
 const fullTitle = title ? `${title} — ${site.brand}` : site.og.title;
@@ -70,7 +72,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <main id="main" class="main-clip">
       <slot />
     </main>
-    <EditorialFooter />
+    <EditorialFooter showNewsletter={showNewsletter} />
     <BookModal />
 
     <!-- Disable browser scroll-restoration BEFORE first paint.

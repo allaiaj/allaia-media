@@ -5,11 +5,17 @@ import TikTok from './icons/TikTok.astro';
 import Youtube from './icons/Youtube.astro';
 import ArrowUpRight from './icons/ArrowUpRight.astro';
 
+interface Props {
+  showNewsletter?: boolean;
+}
+const { showNewsletter = true } = Astro.props;
+
 const year = '2026';
 ---
 
 <footer class="relative mt-24 sm:mt-32 bg-bone border-t border-ink/8">
   <!-- Top: newsletter band (secondary placement) -->
+  {showNewsletter && (
   <div class="border-b border-ink/8">
     <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20 grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-20 items-start">
       <div>
@@ -49,6 +55,7 @@ const year = '2026';
       </div>
     </div>
   </div>
+  )}
 
   <!-- Middle: column nav -->
   <div class="mx-auto max-w-6xl px-6 py-16">

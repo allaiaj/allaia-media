@@ -10,12 +10,13 @@ interface Props {
   lead?: string;
   byline?: string;
   noindex?: boolean;
+  showNewsletter?: boolean;
 }
 
-const { title, description, eyebrow, heading, italic, lead, byline, noindex = false } = Astro.props;
+const { title, description, eyebrow, heading, italic, lead, byline, noindex = false, showNewsletter = true } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} noindex={noindex}>
+<BaseLayout title={title} description={description} noindex={noindex} showNewsletter={showNewsletter}>
   <header class="relative pt-32 sm:pt-40 pb-16 sm:pb-20 border-b border-ink/8">
     <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
       <div
