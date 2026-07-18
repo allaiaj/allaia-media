@@ -22,7 +22,7 @@ export const site = {
     base: 'https://stan.store/allaia',
     book: 'https://stan.store/allaia',
     application:
-      'mailto:allaia@blacklyne.ai' +
+      'mailto:allaiaj.luise@gmail.com' +
       '?subject=' + encodeURIComponent('Application — The Architecture') +
       '&body=' + encodeURIComponent(
         [
@@ -50,7 +50,7 @@ export const site = {
   // External brand handles
   instagram: 'https://instagram.com/allaia.power',
   instagramArt: 'https://instagram.com/allaia.art',
-  tiktok: 'https://tiktok.com/@allaia.power',
+  tiktok: 'https://tiktok.com/@allaiaj',
   youtube: 'https://www.youtube.com/@allaiaj',
   youtubeHandle: '@allaiaj',
   youtubeChannelId: 'UCnqP-tsoaQL7K_gUcCd-URQ',
@@ -67,7 +67,7 @@ export const site = {
   },
 
   // Email
-  email: 'allaia@blacklyne.ai',
+  email: 'allaiaj.luise@gmail.com',
 
   // The studio Allaia is COO at — the credibility lever
   blacklyne: 'https://blacklyne.ai/en',
@@ -236,7 +236,7 @@ export const architecture = {
     // Body template prompts the applicant for the things she needs
     // to make a real decision: who, where, what they're building.
     href:
-      'mailto:allaia@blacklyne.ai' +
+      'mailto:allaiaj.luise@gmail.com' +
       '?subject=' + encodeURIComponent('Application — The Architecture') +
       '&body=' + encodeURIComponent(
         [

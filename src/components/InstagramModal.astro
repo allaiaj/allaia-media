@@ -1,0 +1,204 @@
+---
+// Instagram follow popup — a big editorial modal for @allaia.power.
+// Appears a few seconds after load with a portrait + a Follow CTA.
+// Closes via X / backdrop tap / ESC.
+//
+// Coordinated with BookModal via a SHARED session gate
+// ('allaia_popup_shown') so a visitor only ever sees ONE auto-popup
+// per session. This modal fires first (2500ms) and takes priority;
+// the book popup (2800ms) stands down if this one has already opened.
+//
+// Hidden on /about and /the-studio — those pages run their own modal.
+import { site } from '@data/site';
+import Instagram from '@components/icons/Instagram.astro';
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+const path = Astro.url.pathname.replace(/\/+$/, '');
+const ownsItsModal = path === '/about' || path === '/the-studio';
+---
+
+{!ownsItsModal && (
+
+<div
+  class="ig-modal fixed inset-0 z-[85] hidden items-center justify-center px-4 sm:px-6"
+  data-ig-modal
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="ig-modal-title"
+>
+  <!-- Backdrop -->
+  <button
+    type="button"
+    class="absolute inset-0 w-full h-full bg-anthracite/55 backdrop-blur-md cursor-pointer"
+    aria-label="Close"
+    data-ig-modal-close
+  ></button>
+
+  <!-- Modal card -->
+  <div
+    class="ig-modal-card relative w-full max-w-[960px] max-h-[92vh] overflow-y-auto rounded-[1.75rem] shadow-anthracite"
+    style="background: linear-gradient(160deg, #0E0D0B 0%, #1F1B16 60%, #2A2722 100%);"
+    data-ig-modal-card
+  >
+    <!-- Warm wash inside the card -->
+    <div
+      class="pointer-events-none absolute inset-0 opacity-60"
+      style="background: radial-gradient(ellipse 60% 60% at 82% 8%, rgba(184,85,66,0.55), transparent 70%), radial-gradient(ellipse 55% 55% at 8% 96%, rgba(139,157,126,0.30), transparent 70%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Close button -->
+    <button
+      type="button"
+      aria-label="Close"
+      data-ig-modal-close
+      class="absolute top-4 right-4 sm:top-5 sm:right-5 z-10 grid place-items-center h-10 w-10 rounded-full bg-cream/12 backdrop-blur-md border border-cream/20 text-cream hover:bg-cream/25 hover:scale-110 transition-all duration-300 ease-editorial"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="relative grid sm:grid-cols-[1.05fr_1.1fr] gap-0">
+      <!-- LEFT: portrait -->
+      <div class="relative min-h-[260px] sm:min-h-[440px]">
+        <img
+          src="/img/portraits/DXdmLBNFHa8.jpg"
+          alt="Allaia Power"
+          loading="eager"
+          decoding="async"
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-anthracite/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-anthracite/40"></div>
+        <div class="absolute left-5 bottom-5 inline-flex items-center gap-2 rounded-full bg-cream/90 px-3.5 py-1.5 text-micro font-medium text-ink">
+          <Instagram size={14} /> @allaia.power
+        </div>
+      </div>
+
+      <!-- RIGHT: copy + CTA -->
+      <div class="relative p-7 sm:p-9 lg:p-11 flex flex-col justify-center text-cream">
+        <p class="text-[0.625rem] uppercase tracking-[0.28em] text-sage font-medium mb-4">
+          The diary in motion · Instagram
+        </p>
+        <h2
+          id="ig-modal-title"
+          class="font-display font-medium leading-[1.04] mb-5"
+          style="font-size: clamp(2rem, 5vw, 3.25rem); letter-spacing: -0.025em;"
+        >
+          <span class="block">Come see the life,</span>
+          <span class="block font-display italic font-medium bg-gradient-to-br from-terracotta via-terracotta-deep to-brown bg-clip-text text-transparent" style="padding-bottom: 0.14em;">
+            not the highlight reel.
+          </span>
+        </h2>
+
+        <p class="font-display italic text-cream/85 text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-snug mb-7 max-w-md">
+          Slow, intentional, quietly compounding - posted on the days the work allows.
+        </p>
+
+        <p class="font-serif text-cream/80 leading-[1.6] mb-8 max-w-md text-[1.0625rem]">
+          3M+ views in the last 90 days, and 86.8% of them from women who don't follow me yet. Be one of the ones who does.
+        </p>
+
+        <a
+          href={site.instagram}
+          target="_blank"
+          rel="noopener"
+          class="cta-cream group inline-flex w-full sm:w-auto items-center justify-center"
+          data-ig-modal-cta
+        >
+          <Instagram size={14} class="mr-1.5" />
+          <span>Follow @allaia.power</span>
+          <ArrowUpRight size={12} class="ml-1.5 transition-transform group-hover:translate-x-0.5" />
+        </a>
+
+        <p class="text-[0.6875rem] text-cream/45 mt-4">
+          Opens at <span class="text-cream/70">instagram.com/allaia.power</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Open state — driven by data-state="open" on .ig-modal */
+  .ig-modal {
+    opacity: 0;
+    transition: opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .ig-modal[data-state="open"] {
+    display: flex;
+    opacity: 1;
+  }
+  .ig-modal-card {
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+    transition:
+      transform 480ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .ig-modal[data-state="open"] .ig-modal-card {
+    transform: none;
+    opacity: 1;
+    transition-delay: 80ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ig-modal, .ig-modal-card { transition: none !important; }
+  }
+</style>
+
+<script>
+  // Per-session suppression. SHARED_KEY guarantees only one auto-popup
+  // (this or the book modal) opens per session; OWN_KEY remembers that
+  // this specific modal was closed. Append ?igpopup=1 to force-show.
+  const SHARED_KEY = 'allaia_popup_shown';
+  const OWN_KEY = 'allaia_ig_modal_dismissed';
+  const DELAY_MS = 2500;
+
+  const modal = document.querySelector<HTMLElement>('[data-ig-modal]');
+  if (modal) {
+    let blocked = false;
+    try {
+      blocked =
+        sessionStorage.getItem(OWN_KEY) === '1' ||
+        sessionStorage.getItem(SHARED_KEY) === '1';
+    } catch { /* sessionStorage blocked — show anyway */ }
+
+    const force = new URLSearchParams(location.search).get('igpopup') === '1';
+
+    const open = () => {
+      // Re-check the shared gate at fire time in case the book modal
+      // opened first during the delay window.
+      try {
+        if (!force && sessionStorage.getItem(SHARED_KEY) === '1') return;
+        sessionStorage.setItem(SHARED_KEY, '1');
+      } catch { /* ignore */ }
+      modal.style.display = '';
+      modal.setAttribute('data-state', 'open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      modal.removeAttribute('data-state');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      try { sessionStorage.setItem(OWN_KEY, '1'); } catch { /* ignore */ }
+      setTimeout(() => { modal.style.display = 'none'; }, 360);
+    };
+
+    modal.querySelectorAll<HTMLElement>('[data-ig-modal-close]').forEach((b) => {
+      b.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('data-state') === 'open') close();
+    });
+    modal.querySelector<HTMLElement>('[data-ig-modal-cta]')?.addEventListener('click', () => {
+      try { sessionStorage.setItem(OWN_KEY, '1'); } catch { /* ignore */ }
+    });
+
+    if (force || !blocked) {
+      setTimeout(open, DELAY_MS);
+    }
+  }
+</script>
+)}

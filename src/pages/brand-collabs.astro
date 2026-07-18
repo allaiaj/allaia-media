@@ -4,6 +4,19 @@ import { site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 import Instagram from '@components/icons/Instagram.astro';
 
+// ── Planning numbers ────────────────────────────────────────────────
+// Every figure below is derived from Allaia's real Instagram Insights.
+// The estimator uses a DELIBERATELY CONSERVATIVE per-film number
+// (150K) against a trailing average of ~175K across the last 19
+// published films, so a brand's projection under-promises.
+const PLANNING = {
+  perFilm: 150000,      // conservative planning figure per film
+  trailingAvg: 175000,  // actual trailing average, last 19 films
+  newAudience: 0.868,   // 86.8% of reach are non-followers
+  saveRate: 0.015,      // conservative vs 1.76% on the top film
+  cpm: 10,              // industry-standard social CPM, USD
+};
+
 // Top-performing films — from Instagram Insights, ranked by engagement.
 const topVids = [
   { img: '/img/collabs/best1.jpg', views: '619K', title: 'Escape The Matrix', er: '11.1%', a: ['51.2K', 'Likes'], b: ['10.9K', 'Saves'], href: 'https://www.instagram.com/reel/DYe7mNNsztZ/' },
@@ -33,25 +46,146 @@ const libraryRow2 = [
   { img: '/img/collabs/DZ2wUWgsrun.jpg', views: '57K', title: 'The right one', href: 'https://www.instagram.com/reel/DZ2wUWgsrun/' },
 ];
 
-// Value props — spoken straight to the brand.
-const valueProps = [
-  { k: '86.8%', label: 'non-follower reach', body: 'Your product lands in front of women discovering it for the first time — new buyers, not just my regulars.' },
-  { k: '11.1%', label: 'peak engagement', body: 'Most sponsored content sees 1–3%. My audience stops, saves and acts.' },
-  { k: '619K', label: 'views, one film', body: 'Six-figure reach is the baseline you are buying into, not a fluke.' },
-  { k: '100%', label: 'yours to keep', body: 'Run every frame as paid ads, on your grid, in your emails. You own it.' },
+// ── Proof band — each stat translated into what it BUYS the brand ──
+const proofStats = [
+  { value: 3000000, display: '3M+', label: 'views · last 90 days', body: 'Six-figure reach is your baseline, not your best case.' },
+  { value: 86.8, suffix: '%', decimals: 1, label: 'reach from non-followers', body: 'You are paying for discovery, not for the same crowd seeing you twice.' },
+  { value: 11.1, suffix: '%', decimals: 1, label: 'peak engagement rate', body: 'Sponsored content averages 1–3%. Mine stops the scroll and gets saved.' },
+  { value: 1740000, display: '1.74M', label: 'unique people reached', body: 'Real individual humans, not impressions counted twice.' },
 ];
 
-const steps = [
-  { n: '1', t: 'You brief me', d: 'The product, the goal, a rough budget. One email is enough to know if we should talk.' },
-  { n: '2', t: 'I build it', d: 'Concept, shoot and edit — woven into my world so it reads as a recommendation, never an ad drop.' },
-  { n: '3', t: 'It goes live', d: 'Posted at peak time, then the files and the numbers land in your inbox. Yours from there.' },
+// ── Packages — what a brand actually buys ──
+const packages = [
+  {
+    key: 'single',
+    name: 'The Single',
+    tag: 'One film',
+    films: 1,
+    best: 'A launch moment, or testing the channel before you commit.',
+    intro: 'One editorial film, built around your product and posted native to my feed.',
+    includes: [
+      'Concept and script written around your product',
+      'Full production — shot, lit and edited to the standard on this page',
+      'Native post to my feed at peak time, caption included',
+      'Full usage rights, all channels, no renewal fees',
+      'Performance recap with the real numbers after it runs',
+    ],
+  },
+  {
+    key: 'campaign',
+    name: 'The Campaign',
+    tag: 'Three films · 6 weeks',
+    films: 3,
+    best: 'A launch window where one post is not enough to move stock.',
+    intro: 'Three films across six weeks, so your product is seen more than once by the same warm audience.',
+    includes: [
+      'Everything in The Single, three times over',
+      'Story frames supporting each film, with link stickers',
+      'A discount or affiliate code created for my audience',
+      'Sequenced so the films build on each other, not repeat',
+      'Mid-campaign and end-of-campaign reporting',
+    ],
+    featured: true,
+  },
+  {
+    key: 'ambassador',
+    name: 'The Ambassador',
+    tag: 'Ongoing · quarterly',
+    films: 6,
+    best: 'Owning your category with my audience, rather than renting it.',
+    intro: 'A standing partnership. You stop being a post and start being part of the life.',
+    includes: [
+      'Six or more films per quarter',
+      'Category exclusivity — I will not take your competitor',
+      'Always-on story presence and first look at new products',
+      'A quarterly strategy call before we plan the slate',
+      'Full rights across everything, in perpetuity',
+    ],
+  },
+];
+
+// ── Who the audience is ──
+// Qualitative for now. If Allaia exports the age/gender/geo splits from
+// Instagram Insights, these become hard percentages, which brands prefer.
+const audience = [
+  {
+    k: '25–45',
+    label: 'the age band',
+    body: 'Established enough to buy the good version, still curious enough to try the new thing.',
+  },
+  {
+    k: 'Travel-led',
+    label: 'a life in motion',
+    body: 'She follows the places as much as the person. Your product is seen somewhere she wants to be.',
+  },
+  {
+    k: 'Experience-first',
+    label: 'how she spends',
+    body: 'She books the retreat, the treatment, the plunge. Wellness is a line in her budget, not an impulse buy.',
+  },
+  {
+    k: 'Global',
+    label: 'not local',
+    body: 'Which matters if you ship internationally, run retreats, or sell a destination rather than a shelf.',
+  },
+];
+
+// ── Content pillars — with the brand categories that belong in each ──
+const pillars = [
+  {
+    n: '01',
+    t: 'Recovery & contrast therapy',
+    d: 'Sauna, ice bath, cold plunge. The swing between heat and cold, and why it is the part people actually stick to.',
+    fits: 'Saunas · plunge tubs · recovery tech',
+    wide: true,
+  },
+  {
+    n: '02',
+    t: 'Low-cortisol living',
+    d: 'Nervous system first. Sleep, stress load, slow mornings and the unglamorous basics that move the needle.',
+    fits: 'Adaptogens · sleep · magnesium',
+  },
+  {
+    n: '03',
+    t: 'Biohacking & longevity',
+    d: 'Supplements, protocols and tracking. Tested on myself for weeks before it is ever mentioned out loud.',
+    fits: 'Supplements · wearables · diagnostics',
+  },
+  {
+    n: '04',
+    t: 'Fitness & movement',
+    d: 'Strength, pilates, mobility. Training framed as maintenance of a life, never as punishment for a body.',
+    fits: 'Activewear · equipment · studios',
+  },
+  {
+    n: '05',
+    t: 'Holistic healing & bodywork',
+    d: 'Massage, lymphatic drainage, the treatments that read as maintenance rather than indulgence.',
+    fits: 'Clinics · spas · at-home tools',
+  },
+  {
+    n: '06',
+    t: 'Wellness travel',
+    d: 'Retreats, spas and the destinations built around feeling well — filmed where the audience is already dreaming.',
+    fits: 'Hotels · retreats · destinations',
+    wide: true,
+  },
+];
+
+// ── Paid ads vs. a film — the honest contrast ──
+const contrast = [
+  { them: 'Interrupts someone who did not ask for it.', me: 'Arrives inside content she chose to watch.' },
+  { them: 'Skipped in three seconds, then forgotten.', me: 'Saved, sent to a friend, returned to later.' },
+  { them: 'Trust borrowed from nothing.', me: 'Trust I spent four months earning, pointed at you.' },
+  { them: 'Stops the moment the budget stops.', me: 'Lives on my grid permanently, and the file is yours forever.' },
+  { them: 'You rent the creative.', me: 'You own it — run it as ads, on your grid, in email.' },
 ];
 
 const fits = [
-  { img: '/img/collabs/DZMr2wxs_47.jpg', label: 'Wellness & supplements' },
-  { img: '/img/collabs/DXjGCtWjGYk.jpg', label: 'Beauty & skincare' },
+  { img: '/img/collabs/DZMr2wxs_47.jpg', label: 'Recovery & wellness tech' },
+  { img: '/img/collabs/DXjGCtWjGYk.jpg', label: 'Supplements & longevity' },
   { img: '/img/collabs/DYv4c-YMHFR.jpg', label: 'Activewear & movement' },
-  { img: '/img/collabs/DZzFKFYM2wg.jpg', label: 'Travel, home & soft living' },
+  { img: '/img/collabs/DZzFKFYM2wg.jpg', label: 'Wellness travel & retreats' },
 ];
 
 const marqueeA = [
@@ -65,22 +199,56 @@ const marqueeB = [
 const loopA = [...marqueeA, ...marqueeA];
 const loopB = [...marqueeB, ...marqueeB];
 
-const deliverables = [
-  ['Concept & script', 'built around your product, not bolted on'],
-  ['Editorial production', 'shot, lit and edited to the standard you see here'],
-  ['Native posting', 'to my feed at peak time, caption included'],
-  ['Full usage rights', 'paid ads, organic, email — all channels, no renewals'],
-  ['Performance recap', 'the real numbers after it runs, straight to you'],
+const steps = [
+  { n: '1', t: 'You brief me', d: 'The product, the goal, a rough budget. One email is enough to know if we should talk.' },
+  { n: '2', t: 'I build it', d: 'Concept, shoot and edit — woven into my world so it reads as a recommendation, never an ad drop.' },
+  { n: '3', t: 'It goes live', d: 'Posted at peak time, then the files and the numbers land in your inbox. Yours from there.' },
+];
+
+// ── The questions brands actually ask ──
+const faqs = [
+  {
+    q: 'Do we own the content afterwards?',
+    a: 'Yes. Full usage rights across every channel — paid ads, organic social, your website, email — with no renewal fees and no expiry. You get the clean master files, not just the posted version.',
+  },
+  {
+    q: 'How long from brief to live?',
+    a: 'Typically two to three weeks from the moment the product is in my hands. Rush timelines are possible for launches, but tell me early so I can hold the slot.',
+  },
+  {
+    q: 'Will it be disclosed as an ad?',
+    a: 'Always. Paid partnership label on every piece, without exception. My audience knows when something is paid, which is exactly why they still trust the recommendation.',
+  },
+  {
+    q: 'Do you accept gifted collaborations?',
+    a: 'No. Partnerships here are paid and selective. Keeping them paid is what lets me say no to the products I would not use, which is the reason a yes from me carries weight.',
+  },
+  {
+    q: 'Can we get category exclusivity?',
+    a: 'Yes, at Ambassador level. For the length of the partnership I will not take a direct competitor. For single films and campaigns, exclusivity can be added for a defined window.',
+  },
+  {
+    q: 'What do you need from us?',
+    a: 'The product, a one-page brief with your goal and key messages, and anything I must say or must avoid. I write the concept and script — that is the part you are hiring me for.',
+  },
+  {
+    q: 'What if a film underperforms?',
+    a: 'You get the real numbers either way. No vanity reporting, no screenshots cropped to the good bit. If something underperforms we look at why, and it informs the next one.',
+  },
+  {
+    q: 'Where are you based, and can you shoot on location?',
+    a: 'Between Dubai and Bali, and in transit often. Location shoots and hosted stays are possible — say where and when, and we will see if it lines up.',
+  },
 ];
 ---
 
 <PageLayout
   title="Brand collaborations"
-  description="Selective, editorial brand partnerships — wellness, beauty and lifestyle. Real reach, real engagement, content you own. Paid only."
+  description="Editorial brand partnerships in wellness, recovery and travel. Reaching women 25–45 who travel and spend on feeling well. 3M+ views in 90 days, 86.8% non-follower reach, content you own outright. Selective, paid."
   eyebrow="Brand collaborations · 2026"
   heading="Let’s put your product"
   italic="in front of women who buy."
-  lead="If you run a wellness, beauty or lifestyle brand, here is the short version: I make content that women save and send to their friends — and when your product lives inside it, it reads as a recommendation, not an ad. Selective, editorial, paid."
+  lead="I make content about recovery, low-cortisol living, biohacking and wellness travel — for women aged 25 to 45 who travel often and spend on feeling well. When your product lives inside that world, it reads as a recommendation rather than an ad. Below is exactly who you reach, what you get, and what it is worth."
   byline="Built to this size in 4 months · by personal inquiry · I reply within a week"
   showNewsletter={false}
 >
@@ -111,23 +279,263 @@ const deliverables = [
         </p>
         <p class="serif-body text-ink-mute max-w-prose mb-8">Dubai &amp; Bali · always in transit · every inquiry read personally.</p>
         <div class="flex flex-wrap gap-3">
-          <span class="fit-pill">Wellness</span><span class="fit-pill">Beauty</span><span class="fit-pill">Soft life</span><span class="fit-pill">Movement</span><span class="fit-pill">Clean eating</span>
+          <span class="fit-pill">Recovery</span><span class="fit-pill">Contrast therapy</span><span class="fit-pill">Low cortisol</span><span class="fit-pill">Biohacking</span><span class="fit-pill">Movement</span><span class="fit-pill">Wellness travel</span>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- ── Stat cards — why this works for you ── -->
+  <!-- ── Proof band — animated counters, each translated for the brand ── -->
   <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
     <section class="reveal">
-      <p class="eyebrow mb-5">Why this works for you</p>
+      <p class="eyebrow mb-5">What the numbers buy you</p>
       <h2 class="display-sm mb-10 max-w-2xl">You are not buying a post. You are borrowing trust my audience gives me — <span class="italic-grad">earned one film at a time.</span></h2>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {valueProps.map((v) => (
+        {proofStats.map((s) => (
           <div class="stat-card rounded-[1.5rem] p-7">
-            <p class="font-display italic text-5xl text-terracotta leading-none mb-3">{v.k}</p>
-            <p class="text-micro uppercase tracking-[0.14em] text-ink font-medium mb-3">{v.label}</p>
-            <p class="serif-body text-ink-soft">{v.body}</p>
+            <p
+              class="font-display italic text-5xl text-terracotta leading-none mb-3 tabular-nums"
+              data-countup
+              data-value={s.value}
+              data-display={s.display ?? ''}
+              data-suffix={s.suffix ?? ''}
+              data-decimals={s.decimals ?? 0}
+            >0</p>
+            <p class="text-micro uppercase tracking-[0.14em] text-ink font-medium mb-3">{s.label}</p>
+            <p class="serif-body text-ink-soft">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Who you're reaching — the audience ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal grid lg:grid-cols-[1fr_1.15fr] gap-12 lg:gap-16 items-center">
+      <div class="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
+        <img src="/img/portraits/DVEQKoVj4DN.jpg" alt="Allaia — in transit" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-7">
+          <p class="byline text-white/70 mb-2">Her, roughly</p>
+          <p class="font-display italic text-3xl sm:text-4xl text-white leading-tight">
+            Travels often. Books the treatment. Reads the label.
+          </p>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow mb-5">Who you’re reaching</p>
+        <h2 class="display-sm mb-6">Women 25 to 45 who travel — <span class="italic-grad">and spend on feeling well.</span></h2>
+        <p class="serif-lg text-ink-soft max-w-prose mb-9">
+          This is not a general lifestyle audience with a wellness hobby. She plans trips around retreats, pays for the sauna membership, and researches a supplement before she buys it. If that is who you are trying to reach, she is already here.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          {audience.map((a) => (
+            <div class="aud-card rounded-2xl p-5">
+              <p class="font-display text-2xl text-ink leading-none mb-1">{a.k}</p>
+              <p class="text-micro uppercase tracking-[0.16em] text-terracotta mb-3">{a.label}</p>
+              <p class="serif-body text-ink-soft">{a.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Content pillars — does your product belong here ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">What the content is about</p>
+      <h2 class="display-sm mb-4 max-w-2xl">Six pillars. <span class="italic-grad">Your product has to belong in one.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        I do not take products that need explaining to my audience. If yours sits inside one of these, it lands without friction — because she is already watching me for exactly this.
+      </p>
+      <div class="pillar-grid">
+        {pillars.map((p) => (
+          <article class={`pillar-card rounded-[1.5rem] p-7 ${p.wide ? 'pillar-wide' : ''}`}>
+            <p class="byline text-terracotta tabular-nums mb-4">{p.n}</p>
+            <h3 class="font-display text-2xl text-ink leading-tight mb-3">{p.t}</h3>
+            <p class="serif-body text-ink-soft mb-6 max-w-prose">{p.d}</p>
+            <p class="pillar-fits">{p.fits}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ── INTERACTIVE: what you're buying — package selector ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Choose your shape</p>
+      <h2 class="display-sm mb-4 max-w-2xl">Three ways to work together. <span class="italic-grad">Pick the one that fits your launch.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        Tap a package to see exactly what lands in your inbox — and the reach it is planned against.
+      </p>
+
+      <div class="pkg-tabs" role="tablist" aria-label="Collaboration packages">
+        {packages.map((p, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${p.key}`}
+            aria-controls={`panel-${p.key}`}
+            aria-selected={i === 1 ? 'true' : 'false'}
+            tabindex={i === 1 ? '0' : '-1'}
+            class="pkg-tab"
+            data-pkg-tab={p.key}
+          >
+            <span class="pkg-tab-name">{p.name}</span>
+            <span class="pkg-tab-meta">{p.tag}</span>
+            {p.featured && <span class="pkg-flag">Most chosen</span>}
+          </button>
+        ))}
+      </div>
+
+      {packages.map((p, i) => (
+        <div
+          role="tabpanel"
+          id={`panel-${p.key}`}
+          aria-labelledby={`tab-${p.key}`}
+          class="pkg-panel"
+          data-pkg-panel={p.key}
+          hidden={i !== 1}
+        >
+          <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-0 rounded-[1.75rem] overflow-hidden border border-ink/8">
+            <!-- Left: what you get -->
+            <div class="p-8 sm:p-11 bg-ink/[0.025]">
+              <p class="eyebrow mb-4">{p.tag}</p>
+              <h3 class="display-sm mb-4">{p.name}</h3>
+              <p class="serif-lg text-ink-soft max-w-prose mb-7">{p.intro}</p>
+              <p class="byline text-ink-mute mb-3">What lands in your inbox</p>
+              <ul class="space-y-3 mb-8">
+                {p.includes.map((line, n) => (
+                  <li class="deliver-row rounded-2xl px-5 py-4 flex items-baseline gap-4">
+                    <span class="byline text-terracotta tabular-nums shrink-0">{String(n + 1).padStart(2, '0')}</span>
+                    <span class="serif-body text-ink-soft">{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="serif-body text-ink-mute max-w-prose">
+                <span class="text-ink font-medium">Best for:</span> {p.best}
+              </p>
+            </div>
+
+            <!-- Right: the projection -->
+            <div class="p-8 sm:p-11 text-cream relative overflow-hidden" style="background: linear-gradient(160deg, #0E0D0B 0%, #1F1B16 60%, #2A2722 100%);">
+              <div
+                class="pointer-events-none absolute inset-0 opacity-60"
+                style="background: radial-gradient(ellipse 60% 60% at 85% 5%, rgba(184,85,66,0.5), transparent 70%);"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <p class="text-micro uppercase tracking-[0.22em] text-sage font-medium mb-6">Planned against</p>
+                <div class="space-y-6">
+                  <div>
+                    <p class="font-display italic text-terracotta leading-none tabular-nums" style="font-size: clamp(2.5rem, 6vw, 3.75rem);">
+                      {(p.films * PLANNING.perFilm / 1000).toFixed(0)}K
+                    </p>
+                    <p class="byline text-cream/60 mt-2">projected views</p>
+                  </div>
+                  <div class="h-px bg-cream/12"></div>
+                  <div>
+                    <p class="font-display italic text-cream leading-none tabular-nums" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">
+                      {Math.round(p.films * PLANNING.perFilm * PLANNING.newAudience / 1000)}K
+                    </p>
+                    <p class="byline text-cream/60 mt-2">people who don’t follow me yet</p>
+                  </div>
+                  <div class="h-px bg-cream/12"></div>
+                  <div>
+                    <p class="font-display italic text-cream leading-none tabular-nums" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">
+                      ${(p.films * PLANNING.perFilm / 1000 * PLANNING.cpm / 1000).toFixed(1)}K
+                    </p>
+                    <p class="byline text-cream/60 mt-2">comparable paid-media value</p>
+                  </div>
+                </div>
+                <p class="text-[0.6875rem] text-cream/40 mt-8 leading-relaxed">
+                  Conservative planning figures — {(PLANNING.perFilm / 1000).toFixed(0)}K per film against a trailing average of {(PLANNING.trailingAvg / 1000).toFixed(0)}K across my last 19 published films. Media value at a ${PLANNING.cpm} social CPM.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+
+  <!-- ── INTERACTIVE: reach estimator ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal est-band rounded-[1.75rem] px-7 py-11 sm:px-14 sm:py-14">
+      <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center">
+        <div>
+          <p class="eyebrow mb-5">Run the numbers yourself</p>
+          <h2 class="display-sm mb-5">How far does <span class="italic-grad">your product travel?</span></h2>
+          <p class="serif-body text-ink-soft max-w-prose mb-8">
+            Drag to set how many films you want. Everything recalculates against my real trailing performance — deliberately rounded down, so the projection under-promises.
+          </p>
+
+          <label class="block">
+            <span class="byline text-ink-mute">Films in your campaign</span>
+            <input
+              type="range"
+              min="1"
+              max="8"
+              value="3"
+              step="1"
+              class="est-range mt-4"
+              data-est-range
+              aria-label="Number of films in your campaign"
+            />
+          </label>
+          <div class="flex items-baseline gap-3 mt-5">
+            <span class="font-display italic text-5xl text-terracotta leading-none tabular-nums" data-est-films>3</span>
+            <span class="serif-body text-ink-soft" data-est-films-label>films</span>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="est-cell rounded-[1.25rem] p-6">
+            <p class="font-display italic text-4xl text-ink leading-none tabular-nums" data-est-views>450K</p>
+            <p class="text-micro uppercase tracking-[0.14em] text-ink-mute mt-3">projected views</p>
+          </div>
+          <div class="est-cell rounded-[1.25rem] p-6">
+            <p class="font-display italic text-4xl text-ink leading-none tabular-nums" data-est-new>391K</p>
+            <p class="text-micro uppercase tracking-[0.14em] text-ink-mute mt-3">new to your brand</p>
+          </div>
+          <div class="est-cell rounded-[1.25rem] p-6">
+            <p class="font-display italic text-4xl text-ink leading-none tabular-nums" data-est-saves>6.8K</p>
+            <p class="text-micro uppercase tracking-[0.14em] text-ink-mute mt-3">saves &amp; sends</p>
+          </div>
+          <div class="est-cell est-cell-accent rounded-[1.25rem] p-6">
+            <p class="font-display italic text-4xl text-terracotta leading-none tabular-nums" data-est-value>$4.5K</p>
+            <p class="text-micro uppercase tracking-[0.14em] text-ink-mute mt-3">comparable ad spend</p>
+          </div>
+          <p class="sm:col-span-2 byline text-ink-mute leading-relaxed">
+            Projection only, not a guarantee. Based on {(PLANNING.perFilm / 1000).toFixed(0)}K views per film, {(PLANNING.newAudience * 100).toFixed(1)}% non-follower reach and a ${PLANNING.cpm} CPM. My actual trailing average is {(PLANNING.trailingAvg / 1000).toFixed(0)}K per film.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Paid ads vs. a film ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">The honest comparison</p>
+      <h2 class="display-sm mb-10 max-w-2xl">You could spend the same on ads. <span class="italic-grad">Here is the difference.</span></h2>
+      <div class="rounded-[1.75rem] overflow-hidden border border-ink/8">
+        <div class="grid grid-cols-2 vs-head">
+          <div class="px-6 py-5 sm:px-9"><p class="text-micro uppercase tracking-[0.16em] text-ink-mute font-medium">A paid ad</p></div>
+          <div class="px-6 py-5 sm:px-9 bg-ink text-cream"><p class="text-micro uppercase tracking-[0.16em] font-medium">A film with me</p></div>
+        </div>
+        {contrast.map((row) => (
+          <div class="grid grid-cols-2 vs-row">
+            <div class="px-6 py-5 sm:px-9 flex items-start gap-3">
+              <span class="vs-mark vs-mark-no" aria-hidden="true">—</span>
+              <p class="serif-body text-ink-mute">{row.them}</p>
+            </div>
+            <div class="px-6 py-5 sm:px-9 flex items-start gap-3 bg-ink/[0.03]">
+              <span class="vs-mark vs-mark-yes" aria-hidden="true">✓</span>
+              <p class="serif-body text-ink-soft">{row.me}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -164,37 +572,6 @@ const deliverables = [
             </div>
           </a>
         ))}
-      </div>
-    </section>
-  </div>
-
-  <!-- ── Oversized number moment ── -->
-  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
-    <section class="reveal big-number-band rounded-[1.75rem] px-8 py-14 sm:px-14 sm:py-16 text-center">
-      <p class="eyebrow mb-4">Views · last 90 days</p>
-      <p class="big-number font-display italic text-terracotta leading-none">3M+</p>
-      <p class="serif-lg text-ink-soft max-w-xl mx-auto mt-6">
-        1.74M unique people reached — and 86.8% of them don’t follow me yet. That is your product being discovered, not just seen by the same crowd twice.
-      </p>
-    </section>
-  </div>
-
-  <!-- ── Growth proof — 4 months ── -->
-  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
-    <section class="reveal grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center">
-      <div class="growth-figure rounded-[1.75rem] px-10 py-12 text-center">
-        <p class="font-display italic text-terracotta leading-none" style="font-size: clamp(5rem, 10vw, 8.5rem);">4</p>
-        <p class="text-micro uppercase tracking-[0.18em] text-ink font-medium mt-2">months · that’s all it took</p>
-      </div>
-      <div>
-        <p class="eyebrow mb-5">Why that matters to you</p>
-        <h2 class="display-sm mb-6">Everything on this page was built in <span class="italic-grad">four months.</span></h2>
-        <p class="serif-lg text-ink-soft max-w-prose mb-5">
-          The reach, the engagement, the library of six-figure films — four months of work, not four years. That tells you two things: this is not luck, it is a strategy that works on today’s algorithm. And the momentum you would be buying into is still accelerating, not plateauing.
-        </p>
-        <p class="serif-body text-ink-soft max-w-prose">
-          Partner now and your product rides the steepest part of the curve — the same system that grew this brand, pointed at yours.
-        </p>
       </div>
     </section>
   </div>
@@ -306,33 +683,49 @@ const deliverables = [
     </section>
   </div>
 
-  <!-- ── What you get + how it works ── -->
+  <!-- ── How it works ── -->
   <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
-    <section class="reveal grid lg:grid-cols-2 gap-12 lg:gap-20">
-      <div>
-        <p class="eyebrow mb-5">What you walk away with</p>
-        <h2 class="display-sm mb-8">Everything, <span class="italic-grad">done properly.</span></h2>
-        <ul class="space-y-3">
-          {deliverables.map(([t, d], i) => (
-            <li class="deliver-row rounded-2xl px-5 py-4 flex items-baseline gap-4">
-              <span class="byline text-terracotta tabular-nums shrink-0">{String(i + 1).padStart(2, '0')}</span>
-              <span class="serif-body text-ink-soft"><strong class="font-display text-ink text-lg font-normal">{t}</strong> — {d}</span>
-            </li>
-          ))}
-        </ul>
+    <section class="reveal">
+      <p class="eyebrow mb-5">How we’d work together</p>
+      <h2 class="display-sm mb-10 max-w-2xl">Three steps. <span class="italic-grad">No friction.</span></h2>
+      <div class="grid sm:grid-cols-3 gap-4">
+        {steps.map((s) => (
+          <div class="step-card rounded-2xl p-7 relative overflow-hidden">
+            <span class="step-watermark font-display italic" aria-hidden="true">{s.n}</span>
+            <h3 class="font-display text-xl text-ink mb-2 relative">{s.t}</h3>
+            <p class="serif-body text-ink-soft relative">{s.d}</p>
+          </div>
+        ))}
       </div>
+    </section>
+  </div>
+
+  <!-- ── INTERACTIVE: FAQ ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
       <div>
-        <p class="eyebrow mb-5">How we’d work together</p>
-        <h2 class="display-sm mb-8">Three steps. <span class="italic-grad">No friction.</span></h2>
-        <div class="space-y-4">
-          {steps.map((s) => (
-            <div class="step-card rounded-2xl p-6 relative overflow-hidden">
-              <span class="step-watermark font-display italic" aria-hidden="true">{s.n}</span>
-              <h3 class="font-display text-xl text-ink mb-2 relative">{s.t}</h3>
-              <p class="serif-body text-ink-soft relative max-w-md">{s.d}</p>
+        <p class="eyebrow mb-5">Before you ask</p>
+        <h2 class="display-sm mb-5">The questions <span class="italic-grad">brands actually ask.</span></h2>
+        <p class="serif-body text-ink-soft max-w-prose">
+          Answered plainly, so you can take this to whoever signs off without a second email.
+        </p>
+      </div>
+      <div class="space-y-3">
+        {faqs.map((f) => (
+          <details class="faq-item rounded-2xl">
+            <summary class="faq-q">
+              <span class="font-display text-ink text-lg leading-snug pr-6">{f.q}</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </summary>
+            <div class="faq-a">
+              <p class="serif-body text-ink-soft max-w-prose">{f.a}</p>
             </div>
-          ))}
-        </div>
+          </details>
+        ))}
       </div>
     </section>
   </div>
@@ -349,11 +742,11 @@ const deliverables = [
           A line about you, why you reached out, a rough scope and budget range. That is enough for me to come back with a tailored quote. Press inquiries welcome.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href={site.instagram} target="_blank" rel="noopener" class="cta-dark justify-center !py-4 !bg-cream !text-ink hover:!bg-cream/85">
-            <Instagram size={13} /> <span>DM @allaia.power</span> <ArrowUpRight size={12} />
+          <a href={`mailto:${site.email}?subject=Brand%20partnership`} class="cta-dark justify-center !py-4 !bg-cream !text-ink hover:!bg-cream/85">
+            <span>Send the brief</span> <ArrowUpRight size={12} />
           </a>
-          <a href={`mailto:${site.email}?subject=Brand%20partnership`} class="cta-ghost justify-center !py-4 !border-cream/40 !text-cream hover:!border-cream">
-            <span>Or send an email</span> <ArrowUpRight size={12} />
+          <a href={site.instagram} target="_blank" rel="noopener" class="cta-ghost justify-center !py-4 !border-cream/40 !text-cream hover:!border-cream">
+            <Instagram size={13} /> <span>Or DM @allaia.power</span> <ArrowUpRight size={12} />
           </a>
         </div>
       </div>
@@ -363,21 +756,11 @@ const deliverables = [
 
 <style>
   /* ── Collage ── */
-  .collage {
-    position: relative;
-    aspect-ratio: 4 / 4.4;
-  }
-  .collage-main {
-    position: absolute;
-    inset: 0 14% 10% 0;
-  }
+  .collage { position: relative; aspect-ratio: 4 / 4.4; }
+  .collage-main { position: absolute; inset: 0 14% 10% 0; }
   .collage-side {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 44%;
-    aspect-ratio: 4 / 5;
-    transform: rotate(2.5deg);
+    position: absolute; right: 0; bottom: 0; width: 44%;
+    aspect-ratio: 4 / 5; transform: rotate(2.5deg);
   }
   .collage-chip {
     position: absolute;
@@ -414,17 +797,186 @@ const deliverables = [
     box-shadow: 0 24px 50px -24px rgba(28, 26, 23, 0.28);
   }
 
-  /* ── Play dot on top films ── */
-  .play-dot {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 9999px;
+  /* ── Audience cards ── */
+  .aud-card {
+    background: rgba(28, 26, 23, 0.035);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    transition: border-color 0.45s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.45s;
+  }
+  .aud-card:hover {
+    border-color: rgba(184, 85, 66, 0.32);
+    transform: translateY(-3px);
+  }
+
+  /* ── Content pillars — bento, two wide anchors ── */
+  .pillar-grid {
     display: grid;
-    place-items: center;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+  .pillar-card {
+    grid-column: span 3;
+    background:
+      radial-gradient(120% 90% at 15% 0%, rgba(184, 85, 66, 0.07), transparent 55%),
+      rgba(28, 26, 23, 0.035);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.5s, border-color 0.5s;
+  }
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 85, 66, 0.28);
+    box-shadow: 0 28px 56px -28px rgba(28, 26, 23, 0.3);
+  }
+  .pillar-wide { grid-column: span 6; }
+  .pillar-fits {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(28, 26, 23, 0.08);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7A6F62;
+  }
+  @media (max-width: 900px) {
+    .pillar-card, .pillar-wide { grid-column: span 6; }
+  }
+
+  /* ── Package tabs ── */
+  .pkg-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .pkg-tab {
+    position: relative;
+    text-align: left;
+    padding: 1.15rem 1.35rem;
+    border-radius: 1.15rem;
+    border: 1px solid rgba(28, 26, 23, 0.10);
+    background: rgba(28, 26, 23, 0.025);
+    cursor: pointer;
+    transition: background 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+  }
+  .pkg-tab:hover { transform: translateY(-3px); border-color: rgba(184, 85, 66, 0.35); }
+  .pkg-tab[aria-selected='true'] {
+    background: #1A1A1A;
+    border-color: #1A1A1A;
+    box-shadow: 0 24px 50px -24px rgba(28, 26, 23, 0.45);
+  }
+  .pkg-tab-name {
+    display: block;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    color: #1A1A1A;
+  }
+  .pkg-tab[aria-selected='true'] .pkg-tab-name { color: #F2EDE5; }
+  .pkg-tab-meta {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A6F62;
+  }
+  .pkg-tab[aria-selected='true'] .pkg-tab-meta { color: rgba(242, 237, 229, 0.6); }
+  .pkg-flag {
+    position: absolute;
+    top: -0.55rem; right: 0.9rem;
+    background: #B85542;
+    color: #F2EDE5;
+    font-size: 0.5625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+  }
+  .pkg-tab:focus-visible { outline: 2px solid #B85542; outline-offset: 3px; }
+
+  .pkg-panel[hidden] { display: none; }
+  .pkg-panel { animation: pkg-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  @keyframes pkg-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .deliver-row {
+    background: rgba(28, 26, 23, 0.035);
+    border: 1px solid rgba(28, 26, 23, 0.06);
+  }
+
+  /* ── Estimator ── */
+  .est-band {
+    background:
+      radial-gradient(70% 120% at 15% 0%, rgba(184, 85, 66, 0.12), transparent 60%),
+      rgba(28, 26, 23, 0.03);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+  }
+  .est-cell {
+    background: rgba(250, 246, 238, 0.7);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+  }
+  .est-cell-accent {
+    background:
+      radial-gradient(120% 100% at 80% 0%, rgba(184, 85, 66, 0.16), transparent 60%),
+      rgba(250, 246, 238, 0.7);
+    border-color: rgba(184, 85, 66, 0.3);
+  }
+  .est-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 3px;
+    border-radius: 9999px;
+    background: linear-gradient(to right, #B85542 var(--fill, 28%), rgba(28, 26, 23, 0.14) var(--fill, 28%));
+    outline: none;
+  }
+  .est-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem; height: 1.5rem;
+    border-radius: 9999px;
+    background: #B85542;
+    border: 3px solid #FAF6EE;
+    box-shadow: 0 6px 18px -6px rgba(184, 85, 66, 0.8);
+    cursor: pointer;
+    transition: transform 0.25s;
+  }
+  .est-range::-webkit-slider-thumb:hover { transform: scale(1.12); }
+  .est-range::-moz-range-thumb {
+    width: 1.5rem; height: 1.5rem;
+    border-radius: 9999px;
+    background: #B85542;
+    border: 3px solid #FAF6EE;
+    cursor: pointer;
+  }
+  .est-range:focus-visible { outline: 2px solid #B85542; outline-offset: 6px; }
+
+  /* ── Versus table ── */
+  .vs-head { border-bottom: 1px solid rgba(28, 26, 23, 0.08); }
+  .vs-row + .vs-row { border-top: 1px solid rgba(28, 26, 23, 0.06); }
+  .vs-mark {
+    flex-shrink: 0;
+    width: 1.25rem; height: 1.25rem;
+    border-radius: 9999px;
+    display: grid; place-items: center;
+    font-size: 0.65rem;
+    margin-top: 0.2rem;
+  }
+  .vs-mark-no { background: rgba(28, 26, 23, 0.07); color: #A89B8A; }
+  .vs-mark-yes { background: rgba(184, 85, 66, 0.14); color: #B85542; }
+
+  /* ── Play dot ── */
+  .play-dot {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 3.2rem; height: 3.2rem;
+    border-radius: 9999px;
+    display: grid; place-items: center;
     color: #1c1a17;
     background: rgba(250, 247, 242, 0.88);
     backdrop-filter: blur(4px);
@@ -433,29 +985,7 @@ const deliverables = [
   }
   .group:hover .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
 
-  /* ── Big number band ── */
-  .big-number-band {
-    background:
-      radial-gradient(60% 120% at 50% 0%, rgba(184, 85, 66, 0.12), transparent 60%),
-      rgba(28, 26, 23, 0.03);
-    border: 1px solid rgba(28, 26, 23, 0.07);
-  }
-  .big-number { font-size: clamp(4.5rem, 14vw, 11rem); }
-
-  /* ── Growth figure ── */
-  .growth-figure {
-    background:
-      radial-gradient(90% 90% at 50% 100%, rgba(184, 85, 66, 0.14), transparent 60%),
-      rgba(28, 26, 23, 0.035);
-    border: 1px solid rgba(28, 26, 23, 0.07);
-    min-width: min(320px, 100%);
-  }
-
-  /* ── Deliverables + steps ── */
-  .deliver-row {
-    background: rgba(28, 26, 23, 0.035);
-    border: 1px solid rgba(28, 26, 23, 0.06);
-  }
+  /* ── Steps ── */
   .step-card {
     background:
       radial-gradient(130% 100% at 100% 0%, rgba(184, 85, 66, 0.08), transparent 55%),
@@ -463,14 +993,45 @@ const deliverables = [
     border: 1px solid rgba(28, 26, 23, 0.07);
   }
   .step-watermark {
-    position: absolute;
-    right: 0.6rem;
-    top: -1.6rem;
-    font-size: 7rem;
-    line-height: 1;
+    position: absolute; right: 0.6rem; top: -1.6rem;
+    font-size: 7rem; line-height: 1;
     color: rgba(184, 85, 66, 0.12);
     pointer-events: none;
   }
+
+  /* ── FAQ ── */
+  .faq-item {
+    background: rgba(28, 26, 23, 0.03);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    transition: border-color 0.4s, background 0.4s;
+  }
+  .faq-item[open] { border-color: rgba(184, 85, 66, 0.3); background: rgba(184, 85, 66, 0.04); }
+  .faq-q {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.35rem 1.6rem;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-icon {
+    flex-shrink: 0;
+    width: 1.75rem; height: 1.75rem;
+    border-radius: 9999px;
+    display: grid; place-items: center;
+    background: rgba(28, 26, 23, 0.06);
+    color: #7A6F62;
+    transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.4s, color 0.4s;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: rgba(184, 85, 66, 0.16);
+    color: #B85542;
+  }
+  .faq-a { padding: 0 1.6rem 1.5rem; }
+  .faq-item:focus-within { border-color: rgba(184, 85, 66, 0.4); }
 
   /* ── Marquee ── */
   .collab-marquee-mask {
@@ -478,8 +1039,7 @@ const deliverables = [
     mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
   .collab-marquee {
-    display: flex;
-    gap: 1rem;
+    display: flex; gap: 1rem;
     width: max-content;
     padding-inline: 1rem;
     animation: collab-scroll 44s linear infinite;
@@ -498,6 +1058,143 @@ const deliverables = [
 
   @media (prefers-reduced-motion: reduce) {
     .collab-marquee, .collab-marquee-rev { animation: none; }
-    .stat-card, .stat-card:hover { transform: none; }
+    .stat-card, .stat-card:hover, .pkg-tab:hover { transform: none; }
+    .pkg-panel { animation: none; }
   }
 </style>
+
+<script>
+  // ── Compact number formatting shared by both widgets ──
+  // Drops trailing zeros so we get "1.2M" not "1.20M", and keeps one
+  // decimal below 10K so "6.8K saves" doesn't collapse into a blunt "7K".
+  // "1.20" → "1.2", "1.00" → "1", "4.5" → "4.5"
+  const trim = (s: string): string =>
+    s.replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+
+  const fmtK = (n: number): string => {
+    if (n >= 1_000_000) return trim((n / 1_000_000).toFixed(2)) + 'M';
+    if (n >= 10_000) return Math.round(n / 1_000) + 'K';
+    if (n >= 1_000) return trim((n / 1_000).toFixed(1)) + 'K';
+    return String(Math.round(n));
+  };
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── 1. Count-up stats ──────────────────────────────────────────────
+  const counters = document.querySelectorAll<HTMLElement>('[data-countup]');
+  if (counters.length) {
+    const render = (el: HTMLElement, value: number) => {
+      const display = el.dataset.display || '';
+      const suffix = el.dataset.suffix || '';
+      const decimals = Number(el.dataset.decimals || 0);
+      // A fixed display string (e.g. "3M+") wins once we reach the end.
+      if (display && value >= Number(el.dataset.value)) {
+        el.textContent = display;
+        return;
+      }
+      el.textContent = display
+        ? fmtK(value)
+        : value.toFixed(decimals) + suffix;
+    };
+
+    const run = (el: HTMLElement) => {
+      const target = Number(el.dataset.value || 0);
+      if (reduceMotion) { render(el, target); return; }
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / duration, 1);
+        // easeOutExpo — fast, then settles
+        const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        render(el, target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          run(entry.target as HTMLElement);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    counters.forEach((c) => io.observe(c));
+  }
+
+  // ── 2. Package tabs ────────────────────────────────────────────────
+  const tabs = Array.from(document.querySelectorAll<HTMLElement>('[data-pkg-tab]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-pkg-panel]'));
+  if (tabs.length && panels.length) {
+    const select = (key: string, focus = false) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.pkgTab === key;
+        t.setAttribute('aria-selected', String(on));
+        t.setAttribute('tabindex', on ? '0' : '-1');
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p) => {
+        p.hidden = p.dataset.pkgPanel !== key;
+      });
+    };
+
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => select(t.dataset.pkgTab!));
+    });
+
+    // Roving arrow-key navigation across the tablist.
+    tabs.forEach((t, i) => {
+      t.addEventListener('keydown', (e: KeyboardEvent) => {
+        let next = -1;
+        if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+        if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+        if (e.key === 'Home') next = 0;
+        if (e.key === 'End') next = tabs.length - 1;
+        if (next >= 0) {
+          e.preventDefault();
+          select(tabs[next].dataset.pkgTab!, true);
+        }
+      });
+    });
+  }
+
+  // ── 3. Reach estimator ─────────────────────────────────────────────
+  const range = document.querySelector<HTMLInputElement>('[data-est-range]');
+  if (range) {
+    const PER_FILM = 150_000;
+    const NEW_AUDIENCE = 0.868;
+    const SAVE_RATE = 0.015;
+    const CPM = 10;
+
+    const elFilms = document.querySelector<HTMLElement>('[data-est-films]');
+    const elFilmsLabel = document.querySelector<HTMLElement>('[data-est-films-label]');
+    const elViews = document.querySelector<HTMLElement>('[data-est-views]');
+    const elNew = document.querySelector<HTMLElement>('[data-est-new]');
+    const elSaves = document.querySelector<HTMLElement>('[data-est-saves]');
+    const elValue = document.querySelector<HTMLElement>('[data-est-value]');
+
+    const update = () => {
+      const films = Number(range.value);
+      const views = films * PER_FILM;
+
+      // Paint the filled portion of the track.
+      const pct = ((films - Number(range.min)) / (Number(range.max) - Number(range.min))) * 100;
+      range.style.setProperty('--fill', pct + '%');
+
+      if (elFilms) elFilms.textContent = String(films);
+      if (elFilmsLabel) elFilmsLabel.textContent = films === 1 ? 'film' : 'films';
+      if (elViews) elViews.textContent = fmtK(views);
+      if (elNew) elNew.textContent = fmtK(views * NEW_AUDIENCE);
+      if (elSaves) elSaves.textContent = fmtK(views * SAVE_RATE);
+      if (elValue) {
+        const usd = (views / 1000) * CPM;
+        elValue.textContent = '$' + (usd >= 1000 ? trim((usd / 1000).toFixed(1)) + 'K' : String(Math.round(usd)));
+      }
+    };
+
+    range.addEventListener('input', update);
+    update();
+  }
+</script>

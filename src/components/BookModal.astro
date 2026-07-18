@@ -11,8 +11,9 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
 
 const path = Astro.url.pathname.replace(/\/+$/, '');
 // Suppress on pages that run their own popup so the user never
-// sees two modals stacked on first visit.
-const ownsItsModal = path === '/about' || path === '/the-studio';
+// sees two modals stacked on first visit, and on the brand-collabs
+// pitch page where a book popup would undercut the ask.
+const ownsItsModal = path === '/about' || path === '/the-studio' || path === '/brand-collabs';
 ---
 
 {!ownsItsModal && (
@@ -185,19 +186,31 @@ const ownsItsModal = path === '/about' || path === '/the-studio';
   // new visit. This is an active book campaign — long-lived suppression
   // makes the popup invisible to anyone who tested it once.
   const KEY = 'allaia_book_modal_dismissed';
-  const DELAY_MS = 2500;
+  // Shared with InstagramModal — only one auto-popup opens per session.
+  // The IG modal fires first (2500ms); the book popup waits until 2800ms
+  // and stands down if the IG popup already claimed the session.
+  const SHARED_KEY = 'allaia_popup_shown';
+  const DELAY_MS = 2800;
 
   const modal = document.querySelector<HTMLElement>('[data-book-modal]');
   if (modal) {
     let dismissedThisSession = false;
     try {
-      dismissedThisSession = sessionStorage.getItem(KEY) === '1';
+      dismissedThisSession =
+        sessionStorage.getItem(KEY) === '1' ||
+        sessionStorage.getItem(SHARED_KEY) === '1';
     } catch { /* sessionStorage blocked — show anyway */ }
 
     // Optional force-show: append ?popup=1 to the URL to bypass suppression.
     const force = new URLSearchParams(location.search).get('popup') === '1';
 
     const open = () => {
+      // Re-check the shared gate at fire time in case the IG modal
+      // opened first during the delay window.
+      try {
+        if (!force && sessionStorage.getItem(SHARED_KEY) === '1') return;
+        sessionStorage.setItem(SHARED_KEY, '1');
+      } catch { /* ignore */ }
       modal.style.display = '';
       modal.setAttribute('data-state', 'open');
       modal.setAttribute('aria-hidden', 'false');
