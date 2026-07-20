@@ -110,19 +110,45 @@ const packages = [
 // Allaia sends the real figures from Instagram Insights — the cards
 // render fine without a stat badge, and never with a guessed one.
 // Ordered highest-verified-views first; unverified follow.
+// `views` is the raw number, only where verified — from Instagram Insights
+// screenshots, or from this site's existing library data. Brands still
+// awaiting figures carry null and render without a badge, never a guess.
+// A brand can hold more than one film; the badge then shows the combined total.
 const featuredBrands = [
-  { name: 'Alloura Villa', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: '221K' },
-  { name: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZTyZlzMrJO', views: '151K' },
-  { name: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: '86K' },
-  { name: 'Jason Derulo', note: 'Sexy For You campaign', code: 'DYCE4YxsDzG', views: null },
-  { name: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: null },
-  { name: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: null },
-  { name: 'Boardwalk Dubai', note: 'Dubai', code: 'DXjGCtWjGYk', views: null },
-  { name: 'Bali Babe Ubud', note: 'Ubud', code: 'DX890dlM3GE', views: null },
-  { name: 'Kinoa Bali', note: 'Bali', code: 'DZgpQHusfMy', views: null },
-  // Awaiting the correct reel link — the one supplied duplicated Nude Bali's.
-  { name: 'The Path Wellness Center', note: 'Wellness centre', code: null, views: null },
+  {
+    name: 'NU Human Bali',
+    note: 'Wellness · Bali',
+    films: [{ code: 'DZTyZlzMrJO', views: 158899 }, { code: 'DZheN1usVSX', views: 74549 }],
+  },
+  { name: 'Alloura Villa', note: 'Villa · Bali', films: [{ code: 'DZTtOngsOBG', views: 227293 }] },
+  { name: 'The Path Wellness Center', note: 'Wellness centre · Bali', films: [{ code: 'DZuN-7BMM-v', views: 132606 }] },
+  {
+    name: 'Ferro Restaurant Ubud',
+    note: 'Restaurant · Ubud',
+    films: [{ code: 'DZClhdhs7l7', views: 116192 }, { code: 'DZPVsu_sGih', views: 24231 }],
+  },
+  { name: 'Nude Bali', note: 'Restaurant · Berawa', films: [{ code: 'DZ2Rxivs5dE', views: 11686 }] },
+  { name: 'Jason Derulo', note: 'Sexy For You campaign', films: [{ code: 'DYCE4YxsDzG', views: null }] },
+  { name: 'Bubble Hotel Bali', note: 'Hotel · Bali', films: [{ code: 'DXi-zLRDCJg', views: 20654 }] },
+  { name: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', films: [{ code: 'DXjGCtWjGYk', views: 56447 }] },
+  { name: 'Bali Babe Ubud', note: 'Ubud', films: [{ code: 'DX890dlM3GE', views: null }] },
+  { name: 'Kinoa Bali', note: 'Café · Bali', films: [{ code: 'DZgpQHusfMy', views: 8753 }] },
 ];
+
+// Compact view formatting — whole thousands, nearest (233K, 56K, 12K).
+const fmtViews = (n: number): string =>
+  n >= 1_000_000
+    ? (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M'
+    : Math.round(n / 1000) + 'K';
+
+// Total per brand, then sort by it — verified performers lead, unknowns trail.
+const brandRows = featuredBrands
+  .map((b) => {
+    const known = b.films.filter((f) => f.views !== null);
+    const total = known.reduce((sum, f) => sum + (f.views as number), 0);
+    return { ...b, total: known.length ? total : null };
+  })
+  .sort((a, b) => (b.total ?? -1) - (a.total ?? -1));
 
 // ── Who the audience is ──
 // Qualitative for now. If Allaia exports the age/gender/geo splits from
@@ -392,27 +418,33 @@ const faqs = [
       </p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {featuredBrands.map((b) => {
-          const href = b.code ? `https://www.instagram.com/reel/${b.code}/` : null;
-          const Tag = href ? 'a' : 'div';
+        {brandRows.map((b) => {
+          const links = b.films.filter((f) => f.code);
           return (
-            <Tag
-              href={href}
-              target={href ? '_blank' : undefined}
-              rel={href ? 'noopener' : undefined}
-              class={`brand-card rounded-2xl p-6 flex flex-col ${href ? 'group' : 'brand-card-flat'}`}
-            >
+            <article class="brand-card rounded-2xl p-6 flex flex-col">
               <div class="flex items-start justify-between gap-3 mb-2">
                 <h3 class="font-display text-2xl text-ink leading-tight">{b.name}</h3>
-                {b.views && <span class="brand-stat">{b.views}</span>}
+                {b.total !== null && <span class="brand-stat">{fmtViews(b.total)}</span>}
               </div>
-              <p class="byline text-ink-mute">{b.note}</p>
-              {href && (
-                <span class="brand-link mt-5">
-                  Watch the film <ArrowUpRight size={11} />
-                </span>
+              <p class="byline text-ink-mute">
+                {b.note}{b.films.length > 1 && ` · ${b.films.length} films`}
+              </p>
+              {links.length > 0 && (
+                <div class="brand-links mt-5">
+                  {links.map((f, i) => (
+                    <a
+                      href={`https://www.instagram.com/reel/${f.code}/`}
+                      target="_blank"
+                      rel="noopener"
+                      class="brand-link"
+                    >
+                      {links.length > 1 ? `Film ${i + 1}` : 'Watch the film'}
+                      <ArrowUpRight size={11} />
+                    </a>
+                  ))}
+                </div>
               )}
-            </Tag>
+            </article>
           );
         })}
       </div>
@@ -871,8 +903,9 @@ const faqs = [
     border-color: rgba(184, 85, 66, 0.3);
     box-shadow: 0 26px 52px -26px rgba(28, 26, 23, 0.3);
   }
-  /* Brands with no reel link yet — present, but not pretending to be clickable */
-  .brand-card-flat { opacity: 0.72; }
+  /* Brands with no reel link yet render identically — they just lack the
+     "watch" affordance. No dimming: a 132K result shouldn't look lesser
+     because its URL is still outstanding. */
   .brand-stat {
     flex-shrink: 0;
     background: rgba(184, 85, 66, 0.12);
@@ -883,8 +916,13 @@ const faqs = [
     letter-spacing: 0.08em;
     white-space: nowrap;
   }
-  .brand-link {
+  .brand-links {
     margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.1rem;
+  }
+  .brand-link {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -894,7 +932,7 @@ const faqs = [
     color: #7A6F62;
     transition: color 0.4s;
   }
-  .group:hover .brand-link { color: #B85542; }
+  .brand-link:hover { color: #B85542; }
 
   /* ── Audience cards ── */
   .aud-card {
