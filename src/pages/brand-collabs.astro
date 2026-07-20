@@ -133,23 +133,23 @@ const hasClip = (code: string): boolean =>
 // Every figure below is from Instagram Insights. Jason Derulo's engagement
 // breakdown is still outstanding, so those cells stay empty.
 const featuredFilms = [
-  { brand: 'Alloura Villa', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: 227293, saves: 2800, sends: 2200 },
-  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZTyZlzMrJO', views: 158899, saves: 2700, sends: 2100 },
-  { brand: 'The Path Wellness Center', note: 'Wellness centre · Bali', code: 'DZuN-7BMM-v', views: 132606, saves: 1300, sends: 1800 },
-  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: 116192, saves: 1700, sends: 1300 },
-  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZheN1usVSX', views: 74549, saves: 1200, sends: 947 },
-  { brand: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', code: 'DXjGCtWjGYk', views: 56447, saves: 121, sends: 1100 },
-  { brand: 'Jason Derulo', note: 'Sexy For You campaign', code: 'DYCE4YxsDzG', views: 25000, saves: null, sends: null },
-  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZPVsu_sGih', views: 24231, saves: 276, sends: 154 },
-  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: 20654, saves: 126, sends: 270 },
-  { brand: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 },
-  { brand: 'Kinoa Bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 },
+  { brand: 'Alloura Villa', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: 227293, saves: 2800, sends: 2200 , likes: 8000},
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZTyZlzMrJO', views: 158899, saves: 2700, sends: 2100 , likes: 8700},
+  { brand: 'The Path Wellness Center', note: 'Wellness centre · Bali', code: 'DZuN-7BMM-v', views: 132606, saves: 1300, sends: 1800 , likes: 4000},
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: 116192, saves: 1700, sends: 1300 , likes: 7500},
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZheN1usVSX', views: 74549, saves: 1200, sends: 947 , likes: 4200},
+  { brand: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', code: 'DXjGCtWjGYk', views: 56447, saves: 121, sends: 1100 , likes: 927},
+  { brand: 'Jason Derulo', note: 'Sexy For You campaign', code: 'DYCE4YxsDzG', views: 25000, saves: null, sends: null , likes: null},
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZPVsu_sGih', views: 24231, saves: 276, sends: 154 , likes: 1300},
+  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: 20654, saves: 126, sends: 270 , likes: 1100},
+  { brand: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 , likes: 627},
+  { brand: 'Kinoa Bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 , likes: 333},
   // Awaiting Insights — these render the embed with no figures until they land.
-  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DaahATxMIG_', views: 18815, saves: 224, sends: 138 },
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DaahATxMIG_', views: 18815, saves: 224, sends: 138 , likes: 975},
   // Note kept generic: the reel's caption tags no venue, so the category
   // is unconfirmed rather than guessed.
-  { brand: 'The Iggy Bali', note: 'Bali', code: 'DYv4c-YMHFR', views: 40531, saves: 252, sends: 202 },
-  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 98959, saves: 246, sends: 1100 },
+  { brand: 'The Iggy Bali', note: 'Bali', code: 'DYv4c-YMHFR', views: 40531, saves: 252, sends: 202 , likes: 1600},
+  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 98959, saves: 246, sends: 1100 , likes: 3700},
   // Carousel posts rather than reels — Instagram serves those under /p/.
   { brand: 'Dior Beauty', note: 'Beauty · carousel', code: 'DM0d0OMP4Qn', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Amazónico Dubai', note: 'Restaurant · Dubai', code: 'DWO6qQkiFcT', kind: 'p', views: null, saves: null, sends: null },
@@ -383,6 +383,12 @@ const faqs = [
                     <p class="film-stat-n">{fmtViews(f.views)}</p>
                     <p class="film-stat-l">views</p>
                   </div>
+                  {f.likes !== null && f.likes !== undefined && (
+                    <div>
+                      <p class="film-stat-n">{fmtEng(f.likes)}</p>
+                      <p class="film-stat-l">likes</p>
+                    </div>
+                  )}
                   {f.saves !== null && (
                     <div>
                       <p class="film-stat-n">{fmtEng(f.saves)}</p>
