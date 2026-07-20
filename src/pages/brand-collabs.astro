@@ -319,7 +319,7 @@ const faqs = [
                   muted
                   loop
                   playsinline
-                  preload="none"
+                  preload="metadata"
                   aria-label={`${f.brand} — reel preview, no sound`}
                   data-film-video
                 ></video>
@@ -1368,24 +1368,41 @@ const faqs = [
     counters.forEach((c) => io.observe(c));
   }
 
-  // ── 1b. Featured clips — autoplay muted, only while on screen ──────
-  // Playing all eleven at once would decode eleven streams simultaneously,
-  // so each one starts on entering the viewport and pauses on leaving.
+  // ── 1b. Featured clips — play muted on hover ───────────────────────
+  // Nothing plays until the visitor points at it, so the page stays cheap.
+  // Touch devices have no hover, so there they fall back to playing while
+  // on screen — otherwise a phone would only ever show a still.
   const clips = document.querySelectorAll<HTMLVideoElement>('[data-film-video]');
   if (clips.length && !reduceMotion) {
-    const clipIO = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const v = entry.target as HTMLVideoElement;
-        if (entry.isIntersecting) {
-          // muted is required for autoplay to be allowed at all
-          v.muted = true;
-          v.play().catch(() => { /* autoplay refused — poster stays */ });
-        } else {
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    // muted is a hard requirement for programmatic playback to be allowed
+    const play = (v: HTMLVideoElement) => {
+      v.muted = true;
+      v.play().catch(() => { /* refused — the poster simply stays */ });
+    };
+
+    if (canHover) {
+      clips.forEach((v) => {
+        const card = v.closest('.film-card') ?? v;
+        card.addEventListener('mouseenter', () => play(v));
+        card.addEventListener('mouseleave', () => {
           v.pause();
-        }
+          v.currentTime = 0;
+        });
+        // keyboard users get the same preview when the card's link is focused
+        card.addEventListener('focusin', () => play(v));
+        card.addEventListener('focusout', () => { v.pause(); v.currentTime = 0; });
       });
-    }, { threshold: 0.25 });
-    clips.forEach((v) => clipIO.observe(v));
+    } else {
+      const clipIO = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const v = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) play(v);
+          else v.pause();
+        });
+      }, { threshold: 0.25 });
+      clips.forEach((v) => clipIO.observe(v));
+    }
   }
 
   // ── 2. Package tabs ────────────────────────────────────────────────
