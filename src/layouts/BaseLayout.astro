@@ -105,7 +105,12 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
               }
             });
           },
-          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+          // threshold MUST stay 0. A percentage threshold can never be met by
+          // a section taller than ~8x the viewport - on mobile the brand-collabs
+          // grids run ~8000px in one column, so 0.12 left them stuck at
+          // opacity 0 forever. The negative bottom margin keeps the reveal
+          // feeling delayed without tying it to element height.
+          { threshold: 0, rootMargin: '0px 0px -12% 0px' }
         );
         els.forEach((el) => io.observe(el));
       };
