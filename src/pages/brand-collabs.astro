@@ -104,6 +104,26 @@ const packages = [
   },
 ];
 
+// ── Brands already featured ──
+// `views` is ONLY filled where the number is verified. Three come from
+// the existing library data on this site. The rest stay null until
+// Allaia sends the real figures from Instagram Insights — the cards
+// render fine without a stat badge, and never with a guessed one.
+// Ordered highest-verified-views first; unverified follow.
+const featuredBrands = [
+  { name: 'Alloura Villa', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: '221K' },
+  { name: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZTyZlzMrJO', views: '151K' },
+  { name: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: '86K' },
+  { name: 'Jason Derulo', note: 'Sexy For You campaign', code: 'DYCE4YxsDzG', views: null },
+  { name: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: null },
+  { name: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: null },
+  { name: 'Boardwalk Dubai', note: 'Dubai', code: 'DXjGCtWjGYk', views: null },
+  { name: 'Bali Babe Ubud', note: 'Ubud', code: 'DX890dlM3GE', views: null },
+  { name: 'Kinoa Bali', note: 'Bali', code: 'DZgpQHusfMy', views: null },
+  // Awaiting the correct reel link — the one supplied duplicated Nude Bali's.
+  { name: 'The Path Wellness Center', note: 'Wellness centre', code: null, views: null },
+];
+
 // ── Who the audience is ──
 // Qualitative for now. If Allaia exports the age/gender/geo splits from
 // Instagram Insights, these become hard percentages, which brands prefer.
@@ -359,6 +379,47 @@ const faqs = [
           </article>
         ))}
       </div>
+    </section>
+  </div>
+
+  <!-- ── Brands already featured ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Brands I’ve featured</p>
+      <h2 class="display-sm mb-4 max-w-2xl">Already trusted by <span class="italic-grad">hotels, villas and wellness houses.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        Across Bali, Ubud and Dubai — plus one campaign for Jason Derulo. Tap any name to watch the film that ran.
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {featuredBrands.map((b) => {
+          const href = b.code ? `https://www.instagram.com/reel/${b.code}/` : null;
+          const Tag = href ? 'a' : 'div';
+          return (
+            <Tag
+              href={href}
+              target={href ? '_blank' : undefined}
+              rel={href ? 'noopener' : undefined}
+              class={`brand-card rounded-2xl p-6 flex flex-col ${href ? 'group' : 'brand-card-flat'}`}
+            >
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <h3 class="font-display text-2xl text-ink leading-tight">{b.name}</h3>
+                {b.views && <span class="brand-stat">{b.views}</span>}
+              </div>
+              <p class="byline text-ink-mute">{b.note}</p>
+              {href && (
+                <span class="brand-link mt-5">
+                  Watch the film <ArrowUpRight size={11} />
+                </span>
+              )}
+            </Tag>
+          );
+        })}
+      </div>
+
+      <p class="byline text-ink-mute mt-6">
+        View counts shown where reported. Full performance breakdowns available on request.
+      </p>
     </section>
   </div>
 
@@ -796,6 +857,44 @@ const faqs = [
     transform: translateY(-4px);
     box-shadow: 0 24px 50px -24px rgba(28, 26, 23, 0.28);
   }
+
+  /* ── Featured brand cards ── */
+  .brand-card {
+    background:
+      radial-gradient(120% 90% at 15% 0%, rgba(184, 85, 66, 0.06), transparent 55%),
+      rgba(28, 26, 23, 0.035);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.5s, border-color 0.5s;
+  }
+  a.brand-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 85, 66, 0.3);
+    box-shadow: 0 26px 52px -26px rgba(28, 26, 23, 0.3);
+  }
+  /* Brands with no reel link yet — present, but not pretending to be clickable */
+  .brand-card-flat { opacity: 0.72; }
+  .brand-stat {
+    flex-shrink: 0;
+    background: rgba(184, 85, 66, 0.12);
+    color: #B85542;
+    border-radius: 9999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .brand-link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7A6F62;
+    transition: color 0.4s;
+  }
+  .group:hover .brand-link { color: #B85542; }
 
   /* ── Audience cards ── */
   .aud-card {
