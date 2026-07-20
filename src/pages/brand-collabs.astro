@@ -144,6 +144,8 @@ const featuredFilms = [
   { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: 20654, saves: 126, sends: 270 },
   { brand: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 },
   { brand: 'Kinoa Bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 },
+  // Awaiting Insights — renders the embed with no figures until they land.
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DaahATxMIG_', views: null, saves: null, sends: null },
 ];
 
 // ── Who the audience is ──
@@ -341,24 +343,26 @@ const faqs = [
               <h3 class="font-display text-2xl text-ink leading-tight">{f.brand}</h3>
               <p class="byline text-ink-mute mt-1 mb-5">{f.note}</p>
 
-              <div class="film-stats mt-auto">
-                <div>
-                  <p class="film-stat-n">{fmtViews(f.views)}</p>
-                  <p class="film-stat-l">views</p>
+              {f.views !== null && (
+                <div class="film-stats mt-auto">
+                  <div>
+                    <p class="film-stat-n">{fmtViews(f.views)}</p>
+                    <p class="film-stat-l">views</p>
+                  </div>
+                  {f.saves !== null && (
+                    <div>
+                      <p class="film-stat-n">{fmtEng(f.saves)}</p>
+                      <p class="film-stat-l">saves</p>
+                    </div>
+                  )}
+                  {f.sends !== null && (
+                    <div>
+                      <p class="film-stat-n">{fmtEng(f.sends)}</p>
+                      <p class="film-stat-l">sends</p>
+                    </div>
+                  )}
                 </div>
-                {f.saves !== null && (
-                  <div>
-                    <p class="film-stat-n">{fmtEng(f.saves)}</p>
-                    <p class="film-stat-l">saves</p>
-                  </div>
-                )}
-                {f.sends !== null && (
-                  <div>
-                    <p class="film-stat-n">{fmtEng(f.sends)}</p>
-                    <p class="film-stat-l">sends</p>
-                  </div>
-                )}
-              </div>
+              )}
 
               <a
                 href={`https://www.instagram.com/reel/${f.code}/`}
