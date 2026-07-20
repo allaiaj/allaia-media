@@ -48,7 +48,7 @@ const libraryRow2 = [
 
 // ── Proof band — each stat translated into what it BUYS the brand ──
 const proofStats = [
-  { value: 3000000, display: '3M+', label: 'views · last 90 days', body: 'Six-figure reach is your baseline, not your best case.' },
+  { value: 3500000, display: '3.5M', label: 'views · last 90 days', body: 'Six-figure reach is your baseline, not your best case.' },
   { value: 86.8, suffix: '%', decimals: 1, label: 'reach from non-followers', body: 'You are paying for discovery, not for the same crowd seeing you twice.' },
   { value: 11.1, suffix: '%', decimals: 1, label: 'peak engagement rate', body: 'Sponsored content averages 1–3%. Mine stops the scroll and gets saved.' },
   { value: 1740000, display: '1.74M', label: 'unique people reached', body: 'Real individual humans, not impressions counted twice.' },
@@ -104,50 +104,37 @@ const packages = [
   },
 ];
 
-// ── Brands already featured ──
-// `views` is ONLY filled where the number is verified. Three come from
-// the existing library data on this site. The rest stay null until
-// Allaia sends the real figures from Instagram Insights — the cards
-// render fine without a stat badge, and never with a guessed one.
-// Ordered highest-verified-views first; unverified follow.
-// `views` is the raw number, only where verified — from Instagram Insights
-// screenshots, or from this site's existing library data. Brands still
-// awaiting figures carry null and render without a badge, never a guess.
-// A brand can hold more than one film; the badge then shows the combined total.
-const featuredBrands = [
-  {
-    name: 'NU Human Bali',
-    note: 'Wellness · Bali',
-    films: [{ code: 'DZTyZlzMrJO', views: 158899 }, { code: 'DZheN1usVSX', views: 74549 }],
-  },
-  { name: 'Alloura Villa', note: 'Villa · Bali', films: [{ code: 'DZTtOngsOBG', views: 227293 }] },
-  { name: 'The Path Wellness Center', note: 'Wellness centre · Bali', films: [{ code: 'DZuN-7BMM-v', views: 132606 }] },
-  {
-    name: 'Ferro Restaurant Ubud',
-    note: 'Restaurant · Ubud',
-    films: [{ code: 'DZClhdhs7l7', views: 116192 }, { code: 'DZPVsu_sGih', views: 24231 }],
-  },
-  { name: 'Nude Bali', note: 'Restaurant · Berawa', films: [{ code: 'DZ2Rxivs5dE', views: 11686 }] },
-  { name: 'Jason Derulo', note: 'Sexy For You campaign', films: [{ code: 'DYCE4YxsDzG', views: 25000 }] },
-  { name: 'Bubble Hotel Bali', note: 'Hotel · Bali', films: [{ code: 'DXi-zLRDCJg', views: 20654 }] },
-  { name: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', films: [{ code: 'DXjGCtWjGYk', views: 56447 }] },
-  { name: 'Kinoa Bali', note: 'Café · Bali', films: [{ code: 'DZgpQHusfMy', views: 8753 }] },
-];
-
-// Compact view formatting — whole thousands, nearest (233K, 56K, 12K).
+// Compact number formatting — whole thousands, nearest (233K, 56K, 12K).
 const fmtViews = (n: number): string =>
   n >= 1_000_000
     ? (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M'
-    : Math.round(n / 1000) + 'K';
+    : n >= 1000
+      ? Math.round(n / 1000) + 'K'
+      : String(n);
 
-// Total per brand, then sort by it — verified performers lead, unknowns trail.
-const brandRows = featuredBrands
-  .map((b) => {
-    const known = b.films.filter((f) => f.views !== null);
-    const total = known.reduce((sum, f) => sum + (f.views as number), 0);
-    return { ...b, total: known.length ? total : null };
-  })
-  .sort((a, b) => (b.total ?? -1) - (a.total ?? -1));
+// Engagement numbers keep a decimal below 10K — "2.8K saves" is both more
+// accurate and more persuasive than rounding it down to a flat "3K".
+const fmtEng = (n: number): string =>
+  n >= 10_000 ? Math.round(n / 1000) + 'K'
+    : n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K'
+      : String(n);
+
+// One card per film, each with the reel embedded and its own numbers.
+// Every figure below is from Instagram Insights. Jason Derulo's engagement
+// breakdown is still outstanding, so those cells stay empty.
+const featuredFilms = [
+  { brand: 'Alloura Villa', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: 227293, saves: 2800, sends: 2200 },
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZTyZlzMrJO', views: 158899, saves: 2700, sends: 2100 },
+  { brand: 'The Path Wellness Center', note: 'Wellness centre · Bali', code: 'DZuN-7BMM-v', views: 132606, saves: 1300, sends: 1800 },
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: 116192, saves: 1700, sends: 1300 },
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZheN1usVSX', views: 74549, saves: 1200, sends: 947 },
+  { brand: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', code: 'DXjGCtWjGYk', views: 56447, saves: 121, sends: 1100 },
+  { brand: 'Jason Derulo', note: 'Sexy For You campaign', code: 'DYCE4YxsDzG', views: 25000, saves: null, sends: null },
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZPVsu_sGih', views: 24231, saves: 276, sends: 154 },
+  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: 20654, saves: 126, sends: 270 },
+  { brand: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 },
+  { brand: 'Kinoa Bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 },
+];
 
 // ── Who the audience is ──
 // Qualitative for now. If Allaia exports the age/gender/geo splits from
@@ -294,12 +281,12 @@ const faqs = [
 
 <PageLayout
   title="Brand collaborations"
-  description="Editorial brand partnerships in wellness, recovery and travel. Reaching women 25–45 who travel and spend on feeling well. 3M+ views in 90 days, 86.8% non-follower reach, content you own outright. Selective, paid."
+  description="Editorial brand partnerships in wellness, recovery and travel. Reaching women 25–45 who travel and spend on feeling well. 3.5M views in 90 days, 86.8% non-follower reach, content you own outright. Selective, paid."
   eyebrow="Brand collaborations · 2026"
   heading="Let’s put your product"
   italic="in front of women who buy."
   lead="I make content about recovery, low-cortisol living, biohacking and wellness travel, alongside the soft, feminine, inspirational films my audience keeps coming back for. It is made for women aged 25 to 45 who travel often and spend on feeling well. When your product lives inside that world, it reads as a recommendation rather than an ad. Below is exactly who you reach, what you get, and what it is worth."
-  byline="Built to this size in 4 months · by personal inquiry · I reply within a week"
+  byline="Built to this size in 4 months · by personal inquiry · I reply within a day"
   showNewsletter={false}
 >
   <!-- ── Collage intro — who you'd work with ── -->
@@ -313,7 +300,7 @@ const faqs = [
           <img src="/img/portraits/DXv8snOlDS-.jpg" alt="Allaia — in transit" class="w-full h-full object-cover" loading="lazy" />
         </div>
         <div class="collage-chip chip-views">
-          <p class="font-display italic text-2xl text-terracotta leading-none">3M+</p>
+          <p class="font-display italic text-2xl text-terracotta leading-none">3.5M</p>
           <p class="byline text-ink-mute mt-1">views · last 90 days</p>
         </div>
         <div class="collage-chip chip-er">
@@ -418,43 +405,61 @@ const faqs = [
       <p class="eyebrow mb-5">Brands I’ve featured</p>
       <h2 class="display-sm mb-4 max-w-2xl">Already trusted by <span class="italic-grad">hotels, villas and wellness houses.</span></h2>
       <p class="serif-body text-ink-soft max-w-prose mb-10">
-        Across Bali, Ubud and Dubai — plus one campaign for Jason Derulo. Tap any name to watch the film that ran.
+        Across Bali, Ubud and Dubai — plus one campaign for Jason Derulo. Every film below is the real post, with the numbers it actually did.
       </p>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {brandRows.map((b) => {
-          const links = b.films.filter((f) => f.code);
-          return (
-            <article class="brand-card rounded-2xl p-6 flex flex-col">
-              <div class="flex items-start justify-between gap-3 mb-2">
-                <h3 class="font-display text-2xl text-ink leading-tight">{b.name}</h3>
-                {b.total !== null && <span class="brand-stat">{fmtViews(b.total)}</span>}
-              </div>
-              <p class="byline text-ink-mute">
-                {b.note}{b.films.length > 1 && ` · ${b.films.length} films`}
-              </p>
-              {links.length > 0 && (
-                <div class="brand-links mt-5">
-                  {links.map((f, i) => (
-                    <a
-                      href={`https://www.instagram.com/reel/${f.code}/`}
-                      target="_blank"
-                      rel="noopener"
-                      class="brand-link"
-                    >
-                      {links.length > 1 ? `Film ${i + 1}` : 'Watch the film'}
-                      <ArrowUpRight size={11} />
-                    </a>
-                  ))}
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {featuredFilms.map((f) => (
+          <article class="film-card rounded-[1.5rem] overflow-hidden flex flex-col">
+            <div class="film-embed">
+              <iframe
+                src={`https://www.instagram.com/reel/${f.code}/embed`}
+                title={`${f.brand} — Instagram reel`}
+                loading="lazy"
+                scrolling="no"
+                allowtransparency="true"
+                frameborder="0"
+              ></iframe>
+            </div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="font-display text-2xl text-ink leading-tight">{f.brand}</h3>
+              <p class="byline text-ink-mute mt-1 mb-5">{f.note}</p>
+
+              <div class="film-stats mt-auto">
+                <div>
+                  <p class="film-stat-n">{fmtViews(f.views)}</p>
+                  <p class="film-stat-l">views</p>
                 </div>
-              )}
-            </article>
-          );
-        })}
+                {f.saves !== null && (
+                  <div>
+                    <p class="film-stat-n">{fmtEng(f.saves)}</p>
+                    <p class="film-stat-l">saves</p>
+                  </div>
+                )}
+                {f.sends !== null && (
+                  <div>
+                    <p class="film-stat-n">{fmtEng(f.sends)}</p>
+                    <p class="film-stat-l">sends</p>
+                  </div>
+                )}
+              </div>
+
+              <a
+                href={`https://www.instagram.com/reel/${f.code}/`}
+                target="_blank"
+                rel="noopener"
+                class="brand-link mt-5"
+              >
+                Open on Instagram <ArrowUpRight size={11} />
+              </a>
+            </div>
+          </article>
+        ))}
       </div>
 
       <p class="byline text-ink-mute mt-6">
-        View counts shown where reported. Full performance breakdowns available on request.
+        Views, saves and sends taken from Instagram Insights. Full performance breakdowns available on request.
       </p>
     </section>
   </div>
@@ -894,7 +899,62 @@ const faqs = [
     box-shadow: 0 24px 50px -24px rgba(28, 26, 23, 0.28);
   }
 
-  /* ── Featured brand cards ── */
+  /* ── Featured film cards ── */
+  .film-card {
+    background:
+      radial-gradient(120% 90% at 15% 0%, rgba(184, 85, 66, 0.06), transparent 55%),
+      rgba(28, 26, 23, 0.035);
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.5s, border-color 0.5s;
+  }
+  .film-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 85, 66, 0.28);
+    box-shadow: 0 28px 56px -28px rgba(28, 26, 23, 0.3);
+  }
+  /* Instagram's embed ships its own chrome at a fixed min width. Give it a
+     tall box and let it size itself rather than fighting its internal CSS. */
+  .film-embed {
+    position: relative;
+    width: 100%;
+    height: 424px;
+    overflow: hidden;
+    background: #1F1B16;
+    border-bottom: 1px solid rgba(28, 26, 23, 0.07);
+  }
+  /* Shift the iframe up and overflow-hide, so Instagram's own header and
+     footer chrome sit outside the frame and only the reel itself shows.
+     Attribution is preserved by the "Open on Instagram" link on each card. */
+  .film-embed iframe {
+    position: absolute;
+    top: -54px;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    border: 0;
+    display: block;
+  }
+  .film-stats {
+    display: flex;
+    gap: 1.75rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(28, 26, 23, 0.08);
+  }
+  .film-stat-n {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 1.9rem;
+    line-height: 1;
+    color: #B85542;
+  }
+  .film-stat-l {
+    margin-top: 0.3rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7A6F62;
+  }
+
   .brand-card {
     background:
       radial-gradient(120% 90% at 15% 0%, rgba(184, 85, 66, 0.06), transparent 55%),
