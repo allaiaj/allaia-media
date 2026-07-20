@@ -144,9 +144,36 @@ const featuredFilms = [
   { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: 20654, saves: 126, sends: 270 },
   { brand: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 },
   { brand: 'Kinoa Bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 },
-  // Awaiting Insights — renders the embed with no figures until they land.
-  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DaahATxMIG_', views: null, saves: null, sends: null },
+  // Awaiting Insights — these render the embed with no figures until they land.
+  { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DaahATxMIG_', views: 18815, saves: 224, sends: 138 },
+  // Note kept generic: the reel's caption tags no venue, so the category
+  // is unconfirmed rather than guessed.
+  { brand: 'The Iggy Bali', note: 'Bali', code: 'DYv4c-YMHFR', views: null, saves: null, sends: null },
+  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 98959, saves: 246, sends: 1100 },
+  // Carousel posts rather than reels — Instagram serves those under /p/.
+  { brand: 'Dior Beauty', note: 'Beauty · carousel', code: 'DM0d0OMP4Qn', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Amazónico Dubai', note: 'Restaurant · Dubai', code: 'DWO6qQkiFcT', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'La Villa Medusa Dubai', note: 'Dubai', code: 'DU7pOaqD55V', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Mondoux Café Dubai', note: 'Café · Dubai', code: 'DVVZlRbj4Jq', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'FRNDS Dubai', note: 'Dubai', code: 'DWCADupCAb8', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', code: 'DVOUnHSiLNA', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'The Banc Dubai', note: 'Dubai', code: 'DWVpNU9CM96', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'At.mosphere Burj Khalifa', note: 'Restaurant · Dubai', code: 'DWYgzSFiMhW', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'MÍA Bali', note: 'Bali', code: 'DWlfa4-lOuC', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'ZAI Bali', note: 'Bali', code: 'DW_GqXmlAh6', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXYt8yVFAWn', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Rockfish Uluwatu', note: 'Restaurant · Uluwatu', code: 'DXbZq9JFNiM', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZDGEr2GMTt', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Bella Canggu', note: 'Canggu · Bali', code: 'DZnEtKOGPWz', kind: 'p', views: null, saves: null, sends: null },
 ];
+
+// Reels carry performance figures and lead the page. Carousel posts are a
+// separate visual wall further down — no stats, just the work.
+// Highest-performing first; anything still awaiting Insights trails.
+const reels = featuredFilms
+  .filter((f) => f.kind !== 'p')
+  .sort((a, b) => (b.views ?? -1) - (a.views ?? -1));
+const carousels = featuredFilms.filter((f) => f.kind === 'p');
 
 // ── Who the audience is ──
 // Qualitative for now. If Allaia exports the age/gender/geo splits from
@@ -311,7 +338,9 @@ const faqs = [
       </p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {featuredFilms.map((f) => (
+        {reels.map((f) => {
+          const igPath = `https://www.instagram.com/reel/${f.code}/`;
+          return (
           <article class="film-card rounded-[1.5rem] overflow-hidden flex flex-col">
             {hasClip(f.code) ? (
               <div class="film-clip">
@@ -327,10 +356,10 @@ const faqs = [
                 ></video>
               </div>
             ) : (
-              <div class="film-embed">
+              <div class={f.kind === 'p' ? 'film-embed film-embed-post' : 'film-embed'}>
                 <iframe
-                  src={`https://www.instagram.com/reel/${f.code}/embed`}
-                  title={`${f.brand} — Instagram reel`}
+                  src={`${igPath}embed`}
+                  title={`${f.brand} — Instagram ${f.kind === 'p' ? 'post' : 'reel'}`}
                   loading="lazy"
                   scrolling="no"
                   allowtransparency="true"
@@ -365,7 +394,7 @@ const faqs = [
               )}
 
               <a
-                href={`https://www.instagram.com/reel/${f.code}/`}
+                href={igPath}
                 target="_blank"
                 rel="noopener"
                 class="brand-link mt-5"
@@ -374,12 +403,51 @@ const faqs = [
               </a>
             </div>
           </article>
-        ))}
+          );
+        })}
       </div>
 
       <p class="byline text-ink-mute mt-6">
         Views, saves and sends taken from Instagram Insights. Full performance breakdowns available on request.
       </p>
+    </section>
+  </div>
+
+  <!-- ── Carousel moodboard — the stills, no figures ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
+    <section class="reveal">
+      <p class="eyebrow mb-5">The stills · carousels</p>
+      <h2 class="display-sm mb-4 max-w-2xl">The rooms, the plates, <span class="italic-grad">the light.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        Carousel work across Dubai, Bali and Ubud — from Dior Beauty to At.mosphere at the top of the Burj Khalifa. Tap any to open the post.
+      </p>
+
+      <div class="mood-grid">
+        {carousels.map((c) => (
+          <a
+            href={`https://www.instagram.com/p/${c.code}/`}
+            target="_blank"
+            rel="noopener"
+            class="mood-tile"
+            aria-label={`${c.brand} — open the post on Instagram`}
+          >
+            <div class="mood-media">
+              <iframe
+                src={`https://www.instagram.com/p/${c.code}/embed`}
+                title={`${c.brand} — Instagram post`}
+                loading="lazy"
+                scrolling="no"
+                allowtransparency="true"
+                frameborder="0"
+                tabindex="-1"
+              ></iframe>
+              <span class="mood-veil" aria-hidden="true"></span>
+            </div>
+            <p class="mood-name">{c.brand}</p>
+            <p class="mood-note">{c.note}</p>
+          </a>
+        ))}
+      </div>
     </section>
   </div>
 
@@ -926,6 +994,58 @@ const faqs = [
   .stat-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 24px 50px -24px rgba(28, 26, 23, 0.28);
+  }
+
+  /* ── Carousel moodboard ── */
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) { .mood-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .mood-grid { grid-template-columns: 1fr; } }
+
+  .mood-tile { display: block; }
+  .mood-media {
+    position: relative;
+    width: 100%;
+    /* squarer than the reel cards so the wall reads as a moodboard */
+    height: 330px;
+    overflow: hidden;
+    border-radius: 1.15rem;
+    background: #1F1B16;
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.5s;
+  }
+  .mood-media iframe {
+    position: absolute;
+    top: -54px;      /* crop Instagram's header */
+    left: 0;
+    width: 100%;
+    height: 470px;
+    border: 0;
+    display: block;
+  }
+  /* The iframe swallows pointer events, so this sits over it and makes the
+     whole tile a single link rather than an embed the visitor gets stuck in. */
+  .mood-veil { position: absolute; inset: 0; }
+  .mood-tile:hover .mood-media {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 52px -26px rgba(28, 26, 23, 0.32);
+  }
+  .mood-name {
+    margin-top: 0.9rem;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #1A1A1A;
+  }
+  .mood-note {
+    margin-top: 0.15rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7A6F62;
   }
 
   /* ── Featured film cards ── */
