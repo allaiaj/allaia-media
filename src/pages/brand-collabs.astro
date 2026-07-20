@@ -960,11 +960,12 @@ const faqs = [
     display: block;
   }
   /* Self-hosted clip — vertical reel crop, autoplays muted in view */
+  /* Same height as .film-embed so self-hosted clips and Instagram embeds
+     line up while the library is a mix of the two. */
   .film-clip {
     position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16;
-    max-height: 560px;
+    height: 424px;
     overflow: hidden;
     background: #1F1B16;
     border-bottom: 1px solid rgba(28, 26, 23, 0.07);
