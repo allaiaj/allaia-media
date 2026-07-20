@@ -1,4 +1,5 @@
 ---
+import fs from 'node:fs';
 import PageLayout from '@layouts/PageLayout.astro';
 import { site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
@@ -118,6 +119,15 @@ const fmtEng = (n: number): string =>
   n >= 10_000 ? Math.round(n / 1000) + 'K'
     : n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K'
       : String(n);
+
+// Self-hosted clips beat the Instagram embed: they autoplay muted and
+// carry none of Instagram's chrome. Instagram's own iframe cannot be made
+// to autoplay — it is cross-origin, so the attributes are not ours to set.
+// Drop an MP4 at public/video/collabs/<reel-code>.mp4 and that card
+// upgrades to real video on the next build. Anything without a file keeps
+// the embed, so the section never breaks while the library fills up.
+const hasClip = (code: string): boolean =>
+  fs.existsSync(new URL(`../../public/video/collabs/${code}.mp4`, import.meta.url));
 
 // One card per film, each with the reel embedded and its own numbers.
 // Every figure below is from Instagram Insights. Jason Derulo's engagement
@@ -301,16 +311,31 @@ const faqs = [
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {featuredFilms.map((f) => (
           <article class="film-card rounded-[1.5rem] overflow-hidden flex flex-col">
-            <div class="film-embed">
-              <iframe
-                src={`https://www.instagram.com/reel/${f.code}/embed`}
-                title={`${f.brand} — Instagram reel`}
-                loading="lazy"
-                scrolling="no"
-                allowtransparency="true"
-                frameborder="0"
-              ></iframe>
-            </div>
+            {hasClip(f.code) ? (
+              <div class="film-clip">
+                <video
+                  src={`/video/collabs/${f.code}.mp4`}
+                  poster={`/img/collabs/${f.code}.jpg`}
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label={`${f.brand} — reel preview, no sound`}
+                  data-film-video
+                ></video>
+              </div>
+            ) : (
+              <div class="film-embed">
+                <iframe
+                  src={`https://www.instagram.com/reel/${f.code}/embed`}
+                  title={`${f.brand} — Instagram reel`}
+                  loading="lazy"
+                  scrolling="no"
+                  allowtransparency="true"
+                  frameborder="0"
+                ></iframe>
+              </div>
+            )}
 
             <div class="p-6 flex flex-col flex-1">
               <h3 class="font-display text-2xl text-ink leading-tight">{f.brand}</h3>
@@ -934,6 +959,24 @@ const faqs = [
     border: 0;
     display: block;
   }
+  /* Self-hosted clip — vertical reel crop, autoplays muted in view */
+  .film-clip {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 560px;
+    overflow: hidden;
+    background: #1F1B16;
+    border-bottom: 1px solid rgba(28, 26, 23, 0.07);
+  }
+  .film-clip video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   .film-stats {
     display: flex;
     gap: 1.75rem;
@@ -1323,6 +1366,26 @@ const faqs = [
     }, { threshold: 0.4 });
 
     counters.forEach((c) => io.observe(c));
+  }
+
+  // ── 1b. Featured clips — autoplay muted, only while on screen ──────
+  // Playing all eleven at once would decode eleven streams simultaneously,
+  // so each one starts on entering the viewport and pauses on leaving.
+  const clips = document.querySelectorAll<HTMLVideoElement>('[data-film-video]');
+  if (clips.length && !reduceMotion) {
+    const clipIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const v = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          // muted is required for autoplay to be allowed at all
+          v.muted = true;
+          v.play().catch(() => { /* autoplay refused — poster stays */ });
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    clips.forEach((v) => clipIO.observe(v));
   }
 
   // ── 2. Package tabs ────────────────────────────────────────────────
