@@ -133,17 +133,17 @@ const hasClip = (code: string): boolean =>
 // Every figure below is from Instagram Insights. Jason Derulo's engagement
 // breakdown is still outstanding, so those cells stay empty.
 const featuredFilms = [
-  { brand: 'Alloura Villa', ig: 'allouravilla', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: 227293, saves: 2800, sends: 2200 },
+  { brand: 'Alloura Villa', note: 'Villa · Bali', code: 'DZTtOngsOBG', views: 227293, saves: 2800, sends: 2200 },
   { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZTyZlzMrJO', views: 158899, saves: 2700, sends: 2100 },
   { brand: 'The Path Wellness Center', note: 'Wellness centre · Bali', code: 'DZuN-7BMM-v', views: 132606, saves: 1300, sends: 1800 },
-  { brand: 'Ferro Restaurant Ubud', ig: 'ferroubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: 116192, saves: 1700, sends: 1300 },
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZClhdhs7l7', views: 116192, saves: 1700, sends: 1300 },
   { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DZheN1usVSX', views: 74549, saves: 1200, sends: 947 },
   { brand: 'Boardwalk Dubai', note: 'Waterfront dining · Dubai', code: 'DXjGCtWjGYk', views: 56447, saves: 121, sends: 1100 },
   { brand: 'Jason Derulo', note: 'Sexy For You campaign', code: 'DYCE4YxsDzG', views: 25000, saves: null, sends: null },
-  { brand: 'Ferro Restaurant Ubud', ig: 'ferroubud', note: 'Restaurant · Ubud', code: 'DZPVsu_sGih', views: 24231, saves: 276, sends: 154 },
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZPVsu_sGih', views: 24231, saves: 276, sends: 154 },
   { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXi-zLRDCJg', views: 20654, saves: 126, sends: 270 },
-  { brand: 'Nude Bali', ig: 'nudebali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 },
-  { brand: 'Kinoa Bali', ig: 'kinoa.bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 },
+  { brand: 'Nude Bali', note: 'Restaurant · Berawa', code: 'DZ2Rxivs5dE', views: 11686, saves: 72, sends: 79 },
+  { brand: 'Kinoa Bali', note: 'Café · Bali', code: 'DZgpQHusfMy', views: 8753, saves: 182, sends: 69 },
   // Awaiting Insights — these render the embed with no figures until they land.
   { brand: 'NU Human Bali', note: 'Wellness · Bali', code: 'DaahATxMIG_', views: 18815, saves: 224, sends: 138 },
   // Note kept generic: the reel's caption tags no venue, so the category
@@ -163,7 +163,7 @@ const featuredFilms = [
   { brand: 'ZAI Bali', note: 'Bali', code: 'DW_GqXmlAh6', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'DXYt8yVFAWn', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Rockfish Uluwatu', note: 'Restaurant · Uluwatu', code: 'DXbZq9JFNiM', kind: 'p', views: null, saves: null, sends: null },
-  { brand: 'Ferro Restaurant Ubud', ig: 'ferroubud', note: 'Restaurant · Ubud', code: 'DZDGEr2GMTt', kind: 'p', views: null, saves: null, sends: null },
+  { brand: 'Ferro Restaurant Ubud', note: 'Restaurant · Ubud', code: 'DZDGEr2GMTt', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Bella Canggu', note: 'Canggu · Bali', code: 'DZnEtKOGPWz', kind: 'p', views: null, saves: null, sends: null },
 ];
 
@@ -370,20 +370,7 @@ const faqs = [
 
             <div class="p-6 flex flex-col flex-1">
               <h3 class="font-display text-2xl text-ink leading-tight">{f.brand}</h3>
-              <p class="byline text-ink-mute mt-1 mb-5">
-                {f.note}
-                {f.ig && (
-                  <>
-                    {' · '}
-                    <a
-                      href={`https://www.instagram.com/${f.ig}/`}
-                      target="_blank"
-                      rel="noopener"
-                      class="brand-handle"
-                    >@{f.ig}</a>
-                  </>
-                )}
-              </p>
+              <p class="byline text-ink-mute mt-1 mb-5">{f.note}</p>
 
               {f.views !== null && (
                 <div class="film-stats mt-auto">
@@ -457,7 +444,7 @@ const faqs = [
               <span class="mood-veil" aria-hidden="true"></span>
             </div>
             <p class="mood-name">{c.brand}</p>
-            <p class="mood-note">{c.note}{c.ig && ` · @${c.ig}`}</p>
+            <p class="mood-note">{c.note}</p>
           </a>
         ))}
       </div>
@@ -1186,13 +1173,6 @@ const faqs = [
     transition: color 0.4s;
   }
   .brand-link:hover { color: #B85542; }
-
-  .brand-handle {
-    color: #7A6F62;
-    border-bottom: 1px solid rgba(184, 85, 66, 0.3);
-    transition: color 0.35s, border-color 0.35s;
-  }
-  .brand-handle:hover { color: #B85542; border-color: #B85542; }
 
   /* ── Audience cards ── */
   .aud-card {
