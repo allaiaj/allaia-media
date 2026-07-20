@@ -339,10 +339,13 @@ const faqs = [
       </p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {reels.map((f) => {
+        {reels.map((f, i) => {
           const igPath = `https://www.instagram.com/reel/${f.code}/`;
+          // Only the first six embed on load. The rest hold their URL in
+          // data-src and cost nothing until the visitor asks for them.
+          const deferred = i >= 6;
           return (
-          <article class="film-card rounded-[1.5rem] overflow-hidden flex flex-col">
+          <article class={`film-card rounded-[1.5rem] overflow-hidden flex flex-col${deferred ? ' is-deferred' : ''}`}>
             {hasClip(f.code) ? (
               <div class="film-clip">
                 <video
@@ -357,10 +360,11 @@ const faqs = [
                 ></video>
               </div>
             ) : (
-              <div class={f.kind === 'p' ? 'film-embed film-embed-post' : 'film-embed'}>
+              <div class="film-embed">
                 <iframe
-                  src={`${igPath}embed`}
-                  title={`${f.brand} — Instagram ${f.kind === 'p' ? 'post' : 'reel'}`}
+                  src={deferred ? undefined : `${igPath}embed`}
+                  data-src={deferred ? `${igPath}embed` : undefined}
+                  title={`${f.brand} — Instagram reel`}
                   loading="lazy"
                   scrolling="no"
                   allowtransparency="true"
@@ -408,6 +412,10 @@ const faqs = [
         })}
       </div>
 
+      <button type="button" class="cta-ghost mt-8" data-more-btn="film">
+        Show all {reels.length} films
+      </button>
+
       <p class="byline text-ink-mute mt-6">
         Views, saves and sends taken from Instagram Insights. Full performance breakdowns available on request.
       </p>
@@ -424,17 +432,20 @@ const faqs = [
       </p>
 
       <div class="mood-grid">
-        {carousels.map((c) => (
+        {carousels.map((c, i) => {
+          const deferred = i >= 6;
+          return (
           <a
             href={`https://www.instagram.com/p/${c.code}/`}
             target="_blank"
             rel="noopener"
-            class="mood-tile"
+            class={`mood-tile${deferred ? ' is-deferred' : ''}`}
             aria-label={`${c.brand} — open the post on Instagram`}
           >
             <div class="mood-media">
               <iframe
-                src={`https://www.instagram.com/p/${c.code}/embed`}
+                src={deferred ? undefined : `https://www.instagram.com/p/${c.code}/embed`}
+                data-src={deferred ? `https://www.instagram.com/p/${c.code}/embed` : undefined}
                 title={`${c.brand} — Instagram post`}
                 loading="lazy"
                 scrolling="no"
@@ -447,8 +458,13 @@ const faqs = [
             <p class="mood-name">{c.brand}</p>
             <p class="mood-note">{c.note}</p>
           </a>
-        ))}
+          );
+        })}
       </div>
+
+      <button type="button" class="cta-ghost mt-8" data-more-btn="mood">
+        Show all {carousels.length} stills
+      </button>
     </section>
   </div>
 
@@ -997,6 +1013,10 @@ const faqs = [
     box-shadow: 0 24px 50px -24px rgba(28, 26, 23, 0.28);
   }
 
+  /* Cards past the first six stay out of the DOM flow until requested, so
+     their Instagram embeds never load on first paint. */
+  .is-deferred { display: none; }
+
   /* ── Carousel moodboard ── */
   .mood-grid {
     display: grid;
@@ -1542,6 +1562,24 @@ const faqs = [
       clips.forEach((v) => clipIO.observe(v));
     }
   }
+
+  // ── 1c. Show-all buttons ───────────────────────────────────────────
+  // Only six embeds load initially. Revealing the rest also assigns their
+  // src, so nothing beyond the first six costs a request until asked for.
+  document.querySelectorAll<HTMLButtonElement>('[data-more-btn]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const scope = btn.dataset.moreBtn === 'mood' ? '.mood-tile' : '.film-card';
+      document.querySelectorAll<HTMLElement>(`${scope}.is-deferred`).forEach((card) => {
+        const frame = card.querySelector<HTMLIFrameElement>('iframe[data-src]');
+        if (frame) {
+          frame.src = frame.dataset.src!;
+          frame.removeAttribute('data-src');
+        }
+        card.classList.remove('is-deferred');
+      });
+      btn.remove();
+    });
+  });
 
   // ── 2. Package tabs ────────────────────────────────────────────────
   const tabs = Array.from(document.querySelectorAll<HTMLElement>('[data-pkg-tab]'));
