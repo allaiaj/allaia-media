@@ -289,8 +289,73 @@ const faqs = [
   byline="Built to this size in 4 months · by personal inquiry · I reply within a day"
   showNewsletter={false}
 >
-  <!-- ── Collage intro — who you'd work with ── -->
+  <!-- ── Brands already featured ── -->
   <div class="mx-auto max-w-6xl px-6">
+    <section class="reveal">
+      <p class="eyebrow mb-5">Brands I’ve featured</p>
+      <h2 class="display-sm mb-4 max-w-2xl">Already trusted by <span class="italic-grad">hotels, villas, restaurants and wellness houses.</span></h2>
+      <p class="serif-body text-ink-soft max-w-prose mb-10">
+        Across Bali, Ubud and Dubai — plus one campaign for Jason Derulo. Every film below is the real post, with the numbers it actually did.
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {featuredFilms.map((f) => (
+          <article class="film-card rounded-[1.5rem] overflow-hidden flex flex-col">
+            <div class="film-embed">
+              <iframe
+                src={`https://www.instagram.com/reel/${f.code}/embed`}
+                title={`${f.brand} — Instagram reel`}
+                loading="lazy"
+                scrolling="no"
+                allowtransparency="true"
+                frameborder="0"
+              ></iframe>
+            </div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="font-display text-2xl text-ink leading-tight">{f.brand}</h3>
+              <p class="byline text-ink-mute mt-1 mb-5">{f.note}</p>
+
+              <div class="film-stats mt-auto">
+                <div>
+                  <p class="film-stat-n">{fmtViews(f.views)}</p>
+                  <p class="film-stat-l">views</p>
+                </div>
+                {f.saves !== null && (
+                  <div>
+                    <p class="film-stat-n">{fmtEng(f.saves)}</p>
+                    <p class="film-stat-l">saves</p>
+                  </div>
+                )}
+                {f.sends !== null && (
+                  <div>
+                    <p class="film-stat-n">{fmtEng(f.sends)}</p>
+                    <p class="film-stat-l">sends</p>
+                  </div>
+                )}
+              </div>
+
+              <a
+                href={`https://www.instagram.com/reel/${f.code}/`}
+                target="_blank"
+                rel="noopener"
+                class="brand-link mt-5"
+              >
+                Open on Instagram <ArrowUpRight size={11} />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="byline text-ink-mute mt-6">
+        Views, saves and sends taken from Instagram Insights. Full performance breakdowns available on request.
+      </p>
+    </section>
+  </div>
+
+  <!-- ── Collage intro — who you'd work with ── -->
+  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
     <section class="reveal grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
       <div class="collage">
         <div class="collage-main rounded-[1.75rem] overflow-hidden bg-anthracite-warm paper-grain shadow-photo">
@@ -396,71 +461,6 @@ const faqs = [
           </article>
         ))}
       </div>
-    </section>
-  </div>
-
-  <!-- ── Brands already featured ── -->
-  <div class="mx-auto max-w-6xl px-6 mt-20 sm:mt-28">
-    <section class="reveal">
-      <p class="eyebrow mb-5">Brands I’ve featured</p>
-      <h2 class="display-sm mb-4 max-w-2xl">Already trusted by <span class="italic-grad">hotels, villas and wellness houses.</span></h2>
-      <p class="serif-body text-ink-soft max-w-prose mb-10">
-        Across Bali, Ubud and Dubai — plus one campaign for Jason Derulo. Every film below is the real post, with the numbers it actually did.
-      </p>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {featuredFilms.map((f) => (
-          <article class="film-card rounded-[1.5rem] overflow-hidden flex flex-col">
-            <div class="film-embed">
-              <iframe
-                src={`https://www.instagram.com/reel/${f.code}/embed`}
-                title={`${f.brand} — Instagram reel`}
-                loading="lazy"
-                scrolling="no"
-                allowtransparency="true"
-                frameborder="0"
-              ></iframe>
-            </div>
-
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="font-display text-2xl text-ink leading-tight">{f.brand}</h3>
-              <p class="byline text-ink-mute mt-1 mb-5">{f.note}</p>
-
-              <div class="film-stats mt-auto">
-                <div>
-                  <p class="film-stat-n">{fmtViews(f.views)}</p>
-                  <p class="film-stat-l">views</p>
-                </div>
-                {f.saves !== null && (
-                  <div>
-                    <p class="film-stat-n">{fmtEng(f.saves)}</p>
-                    <p class="film-stat-l">saves</p>
-                  </div>
-                )}
-                {f.sends !== null && (
-                  <div>
-                    <p class="film-stat-n">{fmtEng(f.sends)}</p>
-                    <p class="film-stat-l">sends</p>
-                  </div>
-                )}
-              </div>
-
-              <a
-                href={`https://www.instagram.com/reel/${f.code}/`}
-                target="_blank"
-                rel="noopener"
-                class="brand-link mt-5"
-              >
-                Open on Instagram <ArrowUpRight size={11} />
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <p class="byline text-ink-mute mt-6">
-        Views, saves and sends taken from Instagram Insights. Full performance breakdowns available on request.
-      </p>
     </section>
   </div>
 
