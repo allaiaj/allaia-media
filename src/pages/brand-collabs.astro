@@ -1009,22 +1009,28 @@ const faqs = [
   .mood-media {
     position: relative;
     width: 100%;
-    /* squarer than the reel cards so the wall reads as a moodboard */
-    height: 330px;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     border-radius: 1.15rem;
     background: #1F1B16;
     border: 1px solid rgba(28, 26, 23, 0.07);
     transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.5s;
   }
+  /* Instagram renders a SQUARE image under a ~54px header. To fill a 4:5
+     frame we scale the embed by 1.25 and pull it up past the header, then
+     crop the overflowing sides. Transforms apply right-to-left: translate
+     first (-54px removes the header, -10% re-centres the widened frame),
+     then scale about the top-left corner. */
   .mood-media iframe {
     position: absolute;
-    top: -54px;      /* crop Instagram's header */
+    top: 0;
     left: 0;
     width: 100%;
-    height: 470px;
+    height: 620px;
     border: 0;
     display: block;
+    transform-origin: top left;
+    transform: scale(1.25) translate(-10%, -54px);
   }
   /* The iframe swallows pointer events, so this sits over it and makes the
      whole tile a single link rather than an embed the visitor gets stuck in. */
