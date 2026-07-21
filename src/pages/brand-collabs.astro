@@ -129,6 +129,18 @@ const fmtEng = (n: number): string =>
 const hasClip = (code: string): boolean =>
   fs.existsSync(new URL(`../../public/video/collabs/${code}.mp4`, import.meta.url));
 
+// A carousel tile uses a self-hosted cover image when one exists — instant,
+// reliable, no dependency on Instagram's flaky embed. Drop a JPG at
+// public/img/collabs/carousel/<code>.jpg and that tile upgrades on build.
+const coverImg = (code: string): string | null => {
+  for (const ext of ['jpg', 'jpeg', 'webp', 'png']) {
+    if (fs.existsSync(new URL(`../../public/img/collabs/carousel/${code}.${ext}`, import.meta.url))) {
+      return `/img/collabs/carousel/${code}.${ext}`;
+    }
+  }
+  return null;
+};
+
 // One card per film, each with the reel embedded and its own numbers.
 // Every figure below is from Instagram Insights. Jason Derulo's engagement
 // breakdown is still outstanding, so those cells stay empty.
@@ -362,8 +374,7 @@ const faqs = [
             ) : (
               <div class="film-embed">
                 <iframe
-                  src={deferred ? undefined : `${igPath}embed`}
-                  data-src={deferred ? `${igPath}embed` : undefined}
+                  data-src={`${igPath}embed`}
                   title={`${f.brand} — Instagram reel`}
                   loading="lazy"
                   scrolling="no"
@@ -439,7 +450,11 @@ const faqs = [
 
       <div class="mood-grid">
         {carousels.map((c, i) => {
-          const deferred = i >= 6;
+          const img = coverImg(c.code);
+          // Self-hosted images are cheap and reliable, so they always render.
+          // Only the flaky Instagram embeds are deferred past the sixth to
+          // keep the first paint light.
+          const deferred = !img && i >= 6;
           return (
           <a
             href={`https://www.instagram.com/p/${c.code}/`}
@@ -449,16 +464,19 @@ const faqs = [
             aria-label={`${c.brand} — open the post on Instagram`}
           >
             <div class="mood-media">
-              <iframe
-                src={deferred ? undefined : `https://www.instagram.com/p/${c.code}/embed`}
-                data-src={deferred ? `https://www.instagram.com/p/${c.code}/embed` : undefined}
-                title={`${c.brand} — Instagram post`}
-                loading="lazy"
-                scrolling="no"
-                allowtransparency="true"
-                frameborder="0"
-                tabindex="-1"
-              ></iframe>
+              {img ? (
+                <img src={img} alt={`${c.brand} — Allaia`} loading="lazy" class="mood-img" />
+              ) : (
+                <iframe
+                  data-src={`https://www.instagram.com/p/${c.code}/embed`}
+                  title={`${c.brand} — Instagram post`}
+                  loading="lazy"
+                  scrolling="no"
+                  allowtransparency="true"
+                  frameborder="0"
+                  tabindex="-1"
+                ></iframe>
+              )}
               <span class="mood-veil" aria-hidden="true"></span>
             </div>
             <p class="mood-name">{c.brand}</p>
@@ -468,9 +486,11 @@ const faqs = [
         })}
       </div>
 
-      <button type="button" class="cta-ghost mt-8" data-more-btn="mood">
-        Show all {carousels.length} stills
-      </button>
+      {carousels.some((c, i) => !coverImg(c.code) && i >= 6) && (
+        <button type="button" class="cta-ghost mt-8" data-more-btn="mood">
+          Show all {carousels.length} stills
+        </button>
+      )}
     </section>
   </div>
 
@@ -1059,6 +1079,15 @@ const faqs = [
     transform-origin: top left;
     transform: scale(1.25) translate(-10%, -54px);
   }
+  /* Self-hosted cover image — fills the same 4:5 frame, no crop maths needed */
+  .mood-media .mood-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   /* The iframe swallows pointer events, so this sits over it and makes the
      whole tile a single link rather than an embed the visitor gets stuck in. */
   .mood-veil { position: absolute; inset: 0; }
@@ -1569,19 +1598,52 @@ const faqs = [
     }
   }
 
-  // ── 1c. Show-all buttons ───────────────────────────────────────────
-  // Only six embeds load initially. Revealing the rest also assigns their
-  // src, so nothing beyond the first six costs a request until asked for.
+  // ── 1c. Staggered embed loading ────────────────────────────────────
+  // Instagram's embeds blank out when a page hits their servers with a
+  // burst of requests at once. So instead of every visible iframe loading
+  // simultaneously, they queue and load one every ~450ms. A tile is only
+  // queued once it nears the viewport, so off-screen ones cost nothing.
+  const loadQueue: HTMLIFrameElement[] = [];
+  let draining = false;
+  const drain = () => {
+    if (draining) return;
+    draining = true;
+    const step = () => {
+      const frame = loadQueue.shift();
+      if (!frame) { draining = false; return; }
+      frame.src = frame.dataset.src!;
+      frame.removeAttribute('data-src');
+      window.setTimeout(step, 450);
+    };
+    step();
+  };
+
+  const queueFrame = (frame: HTMLIFrameElement) => {
+    if (!frame.dataset.src || loadQueue.includes(frame)) return;
+    loadQueue.push(frame);
+    drain();
+  };
+
+  const embedIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const card = entry.target as HTMLElement;
+      if (card.classList.contains('is-deferred')) return; // wait for Show all
+      const frame = card.querySelector<HTMLIFrameElement>('iframe[data-src]');
+      if (frame) { queueFrame(frame); embedIO.unobserve(card); }
+    });
+  }, { rootMargin: '600px 0px' });
+
+  document.querySelectorAll<HTMLElement>('.film-card, .mood-tile')
+    .forEach((card) => { if (card.querySelector('iframe[data-src]')) embedIO.observe(card); });
+
+  // Show-all reveals the deferred embeds and lets them queue as normal.
   document.querySelectorAll<HTMLButtonElement>('[data-more-btn]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const scope = btn.dataset.moreBtn === 'mood' ? '.mood-tile' : '.film-card';
       document.querySelectorAll<HTMLElement>(`${scope}.is-deferred`).forEach((card) => {
-        const frame = card.querySelector<HTMLIFrameElement>('iframe[data-src]');
-        if (frame) {
-          frame.src = frame.dataset.src!;
-          frame.removeAttribute('data-src');
-        }
         card.classList.remove('is-deferred');
+        embedIO.observe(card);
       });
       btn.remove();
     });
