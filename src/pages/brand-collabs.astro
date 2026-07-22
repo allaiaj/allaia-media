@@ -140,19 +140,20 @@ try {
     .sort()
     .map((f) => `/video/hero/${f}`);
 } catch { /* folder not created yet — marquee stays hidden */ }
-// Three vertical columns for the hero wall. Each column takes a rotated
-// WINDOW of the clips (different per column, so no two columns show the same
-// reel side by side) — a small window keeps the number of simultaneously
-// playing videos down. Each window is duplicated once for a seamless loop.
-const rotate = <T,>(arr: T[], n: number): T[] =>
-  arr.length ? Array.from({ length: arr.length }, (_, i) => arr[(i + n) % arr.length]) : [];
-const windowOf = (n: number, size = 3) => rotate(heroClips, n).slice(0, Math.min(size, heroClips.length));
+// Three vertical columns for the hero wall. The clips are split into DISJOINT
+// windows — column 0 gets the first N, column 1 the next N, and so on — so no
+// two columns ever show the same reel at the same moment. Window size scales
+// with how many clips exist (2 each at 6 clips, 3 at 9, capped at 4), and each
+// window is duplicated once for a seamless loop.
+const HERO_COLS = 3;
+const heroWindow = Math.min(4, Math.max(2, Math.floor(heroClips.length / HERO_COLS)));
+const windowFor = (c: number) =>
+  Array.from({ length: heroWindow }, (_, i) => heroClips[(c * heroWindow + i) % heroClips.length]);
 const heroColumns = heroClips.length
-  ? [
-      { dir: 'up' as const, clips: [...windowOf(0), ...windowOf(0)] },
-      { dir: 'down' as const, clips: [...windowOf(2), ...windowOf(2)] },
-      { dir: 'up' as const, clips: [...windowOf(4), ...windowOf(4)] },
-    ]
+  ? Array.from({ length: HERO_COLS }, (_, c) => ({
+      dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down',
+      clips: [...windowFor(c), ...windowFor(c)],
+    }))
   : [];
 
 // A carousel tile uses a self-hosted cover image when one exists — instant,
