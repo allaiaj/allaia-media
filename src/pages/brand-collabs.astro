@@ -140,20 +140,18 @@ try {
     .sort()
     .map((f) => `/video/hero/${f}`);
 } catch { /* folder not created yet — marquee stays hidden */ }
-// Three vertical columns for the hero wall. The clips are split into DISJOINT
-// windows — column 0 gets the first N, column 1 the next N, and so on — so no
-// two columns ever show the same reel at the same moment. Window size scales
-// with how many clips exist (2 each at 6 clips, 3 at 9, capped at 4), and each
-// window is duplicated once for a seamless loop.
+// Three vertical columns for the hero wall. Clips are dealt round-robin across
+// the columns (col 0 gets clips 0,3,6…, col 1 gets 1,4,7…, col 2 gets 2,5,8…),
+// so every clip is used exactly once and no two columns ever show the same reel
+// — at any clip count, with none left over. Each column is duplicated once for
+// a seamless loop, and short columns still fill because one clip already
+// overflows the frame height.
 const HERO_COLS = 3;
-const heroWindow = Math.min(4, Math.max(2, Math.floor(heroClips.length / HERO_COLS)));
-const windowFor = (c: number) =>
-  Array.from({ length: heroWindow }, (_, i) => heroClips[(c * heroWindow + i) % heroClips.length]);
 const heroColumns = heroClips.length
-  ? Array.from({ length: HERO_COLS }, (_, c) => ({
-      dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down',
-      clips: [...windowFor(c), ...windowFor(c)],
-    }))
+  ? Array.from({ length: HERO_COLS }, (_, c) => {
+      const own = heroClips.filter((_, i) => i % HERO_COLS === c);
+      return { dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down', clips: [...own, ...own] };
+    })
   : [];
 
 // A carousel tile uses a self-hosted cover image when one exists — instant,
