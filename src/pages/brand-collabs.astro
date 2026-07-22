@@ -132,13 +132,18 @@ const hasClip = (code: string): boolean =>
 // Hero marquee clips — every mp4 dropped in public/video/hero/ scrolls
 // across the top of the page. Reads the folder at build so new clips
 // appear just by adding a file; the marquee hides itself when empty.
+//
+// HERO_ORDER sets the lead sequence (by filename, no extension). Listed
+// clips come first in that order; anything not listed follows in file order.
+const HERO_ORDER = ['01', '02', '04'];
 let heroClips: string[] = [];
 try {
   const dir = new URL('../../public/video/hero/', import.meta.url);
-  heroClips = fs.readdirSync(dir)
-    .filter((f) => /\.(mp4|webm|mov)$/i.test(f))
-    .sort()
-    .map((f) => `/video/hero/${f}`);
+  const files = fs.readdirSync(dir).filter((f) => /\.(mp4|webm|mov)$/i.test(f)).sort();
+  const base = (f: string) => f.replace(/\.[^.]+$/, '');
+  const lead = HERO_ORDER.map((n) => files.find((f) => base(f) === n)).filter(Boolean) as string[];
+  const rest = files.filter((f) => !HERO_ORDER.includes(base(f)));
+  heroClips = [...lead, ...rest].map((f) => `/video/hero/${f}`);
 } catch { /* folder not created yet — marquee stays hidden */ }
 // Three vertical columns for the hero wall. Clips are dealt round-robin across
 // the columns (col 0 gets clips 0,3,6…, col 1 gets 1,4,7…, col 2 gets 2,5,8…),
