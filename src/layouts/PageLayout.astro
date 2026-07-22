@@ -28,7 +28,7 @@ const hasHeroMedia = Astro.slots.has('hero');
         style="background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);"
       ></div>
     </div>
-    <div class={`mx-auto max-w-6xl px-6 ${hasHeroMedia ? 'grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-14 items-start' : ''}`}>
+    <div class={`mx-auto max-w-6xl px-6 ${hasHeroMedia ? 'grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-14 items-center' : ''}`}>
       <div>
         {eyebrow && <p class="reveal eyebrow mb-6">{eyebrow}</p>}
         <h1 class={`reveal max-w-4xl ${hasHeroMedia ? 'display-md' : 'display-lg'}`}>
