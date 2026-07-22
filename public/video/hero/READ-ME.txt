@@ -1,0 +1,12 @@
+HERO MARQUEE CLIPS
+==================
+Every MP4 dropped in this folder scrolls across the top of the
+brand-collabs page as a moving marquee - autoplay, muted, looping.
+
+Just drop the files in (any name). The marquee sorts them alphabetically
+and hides itself entirely until at least one clip is here, so nothing
+looks broken while it is empty.
+
+Best results: short vertical clips (6-10s, 9:16), full quality - I
+compress them here to ~200-400KB each. Six or more fills the strip
+without an obvious repeat.

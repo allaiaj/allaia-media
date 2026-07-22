@@ -129,6 +129,20 @@ const fmtEng = (n: number): string =>
 const hasClip = (code: string): boolean =>
   fs.existsSync(new URL(`../../public/video/collabs/${code}.mp4`, import.meta.url));
 
+// Hero marquee clips — every mp4 dropped in public/video/hero/ scrolls
+// across the top of the page. Reads the folder at build so new clips
+// appear just by adding a file; the marquee hides itself when empty.
+let heroClips: string[] = [];
+try {
+  const dir = new URL('../../public/video/hero/', import.meta.url);
+  heroClips = fs.readdirSync(dir)
+    .filter((f) => /\.(mp4|webm|mov)$/i.test(f))
+    .sort()
+    .map((f) => `/video/hero/${f}`);
+} catch { /* folder not created yet — marquee stays hidden */ }
+// Duplicate the set so the strip can loop seamlessly (needs a few to fill).
+const heroLoop = heroClips.length ? [...heroClips, ...heroClips] : [];
+
 // A carousel tile uses a self-hosted cover image when one exists — instant,
 // reliable, no dependency on Instagram's flaky embed. Drop a JPG at
 // public/img/collabs/carousel/<code>.jpg and that tile upgrades on build.
@@ -341,6 +355,27 @@ const faqs = [
   byline="Built to this size in 4 months · by personal inquiry · I reply within a day"
   showNewsletter={false}
 >
+  {heroLoop.length > 0 && (
+    <!-- ── Hero video marquee — brand work in motion ── -->
+    <section class="hero-marquee reveal" aria-label="Brand work in motion" data-hero-marquee>
+      <div class="hero-marquee-track">
+        {heroLoop.map((src, i) => (
+          <div class="hero-clip">
+            <video
+              src={src}
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-hidden={i >= heroClips.length ? 'true' : undefined}
+              data-hero-video
+            ></video>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
   <!-- ── Brands already featured ── -->
   <div class="mx-auto max-w-6xl px-6">
     <section class="reveal">
@@ -1043,6 +1078,47 @@ const faqs = [
      their Instagram embeds never load on first paint. */
   .is-deferred { display: none; }
 
+  /* ── Hero video marquee ── */
+  .hero-marquee {
+    position: relative;
+    margin: -1rem 0 1rem;      /* sit tight under the hero header */
+    overflow: hidden;
+    /* fade the two edges so clips drift in and out rather than hard-cut */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .hero-marquee-track {
+    display: flex;
+    gap: 0.9rem;
+    width: max-content;
+    padding-inline: 0.9rem;
+    animation: hero-scroll 60s linear infinite;
+  }
+  .hero-marquee:hover .hero-marquee-track { animation-play-state: paused; }
+  .hero-clip {
+    flex: 0 0 auto;
+    width: clamp(150px, 15vw, 232px);
+    aspect-ratio: 9 / 16;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    background: #1F1B16;
+    border: 1px solid rgba(28, 26, 23, 0.07);
+    box-shadow: 0 24px 60px -30px rgba(28, 26, 23, 0.4);
+  }
+  .hero-clip video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @keyframes hero-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-marquee-track { animation: none; }
+  }
+
   /* ── Carousel moodboard ── */
   .mood-grid {
     display: grid;
@@ -1596,6 +1672,21 @@ const faqs = [
       }, { threshold: 0.25 });
       clips.forEach((v) => clipIO.observe(v));
     }
+  }
+
+  // ── 1a2. Hero marquee — play clips only while the strip is on screen ─
+  const heroMarquee = document.querySelector<HTMLElement>('[data-hero-marquee]');
+  if (heroMarquee && !reduceMotion) {
+    const heroVids = heroMarquee.querySelectorAll<HTMLVideoElement>('[data-hero-video]');
+    const heroIO = new IntersectionObserver((entries) => {
+      const onScreen = entries[0]?.isIntersecting;
+      heroVids.forEach((v) => {
+        v.muted = true;
+        if (onScreen) v.play().catch(() => { /* autoplay refused — poster frame stays */ });
+        else v.pause();
+      });
+    }, { threshold: 0.05 });
+    heroIO.observe(heroMarquee);
   }
 
   // ── 1c. Staggered embed loading ────────────────────────────────────
