@@ -146,7 +146,7 @@ try {
 // — at any clip count, with none left over. Each column is duplicated once for
 // a seamless loop, and short columns still fill because one clip already
 // overflows the frame height.
-const HERO_COLS = 3;
+const HERO_COLS = 2;
 const heroColumns = heroClips.length
   ? Array.from({ length: HERO_COLS }, (_, c) => {
       const own = heroClips.filter((_, i) => i % HERO_COLS === c);
