@@ -140,8 +140,12 @@ try {
     .sort()
     .map((f) => `/video/hero/${f}`);
 } catch { /* folder not created yet — marquee stays hidden */ }
-// Duplicate the set so the strip can loop seamlessly (needs a few to fill).
-const heroLoop = heroClips.length ? [...heroClips, ...heroClips] : [];
+// Two vertical columns for the hero — one drifts up, one down. Each set is
+// duplicated so the scroll loops seamlessly, and the columns are offset so
+// the same clip is rarely level with itself.
+const heroColUp = heroClips.length ? [...heroClips, ...heroClips] : [];
+const heroRev = [...heroClips].reverse();
+const heroColDown = heroClips.length ? [...heroRev, ...heroRev] : [];
 
 // A carousel tile uses a self-hosted cover image when one exists — instant,
 // reliable, no dependency on Instagram's flaky embed. Drop a JPG at
@@ -355,25 +359,28 @@ const faqs = [
   byline="Built to this size in 4 months · by personal inquiry · I reply within a day"
   showNewsletter={false}
 >
-  {heroLoop.length > 0 && (
-    <!-- ── Hero video marquee — brand work in motion ── -->
-    <section class="hero-marquee reveal" aria-label="Brand work in motion" data-hero-marquee>
-      <div class="hero-marquee-track">
-        {heroLoop.map((src, i) => (
-          <div class="hero-clip">
-            <video
-              src={src}
-              muted
-              loop
-              playsinline
-              preload="none"
-              aria-hidden={i >= heroClips.length ? 'true' : undefined}
-              data-hero-video
-            ></video>
-          </div>
-        ))}
+  {heroColUp.length > 0 && (
+    <!-- ── Hero video wall — two columns of brand work, drifting ── -->
+    <div slot="hero" class="hero-wall" aria-label="Brand work in motion" data-hero-marquee>
+      <div class="hero-col">
+        <div class="hero-col-track hero-track-up">
+          {heroColUp.map((src) => (
+            <div class="hero-clip">
+              <video src={src} muted loop playsinline preload="none" data-hero-video></video>
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+      <div class="hero-col hero-col-b">
+        <div class="hero-col-track hero-track-down">
+          {heroColDown.map((src) => (
+            <div class="hero-clip">
+              <video src={src} muted loop playsinline preload="none" aria-hidden="true" data-hero-video></video>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   )}
 
   <!-- ── Brands already featured ── -->
@@ -1078,26 +1085,31 @@ const faqs = [
      their Instagram embeds never load on first paint. */
   .is-deferred { display: none; }
 
-  /* ── Hero video marquee ── */
-  .hero-marquee {
+  /* ── Hero video wall — two vertical columns inside the hero ── */
+  .hero-wall {
     position: relative;
-    margin: -1rem 0 1rem;      /* sit tight under the hero header */
-    overflow: hidden;
-    /* fade the two edges so clips drift in and out rather than hard-cut */
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-  }
-  .hero-marquee-track {
     display: flex;
     gap: 0.9rem;
-    width: max-content;
-    padding-inline: 0.9rem;
-    animation: hero-scroll 60s linear infinite;
+    height: clamp(400px, 56vh, 560px);
+    overflow: hidden;
+    /* fade top and bottom so clips drift in and out */
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
   }
-  .hero-marquee:hover .hero-marquee-track { animation-play-state: paused; }
+  .hero-col { flex: 1 1 0; overflow: hidden; }
+  .hero-col-track {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .hero-track-up   { animation: hero-up 34s linear infinite; }
+  .hero-track-down { animation: hero-down 34s linear infinite; }
+  /* second column starts mid-cycle so the two sides stay out of sync */
+  .hero-col-b .hero-col-track { animation-delay: -17s; }
+  .hero-wall:hover .hero-col-track { animation-play-state: paused; }
   .hero-clip {
     flex: 0 0 auto;
-    width: clamp(150px, 15vw, 232px);
+    width: 100%;
     aspect-ratio: 9 / 16;
     border-radius: 1.1rem;
     overflow: hidden;
@@ -1105,18 +1117,11 @@ const faqs = [
     border: 1px solid rgba(28, 26, 23, 0.07);
     box-shadow: 0 24px 60px -30px rgba(28, 26, 23, 0.4);
   }
-  .hero-clip video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  @keyframes hero-scroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
+  .hero-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @keyframes hero-up   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
+  @keyframes hero-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
   @media (prefers-reduced-motion: reduce) {
-    .hero-marquee-track { animation: none; }
+    .hero-track-up, .hero-track-down { animation: none; }
   }
 
   /* ── Carousel moodboard ── */

@@ -14,6 +14,10 @@ interface Props {
 }
 
 const { title, description, eyebrow, heading, italic, lead, byline, noindex = false, showNewsletter = true } = Astro.props;
+
+// When a page supplies hero media (e.g. a video marquee), the hero becomes
+// a two-column split so the media sits alongside the text and stays in view.
+const hasHeroMedia = Astro.slots.has('hero');
 ---
 
 <BaseLayout title={title} description={description} noindex={noindex} showNewsletter={showNewsletter}>
@@ -24,17 +28,24 @@ const { title, description, eyebrow, heading, italic, lead, byline, noindex = fa
         style="background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);"
       ></div>
     </div>
-    <div class="mx-auto max-w-6xl px-6">
-      {eyebrow && <p class="reveal eyebrow mb-6">{eyebrow}</p>}
-      <h1 class="reveal display-lg max-w-4xl">
-        {heading}
-        {italic && <> <span class="italic-grad">{italic}</span></>}
-      </h1>
-      {lead && <p class="reveal serif-lg text-ink-soft mt-7 max-w-prose">{lead}</p>}
-      {byline && (
-        <p class="reveal byline text-ink-mute mt-10 pt-6 border-t border-ink/8 max-w-3xl">
-          {byline}
-        </p>
+    <div class={`mx-auto max-w-6xl px-6 ${hasHeroMedia ? 'grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center' : ''}`}>
+      <div>
+        {eyebrow && <p class="reveal eyebrow mb-6">{eyebrow}</p>}
+        <h1 class="reveal display-lg max-w-4xl">
+          {heading}
+          {italic && <> <span class="italic-grad">{italic}</span></>}
+        </h1>
+        {lead && <p class="reveal serif-lg text-ink-soft mt-7 max-w-prose">{lead}</p>}
+        {byline && (
+          <p class="reveal byline text-ink-mute mt-10 pt-6 border-t border-ink/8 max-w-3xl">
+            {byline}
+          </p>
+        )}
+      </div>
+      {hasHeroMedia && (
+        <div class="reveal">
+          <slot name="hero" />
+        </div>
       )}
     </div>
   </header>
