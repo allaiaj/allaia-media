@@ -145,17 +145,16 @@ try {
   const rest = files.filter((f) => !HERO_ORDER.includes(base(f)));
   heroClips = [...lead, ...rest].map((f) => `/video/hero/${f}`);
 } catch { /* folder not created yet — marquee stays hidden */ }
-// Two horizontal rows for the hero moodboard. Clips are split across the rows
-// (row 0 gets the even-indexed clips, row 1 the odd) so the two rows never show
-// the same reel at once, then each row is duplicated for a seamless loop. Row 0
-// drifts left, row 1 drifts right.
-const heroRowA = heroClips.filter((_, i) => i % 2 === 0);
-const heroRowB = heroClips.filter((_, i) => i % 2 === 1);
-const heroRows = heroClips.length
-  ? [
-      { dir: 'left' as const, clips: [...heroRowA, ...heroRowA] },
-      { dir: 'right' as const, clips: [...heroRowB, ...heroRowB] },
-    ]
+// Two vertical columns for the hero wall on the side of the text. Clips are
+// dealt round-robin (col 0 gets clips 0,2,4…, col 1 gets 1,3,5…) so the two
+// columns never show the same reel at once, then each column is duplicated for
+// a seamless loop. Col 0 drifts up, col 1 down.
+const HERO_COLS = 2;
+const heroColumns = heroClips.length
+  ? Array.from({ length: HERO_COLS }, (_, c) => {
+      const own = heroClips.filter((_, i) => i % HERO_COLS === c);
+      return { dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down', clips: [...own, ...own] };
+    })
   : [];
 
 // A carousel tile uses a self-hosted cover image when one exists — instant,
@@ -370,15 +369,15 @@ const faqs = [
   byline="Built to this size in 4 months · by personal inquiry · I reply within a day"
   showNewsletter={false}
 >
-  {heroRows.length > 0 && (
-    <!-- ── Hero moodboard — two horizontal rows of brand work, drifting ── -->
-    <div slot="hero" class="hero-strip" aria-label="Brand work in motion" data-hero-marquee>
-      {heroRows.map((row, r) => (
-        <div class="hero-strip-row">
-          <div class={`hero-strip-track hero-strip-${row.dir}`}>
-            {row.clips.map((src) => (
-              <div class="hero-tile">
-                <video src={src} muted loop playsinline preload="none" aria-hidden={r > 0 ? 'true' : undefined} data-hero-video></video>
+  {heroColumns.length > 0 && (
+    <!-- ── Hero video wall — two vertical columns beside the text ── -->
+    <div slot="hero" class="hero-wall" aria-label="Brand work in motion" data-hero-marquee>
+      {heroColumns.map((col, c) => (
+        <div class={`hero-col hero-col-${c}`}>
+          <div class={`hero-col-track hero-track-${col.dir}`}>
+            {col.clips.map((src) => (
+              <div class="hero-clip">
+                <video src={src} muted loop playsinline preload="none" aria-hidden={c > 0 ? 'true' : undefined} data-hero-video></video>
               </div>
             ))}
           </div>
@@ -1089,40 +1088,34 @@ const faqs = [
      their Instagram embeds never load on first paint. */
   .is-deferred { display: none; }
 
-  /* ── Hero moodboard — two horizontal rows of drifting reels ── */
-  .hero-strip {
-    /* full-bleed: break out of the hero's max-w-6xl container */
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
+  /* ── Hero video wall — two vertical columns beside the text ── */
+  .hero-wall {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    gap: clamp(0.6rem, 1vw, 1rem);
+    gap: 0.9rem;
+    height: clamp(460px, 68vh, 700px);
     overflow: hidden;
   }
-  .hero-strip-row { overflow: hidden; }
-  .hero-strip-track {
-    display: flex;
-    gap: clamp(0.6rem, 1vw, 1rem);
-    width: max-content;
-  }
-  .hero-strip-left  { animation: hero-left 46s linear infinite; }
-  .hero-strip-right { animation: hero-right 46s linear infinite; }
-  .hero-strip:hover .hero-strip-track { animation-play-state: paused; }
-  .hero-tile {
+  .hero-col { flex: 1 1 0; overflow: hidden; }
+  .hero-col-track { display: flex; flex-direction: column; gap: 0.9rem; }
+  .hero-track-up   { animation: hero-up 40s linear infinite; }
+  .hero-track-down { animation: hero-down 40s linear infinite; }
+  .hero-col-1 .hero-col-track { animation-delay: -13s; }
+  .hero-wall:hover .hero-col-track { animation-play-state: paused; }
+  @media (max-width: 640px) { .hero-col-1 { display: none; } }
+  .hero-clip {
     flex: 0 0 auto;
-    height: clamp(240px, 32vh, 380px);
+    width: 100%;
     aspect-ratio: 9 / 16;
     border-radius: 1rem;
     overflow: hidden;
-    background: #1F1B16;
-    border: 1px solid rgba(28, 26, 23, 0.07);
-    box-shadow: 0 22px 50px -28px rgba(28, 26, 23, 0.38);
+    /* no border and no dark fill — the video is the whole tile */
   }
-  .hero-tile video { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @keyframes hero-left  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
-  @keyframes hero-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  .hero-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @keyframes hero-up   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
+  @keyframes hero-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
   @media (prefers-reduced-motion: reduce) {
-    .hero-strip-left, .hero-strip-right { animation: none; }
+    .hero-track-up, .hero-track-down { animation: none; }
   }
 
   /* ── Carousel moodboard ── */
