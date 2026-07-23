@@ -28,24 +28,23 @@ const hasHeroMedia = Astro.slots.has('hero');
         style="background: radial-gradient(circle, rgba(184,85,66,0.4), transparent 70%);"
       ></div>
     </div>
-    <div class={`mx-auto max-w-6xl px-6 ${hasHeroMedia ? 'grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-14 items-center' : ''}`}>
-      <div>
-        {eyebrow && <p class="reveal eyebrow mb-6">{eyebrow}</p>}
-        <h1 class={`reveal max-w-4xl ${hasHeroMedia ? 'display-md' : 'display-lg'}`}>
-          {heading}
-          {italic && <> <span class="italic-grad">{italic}</span></>}
-        </h1>
-        {lead && <p class="reveal serif-lg text-ink-soft mt-7 max-w-prose">{lead}</p>}
-        {byline && (
-          <p class="reveal byline text-ink-mute mt-10 pt-6 border-t border-ink/8 max-w-3xl">
-            {byline}
-          </p>
-        )}
+    {/* Full-bleed hero media leads the hero (e.g. a horizontal video moodboard) */}
+    {hasHeroMedia && (
+      <div class="reveal mb-12 sm:mb-16">
+        <slot name="hero" />
       </div>
-      {hasHeroMedia && (
-        <div class="reveal">
-          <slot name="hero" />
-        </div>
+    )}
+    <div class="mx-auto max-w-6xl px-6">
+      {eyebrow && <p class="reveal eyebrow mb-6">{eyebrow}</p>}
+      <h1 class="reveal display-lg max-w-4xl">
+        {heading}
+        {italic && <> <span class="italic-grad">{italic}</span></>}
+      </h1>
+      {lead && <p class="reveal serif-lg text-ink-soft mt-7 max-w-prose">{lead}</p>}
+      {byline && (
+        <p class="reveal byline text-ink-mute mt-10 pt-6 border-t border-ink/8 max-w-3xl">
+          {byline}
+        </p>
       )}
     </div>
   </header>
