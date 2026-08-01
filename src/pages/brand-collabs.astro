@@ -190,6 +190,9 @@ const featuredFilms = [
   // is unconfirmed rather than guessed.
   { brand: 'The Iggy Bali', note: 'Bali', code: 'DYv4c-YMHFR', views: 40531, saves: 252, sends: 202 , likes: 1600},
   { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 98959, saves: 246, sends: 1100 , likes: 3700},
+  // Self-hosted clip (no Instagram post): plays from public/video/collabs.
+  // `self: true` marks it so no "Open on Instagram" link is rendered.
+  { brand: 'Quora Medical Wellness', note: 'Wellness clinic · Bangkok', code: 'quora-medical-wellness', self: true, views: null, saves: null, sends: null, likes: null },
   // Carousel posts rather than reels — Instagram serves those under /p/.
   { brand: 'Dior Beauty', note: 'Beauty · carousel', code: 'DM0d0OMP4Qn', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Amazónico Dubai', note: 'Restaurant · Dubai', code: 'DWO6qQkiFcT', kind: 'p', views: null, saves: null, sends: null },
@@ -397,7 +400,7 @@ const faqs = [
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {reels.map((f, i) => {
-          const igPath = `https://www.instagram.com/reel/${f.code}/`;
+          const igPath = f.self ? null : `https://www.instagram.com/reel/${f.code}/`;
           // Only the first six embed on load. The rest hold their URL in
           // data-src and cost nothing until the visitor asks for them.
           const deferred = i >= 6;
@@ -460,14 +463,16 @@ const faqs = [
                 </div>
               )}
 
-              <a
-                href={igPath}
-                target="_blank"
-                rel="noopener"
-                class="brand-link mt-5"
-              >
-                Open on Instagram <ArrowUpRight size={11} />
-              </a>
+              {igPath && (
+                <a
+                  href={igPath}
+                  target="_blank"
+                  rel="noopener"
+                  class="brand-link mt-5"
+                >
+                  Open on Instagram <ArrowUpRight size={11} />
+                </a>
+              )}
             </div>
           </article>
           );
