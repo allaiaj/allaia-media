@@ -186,7 +186,7 @@ export const book = {
 
 // The Architecture — 1:1 private practice
 export const architecture = {
-  eyebrow: '1:1 PERSONAL BRAND PRACTICE · 12 WEEKS · BY APPLICATION',
+  eyebrow: '1:1 PERSONAL BRAND PRACTICE · 12 WEEKS · BY SELECTION',
   heading: {
     pre: 'Impact, freedom, and a life',
     italic: 'that feels like a vacation.',
@@ -194,7 +194,7 @@ export const architecture = {
   lead:
     'Twelve weeks of 1:1 work — the inner and the outer. The morning and evening routines that make you her, the limiting beliefs you finally put down, and the positioning, voice and rhythm that turn it into a personal brand. So you can leave the 9-to-5, earn from what you love, and wake up somewhere that feels like a vacation — no matter what niche you choose. Plus I teach you to set up your own system for pitching brands and getting paid.',
   lead2:
-    'By application. The room is kept curated — on purpose.',
+    'By selection. I take on only the few I see real potential in — the room is kept curated on purpose.',
   chapters: [
     {
       n: '01',
@@ -240,10 +240,10 @@ export const architecture = {
   format: { label: 'Format', value: 'Weekly 1:1' },
   length: { label: 'Length', value: '12 weeks' },
   seats: { label: 'Seats', value: '4 / cohort' },
-  access: { label: 'Access', value: 'By application' },
+  access: { label: 'Access', value: 'By selection' },
   intake: { label: 'Intake', value: 'Quarterly cohorts' },
   closing:
-    'The goal is a life you would choose on purpose — off the 9-to-5, paid to do what you love, waking somewhere that feels like a vacation, with a name that carries real impact. I have built exactly that between Bali and Dubai, and The Architecture is the method behind it. The room is kept curated so the work can go deep.',
+    'The goal is a life you would choose on purpose — off the 9-to-5, paid to do what you love, waking somewhere that feels like a vacation, with a name that carries real impact. I have built exactly that between Bali and Dubai, and The Architecture is the method behind it. I take on only the few I see real potential in, so the room stays curated and the work can go deep.',
   cta: {
     label: 'Apply for The Architecture',
     // Mailto application — Allaia reads and replies personally.
@@ -425,9 +425,9 @@ export const closingTiles = [
     external: true,
   },
   {
-    eyebrow: '1:1 PRACTICE',
+    eyebrow: '1:1 PERSONAL BRAND',
     title: 'The Architecture',
-    sub: 'Twelve weeks, four seats — by application',
+    sub: 'Twelve weeks, four seats — by selection',
     href: site.stan.application,
     external: true,
   },
