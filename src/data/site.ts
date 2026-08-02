@@ -156,7 +156,7 @@ export const editorialOpening = {
   eyebrow: 'The work',
   lead: 'I build personal brands.',
   sub: 'For impact. For freedom. For a life that feels like a vacation.',
-  body: 'The main work now is a private practice — twelve weeks, one to one — building your personal brand so you can leave the 9-to-5, make money from what you love, and live the life you actually dream about. Positioning, voice, rhythm, and the proof that follows.',
+  body: 'The main work now is a private practice — twelve weeks, one to one. First we build the woman: the morning and evening routines of becoming her, and the limiting beliefs you leave behind. Then the brand around her — positioning, voice, rhythm — so you can leave the 9-to-5, earn from what you love, and live the life you actually dream about, whatever your niche.',
   body2:
     'The goal is impact and freedom: income from your passion, a name that opens doors, and the kind of life where most days feel a little like a vacation. The book, the collaborations, the numbers — those are the receipts that the method works.',
   ctas: [
@@ -192,38 +192,50 @@ export const architecture = {
     italic: 'that feels like a vacation.',
   },
   lead:
-    'Twelve weeks of 1:1 work building your personal brand — so you can leave the 9-to-5 behind, make real money from what you actually love, and wake up somewhere that feels like a vacation. Positioning, voice, rhythm, and the proof. The impact and the income, on your own terms — not waiting on anyone’s permission.',
+    'Twelve weeks of 1:1 work — the inner and the outer. The morning and evening routines that make you her, the limiting beliefs you finally put down, and the positioning, voice and rhythm that turn it into a personal brand. So you can leave the 9-to-5, earn from what you love, and wake up somewhere that feels like a vacation — no matter what niche you choose. Plus the exact infrastructure I use to pitch brands and get paid.',
   lead2:
     'By application. The room is kept curated — on purpose.',
   chapters: [
     {
       n: '01',
+      title: 'Becoming',
+      body: 'The woman first — before the niche, before the content. The morning and evening routines that make her a daily practice, and the work of stepping out of the negative self-talk and limiting beliefs that keep you invisible. This part works no matter what you are building. You cannot post from a self you have not yet become.',
+    },
+    {
+      n: '02',
       title: 'Position',
       body: 'Who you are. Who you serve. What you stand for. We get the sentence right — the one a stranger repeats to a friend, the one that makes you the obvious choice.',
     },
     {
-      n: '02',
+      n: '03',
       title: 'Voice',
       body: 'How you sound on the page, on camera, in the DMs. Not a brand voice doc — your actual voice, dialled up until people recognise it anywhere.',
     },
     {
-      n: '03',
+      n: '04',
       title: 'Rhythm',
       body: 'A weekly cadence that ships content without draining you. Hooks, scripts, the posts you have been afraid to publish — turned into a habit that compounds.',
     },
     {
-      n: '04',
+      n: '05',
       title: 'Receipts',
       body: 'The receipts of a life that pays for itself: income from your passion, inbound that actually qualifies, and the freedom to do the work from anywhere you want to wake up.',
     },
+    {
+      n: 'BONUS',
+      title: 'The brand-pitch infrastructure',
+      body: 'The exact system I built to land paid brand collaborations — the outreach, the media kit, the pitch that gets a yes. Handed to you, so your brand starts paying you back.',
+    },
   ],
   outcomes: [
+    'Morning and evening routines that make becoming her a daily practice',
+    'The limiting beliefs and negative self-talk — named, and finally put down',
     'A clear positioning — the line that makes you the obvious choice',
     'A voice that is recognisably yours — no house style',
     'A weekly rhythm you do not dread on a Sunday night',
     'Income from what you love — not a job you quietly tolerate',
-    'The freedom to work from anywhere — most days a little like a vacation',
-    'Impact and a name that opens rooms — a life you chose on purpose',
+    'The infrastructure to pitch brands and get paid — handed to you',
+    'Impact, freedom, and a life you chose on purpose — from anywhere',
   ],
   format: { label: 'Format', value: 'Weekly 1:1' },
   length: { label: 'Length', value: '12 weeks' },

@@ -38,23 +38,26 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
             style="background: linear-gradient(180deg, transparent, var(--color-terracotta) 12%, var(--color-terracotta-deep) 50%, var(--color-brown) 88%, transparent);"
             aria-hidden="true"
           ></div>
-          {architecture.chapters.map((c) => (
+          {architecture.chapters.map((c) => {
+            const isBonus = c.n === 'BONUS';
+            return (
             <li class="relative flex gap-5">
               <span
                 class="flex-none flex h-9 w-9 items-center justify-center rounded-full font-mono text-[0.7rem] tracking-wider text-cream relative z-10"
                 style="background: linear-gradient(135deg, var(--color-terracotta), var(--color-terracotta-deep)); box-shadow: 0 0 0 4px var(--color-cream), 0 8px 18px -4px rgba(184,85,66,0.45);"
               >
-                {c.n}
+                {isBonus ? '★' : c.n}
               </span>
               <div>
-                <p class="byline text-ink-mute mb-1">Chapter {c.n}</p>
+                <p class="byline text-ink-mute mb-1">{isBonus ? 'Bonus' : `Chapter ${c.n}`}</p>
                 <h3 class="font-display italic text-[1.75rem] sm:text-[2rem] text-ink mb-2 leading-tight">
                   <span class="italic-grad">{c.title}</span>
                 </h3>
                 <p class="serif-body text-ink-soft">{c.body}</p>
               </div>
             </li>
-          ))}
+            );
+          })}
         </ol>
       </div>
 
