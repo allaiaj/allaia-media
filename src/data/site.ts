@@ -192,7 +192,7 @@ export const architecture = {
     italic: 'that feels like a vacation.',
   },
   lead:
-    'Twelve weeks of 1:1 work — the inner and the outer. The morning and evening routines that make you her, the limiting beliefs you finally put down, and the positioning, voice and rhythm that turn it into a personal brand. So you can leave the 9-to-5, earn from what you love, and wake up somewhere that feels like a vacation — no matter what niche you choose. Plus the exact infrastructure I use to pitch brands and get paid.',
+    'Twelve weeks of 1:1 work — the inner and the outer. The morning and evening routines that make you her, the limiting beliefs you finally put down, and the positioning, voice and rhythm that turn it into a personal brand. So you can leave the 9-to-5, earn from what you love, and wake up somewhere that feels like a vacation — no matter what niche you choose. Plus I teach you to set up your own system for pitching brands and getting paid.',
   lead2:
     'By application. The room is kept curated — on purpose.',
   chapters: [
@@ -223,8 +223,8 @@ export const architecture = {
     },
     {
       n: 'BONUS',
-      title: 'The brand-pitch infrastructure',
-      body: 'The exact system I built to land paid brand collaborations — the outreach, the media kit, the pitch that gets a yes. Handed to you, so your brand starts paying you back.',
+      title: 'The brand-pitch setup',
+      body: 'I teach you to set up your own system for landing paid brand collaborations — the outreach, the media kit, the pitch that gets a yes — built the way I built mine, so your brand starts paying you back.',
     },
   ],
   outcomes: [
@@ -234,7 +234,7 @@ export const architecture = {
     'A voice that is recognisably yours — no house style',
     'A weekly rhythm you do not dread on a Sunday night',
     'Income from what you love — not a job you quietly tolerate',
-    'The infrastructure to pitch brands and get paid — handed to you',
+    'Your own system for pitching brands and getting paid — set up with me',
     'Impact, freedom, and a life you chose on purpose — from anywhere',
   ],
   format: { label: 'Format', value: 'Weekly 1:1' },
