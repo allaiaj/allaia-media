@@ -1,8 +1,20 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import Architecture from '@components/sections/Architecture.astro';
-import { architecture } from '@data/site';
+import { architecture, site } from '@data/site';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+// Application quiz — one question per step, submits to Allaia by email.
+const applyQuestions = [
+  { name: 'name', label: 'What should I call you?', type: 'text', required: true, placeholder: 'Your name' },
+  { name: 'email', label: 'Where can I reach you?', type: 'email', required: true, placeholder: 'you@email.com', hint: 'I reply to every application myself.' },
+  { name: 'instagram', label: 'Where do you live on Instagram?', type: 'text', required: false, placeholder: '@yourhandle' },
+  { name: 'based', label: 'Where in the world are you right now?', type: 'text', required: true, placeholder: 'City, country' },
+  { name: 'building', label: 'What are you building — in one sentence?', type: 'textarea', required: true, placeholder: 'One sentence is enough.' },
+  { name: 'now', label: 'Where are you actually at with it?', type: 'textarea', required: true, placeholder: 'The real version, not the LinkedIn one.' },
+  { name: 'blocked', label: 'What has felt blocked, hard, or unspeakable?', type: 'textarea', required: false, placeholder: 'Say the true thing.' },
+  { name: 'why', label: 'Why now?', type: 'textarea', required: true, placeholder: 'Why this, why now.' },
+];
 ---
 
 <PageLayout
@@ -36,9 +48,169 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
           </li>
         ))}
       </ul>
-      <a href={architecture.cta.href} target="_blank" rel="noopener" class="cta-dark">
+      <a href="#apply" class="cta-dark">
         {architecture.cta.label} <ArrowUpRight size={12} />
       </a>
     </div>
   </section>
+
+  <!-- ── Application quiz ── -->
+  <section id="apply" class="mx-auto max-w-2xl px-6 py-20 sm:py-28 scroll-mt-28">
+    <div class="reveal">
+      <p class="eyebrow mb-4">Apply · by selection</p>
+      <h2 class="display-md mb-3">Apply for <span class="italic-grad">The Architecture.</span></h2>
+      <p class="serif-body text-ink-soft mb-10 max-w-prose">
+        A few questions, one at a time. I read every application myself — I take on only the few I see real potential in.
+      </p>
+
+      <form
+        class="apply-quiz"
+        data-apply-form
+        action="https://formsubmit.co/allaiaj.luise@gmail.com"
+        method="POST"
+      >
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="Application — The Architecture" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <!-- honeypot -->
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="quiz-honey" />
+
+        <div class="quiz-top">
+          <span class="byline text-ink-mute" data-quiz-count>01 / {String(applyQuestions.length).padStart(2, '0')}</span>
+          <div class="quiz-bar" aria-hidden="true"><span class="quiz-bar-fill" data-quiz-fill></span></div>
+        </div>
+
+        {applyQuestions.map((q, i) => (
+          <div class="quiz-step" data-quiz-step={i}>
+            <label class="quiz-q" for={`q-${q.name}`}>
+              <span class="quiz-n">{String(i + 1).padStart(2, '0')}</span>
+              <span>{q.label}{!q.required && <em class="quiz-opt"> — optional</em>}</span>
+            </label>
+            {q.type === 'textarea' ? (
+              <textarea id={`q-${q.name}`} name={q.name} rows="3" placeholder={q.placeholder} required={q.required} class="quiz-input"></textarea>
+            ) : (
+              <input id={`q-${q.name}`} name={q.name} type={q.type} placeholder={q.placeholder} required={q.required} class="quiz-input" />
+            )}
+            {q.hint && <p class="quiz-hint">{q.hint}</p>}
+            <div class="quiz-nav">
+              {i > 0 && <button type="button" class="quiz-back" data-quiz-back>Back</button>}
+              {i < applyQuestions.length - 1 ? (
+                <button type="button" class="cta-dark quiz-next" data-quiz-next>Continue <ArrowUpRight size={11} /></button>
+              ) : (
+                <button type="submit" class="cta-dark quiz-submit">Apply now <ArrowUpRight size={11} /></button>
+              )}
+            </div>
+          </div>
+        ))}
+      </form>
+
+      <div class="apply-done" data-apply-done hidden>
+        <p class="eyebrow mb-4">Received</p>
+        <h3 class="display-sm mb-4">That’s with me now.</h3>
+        <p class="serif-body text-ink-soft max-w-prose">
+          I read every application myself. If I see it, you will hear from me — usually within a few days. No autoresponder, no funnel.
+        </p>
+      </div>
+
+      <p class="byline text-ink-mute mt-8">
+        Prefer email? <a href={site.stan.applicationMailto} class="border-b border-ink/25 hover:text-terracotta hover:border-terracotta transition-colors">Write to me directly.</a>
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .quiz-honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .quiz-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.25rem; }
+    .quiz-bar { flex: 1; height: 2px; border-radius: 9999px; background: rgba(28,26,23,0.1); overflow: hidden; }
+    .quiz-bar-fill { display: block; height: 100%; width: 12.5%; border-radius: 9999px;
+      background: linear-gradient(90deg, var(--color-terracotta), var(--color-terracotta-deep));
+      transition: width 0.5s cubic-bezier(0.22,0.61,0.36,1); }
+    .quiz-step { animation: quiz-in 0.45s cubic-bezier(0.22,0.61,0.36,1); }
+    .quiz-step.is-off { display: none; }
+    @keyframes quiz-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .quiz-q { display: flex; gap: 0.9rem; align-items: baseline;
+      font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+      line-height: 1.15; color: #1A1A1A; margin-bottom: 1.4rem; }
+    .quiz-n { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; color: #B85542; font-size: 0.9em; }
+    .quiz-opt { font-style: italic; color: #A89B8A; font-size: 0.62em; }
+    .quiz-input {
+      width: 100%; background: rgba(250,246,238,0.7); border: 1px solid rgba(28,26,23,0.14);
+      border-radius: 1rem; padding: 1rem 1.25rem; font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem; color: #1A1A1A; transition: border-color 0.35s, background 0.35s; resize: vertical;
+    }
+    .quiz-input::placeholder { color: #A89B8A; }
+    .quiz-input:focus { outline: none; border-color: var(--color-terracotta); background: #FAF6EE; }
+    .quiz-hint { margin-top: 0.6rem; font-size: 0.78rem; letter-spacing: 0.04em; color: #7A6F62; }
+    .quiz-nav { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.75rem; }
+    .quiz-back { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7A6F62;
+      background: none; border: none; cursor: pointer; transition: color 0.3s; }
+    .quiz-back:hover { color: #1A1A1A; }
+    .quiz-next, .quiz-submit { margin-left: auto; }
+    .apply-done { animation: quiz-in 0.5s cubic-bezier(0.22,0.61,0.36,1); }
+  </style>
+
+  <script>
+    const form = document.querySelector<HTMLFormElement>('[data-apply-form]');
+    if (form) {
+      const steps = Array.from(form.querySelectorAll<HTMLElement>('[data-quiz-step]'));
+      const countEl = form.querySelector<HTMLElement>('[data-quiz-count]');
+      const fillEl = form.querySelector<HTMLElement>('[data-quiz-fill]');
+      const doneEl = document.querySelector<HTMLElement>('[data-apply-done]');
+      const total = steps.length;
+      let current = 0;
+
+      const pad = (n: number) => String(n).padStart(2, '0');
+      const show = (i: number) => {
+        current = i;
+        steps.forEach((s, n) => s.classList.toggle('is-off', n !== i));
+        if (countEl) countEl.textContent = `${pad(i + 1)} / ${pad(total)}`;
+        if (fillEl) fillEl.style.width = `${((i + 1) / total) * 100}%`;
+        const field = steps[i].querySelector<HTMLElement>('input, textarea');
+        // focus the field without yanking the page around on load
+        window.setTimeout(() => field?.focus({ preventScroll: true }), 60);
+      };
+
+      // Validate the visible step's field before advancing.
+      const stepValid = (i: number) => {
+        const field = steps[i].querySelector<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
+        if (!field) return true;
+        if (!field.checkValidity()) { field.reportValidity(); return false; }
+        return true;
+      };
+
+      steps.forEach((step, i) => {
+        step.querySelector('[data-quiz-next]')?.addEventListener('click', () => {
+          if (stepValid(i)) show(i + 1);
+        });
+        step.querySelector('[data-quiz-back]')?.addEventListener('click', () => show(i - 1));
+        // Enter advances rather than submitting early (except the last textarea)
+        step.querySelector('input')?.addEventListener('keydown', (e) => {
+          if ((e as KeyboardEvent).key === 'Enter') { e.preventDefault(); if (stepValid(i)) show(i + 1); }
+        });
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!stepValid(current)) return;
+        const btn = form.querySelector<HTMLButtonElement>('.quiz-submit');
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        try {
+          const res = await fetch('https://formsubmit.co/ajax/allaiaj.luise@gmail.com', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          });
+          if (!res.ok) throw new Error('bad response');
+          form.style.display = 'none';
+          if (doneEl) { doneEl.hidden = false; doneEl.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+        } catch {
+          // Network/endpoint issue — fall back to a native submit.
+          form.submit();
+        }
+      });
+
+      show(0);
+    }
+  </script>
 </PageLayout>

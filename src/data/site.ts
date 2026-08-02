@@ -21,7 +21,10 @@ export const site = {
   stan: {
     base: 'https://stan.store/allaia',
     book: 'https://stan.store/allaia',
-    application:
+    // Application now routes to the on-page application quiz.
+    application: '/the-architecture#apply',
+    // Kept as a "prefer email?" fallback under the quiz.
+    applicationMailto:
       'mailto:allaiaj.luise@gmail.com' +
       '?subject=' + encodeURIComponent('Application — The Architecture') +
       '&body=' + encodeURIComponent(
@@ -244,35 +247,10 @@ export const architecture = {
   intake: { label: 'Intake', value: 'Quarterly cohorts' },
   closing:
     'The goal is a life you would choose on purpose — off the 9-to-5, paid to do what you love, waking somewhere that feels like a vacation, with a name that carries real impact. I have built exactly that between Bali and Dubai, and The Architecture is the method behind it. I take on only the few I see real potential in, so the room stays curated and the work can go deep.',
+  // CTA routes to the on-page application quiz (#apply on /the-architecture).
   cta: {
-    label: 'Apply for The Architecture',
-    // Mailto application — Allaia reads and replies personally.
-    // Body template prompts the applicant for the things she needs
-    // to make a real decision: who, where, what they're building.
-    href:
-      'mailto:allaiaj.luise@gmail.com' +
-      '?subject=' + encodeURIComponent('Application — The Architecture') +
-      '&body=' + encodeURIComponent(
-        [
-          'Hi Allaia,',
-          '',
-          'I would like to apply for The Architecture.',
-          '',
-          'Name —',
-          'Instagram —',
-          'Where I am based —',
-          '',
-          'What I am building, in a sentence —',
-          '',
-          'Where I am right now (the real version, not the LinkedIn one) —',
-          '',
-          'What has felt blocked, hard, or unspeakable —',
-          '',
-          'Why now —',
-          '',
-          'Thank you.',
-        ].join('\n')
-      ),
+    label: 'Apply now',
+    href: '/the-architecture#apply',
   },
 };
 
