@@ -155,10 +155,10 @@ export const heroBeats = {
 export const editorialOpening = {
   eyebrow: 'The work',
   lead: 'I build personal brands.',
-  sub: 'For impact. For success. For the women ready to be a name.',
-  body: 'The main work now is a private practice — twelve weeks, one to one — building your personal brand until it carries real weight. Positioning, voice, rhythm, and the proof that follows. Written for the women who are done being the best-kept secret in their field.',
+  sub: 'For impact. For freedom. For a life that feels like a vacation.',
+  body: 'The main work now is a private practice — twelve weeks, one to one — building your personal brand so you can leave the 9-to-5, make money from what you love, and live the life you actually dream about. Positioning, voice, rhythm, and the proof that follows.',
   body2:
-    'The goal is impact and the success that comes with it: a name that opens doors, an audience that actually buys, a reputation that compounds while you sleep. The book, the collaborations, the numbers — those are the receipts that the method works.',
+    'The goal is impact and freedom: income from your passion, a name that opens doors, and the kind of life where most days feel a little like a vacation. The book, the collaborations, the numbers — those are the receipts that the method works.',
   ctas: [
     { label: 'The Architecture', href: '/the-architecture', primary: true },
     { label: 'The book', href: '/book', primary: false },
@@ -188,11 +188,11 @@ export const book = {
 export const architecture = {
   eyebrow: '1:1 PERSONAL BRAND PRACTICE · 12 WEEKS · BY APPLICATION',
   heading: {
-    pre: 'Build a personal brand for',
-    italic: 'impact and success.',
+    pre: 'Impact, freedom, and a life',
+    italic: 'that feels like a vacation.',
   },
   lead:
-    'Twelve weeks of 1:1 work building your personal brand — the positioning, the voice, the rhythm, and the proof. Not a course. Not a community. The private, deliberate craft of becoming known for what you actually do, so the impact and the income stop waiting on permission.',
+    'Twelve weeks of 1:1 work building your personal brand — so you can leave the 9-to-5 behind, make real money from what you actually love, and wake up somewhere that feels like a vacation. Positioning, voice, rhythm, and the proof. The impact and the income, on your own terms — not waiting on anyone’s permission.',
   lead2:
     'By application. The room is kept curated — on purpose.',
   chapters: [
@@ -214,16 +214,16 @@ export const architecture = {
     {
       n: '04',
       title: 'Receipts',
-      body: 'The impact showing up in the numbers: an audience that pays attention, inbound that is actually qualified, a name that opens doors and gets googled before the meeting.',
+      body: 'The receipts of a life that pays for itself: income from your passion, inbound that actually qualifies, and the freedom to do the work from anywhere you want to wake up.',
     },
   ],
   outcomes: [
     'A clear positioning — the line that makes you the obvious choice',
     'A voice that is recognisably yours — no house style',
     'A weekly rhythm you do not dread on a Sunday night',
-    'On-camera ease — scripts, hooks, and the inner work behind them',
-    'Inbound that turns into income, not just likes',
-    'A name that opens rooms — the impact you have been building toward',
+    'Income from what you love — not a job you quietly tolerate',
+    'The freedom to work from anywhere — most days a little like a vacation',
+    'Impact and a name that opens rooms — a life you chose on purpose',
   ],
   format: { label: 'Format', value: 'Weekly 1:1' },
   length: { label: 'Length', value: '12 weeks' },
@@ -231,7 +231,7 @@ export const architecture = {
   access: { label: 'Access', value: 'By application' },
   intake: { label: 'Intake', value: 'Quarterly cohorts' },
   closing:
-    'The goal is impact and the success that follows it — a personal brand that carries real weight, opens real doors, and keeps compounding long after the twelve weeks. The room is kept curated so the work can go deep.',
+    'The goal is a life you would choose on purpose — off the 9-to-5, paid to do what you love, waking somewhere that feels like a vacation, with a name that carries real impact. I have built exactly that between Bali and Dubai, and The Architecture is the method behind it. The room is kept curated so the work can go deep.',
   cta: {
     label: 'Apply for The Architecture',
     // Mailto application — Allaia reads and replies personally.
