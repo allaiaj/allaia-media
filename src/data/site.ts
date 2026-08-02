@@ -129,13 +129,15 @@ export const identities = [
 ] as const;
 
 export const navItems = [
+  // The Architecture is the main offer — 1:1 personal-brand practice — so it
+  // leads the nav.
+  { label: 'The Architecture', href: '/the-architecture' },
   // The Studio → the in-site page that highlights Blacklyne + pops a
   // preview modal. The page itself CTAs to blacklyne.ai.
   { label: 'The Studio', href: '/the-studio' },
   { label: 'Book', href: '/book' },
   { label: 'Brand Collabs', href: '/brand-collabs' },
   { label: 'Press', href: '/press' },
-  { label: 'Coven', href: '/coven' },
   { label: 'About', href: '/about' },
 ] as const;
 
@@ -151,15 +153,15 @@ export const heroBeats = {
 };
 
 export const editorialOpening = {
-  eyebrow: 'A message from Allaia',
-  lead: 'Allaia.',
-  sub: 'Author. Operator. Artist. Free spirit.',
-  body: 'A free spirit, in motion. A life built between Dubai and Bali, between the studio and the canvas, between the rooms that ask of me. Written down for the women building one of their own.',
+  eyebrow: 'The work',
+  lead: 'I build personal brands.',
+  sub: 'For impact. For success. For the women ready to be a name.',
+  body: 'The main work now is a private practice — twelve weeks, one to one — building your personal brand until it carries real weight. Positioning, voice, rhythm, and the proof that follows. Written for the women who are done being the best-kept secret in their field.',
   body2:
-    'The work is identity-led. Slow. Quietly compounding. A book, a community, a private practice kept curated, and a life that moves on its own terms — because the women who buy from me are not buying an offer, they are buying the proof.',
+    'The goal is impact and the success that comes with it: a name that opens doors, an audience that actually buys, a reputation that compounds while you sleep. The book, the collaborations, the numbers — those are the receipts that the method works.',
   ctas: [
-    { label: 'The book', href: '/book', primary: true },
-    { label: 'The Architecture', href: site.stan.application, primary: false, external: true },
+    { label: 'The Architecture', href: '/the-architecture', primary: true },
+    { label: 'The book', href: '/book', primary: false },
   ],
 };
 
@@ -184,44 +186,44 @@ export const book = {
 
 // The Architecture — 1:1 private practice
 export const architecture = {
-  eyebrow: '1:1 PRACTICE · 12 WEEKS · BY APPLICATION',
+  eyebrow: '1:1 PERSONAL BRAND PRACTICE · 12 WEEKS · BY APPLICATION',
   heading: {
-    pre: 'For the women building it',
-    italic: 'underneath.',
+    pre: 'Build a personal brand for',
+    italic: 'impact and success.',
   },
   lead:
-    'Twelve weeks of 1:1 work with me. Not a course. Not a community. Not a Sunday-night Loom drop. A weekly call, a private thread, and the slow, deliberate craft of living your real life — fully, visibly, on your own terms.',
+    'Twelve weeks of 1:1 work building your personal brand — the positioning, the voice, the rhythm, and the proof. Not a course. Not a community. The private, deliberate craft of becoming known for what you actually do, so the impact and the income stop waiting on permission.',
   lead2:
     'By application. The room is kept curated — on purpose.',
   chapters: [
     {
       n: '01',
       title: 'Position',
-      body: 'Who you are. Who you serve. What you stand for. We get the sentence right — the one a stranger could repeat back to a friend and have it land.',
+      body: 'Who you are. Who you serve. What you stand for. We get the sentence right — the one a stranger repeats to a friend, the one that makes you the obvious choice.',
     },
     {
       n: '02',
       title: 'Voice',
-      body: 'How you sound on the page, on camera, in the DMs. Not a brand voice doc — your actual voice, dialled up.',
+      body: 'How you sound on the page, on camera, in the DMs. Not a brand voice doc — your actual voice, dialled up until people recognise it anywhere.',
     },
     {
       n: '03',
       title: 'Rhythm',
-      body: 'A weekly cadence that ships content without draining you. Hooks, scripts, the diary entries you have been afraid to publish.',
+      body: 'A weekly cadence that ships content without draining you. Hooks, scripts, the posts you have been afraid to publish — turned into a habit that compounds.',
     },
     {
       n: '04',
       title: 'Receipts',
-      body: 'Six months in: the audience that is actually paying attention, the inbound that is actually qualified, the name that is actually being googled.',
+      body: 'The impact showing up in the numbers: an audience that pays attention, inbound that is actually qualified, a name that opens doors and gets googled before the meeting.',
     },
   ],
   outcomes: [
-    'A clear positioning — the line a stranger could repeat back',
+    'A clear positioning — the line that makes you the obvious choice',
     'A voice that is recognisably yours — no house style',
     'A weekly rhythm you do not dread on a Sunday night',
-    'On-camera ease — scripts, hooks, the inner work behind them',
-    'A real life you actually want to be seen living',
-    'In your WhatsApp between calls — that is me',
+    'On-camera ease — scripts, hooks, and the inner work behind them',
+    'Inbound that turns into income, not just likes',
+    'A name that opens rooms — the impact you have been building toward',
   ],
   format: { label: 'Format', value: 'Weekly 1:1' },
   length: { label: 'Length', value: '12 weeks' },
@@ -229,7 +231,7 @@ export const architecture = {
   access: { label: 'Access', value: 'By application' },
   intake: { label: 'Intake', value: 'Quarterly cohorts' },
   closing:
-    'The work is becoming the woman who lives her real life — fully, visibly, with nothing left to prove. The room is kept curated so the work can go deep.',
+    'The goal is impact and the success that follows it — a personal brand that carries real weight, opens real doors, and keeps compounding long after the twelve weeks. The room is kept curated so the work can go deep.',
   cta: {
     label: 'Apply for The Architecture',
     // Mailto application — Allaia reads and replies personally.
