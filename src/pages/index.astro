@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import CinematicHero from '@components/sections/CinematicHero.astro';
+import OfferHero from '@components/sections/OfferHero.astro';
 import PortraitScrub from '@components/sections/PortraitScrub.astro';
 import EditorialOpening from '@components/sections/EditorialOpening.astro';
 import ChapterDivider from '@components/editorial/ChapterDivider.astro';
@@ -20,43 +20,18 @@ import ClosingTiles from '@components/sections/ClosingTiles.astro';
 ---
 
 <BaseLayout
-  title="Author, operator, artist"
-  description="Author of Become Her, out 2026. COO at Blacklyne. Artist at @allaia.art. Identity-led content for women who are tired of performing — and ready to do the slow, unsexy work of becoming who they actually are underneath."
+  title="1:1 personal brand coaching — build a brand that pays you to live"
+  description="Allaia builds personal brands, one to one. Twelve weeks — positioning, voice, the routines of becoming her, and the proof — so you leave the 9-to-5, earn from what you love, and live like every day feels like a vacation. By selection."
 >
-  <CinematicHero />
-  <PortraitScrub />
+  <OfferHero />
   <EditorialOpening />
 
-  <YouTubeFeatured />
-
   <ChapterDivider
-    numeral="I"
-    eyebrow="CHAPTER ONE · THE FOUNDATIONAL WORK"
-    title="The book."
-    italic="Slow letter, for the women already at it."
-    body="Five parts. Twenty-two chapters. The work everything else is downstream of."
-  />
-
-  <BookAnchor />
-  <BookStanEmbed />
-
-  <ChapterDivider
-    numeral="II"
-    eyebrow="CHAPTER TWO · THE FOUR EXPRESSIONS"
-    title="The work."
-    italic="Four expressions. One thesis."
-    body="Author. Operator. Artist. Creator. The four held together by a single line — identity is what compounds, performance does not."
-  />
-
-  <FourIdentities />
-  <OperatorSection />
-
-  <ChapterDivider
-    numeral="III"
-    eyebrow="CHAPTER THREE · THE ROOM"
-    title="The room."
-    italic="Curated, on purpose."
-    body="The 1:1 practice is kept small. The community is by application. The diary is for the women already doing the work — and the ones on the edge of it."
+    numeral="01"
+    eyebrow="THE OFFER · THE ARCHITECTURE"
+    title="How it works."
+    italic="Twelve weeks, one to one."
+    body="The inner work and the outer: become her first, then build the brand around her — positioning, voice, rhythm, and the proof. Plus the setup to pitch brands and get paid. By selection."
     tone="dark"
   />
 
@@ -68,16 +43,39 @@ import ClosingTiles from '@components/sections/ClosingTiles.astro';
     tone="cream"
   />
 
+  <ChapterDivider
+    numeral="02"
+    eyebrow="THE PROOF · I'VE BUILT EXACTLY THIS"
+    title="The receipts."
+    italic="A life, on my own terms."
+    body="3.5M views a quarter, brand collaborations across Bali, Ubud and Dubai, a book out 2026 — the proof the method works. If I can teach it, it is because I live it."
+  />
+
+  <PortraitScrub />
   <ReelsShowcase />
+  <YouTubeFeatured />
+  <FourIdentities />
+  <OperatorSection />
   <PressFeatures compact={true} />
   <RuptureGallery />
 
   <ChapterDivider
-    numeral="IV"
-    eyebrow="CHAPTER FOUR · THE ROOM AHEAD"
-    title="What is next."
-    italic="A coven, in waiting."
-    body="A community for the women living it — and the ones about to. Application-based. Launching slowly."
+    numeral="03"
+    eyebrow="THE BOOK · THE METHOD, WRITTEN DOWN"
+    title="Become Her."
+    italic="Five parts. Twenty-two chapters."
+    body="The foundational work everything in The Architecture is downstream of. Out 2026."
+  />
+
+  <BookAnchor />
+  <BookStanEmbed />
+
+  <ChapterDivider
+    numeral="04"
+    eyebrow="WHAT IS NEXT · THE COVEN"
+    title="A room, in waiting."
+    italic="For the women living it."
+    body="A community for the women already doing the work — and the ones about to. By application. Launching slowly."
   />
 
   <CovenWaitlist />

@@ -1,0 +1,56 @@
+---
+// OfferHero — the homepage hero, offer-first and unambiguous.
+// Replaces the abstract cinematic/author hero: a cold visitor now reads
+// exactly what Allaia offers, the promise, and how to apply — above the fold.
+import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+---
+
+<section class="offer-hero relative w-full overflow-hidden" aria-label="1:1 personal brand coaching">
+  <!-- Warm brand backdrop -->
+  <div
+    class="pointer-events-none absolute inset-0 -z-10"
+    aria-hidden="true"
+    style="background: radial-gradient(circle at 22% 28%, rgba(184,85,66,0.28), transparent 55%), radial-gradient(circle at 82% 78%, rgba(107,79,61,0.30), transparent 62%), linear-gradient(150deg, #FAF6EE 0%, #F2EDE5 55%, #E7D6C6 130%);"
+  ></div>
+
+  <div class="mx-auto max-w-5xl px-6 min-h-[90svh] flex flex-col justify-center py-28 sm:py-32">
+    <p class="reveal eyebrow mb-6">1:1 personal brand coaching · by selection</p>
+
+    <h1 class="reveal offer-h1">
+      Build a personal brand
+      <span class="offer-h1-accent italic-grad">that pays you to live.</span>
+    </h1>
+
+    <p class="reveal serif-lg text-ink-soft mt-8 max-w-2xl">
+      Twelve weeks, one to one. The positioning, the voice, the routines of becoming her, and
+      the proof — so you leave the 9-to-5, earn from what you love, and wake up somewhere that
+      feels like a vacation. Whatever your niche.
+    </p>
+
+    <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+      <a href="/the-architecture#apply" class="cta-dark">
+        Apply now <ArrowUpRight size={12} />
+      </a>
+      <a href="/the-architecture" class="cta-ghost">
+        How it works
+      </a>
+    </div>
+
+    <p class="reveal byline text-ink-mute mt-10">
+      The Architecture · 12 weeks · four seats a cohort · I take on only the few I see potential in
+    </p>
+  </div>
+</section>
+
+<style>
+  .offer-h1 {
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.9rem, 8.5vw, 6rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: #1A1A1A;
+    max-width: 16ch;
+  }
+  .offer-h1-accent { display: block; }
+</style>
