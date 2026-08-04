@@ -1,44 +1,78 @@
 ---
-// OfferHero — the homepage hero, offer-first and unambiguous.
-// Replaces the abstract cinematic/author hero: a cold visitor now reads
-// exactly what Allaia offers, the promise, and how to apply — above the fold.
+// OfferHero — homepage hero. Offer-first text on the left, a live wall of
+// Allaia's reels drifting on the right (her own footage = the "vacation life"
+// proof). Clear AND interactive.
+import fs from 'node:fs';
+import path from 'node:path';
 import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
+
+// Reuse the hero clips in public/video/hero (same set as the brand-collabs
+// wall). HERO_ORDER leads with her chosen clips; the rest follow.
+const HERO_ORDER = ['01', '02', '04'];
+let ordered: string[] = [];
+try {
+  const dir = path.join(process.cwd(), 'public/video/hero');
+  const files = fs.readdirSync(dir).filter((f) => /\.(mp4|webm|mov)$/i.test(f)).sort();
+  const base = (f: string) => f.replace(/\.[^.]+$/, '');
+  const lead = HERO_ORDER.map((n) => files.find((f) => base(f) === n)).filter(Boolean) as string[];
+  const rest = files.filter((f) => !HERO_ORDER.includes(base(f)));
+  ordered = [...lead, ...rest].map((f) => `/video/hero/${f}`);
+} catch { /* no clips yet — wall stays hidden, text hero still works */ }
+
+const HERO_COLS = 2;
+const columns = ordered.length
+  ? Array.from({ length: HERO_COLS }, (_, c) => {
+      const own = ordered.filter((_, i) => i % HERO_COLS === c);
+      return { dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down', clips: [...own, ...own] };
+    })
+  : [];
 ---
 
 <section class="offer-hero relative w-full overflow-hidden" aria-label="1:1 personal brand coaching">
-  <!-- Warm brand backdrop -->
   <div
     class="pointer-events-none absolute inset-0 -z-10"
     aria-hidden="true"
-    style="background: radial-gradient(circle at 22% 28%, rgba(184,85,66,0.28), transparent 55%), radial-gradient(circle at 82% 78%, rgba(107,79,61,0.30), transparent 62%), linear-gradient(150deg, #FAF6EE 0%, #F2EDE5 55%, #E7D6C6 130%);"
+    style="background: radial-gradient(circle at 20% 26%, rgba(184,85,66,0.24), transparent 55%), radial-gradient(circle at 84% 80%, rgba(107,79,61,0.26), transparent 62%), linear-gradient(150deg, #FAF6EE 0%, #F2EDE5 55%, #E7D6C6 135%);"
   ></div>
 
-  <div class="mx-auto max-w-5xl px-6 min-h-[90svh] flex flex-col justify-center py-28 sm:py-32">
-    <p class="reveal eyebrow mb-6">1:1 personal brand coaching · by selection</p>
-
-    <h1 class="reveal offer-h1">
-      Build a personal brand
-      <span class="offer-h1-accent italic-grad">that pays you to live.</span>
-    </h1>
-
-    <p class="reveal serif-lg text-ink-soft mt-8 max-w-2xl">
-      Twelve weeks, one to one. The positioning, the voice, the routines of becoming her, and
-      the proof — so you leave the 9-to-5, earn from what you love, and wake up somewhere that
-      feels like a vacation. Whatever your niche.
-    </p>
-
-    <div class="reveal mt-10 flex flex-wrap items-center gap-4">
-      <a href="/the-architecture#apply" class="cta-dark">
-        Apply now <ArrowUpRight size={12} />
-      </a>
-      <a href="/the-architecture" class="cta-ghost">
-        How it works
-      </a>
+  <div class={`mx-auto max-w-6xl px-6 min-h-[90svh] py-24 sm:py-28 ${columns.length ? 'grid lg:grid-cols-[0.92fr_1.08fr] gap-12 lg:gap-14 items-center' : 'flex flex-col justify-center'}`}>
+    <!-- LEFT: the offer, stated plainly -->
+    <div>
+      <p class="reveal eyebrow mb-6">1:1 personal brand coaching · by selection</p>
+      <h1 class="reveal offer-h1">
+        Build a personal brand
+        <span class="offer-h1-accent italic-grad">that pays you to live.</span>
+      </h1>
+      <p class="reveal serif-lg text-ink-soft mt-7 max-w-xl">
+        Twelve weeks, one to one. The positioning, the voice, the routines of becoming her, and
+        the proof — so you leave the 9-to-5, earn from what you love, and wake up somewhere that
+        feels like a vacation. Whatever your niche.
+      </p>
+      <div class="reveal mt-9 flex flex-wrap items-center gap-4">
+        <a href="/the-architecture#apply" class="cta-dark">Apply now <ArrowUpRight size={12} /></a>
+        <a href="/the-architecture" class="cta-ghost">How it works</a>
+      </div>
+      <p class="reveal byline text-ink-mute mt-9">
+        The Architecture · 12 weeks · four seats a cohort · by selection
+      </p>
     </div>
 
-    <p class="reveal byline text-ink-mute mt-10">
-      The Architecture · 12 weeks · four seats a cohort · I take on only the few I see potential in
-    </p>
+    <!-- RIGHT: live wall of her reels -->
+    {columns.length > 0 && (
+      <div class="offer-wall reveal" aria-label="Allaia's work in motion" data-offer-wall>
+        {columns.map((col, c) => (
+          <div class={`offer-col offer-col-${c}`}>
+            <div class={`offer-col-track offer-track-${col.dir}`}>
+              {col.clips.map((src) => (
+                <div class="offer-clip">
+                  <video src={src} muted loop playsinline preload="none" data-offer-video></video>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 </section>
 
@@ -46,11 +80,58 @@ import ArrowUpRight from '@components/icons/ArrowUpRight.astro';
   .offer-h1 {
     font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
     font-weight: 400;
-    font-size: clamp(2.9rem, 8.5vw, 6rem);
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
     line-height: 1.0;
     letter-spacing: -0.02em;
     color: #1A1A1A;
-    max-width: 16ch;
+    max-width: 14ch;
   }
   .offer-h1-accent { display: block; }
+
+  /* Reel wall — two vertical columns drifting, no border, no edge fade */
+  .offer-wall {
+    position: relative;
+    display: flex;
+    gap: 0.9rem;
+    height: clamp(440px, 66vh, 640px);
+    overflow: hidden;
+  }
+  .offer-col { flex: 1 1 0; overflow: hidden; }
+  .offer-col-track { display: flex; flex-direction: column; gap: 0.9rem; }
+  .offer-track-up   { animation: offer-up 40s linear infinite; }
+  .offer-track-down { animation: offer-down 40s linear infinite; }
+  .offer-col-1 .offer-col-track { animation-delay: -13s; }
+  .offer-wall:hover .offer-col-track { animation-play-state: paused; }
+  @media (max-width: 640px) { .offer-col-1 { display: none; } }
+  .offer-clip {
+    flex: 0 0 auto;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  .offer-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @keyframes offer-up   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
+  @keyframes offer-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .offer-track-up, .offer-track-down { animation: none; }
+  }
 </style>
+
+<script>
+  // Play the reel wall only while it is on screen; muted autoplay.
+  const wall = document.querySelector<HTMLElement>('[data-offer-wall]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (wall && !reduce) {
+    const vids = wall.querySelectorAll<HTMLVideoElement>('[data-offer-video]');
+    const io = new IntersectionObserver((entries) => {
+      const on = entries[0]?.isIntersecting;
+      vids.forEach((v) => {
+        v.muted = true;
+        if (on) v.play().catch(() => {});
+        else v.pause();
+      });
+    }, { threshold: 0.05 });
+    io.observe(wall);
+  }
+</script>
