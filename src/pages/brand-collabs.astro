@@ -45,6 +45,9 @@ const libraryRow2 = [
   { img: '/img/collabs/DWWc7c4iBsO.jpg', views: '70K', title: 'Says who?', href: 'https://www.instagram.com/reel/DWWc7c4iBsO/' },
   { img: '/img/collabs/DWiLJd-jKed.jpg', views: '67K', title: 'My fiery women', href: 'https://www.instagram.com/reel/DWiLJd-jKed/' },
   { img: '/img/collabs/DZ2wUWgsrun.jpg', views: '57K', title: 'The right one', href: 'https://www.instagram.com/reel/DZ2wUWgsrun/' },
+  { img: '/img/collabs/DasrBm6ss1e.jpg', views: '177K', title: 'Becoming her', href: 'https://www.instagram.com/reel/DasrBm6ss1e/' },
+  { img: '/img/collabs/DbsqrUwsSVD.jpg', views: '128K', title: 'On her own terms', href: 'https://www.instagram.com/reel/DbsqrUwsSVD/' },
+  { img: '/img/collabs/DbAA3vbsC8t.jpg', views: '45K', title: 'The quiet work', href: 'https://www.instagram.com/reel/DbAA3vbsC8t/' },
 ];
 
 // ── Proof band — each stat translated into what it BUYS the brand ──
@@ -189,7 +192,12 @@ const featuredFilms = [
   // Note kept generic: the reel's caption tags no venue, so the category
   // is unconfirmed rather than guessed.
   { brand: 'The Iggy Bali', note: 'Bali', code: 'DYv4c-YMHFR', views: 40531, saves: 252, sends: 202 , likes: 1600},
-  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 98959, saves: 246, sends: 1100 , likes: 3700},
+  { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 192000, likes: 9000, reposts: 1002, sends: 2704, saves: null },
+  { brand: 'Public House Bangkok', note: 'Restaurant · Bangkok', code: 'DbzllgEswXo', views: 104000, likes: 6000, reposts: 1030, sends: 880, saves: null },
+  { brand: 'Morning Kiss Bangkok', note: 'Café · Bangkok', code: 'Dbp6RF_MWHV', views: 57100, likes: 3500, reposts: 205, sends: 157, saves: null },
+  { brand: 'Arah Ice Bath & Sauna', note: 'Ice bath & sauna · Bangkok', code: 'DbdBlWOMepy', views: 47000, likes: 2300, reposts: 218, sends: 480, saves: null },
+  { brand: 'Isora Wellness', note: 'Wellness · Bangkok', code: 'DbD9GGSsMqA', views: 44000, likes: 2275, reposts: 265, sends: 491, saves: null },
+  { brand: 'Whitewood Green Spa', note: 'Spa · Bangkok', code: 'DbPgg7nMQ8m', views: 23300, likes: 1805, reposts: 189, sends: 357, saves: null },
   // Self-hosted clip (no Instagram post): plays from public/video/collabs.
   // `self: true` marks it so no "Open on Instagram" link is rendered.
   { brand: 'Quora Medical Wellness', note: 'Wellness clinic · Bangkok', code: 'quora-medical-wellness', self: true, views: null, saves: null, sends: null, likes: null },
@@ -448,10 +456,16 @@ const faqs = [
                       <p class="film-stat-l">likes</p>
                     </div>
                   )}
-                  {f.saves !== null && (
+                  {f.saves !== null && f.saves !== undefined && (
                     <div>
                       <p class="film-stat-n">{fmtEng(f.saves)}</p>
                       <p class="film-stat-l">saves</p>
+                    </div>
+                  )}
+                  {(f.saves === null || f.saves === undefined) && f.reposts !== null && f.reposts !== undefined && (
+                    <div>
+                      <p class="film-stat-n">{fmtEng(f.reposts)}</p>
+                      <p class="film-stat-l">reposts</p>
                     </div>
                   )}
                   {f.sends !== null && (
