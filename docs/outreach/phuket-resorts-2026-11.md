@@ -31,7 +31,7 @@ Bump each thread after 5 days with no reply: "Floating this back up in case it g
 - **Links.** Make them clickable: @allaia.power (instagram.com/allaia.power, without QR tracking parameters) and the media kit (allaiamedia.com/brand-collabs).
 - **Ask.** "Just reply 1, 2 or 3."
 
-## Round 2: 15 drafts (created 2026-11-09, Bali time)
+## Round 2: 16 drafts (created 2026-11-09, Bali time)
 
 Evidence key: **A** = the property or its group has a public creator or influencer program or request route. **B** = a luxury property that is active in media and PR, with a direct contact found, but no public program.
 
@@ -51,6 +51,7 @@ Evidence key: **A** = the property or its group has a public creator or influenc
 | 12 | The Slate | Nai Yang | B: hosts media | reservations@theslatephuket.com | Aksari + Alloura |
 | 13 | Six Senses Yao Noi | Phang Nga Bay | B | reservations-yaonoi@sixsenses.com | Lumeira + Aksari |
 | 14 | V Villas Phuket (MGallery) | Phuket | B | HB775@accor.com | Aksari + Alloura |
+| 16 | The Naka Phuket (Design Hotels) | Kamala | Requested by Allaia | info@thenakaphuket.com | Aksari + Alloura |
 | 15 | Pullman Phuket Arcadia | Naithon | B: upscale rather than top-tier luxury, the weakest fit | h7488-re@accor.com | Aksari + Alloura |
 
 Forms only (no email found; Allaia to apply directly):
@@ -58,3 +59,13 @@ Forms only (no email found; Allaia to apply directly):
 - Twinpalms Phuket, via the Twinpalms creator affiliate programme
 - Banyan Group media list (news.groupbanyan.com/press-list/join), which strengthens #1 to #3
 - SAii media / influencer form (saiihotels.com/media-influencer-request-form), which strengthens #4
+
+## Offer and dates (added 2026-11-09; applies to all 21 drafts)
+
+- **Travel window.** "Anytime between December 8 and 20". Phuket properties say Phuket. Natai and Yao Noi say "the Phuket area". Samui, Krabi and SAii say Thailand.
+- **What I'd create:**
+  - 1 cinematic Instagram Reel, potentially as a Collab Post
+  - 1 carousel of professionally styled photography
+  - 3–5 Instagram Stories documenting the experience
+  - Optional short-form video assets for the resort's social channels, separately negotiated
+- **Options.** 1 = hosted stay (the content above, with organic usage rights). 2 = paid partnership (full usage rights). 3 = both.
