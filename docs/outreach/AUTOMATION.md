@@ -2,7 +2,8 @@
 
 **Read this first on every scheduled run.** Allaia asked for this setup on 2026-11-09:
 
-- 20 new pitch emails every weekday, sent in chunks (5 per run)
+- **at most 25 emails per weekday in total, counting new pitches and follow-ups together** (updated by Allaia, 2026-11-09)
+- new pitches at most 20 per day, sent in chunks across the four runs
 - runs at 08:07, 10:07, 13:07 and 15:07 Bali time (Asia/Makassar), Monday to Friday
 - new pitches until **Tuesday 1 December 2026**
 - two follow-ups per resort: day 3 and day 7 after the first email
@@ -32,15 +33,21 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
    - For every row in `sent` or `fu1`, call `get_thread(thread_id)`. If the thread has any message whose sender is not allaiapower@gmail.com, set `replied` and note who replied.
    - Search `from:mailer-daemon newer_than:3d` and match addresses. Set `bounced` on any match.
    - Never answer a resort on Allaia's behalf. Only tell her.
-3. **Send follow-ups that are due.**
+3. **Work out this run's budget.**
+   - Count every email already sent today (Bali date): new pitches plus follow-ups.
+   - `remaining_today = 25 - sent_today`.
+   - This run's budget is `ceil(remaining_today / runs_left_today)`, counting this run, with the four runs at 08:07, 10:07, 13:07 and 15:07, and never more than 7. That spreads the day evenly instead of sending in one go.
+   - Spend the budget on follow-ups first, oldest due date first. Follow-up 2 goes before follow-up 1, because it closes a thread. Then use what's left on new pitches.
+   - Any due follow-ups that don't fit roll over to the next run or the next weekday. They are never dropped.
+4. **Send follow-ups that are due**, within the budget.
    - Follow-up 1 is due when status is `sent` and today ≥ sent date + 3 calendar days.
    - Follow-up 2 is due when status is `fu1` and today ≥ sent date + 7 calendar days.
    - If a due date falls on a weekend, the follow-up goes out on the next weekday run.
    - Send it as a reply in the same thread: `send_message` with `replyThreadId`, the same `to` and `cc`, and subject `Re: <subject>`. Plain `body` plus `htmlBody`.
    - Set `fu1_at` or `fu2_at`, and the status.
-4. **Send new pitches**, only while today ≤ 2026-12-01.
-   - Daily cap: 20, counting rows whose `sent_at` is today.
-   - Send up to 5 per run, taking rows in `n` order with status `queued` or `research`.
+5. **Send new pitches** with whatever budget is left, only while today ≤ 2026-12-01.
+   - New pitches are also capped at 20 per day, counting rows whose `sent_at` is today.
+   - Take taking rows in `n` order with status `queued` or `research`.
    - For a `research` row:
      - Find the property's contact email. Accept only an address shown on the official website, the brand site, an official fact sheet or press release, or two independent reputable listings. Never guess an address from a naming pattern. Prefer a PR or marketing contact, then a general info address, then reservations.
      - Write `hook`: one accurate, specific detail plus its verb, for example "your Sky Villas over Kata Bay have". If you can't confirm a detail, use `<resort> has`.
@@ -49,13 +56,13 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
      - If no credible email exists, mark `no_email` and move to the next row.
    - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 20", "What I'd create" and "37.4K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
    - Record `sent_at`, `thread_id`, `subject` and `status=sent`.
-5. Commit `queue.csv` with message `outreach: <date> run <time>` and push it. Use a plain push, never force; if the push is rejected, pull and retry.
-6. **Report** to Allaia in the session: what was sent, any replies (with the resort and a one-line gist), bounces and errors. At the 15:07 run, give the day's totals.
-7. **Safety stops.** Pause the scheduled task (`update_trigger enabled=false`) and tell Allaia if:
+6. Commit `queue.csv` with message `outreach: <date> run <time>` and push it. Use a plain push, never force; if the push is rejected, pull and retry.
+7. **Report** to Allaia in the session: what was sent, any replies (with the resort and a one-line gist), bounces and errors. At the 15:07 run, give the day's totals.
+8. **Safety stops.** Pause the scheduled task (`update_trigger enabled=false`) and tell Allaia if:
    - there are 5 or more bounces in one day,
    - Gmail returns a sending-limit or spam error, or
    - fewer than 5 sendable rows remain, after researching and appending more 5-star resorts in Thailand and then Bali first.
-8. **End.** After 2026-12-01, send follow-ups only. Once no rows remain in `sent` or `fu1`, disable the scheduled task and send Allaia a final summary.
+9. **End.** After 2026-12-01, send follow-ups only. Once no rows remain in `sent` or `fu1`, disable the scheduled task and send Allaia a final summary.
 
 ## Pitch template
 
