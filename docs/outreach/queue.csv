@@ -297,83 +297,99 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 296,Villa Aye,Phuket,,,"Hi Villa Aye team,",,Phuket,AA,,research,,,,,,villa: Kamala; verify
 297,Villa Analaya,Phuket,,,"Hi Villa Analaya team,",,Phuket,AA,,research,,,,,,villa: verify
 298,Baan Paa Talee,Phuket,,,"Hi Baan Paa Talee team,",,Phuket,AA,,research,,,,,,villa: verify
-299,WISKII Active,Activewear,,,"Hi WISKII Active team,",,brand,BB,,skipped,,,,,,"active collab in progress (order #WIS190790, awaiting shipping); handled by Allaia with Brooklyn, collab@wiskiiactive.com"
-300,Liquido Active,Activewear,,,"Hi Liquido Active team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-301,Yoga Design Lab,Activewear,,,"Hi Yoga Design Lab team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-302,Kydra,Activewear,,,"Hi Kydra team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-303,Alo Yoga,Activewear,,,"Hi Alo Yoga team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-304,Set Active,Activewear,,,"Hi Set Active team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-305,Oner Active,Activewear,,,"Hi Oner Active team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-306,Bo+Tee,Activewear,,,"Hi Bo+Tee team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-307,Adanola,Activewear,,,"Hi Adanola team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-308,P.E Nation,Activewear,,,"Hi P.E Nation team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-309,Lorna Jane,Activewear,,,"Hi Lorna Jane team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-310,LSKD,Activewear,,,"Hi LSKD team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-311,Stax,Activewear,,,"Hi Stax team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-312,Girlfriend Collective,Activewear,,,"Hi Girlfriend Collective team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-313,Halara,Activewear,,,"Hi Halara team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-314,CRZ Yoga,Activewear,,,"Hi CRZ Yoga team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-315,Faithfull the Brand,Fashion,,,"Hi Faithfull the Brand team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-316,St Agni,Fashion,,,"Hi St Agni team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-317,Arnhem,Fashion,,,"Hi Arnhem team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-318,Natalie Rolt,Fashion,,,"Hi Natalie Rolt team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-319,Bird & Knoll,Fashion,,,"Hi Bird & Knoll team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-320,"Love, Bonito",Fashion,,,"Hi Love, Bonito team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-321,Pomelo,Fashion,,,"Hi Pomelo team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-322,In Good Company,Fashion,,,"Hi In Good Company team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-323,Sir the Label,Fashion,,,"Hi Sir the Label team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-324,Shona Joy,Fashion,,,"Hi Shona Joy team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-325,Réalisation Par,Fashion,,,"Hi Réalisation Par team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-326,Aje,Fashion,,,"Hi Aje team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-327,Bec + Bridge,Fashion,,,"Hi Bec + Bridge team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-328,Meshki,Fashion,,,"Hi Meshki team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-329,White Fox,Fashion,,,"Hi White Fox team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-330,Oh Polly,Fashion,,,"Hi Oh Polly team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-331,House of CB,Fashion,,,"Hi House of CB team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-332,Princess Polly,Fashion,,,"Hi Princess Polly team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-333,Hello Molly,Fashion,,,"Hi Hello Molly team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-334,Sabo,Fashion,,,"Hi Sabo team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-335,Cotton Ink,Fashion,,,"Hi Cotton Ink team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-336,Sare Studio,Fashion,,,"Hi Sare Studio team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-337,La Mer,Skincare,,,"Hi La Mer team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-338,La Prairie,Skincare,,,"Hi La Prairie team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-339,Sisley Paris,Skincare,,,"Hi Sisley Paris team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-340,Augustinus Bader,Skincare,,,"Hi Augustinus Bader team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-341,Dr. Barbara Sturm,Skincare,,,"Hi Dr. Barbara Sturm team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-342,111SKIN,Skincare,,,"Hi 111SKIN team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-343,Clé de Peau Beauté,Skincare,,,"Hi Clé de Peau Beauté team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-344,SK-II,Skincare,,,"Hi SK-II team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-345,Sulwhasoo,Skincare,,,"Hi Sulwhasoo team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-346,Tatcha,Skincare,,,"Hi Tatcha team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-347,Omorovicza,Skincare,,,"Hi Omorovicza team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-348,Aesop,Skincare,,,"Hi Aesop team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-349,Dior Beauty (skincare),Skincare,,,"Hi Dior Beauty (skincare) team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-350,Guerlain,Skincare,,,"Hi Guerlain team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-351,Dior Beauty,Make-up,,,"Hi Dior Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-352,Chanel Beauty,Make-up,,,"Hi Chanel Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-353,YSL Beauty,Make-up,,,"Hi YSL Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-354,Armani Beauty,Make-up,,,"Hi Armani Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-355,Valentino Beauty,Make-up,,,"Hi Valentino Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-356,Prada Beauty,Make-up,,,"Hi Prada Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-357,Tom Ford Beauty,Make-up,,,"Hi Tom Ford Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-358,Charlotte Tilbury,Make-up,,,"Hi Charlotte Tilbury team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-359,Pat McGrath Labs,Make-up,,,"Hi Pat McGrath Labs team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-360,Hourglass,Make-up,,,"Hi Hourglass team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-361,Natasha Denona,Make-up,,,"Hi Natasha Denona team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-362,Gucci Beauty,Make-up,,,"Hi Gucci Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-363,Fenty Beauty,Make-up,,,"Hi Fenty Beauty team,",,brand,BB,,research,,,,,,phase 2 brand; Allaia's approved exception; check that it ships to Indonesia first
-364,Byredo,Perfume,,,"Hi Byredo team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-365,Le Labo,Perfume,,,"Hi Le Labo team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-366,Maison Francis Kurkdjian,Perfume,,,"Hi Maison Francis Kurkdjian team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-367,Diptyque,Perfume,,,"Hi Diptyque team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-368,Jo Malone London,Perfume,,,"Hi Jo Malone London team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-369,Kilian Paris,Perfume,,,"Hi Kilian Paris team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-370,Creed,Perfume,,,"Hi Creed team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-371,Parfums de Marly,Perfume,,,"Hi Parfums de Marly team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-372,Initio Parfums Privés,Perfume,,,"Hi Initio Parfums Privés team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-373,Frédéric Malle,Perfume,,,"Hi Frédéric Malle team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-374,Penhaligon's,Perfume,,,"Hi Penhaligon's team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-375,Xerjoff,Perfume,,,"Hi Xerjoff team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-376,Amouage,Perfume,,,"Hi Amouage team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-377,Maison Margiela Replica,Perfume,,,"Hi Maison Margiela Replica team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
-378,Tom Ford Private Blend,Perfume,,,"Hi Tom Ford Private Blend team,",,brand,BB,,research,,,,,,phase 2 brand; check that it ships to Indonesia first
+299,Liquido Active,Activewear,,,"Hi Liquido Active team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
+300,Yoga Design Lab,Activewear,,,"Hi Yoga Design Lab team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
+301,Natalie Rolt,Fashion,,,"Hi Natalie Rolt team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
+302,Bird & Knoll,Fashion,,,"Hi Bird & Knoll team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
+303,Cotton Ink,Fashion,,,"Hi Cotton Ink team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
+304,Sare Studio,Fashion,,,"Hi Sare Studio team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
+305,Aesop,Skincare,,,"Hi Aesop team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+306,Dior Beauty (skincare),Skincare,,,"Hi Dior Beauty (skincare) team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+307,Guerlain,Skincare,,,"Hi Guerlain team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+308,Dior Beauty,Make-up,,,"Hi Dior Beauty team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+309,Tom Ford Beauty,Make-up,,,"Hi Tom Ford Beauty team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+310,Charlotte Tilbury,Make-up,,,"Hi Charlotte Tilbury team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+311,Fenty Beauty,Make-up,,,"Hi Fenty Beauty team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; Allaia's approved exception; check that it ships to Indonesia first
+312,Jo Malone London,Perfume,,,"Hi Jo Malone London team,",,brand,BB,,research,,,,,,tier=ID (Sephora Indonesia / Indonesian presence: pitch the Indonesia PR); phase 2 brand; check that it ships to Indonesia first
+313,Sephora Indonesia,Beauty retailer,,,"Hi Sephora Indonesia team,",,brand,BB,,research,,,,,,tier=ID; retailer PR/creator team; can seed several luxury brands at once
+314,Givenchy Beauty,Make-up,,,"Hi Givenchy Beauty team,",,brand,BB,,research,,,,,,tier=ID; on sephora.co.id; pitch the Indonesian distributor or PR
+315,Hermès Beauty,Make-up,,,"Hi Hermès Beauty team,",,brand,BB,,research,,,,,,tier=ID; on sephora.co.id
+316,Chloé Parfums,Perfume,,,"Hi Chloé Parfums team,",,brand,BB,,research,,,,,,tier=ID; on sephora.co.id
+317,Biasa,Fashion,,,"Hi Biasa team,",,brand,BB,,research,,,,,,tier=ID; Bali resortwear since 1994
+318,Je Suis Flirt,Fashion,,,"Hi Je Suis Flirt team,",,brand,BB,,research,,,,,,"tier=ID; Bali, beach-club dresses"
+319,Lily Jean,Fashion,,,"Hi Lily Jean team,",,brand,BB,,research,,,,,,tier=ID; Bali resort and evening dresses
+320,Magali Pascal,Fashion,,,"Hi Magali Pascal team,",,brand,BB,,research,,,,,,tier=ID; Bali womenswear since 2002
+321,Veresa,Fashion,,,"Hi Veresa team,",,brand,BB,,research,,,,,,tier=ID; Bali resortwear
+322,Sejauh Mata Memandang,Fashion,,,"Hi Sejauh Mata Memandang team,",,brand,BB,,research,,,,,,tier=ID; Jakarta it-label
+323,Nadjani,Fashion,,,"Hi Nadjani team,",,brand,BB,,research,,,,,,tier=ID; Jakarta
+324,Hunting Fields,Fashion,,,"Hi Hunting Fields team,",,brand,BB,,research,,,,,,tier=ID; Jakarta womenswear
+325,Yumi Active,Activewear,,,"Hi Yumi Active team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand
+326,Miniletics,Activewear,,,"Hi Miniletics team,",,brand,BB,,research,,,,,,tier=ID; Surabaya
+327,Ryse & Shyne,Activewear,,,"Hi Ryse & Shyne team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand
+328,ARUS,Activewear,,,"Hi ARUS team,",,brand,BB,,research,,,,,,tier=ID; lounge and activewear
+329,Kydra,Activewear,,,"Hi Kydra team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+330,Faithfull the Brand,Fashion,,,"Hi Faithfull the Brand team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+331,St Agni,Fashion,,,"Hi St Agni team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+332,Arnhem,Fashion,,,"Hi Arnhem team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+333,"Love, Bonito",Fashion,,,"Hi Love, Bonito team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+334,Pomelo,Fashion,,,"Hi Pomelo team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+335,In Good Company,Fashion,,,"Hi In Good Company team,",,brand,BB,,research,,,,,,tier=SEA; phase 2 brand; check that it ships to Indonesia first
+336,WISKII Active,Activewear,,,"Hi WISKII Active team,",,brand,BB,,skipped,,,,,,"tier=INTL; active collab in progress (order #WIS190790, awaiting shipping); handled by Allaia with Brooklyn, collab@wiskiiactive.com"
+337,Alo Yoga,Activewear,,,"Hi Alo Yoga team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+338,Set Active,Activewear,,,"Hi Set Active team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+339,Oner Active,Activewear,,,"Hi Oner Active team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+340,Bo+Tee,Activewear,,,"Hi Bo+Tee team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+341,Adanola,Activewear,,,"Hi Adanola team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+342,P.E Nation,Activewear,,,"Hi P.E Nation team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+343,Lorna Jane,Activewear,,,"Hi Lorna Jane team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+344,LSKD,Activewear,,,"Hi LSKD team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+345,Stax,Activewear,,,"Hi Stax team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+346,Girlfriend Collective,Activewear,,,"Hi Girlfriend Collective team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+347,Halara,Activewear,,,"Hi Halara team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+348,CRZ Yoga,Activewear,,,"Hi CRZ Yoga team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+349,Sir the Label,Fashion,,,"Hi Sir the Label team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+350,Shona Joy,Fashion,,,"Hi Shona Joy team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+351,Réalisation Par,Fashion,,,"Hi Réalisation Par team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+352,Aje,Fashion,,,"Hi Aje team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+353,Bec + Bridge,Fashion,,,"Hi Bec + Bridge team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+354,Meshki,Fashion,,,"Hi Meshki team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+355,White Fox,Fashion,,,"Hi White Fox team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+356,Oh Polly,Fashion,,,"Hi Oh Polly team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+357,House of CB,Fashion,,,"Hi House of CB team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+358,Princess Polly,Fashion,,,"Hi Princess Polly team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+359,Hello Molly,Fashion,,,"Hi Hello Molly team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+360,Sabo,Fashion,,,"Hi Sabo team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+361,La Mer,Skincare,,,"Hi La Mer team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+362,La Prairie,Skincare,,,"Hi La Prairie team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+363,Sisley Paris,Skincare,,,"Hi Sisley Paris team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+364,Augustinus Bader,Skincare,,,"Hi Augustinus Bader team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+365,Dr. Barbara Sturm,Skincare,,,"Hi Dr. Barbara Sturm team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+366,111SKIN,Skincare,,,"Hi 111SKIN team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+367,Clé de Peau Beauté,Skincare,,,"Hi Clé de Peau Beauté team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+368,SK-II,Skincare,,,"Hi SK-II team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+369,Sulwhasoo,Skincare,,,"Hi Sulwhasoo team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+370,Tatcha,Skincare,,,"Hi Tatcha team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+371,Omorovicza,Skincare,,,"Hi Omorovicza team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+372,Chanel Beauty,Make-up,,,"Hi Chanel Beauty team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+373,YSL Beauty,Make-up,,,"Hi YSL Beauty team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+374,Armani Beauty,Make-up,,,"Hi Armani Beauty team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+375,Valentino Beauty,Make-up,,,"Hi Valentino Beauty team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+376,Prada Beauty,Make-up,,,"Hi Prada Beauty team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+377,Pat McGrath Labs,Make-up,,,"Hi Pat McGrath Labs team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+378,Hourglass,Make-up,,,"Hi Hourglass team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+379,Natasha Denona,Make-up,,,"Hi Natasha Denona team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+380,Gucci Beauty,Make-up,,,"Hi Gucci Beauty team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+381,Byredo,Perfume,,,"Hi Byredo team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+382,Le Labo,Perfume,,,"Hi Le Labo team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+383,Maison Francis Kurkdjian,Perfume,,,"Hi Maison Francis Kurkdjian team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+384,Diptyque,Perfume,,,"Hi Diptyque team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+385,Kilian Paris,Perfume,,,"Hi Kilian Paris team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+386,Creed,Perfume,,,"Hi Creed team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+387,Parfums de Marly,Perfume,,,"Hi Parfums de Marly team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+388,Initio Parfums Privés,Perfume,,,"Hi Initio Parfums Privés team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+389,Frédéric Malle,Perfume,,,"Hi Frédéric Malle team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+390,Penhaligon's,Perfume,,,"Hi Penhaligon's team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+391,Xerjoff,Perfume,,,"Hi Xerjoff team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+392,Amouage,Perfume,,,"Hi Amouage team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+393,Maison Margiela Replica,Perfume,,,"Hi Maison Margiela Replica team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
+394,Tom Ford Private Blend,Perfume,,,"Hi Tom Ford Private Blend team,",,brand,BB,,research,,,,,,tier=INTL; phase 2 brand; check that it ships to Indonesia first
