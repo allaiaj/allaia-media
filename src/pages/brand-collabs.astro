@@ -203,6 +203,8 @@ const featuredFilms = [
   // Self-hosted clip (no Instagram post): plays from public/video/collabs.
   // `self: true` marks it so no "Open on Instagram" link is rendered.
   { brand: 'Quora Medical Wellness', note: 'Wellness clinic · Bangkok', code: 'quora-medical-wellness', self: true, views: null, saves: null, sends: null, likes: null },
+  { brand: 'Aksari Ubud', note: 'Resort · Ubud', code: 'aksari-ubud', self: true, pin: true, views: null, saves: null, sends: null, likes: null },
+  { brand: 'Hotel Tugu Bali', note: 'Hotel · Canggu', code: 'hotel-tugu-bali', self: true, pin: true, views: null, saves: null, sends: null, likes: null },
   // Carousel posts rather than reels — Instagram serves those under /p/.
   { brand: 'Dior Beauty', note: 'Beauty · carousel', code: 'DM0d0OMP4Qn', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Amazónico Dubai', note: 'Restaurant · Dubai', code: 'DWO6qQkiFcT', kind: 'p', views: null, saves: null, sends: null },
@@ -223,10 +225,11 @@ const featuredFilms = [
 
 // Reels carry performance figures and lead the page. Carousel posts are a
 // separate visual wall further down — no stats, just the work.
-// Highest-performing first; anything still awaiting Insights trails.
+// Pinned stays lead (newest luxury work, so it is never hidden behind
+// "Show all"), then highest-performing first; anything awaiting Insights trails.
 const reels = featuredFilms
   .filter((f) => f.kind !== 'p')
-  .sort((a, b) => (b.views ?? -1) - (a.views ?? -1));
+  .sort((a, b) => Number(!!b.pin) - Number(!!a.pin) || (b.views ?? -1) - (a.views ?? -1));
 const carousels = featuredFilms.filter((f) => f.kind === 'p');
 
 // ── Who the audience is ──
