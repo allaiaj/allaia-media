@@ -8,7 +8,7 @@
 - new pitches until **Tuesday 1 December 2026**
 - two follow-ups per resort: day 3 and day 7 after the first email
 
-**Scope: Phuket only** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island. Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`. Phang Nga properties (Khao Lak, Natai, Koh Yao) are on `hold`: never send to a `hold` row unless Allaia moves it to `queued`.
+**Scope: Phuket and Phang Nga** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island, plus Phang Nga (Khao Lak, Natai, Koh Yao, Phang Nga Bay), whose `place` is "the Phuket area". Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`.
 
 Everything goes out from **allaiapower@gmail.com** using the Gmail tools. The source of truth is `docs/outreach/queue.csv` on branch `claude/phuket-resorts-influencer-emails-fe1myw`.
 
@@ -67,7 +67,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
 8. **Safety stops.** Pause the scheduled task (`update_trigger enabled=false`) and tell Allaia if:
    - there are 5 or more bounces in one day,
    - Gmail returns a sending-limit or spam error, or
-   - fewer than 5 sendable rows remain, after researching and appending more 5-star resorts and luxury private villas on Phuket island first.
+   - fewer than 5 sendable rows remain, after researching and appending more 5-star resorts and luxury private villas on Phuket and in Phang Nga first.
 9. **End.** After 2026-12-01, send follow-ups only. Once no rows remain in `sent` or `fu1`, disable the scheduled task and send Allaia a final summary.
 
 ## Pitch template

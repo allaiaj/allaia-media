@@ -14,9 +14,9 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 13,Rosewood Phuket,Phuket,teeraphong.kunklangdone@rosewoodhotels.com,phuket@rosewoodhotels.com,"Hi Teeraphong,",,Phuket,AA,r-6453198400660410415,queued,,,,,,
 14,Sri Panwa,Phuket,reservation@sripanwa.com,,"Hi Sri Panwa team,",,Phuket,AA,r-9146197565356679635,queued,,,,,,
 15,COMO Point Yamu,Phuket,pointyamu@comohotels.com,,"Hi COMO Point Yamu team,",,Phuket,LA,r6108704608009816860,queued,,,,,,
-16,Iniala Beach House,Phang Nga,stay@iniala.com,,"Hi Iniala Beach House team,",,the Phuket area,AA,r1543449673956065187,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
+16,Iniala Beach House,Phang Nga,stay@iniala.com,,"Hi Iniala Beach House team,",,the Phuket area,AA,r1543449673956065187,queued,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 17,The Slate,Phuket,reservations@theslatephuket.com,,"Hi The Slate team,",,Phuket,AA,r3262861060322187495,queued,,,,,,
-18,Six Senses Yao Noi,Phang Nga,reservations-yaonoi@sixsenses.com,,"Hi Six Senses Yao Noi team,",,the Phuket area,LA,r-7919653226409628467,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
+18,Six Senses Yao Noi,Phang Nga,reservations-yaonoi@sixsenses.com,,"Hi Six Senses Yao Noi team,",,the Phuket area,LA,r-7919653226409628467,queued,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 19,V Villas Phuket,Phuket,HB775@accor.com,,"Hi V Villas Phuket team,",,Phuket,AA,r-7393010236012755041,queued,,,,,,
 20,The Naka Phuket,Phuket,info@thenakaphuket.com,,"Hi The Naka Phuket team,",,Phuket,AA,r-8470286863040210113,queued,,,,,,
 21,Pullman Phuket Arcadia,Phuket,h7488-re@accor.com,,"Hi Pullman Phuket Arcadia team,",,Phuket,AA,r-8954256232167662896,queued,,,,,,
@@ -56,24 +56,24 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 55,Thanyapura Health & Sports Resort,Phuket,,,"Hi Thanyapura Health & Sports Resort team,",,Phuket,AA,,research,,,,,,
 56,Avadina Hills Phuket,Phuket,,,"Hi Avadina Hills Phuket team,",,Phuket,AA,,research,,,,,,
 57,Mövenpick Resort Bangtao Beach Phuket,Phuket,,,"Hi Mövenpick Resort Bangtao Beach Phuket team,",,Phuket,AA,,research,,,,,,
-58,Aleenta Phuket-Phang Nga Resort & Spa,Phang Nga/Khao Lak,,,"Hi Aleenta Phuket-Phang Nga Resort & Spa team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-59,"The Naka Island, a Luxury Collection Resort",Phang Nga/Khao Lak,,,"Hi The Naka Island, a Luxury Collection Resort team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-60,Koyao Island Resort,Phang Nga/Khao Lak,,,"Hi Koyao Island Resort team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-61,TreeHouse Villas Koh Yao Noi,Phang Nga/Khao Lak,,,"Hi TreeHouse Villas Koh Yao Noi team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-62,Santhiya Koh Yao Yai Resort & Spa,Phang Nga/Khao Lak,,,"Hi Santhiya Koh Yao Yai Resort & Spa team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-63,Cape Kudu Hotel Koh Yao Noi,Phang Nga/Khao Lak,,,"Hi Cape Kudu Hotel Koh Yao Noi team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-64,The Sarojin Khao Lak,Phang Nga/Khao Lak,,,"Hi The Sarojin Khao Lak team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-65,JW Marriott Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi JW Marriott Khao Lak Resort & Spa team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-66,Devasom Khao Lak Beach Resort & Villas,Phang Nga/Khao Lak,,,"Hi Devasom Khao Lak Beach Resort & Villas team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-67,Pullman Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Pullman Khao Lak Resort team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-68,Le Méridien Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi Le Méridien Khao Lak Resort & Spa team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-69,La Vela Khao Lak,Phang Nga/Khao Lak,,,"Hi La Vela Khao Lak team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-70,Casa de La Flora Khao Lak,Phang Nga/Khao Lak,,,"Hi Casa de La Flora Khao Lak team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-71,Avani+ Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Avani+ Khao Lak Resort team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-72,The Haven Khao Lak,Phang Nga/Khao Lak,,,"Hi The Haven Khao Lak team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-73,ananea Beyond Khaolak,Phang Nga/Khao Lak,,,"Hi ananea Beyond Khaolak team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-74,Moracea by Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Moracea by Khao Lak Resort team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
-75,Natai Beach Resort,Phang Nga/Khao Lak,,,"Hi Natai Beach Resort team,",,the Phuket area,AA,,hold,,,,,,"Phang Nga, not Phuket island: held pending Allaia"
+58,Aleenta Phuket-Phang Nga Resort & Spa,Phang Nga/Khao Lak,,,"Hi Aleenta Phuket-Phang Nga Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+59,"The Naka Island, a Luxury Collection Resort",Phang Nga/Khao Lak,,,"Hi The Naka Island, a Luxury Collection Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+60,Koyao Island Resort,Phang Nga/Khao Lak,,,"Hi Koyao Island Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+61,TreeHouse Villas Koh Yao Noi,Phang Nga/Khao Lak,,,"Hi TreeHouse Villas Koh Yao Noi team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+62,Santhiya Koh Yao Yai Resort & Spa,Phang Nga/Khao Lak,,,"Hi Santhiya Koh Yao Yai Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+63,Cape Kudu Hotel Koh Yao Noi,Phang Nga/Khao Lak,,,"Hi Cape Kudu Hotel Koh Yao Noi team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+64,The Sarojin Khao Lak,Phang Nga/Khao Lak,,,"Hi The Sarojin Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+65,JW Marriott Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi JW Marriott Khao Lak Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+66,Devasom Khao Lak Beach Resort & Villas,Phang Nga/Khao Lak,,,"Hi Devasom Khao Lak Beach Resort & Villas team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+67,Pullman Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Pullman Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+68,Le Méridien Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi Le Méridien Khao Lak Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+69,La Vela Khao Lak,Phang Nga/Khao Lak,,,"Hi La Vela Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+70,Casa de La Flora Khao Lak,Phang Nga/Khao Lak,,,"Hi Casa de La Flora Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+71,Avani+ Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Avani+ Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+72,The Haven Khao Lak,Phang Nga/Khao Lak,,,"Hi The Haven Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+73,ananea Beyond Khaolak,Phang Nga/Khao Lak,,,"Hi ananea Beyond Khaolak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+74,Moracea by Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Moracea by Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+75,Natai Beach Resort,Phang Nga/Khao Lak,,,"Hi Natai Beach Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 76,Rayavadee Krabi,,,,"Hi Rayavadee Krabi team,",,Thailand,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 77,"Phulay Bay, a Ritz-Carlton Reserve",,,,"Hi Phulay Bay, a Ritz-Carlton Reserve team,",,Thailand,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 78,Centara Grand Beach Resort & Villas Krabi,,,,"Hi Centara Grand Beach Resort & Villas Krabi team,",,Thailand,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
