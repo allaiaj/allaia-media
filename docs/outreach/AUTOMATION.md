@@ -47,7 +47,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
    - Set `fu1_at` or `fu2_at`, and the status.
 5. **Send new pitches** with whatever budget is left, only while today ≤ 2026-12-01.
    - New pitches are also capped at 20 per day, counting rows whose `sent_at` is today.
-   - Take taking rows in `n` order with status `queued` or `research`.
+   - Take rows in `n` order with status `queued` or `research`.
    - For a `research` row:
      - Find the property's contact email. Accept only an address shown on the official website, the brand site, an official fact sheet or press release, or two independent reputable listings. Never guess an address from a naming pattern. Prefer a PR or marketing contact, then a general info address, then reservations.
      - Write `hook`: one accurate, specific detail plus its verb, for example "your Sky Villas over Kata Bay have". If you can't confirm a detail, use `<resort> has`.
