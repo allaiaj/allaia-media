@@ -26,6 +26,8 @@ const columns = ordered.length
       return { dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down', clips: [...own, ...own] };
     })
   : [];
+// Phones show one column, so it carries every clip (not just half of them).
+const mobileClips = ordered.length ? [...ordered, ...ordered] : [];
 ---
 
 <section class="offer-hero relative w-full overflow-hidden" aria-label="1:1 personal brand coaching">
@@ -71,6 +73,15 @@ const columns = ordered.length
             </div>
           </div>
         ))}
+        <div class="offer-col offer-col-all">
+          <div class="offer-col-track offer-track-up offer-track-all">
+            {mobileClips.map((src) => (
+              <div class="offer-clip">
+                <video src={src} muted loop playsinline preload="none" data-offer-video></video>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     )}
   </div>
@@ -102,7 +113,13 @@ const columns = ordered.length
   .offer-track-down { animation: offer-down 40s linear infinite; }
   .offer-col-1 .offer-col-track { animation-delay: -13s; }
   .offer-wall:hover .offer-col-track { animation-play-state: paused; }
-  @media (max-width: 640px) { .offer-col-1 { display: none; } }
+  /* Phones: one column holding every clip; the two desktop columns hide. */
+  .offer-col-all { display: none; }
+  .offer-track-all { animation-duration: 80s; }
+  @media (max-width: 640px) {
+    .offer-col-0, .offer-col-1 { display: none; }
+    .offer-col-all { display: block; }
+  }
   .offer-clip {
     flex: 0 0 auto;
     width: 100%;
@@ -128,7 +145,8 @@ const columns = ordered.length
       const on = entries[0]?.isIntersecting;
       vids.forEach((v) => {
         v.muted = true;
-        if (on) v.play().catch(() => {});
+        // Only the column(s) shown at this screen size play — hidden ones never download.
+        if (on && v.offsetParent !== null) v.play().catch(() => {});
         else v.pause();
       });
     }, { threshold: 0.05 });
