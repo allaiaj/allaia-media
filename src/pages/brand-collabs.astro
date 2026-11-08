@@ -159,6 +159,8 @@ const heroColumns = heroClips.length
       return { dir: (c % 2 === 0 ? 'up' : 'down') as 'up' | 'down', clips: [...own, ...own] };
     })
   : [];
+// Phones show one column, so it carries every clip (not just half of them).
+const heroMobileClips = heroClips.length ? [...heroClips, ...heroClips] : [];
 
 // A carousel tile uses a self-hosted cover image when one exists — instant,
 // reliable, no dependency on Instagram's flaky embed. Drop a JPG at
@@ -394,6 +396,15 @@ const faqs = [
           </div>
         </div>
       ))}
+      <div class="hero-col hero-col-all">
+        <div class="hero-col-track hero-track-up hero-track-all">
+          {heroMobileClips.map((src) => (
+            <div class="hero-clip">
+              <video src={src} muted loop playsinline preload="none" data-hero-video></video>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )}
 
@@ -1121,7 +1132,13 @@ const faqs = [
   .hero-track-down { animation: hero-down 40s linear infinite; }
   .hero-col-1 .hero-col-track { animation-delay: -13s; }
   .hero-wall:hover .hero-col-track { animation-play-state: paused; }
-  @media (max-width: 640px) { .hero-col-1 { display: none; } }
+  /* Phones: one column holding every clip; the two desktop columns hide. */
+  .hero-col-all { display: none; }
+  .hero-track-all { animation-duration: 80s; }
+  @media (max-width: 640px) {
+    .hero-col-0, .hero-col-1 { display: none; }
+    .hero-col-all { display: block; }
+  }
   .hero-clip {
     flex: 0 0 auto;
     width: 100%;
@@ -1700,7 +1717,8 @@ const faqs = [
       const onScreen = entries[0]?.isIntersecting;
       heroVids.forEach((v) => {
         v.muted = true;
-        if (onScreen) v.play().catch(() => { /* autoplay refused — poster frame stays */ });
+        // Only the column(s) shown at this screen size play — hidden ones never download.
+        if (onScreen && v.offsetParent !== null) v.play().catch(() => { /* autoplay refused — poster frame stays */ });
         else v.pause();
       });
     }, { threshold: 0.05 });
