@@ -72,6 +72,8 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
 
 ## Phase 2: brands (rows where `place` is `brand`)
 
+- **Sending account (Allaia, 2026-11-09).** Brand emails must go out from **allaiaj.luise@gmail.com**, never from allaiapower@gmail.com. The Gmail tools in this session are connected to allaiapower@gmail.com only. So **do not send any brand pitch or brand follow-up** until a run can confirm that the connected account is allaiaj.luise@gmail.com (check the sender of a recent `in:sent` message). If it can't, skip phase 2 and remind Allaia in the run report. Resort and villa emails stay on allaiapower@gmail.com.
+
 - **When:** start brand pitches only once no resort or villa rows (any `place` other than `brand`) are left in `queued` or `research`. Resort follow-ups keep priority inside the daily budget. The 35-a-day cap and follow-up rules still apply.
 - **Brands are continuous** (Allaia, 2026-11-09). The 1 December cut-off applies to resorts and villas only. Brand pitches carry on Monday to Friday after 1 December until Allaia says stop. When fewer than 10 sendable brand rows remain, research and append more brands, following the tier order below.
 - **Shipping to Bali is hard, so Indonesian brands come first.** Work in `tier` order from `notes`:
