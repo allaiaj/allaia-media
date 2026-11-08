@@ -51,8 +51,8 @@ Evidence key: **A** = the property or its group has a public creator or influenc
 | 12 | The Slate | Nai Yang | B: hosts media | reservations@theslatephuket.com | Aksari + Alloura |
 | 13 | Six Senses Yao Noi | Phang Nga Bay | B | reservations-yaonoi@sixsenses.com | Lumeira + Aksari |
 | 14 | V Villas Phuket (MGallery) | Phuket | B | HB775@accor.com | Aksari + Alloura |
-| 16 | The Naka Phuket (Design Hotels) | Kamala | Requested by Allaia | info@thenakaphuket.com | Aksari + Alloura |
 | 15 | Pullman Phuket Arcadia | Naithon | B: upscale rather than top-tier luxury, the weakest fit | h7488-re@accor.com | Aksari + Alloura |
+| 16 | The Naka Phuket (Design Hotels) | Kamala | Requested by Allaia | info@thenakaphuket.com | Aksari + Alloura |
 
 Forms only (no email found; Allaia to apply directly):
 - Conrad Koh Samui, via Hilton's influencer request form (stories.hilton.com/influencer-inquiries)
