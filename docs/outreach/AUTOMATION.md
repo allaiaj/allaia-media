@@ -2,7 +2,7 @@
 
 **Read this first on every scheduled run.** Allaia asked for this setup on 2026-11-09:
 
-- **at most 25 emails per weekday in total, counting new pitches and follow-ups together** (updated by Allaia, 2026-11-09)
+- **at most 35 emails per weekday in total, counting new pitches and follow-ups together** (Allaia raised this from 25 on 2026-11-09)
 - new pitches at most 20 per day, sent in chunks across the four runs
 - runs at 08:07, 10:07, 13:07 and 15:07 Bali time (Asia/Makassar), Monday to Friday
 - new pitches until **Tuesday 1 December 2026**
@@ -37,8 +37,8 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
    - Never answer a resort on Allaia's behalf. Only tell her.
 3. **Work out this run's budget.**
    - Count every email already sent today (Bali date): new pitches plus follow-ups.
-   - `remaining_today = 25 - sent_today`.
-   - This run's budget is `ceil(remaining_today / runs_left_today)`, counting this run, with the four runs at 08:07, 10:07, 13:07 and 15:07, and never more than 7. That spreads the day evenly instead of sending in one go.
+   - `remaining_today = 35 - sent_today`.
+   - This run's budget is `ceil(remaining_today / runs_left_today)`, counting this run, with the four runs at 08:07, 10:07, 13:07 and 15:07, and never more than 10. That spreads the day evenly instead of sending in one go.
    - Spend the budget on follow-ups first, oldest due date first. Follow-up 2 goes before follow-up 1, because it closes a thread. Then use what's left on new pitches.
    - Any due follow-ups that don't fit roll over to the next run or the next weekday. They are never dropped.
 4. **Send follow-ups that are due**, within the budget, **only to resorts that have not replied** (Allaia's rule).
