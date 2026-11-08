@@ -39,7 +39,10 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
    - This run's budget is `ceil(remaining_today / runs_left_today)`, counting this run, with the four runs at 08:07, 10:07, 13:07 and 15:07, and never more than 7. That spreads the day evenly instead of sending in one go.
    - Spend the budget on follow-ups first, oldest due date first. Follow-up 2 goes before follow-up 1, because it closes a thread. Then use what's left on new pitches.
    - Any due follow-ups that don't fit roll over to the next run or the next weekday. They are never dropped.
-4. **Send follow-ups that are due**, within the budget.
+4. **Send follow-ups that are due**, within the budget, **only to resorts that have not replied** (Allaia's rule).
+   - Right before each follow-up, check again: `get_thread(thread_id)`, then search Gmail for `from:<recipient domain> after:<sent date>` to catch replies sent from a different address or in a new thread.
+   - Any human reply counts, including "not interested" or "please use our form". Set `replied` and send nothing more.
+   - An automatic acknowledgement or out-of-office message does not count as a reply. Note it in `notes`; the follow-ups still go out.
    - Follow-up 1 is due when status is `sent` and today ≥ sent date + 3 calendar days.
    - Follow-up 2 is due when status is `fu1` and today ≥ sent date + 7 calendar days.
    - If a due date falls on a weekend, the follow-up goes out on the next weekday run.
