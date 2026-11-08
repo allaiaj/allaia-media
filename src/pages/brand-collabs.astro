@@ -195,7 +195,7 @@ const featuredFilms = [
   // is unconfirmed rather than guessed.
   { brand: 'The Iggy Bali', note: 'Bali', code: 'DYv4c-YMHFR', views: 40531, saves: 252, sends: 202 , likes: 1600},
   { brand: 'Bubble Hotel Bali', note: 'Hotel · Bali', code: 'Daw6LsPM-Wt', views: 192000, likes: 9000, reposts: 1002, sends: 2704, saves: null },
-  { brand: 'Public House Bangkok', note: 'Restaurant · Bangkok', code: 'DbzllgEswXo', views: 104000, likes: 6000, reposts: 1030, sends: 880, saves: null },
+  { brand: 'Public House Bangkok', note: 'Restaurant · Bangkok', code: 'DbzllgEswXo', views: 121000, likes: 6000, reposts: 1030, sends: 880, saves: null },
   { brand: 'Morning Kiss Bangkok', note: 'Café · Bangkok', code: 'Dbp6RF_MWHV', views: 57100, likes: 3500, reposts: 205, sends: 157, saves: null },
   { brand: 'Arah Ice Bath & Sauna', note: 'Ice bath & sauna · Bangkok', code: 'DbdBlWOMepy', views: 47000, likes: 2300, reposts: 218, sends: 480, saves: null },
   { brand: 'Isora Wellness', note: 'Wellness · Bangkok', code: 'DbD9GGSsMqA', views: 44000, likes: 2275, reposts: 265, sends: 491, saves: null },
@@ -203,8 +203,11 @@ const featuredFilms = [
   // Self-hosted clip (no Instagram post): plays from public/video/collabs.
   // `self: true` marks it so no "Open on Instagram" link is rendered.
   { brand: 'Quora Medical Wellness', note: 'Wellness clinic · Bangkok', code: 'quora-medical-wellness', self: true, views: null, saves: null, sends: null, likes: null },
-  { brand: 'Aksari Ubud', note: 'Resort · Ubud', code: 'aksari-ubud', self: true, pin: true, views: null, saves: null, sends: null, likes: null },
-  { brand: 'Hotel Tugu Bali', note: 'Hotel · Canggu', code: 'hotel-tugu-bali', self: true, pin: true, views: null, saves: null, sends: null, likes: null },
+  // Luxury stays are pinned to the front of the grid (see `reels` below).
+  { brand: 'Aksari Ubud', note: 'Resort · Ubud', code: 'Dc2IZwZvCu_', pin: true, views: 106000, saves: null, sends: null, likes: null },
+  { brand: 'Cyrus Villa Bali', note: 'Villa · Bali', code: 'DeTb3jIM3tL', pin: true, views: 43000, saves: null, sends: null, likes: null },
+  { brand: 'Hotel Tugu Bali', note: 'Hotel · Canggu', code: 'DfRhp6-MWBr', pin: true, views: 24000, saves: null, sends: null, likes: null },
+  { brand: 'Lumeira Bali', note: 'Wellness space · Bali', code: 'DfOKQtesIgK', views: 100000, saves: null, sends: null, likes: null },
   // Carousel posts rather than reels — Instagram serves those under /p/.
   { brand: 'Dior Beauty', note: 'Beauty · carousel', code: 'DM0d0OMP4Qn', kind: 'p', views: null, saves: null, sends: null },
   { brand: 'Amazónico Dubai', note: 'Restaurant · Dubai', code: 'DWO6qQkiFcT', kind: 'p', views: null, saves: null, sends: null },
