@@ -52,6 +52,8 @@ const libraryRow2 = [
 
 // ── Proof band — each stat translated into what it BUYS the brand ──
 const proofStats = [
+  { value: 37400, display: '37.4K', label: 'Instagram followers', body: 'The women who see every film, not only the ones the algorithm finds.' },
+  { value: 32000, display: '32K', label: 'TikTok followers', body: 'A second audience on a second platform, built the same way.' },
   { value: 6837062, display: '6.8M', label: 'views · last 90 days', body: 'Six-figure reach is your baseline, not your best case.' },
   { value: 86.8, suffix: '%', decimals: 1, label: 'reach from non-followers', body: 'You are paying for discovery, not for the same crowd seeing you twice.' },
   { value: 11.1, suffix: '%', decimals: 1, label: 'peak engagement rate', body: 'Sponsored content averages 1–3%. Mine stops the scroll and gets saved.' },
@@ -381,12 +383,12 @@ const faqs = [
 
 <PageLayout
   title="Brand collaborations"
-  description="Editorial brand partnerships in wellness, recovery and travel. Reaching women 25–45 who travel and spend on feeling well. 6.8M views in 90 days, 86.8% non-follower reach, content you own outright. Selective, paid."
+  description="Editorial brand partnerships in wellness, recovery and travel. Reaching women 25–45 who travel and spend on feeling well. 37.4K Instagram and 32K TikTok followers, 6.8M views in 90 days, 86.8% non-follower reach, content you own outright. Selective, paid."
   eyebrow="Brand collaborations · 2026"
   heading="Soft luxury living,"
   italic="wellness, low-cortisol life."
   lead="I make content about recovery, low-cortisol living, biohacking and wellness travel, alongside the soft, feminine, inspirational films my audience keeps coming back for. It is made for women aged 25 to 45 who travel often and spend on feeling well. When your product lives inside that world, it reads as a recommendation rather than an ad. Below is exactly who you reach, what you get, and what it is worth."
-  byline="Built to this size in 4 months · by personal inquiry · I reply within a day"
+  byline="37.4K on Instagram · 32K on TikTok · Built to this size in 4 months · I reply within a day"
   showNewsletter={false}
 >
   {heroColumns.length > 0 && (
@@ -615,7 +617,7 @@ const faqs = [
     <section class="reveal">
       <p class="eyebrow mb-5">What the numbers buy you</p>
       <h2 class="display-sm mb-10 max-w-2xl">You are not buying a post. You are borrowing trust my audience gives me — <span class="italic-grad">earned one film at a time.</span></h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {proofStats.map((s) => (
           <div class="stat-card rounded-[1.5rem] p-7">
             <p
