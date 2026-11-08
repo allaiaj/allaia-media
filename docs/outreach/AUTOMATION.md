@@ -70,7 +70,37 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
    - fewer than 5 sendable rows remain, after researching and appending more 5-star resorts and luxury private villas on Phuket and in Phang Nga first.
 9. **End.** After 2026-12-01, send follow-ups only. Once no rows remain in `sent` or `fu1`, disable the scheduled task and send Allaia a final summary.
 
-## Pitch template
+## Phase 2: brands (rows where `place` is `brand`)
+
+- **When:** start brand pitches only once no resort or villa rows (any `place` other than `brand`) are left in `queued` or `research`. Resort follow-ups keep priority inside the daily budget. The 35-a-day cap, follow-up rules and the 1 December cut-off for new pitches all still apply.
+- **Research each brand before pitching:**
+  - Confirm on the brand's own shipping or checkout page that it ships to Indonesia. If it doesn't, set `no_ship`.
+  - Find the best contact, in this order: a PR, influencer or creator email for the Indonesia or APAC team, then the global PR or influencer email, then press@ or collabs@ on the official site. If the brand only takes applications through a form, set `form_only` and put the URL in `notes` for Allaia.
+  - Dedupe against Gmail `in:sent` and existing collaborations: WISKII, Kitty Activewear, On Me Bali, Stormyy, Bubblegum, Ayo Lab, Dior and Mealira. For a brand she has already worked with (WISKII, Dior), only send a "working together again" variant, and mention the earlier collab.
+- **Beauty and perfume are luxury only.** Never add a mass, drugstore or masstige brand.
+
+### Brand pitch template
+
+Subject: `three ways we could work together, <brand>`
+
+```
+<p><greeting></p>
+<p>I'm Allaia (<a href="https://www.instagram.com/allaia.power/">@allaia.power</a>), a wellness &amp; lifestyle creator based in Bali, with content focused on feminine life, pilates and feminine fashion. I'd love to create content with <brand>.</p>
+<p>I handle everything - concept, styling, shooting and production - so you receive beautiful lifestyle content you can repost on your own channels.</p>
+<p>What I'd create:<br>- 1 cinematic Instagram Reel, potentially as a Collab Post<br>- 1 carousel of professionally styled photography<br>- 3–5 Instagram Stories<br>- Optional short-form video assets for your ads and social channels, separately negotiated</p>
+<p>Three ways we could work together:<br>1. Gifted collab - you send pieces to Bali, I create the content above, with organic usage rights<br>2. Paid partnership - a content package built to your brief, full usage rights<br>3. Both</p>
+<p>37.4K followers on Instagram and 32K on TikTok, with 6.8M Instagram views in the last 90 days. Recent collabs: Bubblegum the Brand (879K views) and Kitty Activewear (562K).</p>
+<p>Media kit: <a href="https://www.allaiamedia.com/brand-collabs">allaiamedia.com/brand-collabs</a></p>
+<p>Just reply 1, 2 or 3 and I'll take it from there.</p>
+<p>Allaia<br><a href="https://www.instagram.com/allaia.power/">@allaia.power</a></p>
+```
+
+### Brand follow-ups
+
+- **Day 3:** `Floating this back up in case it got buried. I'd love to create content with <brand> this season. Just reply 1, 2 or 3 and I'll take it from there.`
+- **Day 7:** `A last note from me - I'm planning my content for the coming weeks. If a collaboration with <brand> could work, just reply 1, 2 or 3 and I'll take it from there. Either way, thank you for your time.`
+
+## Pitch template (resorts and villas)
 
 Subject: `three ways we could work together, <resort>`
 
