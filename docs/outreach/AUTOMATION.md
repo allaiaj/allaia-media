@@ -87,24 +87,25 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
 
 ### Brand pitch template
 
-Subject: `three ways we could work together, <brand>`
+Allaia's rules (2026-11-09): don't over-promise. A **gifted** collab is **one** Reel **or** one carousel, never both, plus **1–3 Stories**. The bigger package is for **paid** partnerships only. There is no "both" option for brands.
+
+Subject: `two ways we could work together, <brand>`
 
 ```
 <p><greeting></p>
 <p>I'm Allaia (<a href="https://www.instagram.com/allaia.power/">@allaia.power</a>), a wellness &amp; lifestyle creator based in Bali, with content focused on feminine life, pilates and feminine fashion. I'd love to create content with <brand>.</p>
 <p>I handle everything - concept, styling, shooting and production - so you receive beautiful lifestyle content you can repost on your own channels.</p>
-<p>What I'd create:<br>- 1 cinematic Instagram Reel, potentially as a Collab Post<br>- 1 carousel of professionally styled photography<br>- 3–5 Instagram Stories<br>- Optional short-form video assets for your ads and social channels, separately negotiated</p>
-<p>Three ways we could work together:<br>1. Gifted collab - you send pieces to Bali, I create the content above, with organic usage rights<br>2. Paid partnership - a content package built to your brief, full usage rights<br>3. Both</p>
+<p>Two ways we could work together:<br>1. Gifted collab - you send pieces to Bali, and I create 1 Reel or 1 carousel, plus 1–3 Instagram Stories, with organic usage rights<br>2. Paid partnership - a content package built to your brief, such as a cinematic Reel (potentially as a Collab Post), a carousel of styled photography and Stories, with full usage rights. Short-form video assets for your ads can be added.</p>
 <p>37.4K followers on Instagram and 32K on TikTok, with 6.8M Instagram views in the last 90 days. Recent collabs: Bubblegum the Brand (879K views) and Kitty Activewear (562K).</p>
 <p>Media kit: <a href="https://www.allaiamedia.com/brand-collabs">allaiamedia.com/brand-collabs</a></p>
-<p>Just reply 1, 2 or 3 and I'll take it from there.</p>
+<p>Just reply 1 or 2 and I'll take it from there.</p>
 <p>Allaia<br><a href="https://www.instagram.com/allaia.power/">@allaia.power</a></p>
 ```
 
 ### Brand follow-ups
 
-- **Day 3:** `Floating this back up in case it got buried. I'd love to create content with <brand> this season. Just reply 1, 2 or 3 and I'll take it from there.`
-- **Day 7:** `A last note from me - I'm planning my content for the coming weeks. If a collaboration with <brand> could work, just reply 1, 2 or 3 and I'll take it from there. Either way, thank you for your time.`
+- **Day 3:** `Floating this back up in case it got buried. I'd love to create content with <brand> this season. Just reply 1 or 2 and I'll take it from there.`
+- **Day 7:** `A last note from me - I'm planning my content for the coming weeks. If a collaboration with <brand> could work, just reply 1 or 2 and I'll take it from there. Either way, thank you for your time.`
 
 ## Pitch template (resorts and villas)
 
