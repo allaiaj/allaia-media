@@ -92,6 +92,7 @@ These ratings come from what I already know. Each one is verified on the brand's
 | Hourglass | Luxury |
 | Natasha Denona | Luxury artistry |
 | Gucci Beauty | Luxury house |
+| Fenty Beauty | Approved by Allaia as the one exception (sold at Sephora Indonesia). Rare Beauty: no |
 
 ## Perfume (luxury and niche)
 | Brand | Notes |

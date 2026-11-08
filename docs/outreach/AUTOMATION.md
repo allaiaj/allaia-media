@@ -77,7 +77,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
   - Confirm on the brand's own shipping or checkout page that it ships to Indonesia. If it doesn't, set `no_ship`.
   - Find the best contact, in this order: a PR, influencer or creator email for the Indonesia or APAC team, then the global PR or influencer email, then press@ or collabs@ on the official site. If the brand only takes applications through a form, set `form_only` and put the URL in `notes` for Allaia.
   - Dedupe against Gmail `in:sent` and existing collaborations: WISKII, Kitty Activewear, On Me Bali, Stormyy, Bubblegum, Ayo Lab, Dior and Mealira. For a brand she has already worked with (WISKII, Dior), only send a "working together again" variant, and mention the earlier collab.
-- **Beauty and perfume are luxury only.** Never add a mass, drugstore or masstige brand.
+- **Beauty and perfume are luxury only.** Never add a mass, drugstore or masstige brand. The one exception Allaia approved is Fenty Beauty. Rare Beauty: no.
 
 ### Brand pitch template
 
