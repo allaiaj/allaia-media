@@ -59,6 +59,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
      - Set `proof`: `LA` for wellness- or spa-led properties, otherwise `AA`.
      - Dedupe: search Gmail `in:sent` for the email domain and the resort name. If it was pitched before, mark `skipped`.
      - If no credible email exists, mark `no_email` and move to the next row.
+     - **Villas:** many Phuket villas are run by a management company (Elite Havens, Villa Getaways, Shibumi and others). If the only address you can find belongs to a management company that has already been pitched, mark the villa `skipped` with the note "covered by <company>". Never email the same company twice in the same round. If a villa has its own direct address, pitch the villa.
    - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 20", "What I'd create" and "37.4K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
    - Record `sent_at`, `thread_id`, `subject` and `status=sent`.
 6. Commit `queue.csv` with message `outreach: <date> run <time>` and push it. Use a plain push, never force; if the push is rejected, pull and retry.
