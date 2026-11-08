@@ -5,7 +5,7 @@
 - **at most 35 emails per weekday in total, counting new pitches and follow-ups together** (Allaia raised this from 25 on 2026-11-09)
 - new pitches at most 20 per day, sent in chunks across the four runs
 - runs at 08:07, 10:07, 13:07 and 15:07 Bali time (Asia/Makassar), Monday to Friday
-- new pitches until **Tuesday 1 December 2026**
+- new resort and villa pitches until **Tuesday 1 December 2026**. Brand pitches continue after that
 - two follow-ups per resort: day 3 and day 7 after the first email
 
 **Scope: Phuket and Phang Nga** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island, plus Phang Nga (Khao Lak, Natai, Koh Yao, Phang Nga Bay), whose `place` is "the Phuket area". Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`.
@@ -68,11 +68,17 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
    - there are 5 or more bounces in one day,
    - Gmail returns a sending-limit or spam error, or
    - fewer than 5 sendable rows remain, after researching and appending more 5-star resorts and luxury private villas on Phuket and in Phang Nga first.
-9. **End.** After 2026-12-01, send follow-ups only. Once no rows remain in `sent` or `fu1`, disable the scheduled task and send Allaia a final summary.
+9. **End.** After 2026-12-01, send no new resort or villa pitches, but keep sending their follow-ups until they are done. Brand pitches and follow-ups continue. Only disable the scheduled task when Allaia asks, or when the brand list can't be topped up and nothing is left in `sent` or `fu1`, and then send her a final summary.
 
 ## Phase 2: brands (rows where `place` is `brand`)
 
-- **When:** start brand pitches only once no resort or villa rows (any `place` other than `brand`) are left in `queued` or `research`. Resort follow-ups keep priority inside the daily budget. The 35-a-day cap, follow-up rules and the 1 December cut-off for new pitches all still apply.
+- **When:** start brand pitches only once no resort or villa rows (any `place` other than `brand`) are left in `queued` or `research`. Resort follow-ups keep priority inside the daily budget. The 35-a-day cap and follow-up rules still apply.
+- **Brands are continuous** (Allaia, 2026-11-09). The 1 December cut-off applies to resorts and villas only. Brand pitches carry on Monday to Friday after 1 December until Allaia says stop. When fewer than 10 sendable brand rows remain, research and append more brands, following the tier order below.
+- **Shipping to Bali is hard, so Indonesian brands come first.** Work in `tier` order from `notes`:
+  - **ID**: Indonesian or Bali brands, plus luxury brands sold in Indonesia (for example on sephora.co.id). For these, pitch the brand's Indonesia PR team or distributor, or Sephora Indonesia, never global HQ.
+  - **SEA**: Southeast Asian brands.
+  - **INTL**: global brands. Pitch these only after the ID and SEA rows are done, and only when their site confirms delivery to Indonesia.
+  - When adding new brands, look for Indonesian ones first.
 - **Research each brand before pitching:**
   - Confirm on the brand's own shipping or checkout page that it ships to Indonesia. If it doesn't, set `no_ship`.
   - Find the best contact, in this order: a PR, influencer or creator email for the Indonesia or APAC team, then the global PR or influencer email, then press@ or collabs@ on the official site. If the brand only takes applications through a form, set `form_only` and put the URL in `notes` for Allaia.
