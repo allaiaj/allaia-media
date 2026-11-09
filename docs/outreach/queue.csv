@@ -1,9 +1,9 @@
 n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,subject,fu1_at,fu2_at,notes
-1,Kata Rocks,Phuket,reservations@katarocks.com,,"Hi Kata Rocks team,",,Phuket,AA,r-5240861575324035444,queued,,,,,,also has influencer form katarocks.com/influencers
-2,Veranda Resort Phuket,Phuket,info.phuket@verandaresort.com,,"Hi Veranda Resort Phuket team,",,Phuket,AA,r1830435901520441435,queued,,,,,,also has media/influencer form
-3,Keemala,Phuket,stay@keemala.com,,"Hi Keemala team,",,Phuket,LA,r-7939392382169387190,queued,,,,,,
-4,Trisara,Phuket,reservations@trisara.com,info@montarahospitality.com,"Hi Trisara team,",,Phuket,AA,r-4813147457121235539,queued,,,,,,
-5,Banyan Tree Phuket,Phuket,phuket@banyantree.com,,"Hi Banyan Tree Phuket team,",,Phuket,LA,r729613377864392975,queued,,,,,,
+1,Kata Rocks,Phuket,reservations@katarocks.com,,"Hi Kata Rocks team,",,Phuket,AA,r-5240861575324035444,sent,2026-11-09T13:37+08:00,1a1bc3aedc51e069,"three ways we could work together, Kata Rocks",,,also has influencer form katarocks.com/influencers
+2,Veranda Resort Phuket,Phuket,info.phuket@verandaresort.com,,"Hi Veranda Resort Phuket team,",,Phuket,AA,r1830435901520441435,sent,2026-11-09T13:37+08:00,1a1bc3aef2173b5e,"three ways we could work together, Veranda Resort Phuket",,,also has media/influencer form
+3,Keemala,Phuket,stay@keemala.com,,"Hi Keemala team,",,Phuket,LA,r-7939392382169387190,sent,2026-11-09T13:37+08:00,1a1bc3af1b5c38d8,"three ways we could work together, Keemala",,,
+4,Trisara,Phuket,reservations@trisara.com,info@montarahospitality.com,"Hi Trisara team,",,Phuket,AA,r-4813147457121235539,sent,2026-11-09T13:37+08:00,1a1bc3af27161486,"three ways we could work together, Trisara",,,
+5,Banyan Tree Phuket,Phuket,phuket@banyantree.com,,"Hi Banyan Tree Phuket team,",,Phuket,LA,r729613377864392975,sent,2026-11-09T13:37+08:00,1a1bc3af5dce51af,"three ways we could work together, Banyan Tree Phuket",,,
 6,Angsana Laguna Phuket,Phuket,reservations-lagunaphuket@angsana.com,,"Hi Angsana Laguna Phuket team,",,Phuket,AA,r-912641194033319287,queued,,,,,,
 7,Banyan Tree Samui,Koh Samui,samui@banyantree.com,,"Hi Banyan Tree Samui team,",,Thailand,LA,r1018575910344619353,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 8,Banyan Tree Krabi,Krabi,krabi@banyantree.com,,"Hi Banyan Tree Krabi team,",,Thailand,LA,r5076417327888192659,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
