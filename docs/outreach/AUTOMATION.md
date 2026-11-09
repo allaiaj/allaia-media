@@ -10,6 +10,14 @@
 
 **Scope: Phuket and Phang Nga** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island, plus Phang Nga (Khao Lak, Natai, Koh Yao, Phang Nga Bay), whose `place` is "the Phuket area". Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`.
 
+**Sending route (Allaia, 2026-11-09): send only from her Mac.** The Claude Gmail connector rewrites every link into a `google.com/url` redirect, so never use `send_message` for outreach. Use it only for reading: replies, bounces and the Sent folder.
+
+- Build the run's emails into a JSON batch, then run `python3 scripts/outreach/send_batch.py <batch.json>` on Allaia's Mac, through the attached Remote Control folder.
+- The script uses Gmail SMTP with the app password stored in her Keychain, the same route as her August pitches.
+- For follow-ups, pass `in_reply_to` with the original Message-ID, so they thread under the first email.
+- Store each `message_id` in `thread_id` as `msgid:<...>`.
+- If the Mac isn't attached or online, send nothing that run and tell Allaia.
+
 Everything goes out from **allaiapower@gmail.com** using the Gmail tools. The source of truth is `docs/outreach/queue.csv` on branch `claude/phuket-resorts-influencer-emails-fe1myw`.
 
 ## queue.csv
