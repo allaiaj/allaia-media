@@ -62,7 +62,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
      - Dedupe: search Gmail `in:sent` for the email domain and the resort name. If it was pitched before, mark `skipped`.
      - If no credible email exists, mark `no_email` and move to the next row.
      - **Villas:** many Phuket villas are run by a management company (Elite Havens, Villa Getaways, Shibumi and others). If the only address you can find belongs to a management company that has already been pitched, mark the villa `skipped` with the note "covered by <company>". Never email the same company twice in the same round. If a villa has its own direct address, pitch the villa.
-   - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 20", "What I'd create" and "37.4K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
+   - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 20", "What I'd create" and "38.2K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
    - Record `sent_at`, `thread_id`, `subject` and `status=sent`.
 6. Commit `queue.csv` with message `outreach: <date> run <time>` and push it. Use a plain push, never force; if the push is rejected, pull and retry.
 7. **Report** to Allaia in the session: what was sent, any replies (with the resort and a one-line gist), bounces and errors. At the 15:07 run, give the day's totals.
@@ -100,7 +100,7 @@ Subject: `two ways we could work together, <brand>`
 <p>I'm Allaia (<a href="https://www.instagram.com/allaia.power/">@allaia.power</a>), a wellness &amp; lifestyle creator based in Bali, with content focused on feminine life, pilates and feminine fashion. I'd love to create content with <brand>.</p>
 <p>I handle everything - concept, styling, shooting and production - so you receive beautiful lifestyle content you can repost on your own channels.</p>
 <p>Two ways we could work together:<br>1. Gifted collab - you send me some products, and I create 1 Reel or 1 carousel, plus 1–3 Instagram Stories, with organic usage rights<br>2. Paid partnership - a content package built to your brief, such as a cinematic Reel (potentially as a Collab Post), a carousel of styled photography and Stories, with full usage rights. Short-form video assets for your ads can be added.</p>
-<p>37.4K followers on Instagram and 32K on TikTok, with 6.8M Instagram views in the last 90 days. Recent collabs: Bubblegum the Brand (879K views) and Kitty Activewear (562K).</p>
+<p>38.2K followers on Instagram and 32K on TikTok, with 6.8M Instagram views in the last 90 days. Recent collabs: Bubblegum the Brand (879K views) and Kitty Activewear (562K).</p>
 <p>Media kit: <a href="https://www.allaiamedia.com/brand-collabs">allaiamedia.com/brand-collabs</a></p>
 <p>Just reply 1 or 2 and I'll take it from there.</p>
 <p>Allaia<br><a href="https://www.instagram.com/allaia.power/">@allaia.power</a></p>
@@ -133,7 +133,7 @@ HTML body (the plain-text body has the same words, with full URLs):
 <p>I handle everything - concept, shooting and production - so you receive beautiful lifestyle photos and films you can repost on your own channels.</p>
 <p>What I'd create:<br>- 1 cinematic Instagram Reel, potentially as a Collab Post<br>- 1 carousel of professionally styled photography<br>- 3–5 Instagram Stories documenting the experience<br>- Optional short-form video assets for your social channels, separately negotiated</p>
 <p>Three ways we could work together:<br>1. Hosted stay - the content above, with organic usage rights<br>2. Paid partnership - a content package built to your brief, full usage rights<br>3. Both</p>
-<p>37.4K followers on Instagram and 32K on TikTok, with 6.8M Instagram views in the last 90 days. <proof></p>
+<p>38.2K followers on Instagram and 32K on TikTok, with 6.8M Instagram views in the last 90 days. <proof></p>
 <p>Media kit: <a href="https://www.allaiamedia.com/brand-collabs">allaiamedia.com/brand-collabs</a></p>
 <p>Just reply 1, 2 or 3 and I'll take it from there.</p>
 <p>Allaia<br><a href="https://www.instagram.com/allaia.power/">@allaia.power</a></p>

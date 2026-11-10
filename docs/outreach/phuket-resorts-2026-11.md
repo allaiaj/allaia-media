@@ -26,7 +26,7 @@ Bump each thread after 5 days with no reply: "Floating this back up in case it g
 - **Short.** About 120 words. Nothing beyond: hook, offer, options, numbers, media kit, ask.
 - **Positioning.** "Luxury travel & lifestyle creator based in Bali." Not "wellness & travel".
 - **Lead with the offer, not reach.** Allaia handles concept, shooting and production. The property gets lifestyle photos and films to repost on its own channels.
-- **Numbers.** 37.4K Instagram followers, 32K TikTok followers, and 6.8M Instagram views in the last 90 days (label Instagram views as Instagram).
+- **Numbers.** 38.2K Instagram followers, 32K TikTok followers, and 6.8M Instagram views in the last 90 days (label Instagram views as Instagram).
 - **Proof.** Luxury stays first: Aksari Ubud (106K). For wellness or spa properties, add Lumeira Bali (879K). Alloura Villa (227K) is a fallback.
 - **Links.** Make them clickable: @allaia.power (instagram.com/allaia.power, without QR tracking parameters) and the media kit (allaiamedia.com/brand-collabs).
 - **Ask.** "Just reply 1, 2 or 3."
