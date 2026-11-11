@@ -1,0 +1,117 @@
+/* Paid to Exist — print stylesheet. Palette and type follow docs/STYLE-GUIDE.md. */
+@font-face { font-family: 'Playfair'; src: url('../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2'); font-weight: 700; }
+@font-face { font-family: 'Playfair'; src: url('../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-800-normal.woff2'); font-weight: 800; }
+@font-face { font-family: 'Playfair'; src: url('../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-700-italic.woff2'); font-weight: 700; font-style: italic; }
+@font-face { font-family: 'Playfair'; src: url('../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-800-italic.woff2'); font-weight: 800; font-style: italic; }
+@font-face { font-family: 'Cormorant'; src: url('../../node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2'); font-weight: 400; }
+@font-face { font-family: 'Cormorant'; src: url('../../node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2'); font-weight: 400; font-style: italic; }
+@font-face { font-family: 'Cormorant'; src: url('../../node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-700-normal.woff2'); font-weight: 700; }
+@font-face { font-family: 'Inter'; src: url('../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2'); font-weight: 500; }
+@font-face { font-family: 'Inter'; src: url('../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2'); font-weight: 600; }
+
+:root {
+  --cream: #F2EDE5; --bone: #FAF6EE; --ink: #1A1A1A; --ink-soft: #3A3530; --mute: #7A6F62;
+  --terra: #B85542; --terra-deep: #8E3D2F; --sage: #8B9D7E; --brown: #6B4F3D; --anthracite: #0E0D0B;
+}
+
+@page {
+  size: 148mm 210mm;
+  margin: 18mm 17mm 20mm;
+  background: var(--cream);
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Inter', sans-serif; font-size: 7pt; letter-spacing: 0.18em; color: #7A6F62;
+  }
+}
+@page full { margin: 0; @bottom-center { content: none; } }
+@page :first { margin: 0; @bottom-center { content: none; } }
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: var(--cream); color: var(--ink-soft); font-family: 'Cormorant', Georgia, serif; font-size: 11.6pt; line-height: 1.5; hyphens: auto; }
+
+/* ── cover ── */
+.cover { page: full; position: relative; width: 148mm; height: 210mm; overflow: hidden; background: var(--anthracite); color: var(--cream); }
+.cover-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.cover-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,13,11,.55) 0%, rgba(14,13,11,0) 22%, rgba(14,13,11,0) 42%, rgba(14,13,11,.88) 72%, rgba(14,13,11,.96) 100%); }
+.cover-top { position: absolute; top: 13mm; left: 14mm; right: 14mm; }
+.cover-body { position: absolute; left: 14mm; right: 14mm; bottom: 24mm; }
+.cover-kicker { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 8.4pt; letter-spacing: 0.06em; line-height: 1.5; margin: 0 0 5mm; color: var(--cream); }
+.cover-title { font-family: 'Playfair', serif; font-weight: 800; font-size: 46pt; line-height: 0.95; letter-spacing: -0.035em; margin: 0 0 5mm; color: var(--cream); }
+.cover-title em { font-style: italic; color: #E0A48F; }
+.cover-sub { font-size: 13pt; line-height: 1.35; margin: 0; color: rgba(242,237,229,.86); max-width: 105mm; }
+.cover-foot { position: absolute; bottom: 10mm; left: 14mm; right: 14mm; display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; font-size: 6.5pt; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(242,237,229,.6); border-top: 0.4pt solid rgba(242,237,229,.25); padding-top: 3mm; }
+
+/* ── type ── */
+.eyebrow { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 6.6pt; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mute); margin: 0 0 4mm; }
+.eyebrow.light { color: rgba(242,237,229,.75); }
+.display { font-family: 'Playfair', serif; font-weight: 700; font-size: 22pt; line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 6mm; break-after: avoid; }
+h3 { font-family: 'Playfair', serif; font-weight: 700; font-style: italic; font-size: 13pt; color: var(--brown); margin: 7mm 0 2.5mm; break-after: avoid; }
+p { margin: 0 0 3mm; orphans: 3; widows: 3; }
+.lede { font-size: 13.4pt; line-height: 1.42; color: var(--ink); margin-bottom: 6mm; padding-bottom: 5mm; border-bottom: 0.5pt solid var(--sage); }
+b { color: var(--ink); font-weight: 700; }
+em { font-style: italic; }
+
+.chapter, .page { break-before: page; }
+.chapter > .eyebrow:first-child { padding-top: 6mm; }
+.chapter .lede::first-letter { font-family: 'Playfair', serif; font-style: italic; font-weight: 800; float: left; font-size: 40pt; line-height: 0.82; padding: 1.2mm 2mm 0 0; color: var(--terra); }
+
+/* ── part dividers ── */
+.part { page: full; break-before: page; position: relative; width: 148mm; height: 210mm; overflow: hidden; background: var(--anthracite); }
+.part img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.part::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,13,11,0) 40%, rgba(14,13,11,.92) 85%); }
+.part-text { position: absolute; z-index: 2; left: 14mm; right: 14mm; bottom: 18mm; color: var(--cream); }
+.part-text h2 { font-family: 'Playfair', serif; font-weight: 800; font-size: 38pt; line-height: 1; letter-spacing: -0.03em; margin: 0 0 4mm; }
+.part-text h2 em { color: #E0A48F; }
+.part-text p:last-child { font-size: 13pt; color: rgba(242,237,229,.82); margin: 0; }
+
+/* ── front ── */
+.front { padding-top: 70mm; }
+.front-copy { font-size: 9.6pt; color: var(--mute); line-height: 1.5; }
+.toc { list-style: none; margin: 0; padding: 0; }
+.toc li { display: flex; gap: 4mm; padding: 0.9mm 0; border-bottom: 0.4pt solid rgba(122,111,98,.22); font-size: 10.2pt; color: var(--ink); line-height: 1.25; }
+.toc-n { font-family: 'Inter', sans-serif; font-size: 7pt; letter-spacing: 0.12em; color: var(--terra); width: 7mm; flex: none; padding-top: 0.8mm; }
+.toc .toc-part { display: block; border: 0; padding: 2.6mm 0 0.6mm; font-family: 'Inter', sans-serif; font-size: 6.4pt; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mute); }
+
+/* ── components ── */
+.stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin: 2mm 0 6mm; border-top: 0.5pt solid var(--sage); border-bottom: 0.5pt solid var(--sage); break-inside: avoid; }
+.stats div { padding: 3.5mm 2.5mm 3.5mm 0; }
+.stats div:nth-child(-n+3) { border-bottom: 0.4pt solid rgba(139,157,126,.5); }
+.stats b { display: block; font-family: 'Playfair', serif; font-weight: 800; font-size: 19pt; color: var(--terra); line-height: 1; letter-spacing: -0.02em; }
+.stats span { display: block; margin-top: 1.5mm; font-family: 'Inter', sans-serif; font-size: 6.2pt; letter-spacing: 0.06em; line-height: 1.4; color: var(--mute); text-transform: uppercase; }
+
+.pull { margin: 7mm 0 4mm; padding: 0 0 0 6mm; border-left: 1.4pt solid var(--sage); font-family: 'Playfair', serif; font-style: italic; font-weight: 700; font-size: 14.5pt; line-height: 1.22; color: var(--terra-deep); break-inside: avoid; }
+
+.box { background: var(--bone); border-radius: 3mm; padding: 4.5mm 5mm 2mm; margin: 4mm 0 5mm; break-inside: avoid; border: 0.4pt solid rgba(26,26,26,.07); }
+.box-label { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 6.4pt; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terra); margin-bottom: 2mm; }
+.box.quote p { font-style: italic; font-size: 12pt; color: var(--ink); }
+.formula { font-size: 12.6pt; color: var(--ink); }
+
+.tbl { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 10pt; line-height: 1.3; break-inside: avoid; }
+.tbl th { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 6pt; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); text-align: left; padding: 0 2mm 1.8mm 0; border-bottom: 0.6pt solid var(--ink); }
+.tbl td { padding: 2mm 2.5mm 2mm 0; border-bottom: 0.4pt solid rgba(122,111,98,.25); vertical-align: top; }
+.tbl td:first-child { color: var(--ink); font-weight: 700; width: 30%; }
+
+.steps { padding-left: 0; margin: 2mm 0 4mm; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; position: relative; padding-left: 8mm; margin-bottom: 2.4mm; break-inside: avoid; }
+.steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 0.9mm; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 6.6pt; letter-spacing: 0.08em; color: var(--terra); }
+
+.checks, .ticks, .hooks { list-style: none; padding: 0; margin: 2mm 0 4mm; }
+.checks li, .hooks li { position: relative; padding-left: 6mm; margin-bottom: 2mm; break-inside: avoid; }
+.checks li::before { content: ''; position: absolute; left: 0.5mm; top: 2.6mm; width: 2.4mm; height: 0.6pt; background: var(--terra); }
+.hooks { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5mm 5mm; }
+.hooks li { font-family: 'Playfair', serif; font-style: italic; font-size: 10.5pt; color: var(--ink); padding-left: 0; border-bottom: 0.4pt solid rgba(122,111,98,.2); padding-bottom: 1.5mm; margin: 0; }
+.ticks li { position: relative; padding: 1.6mm 0 1.6mm 7mm; border-bottom: 0.4pt solid rgba(122,111,98,.2); break-inside: avoid; }
+.ticks li::before { content: ''; position: absolute; left: 0; top: 2.6mm; width: 3mm; height: 3mm; border: 0.6pt solid var(--brown); border-radius: 0.6mm; }
+
+.tpl { background: var(--bone); border-left: 1.4pt solid var(--terra); padding: 4mm 5mm 1.5mm; margin: 2mm 0 5mm; font-size: 10.4pt; line-height: 1.42; color: var(--ink); break-inside: avoid; }
+.tpl p { margin-bottom: 2.4mm; }
+.tpl-subj { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 7pt; letter-spacing: 0.04em; color: var(--brown); }
+
+.sign { margin-top: 8mm; font-family: 'Playfair', serif; font-weight: 700; font-size: 14pt; color: var(--ink); line-height: 1.4; }
+.sign em { color: var(--terra); }
+.endnote { margin-top: 14mm; padding-top: 5mm; border-top: 0.5pt solid var(--sage); text-align: center; }
+.endnote p { font-family: 'Inter', sans-serif; font-size: 7pt; letter-spacing: 0.14em; color: var(--mute); }
+
+/* Headings never hyphenate; body text does. */
+.display, h3, .lede, .pull, .cover-title, .part-text h2, .toc, .tpl { hyphens: manual; }
