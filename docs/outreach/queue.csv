@@ -274,20 +274,20 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 273,The Westin Resort Nusa Dua,Bali,,,"Hi The Westin Resort Nusa Dua team,",,Bali,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 274,Kimpton Naranta Bali,Bali,,,"Hi Kimpton Naranta Bali team,",,Bali,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 275,Hotel Indigo Bali Seminyak Beach,Bali,,,"Hi Hotel Indigo Bali Seminyak Beach team,",,Bali,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
-276,Villa Getaways,Phuket,Sales@VillaGetaways.com,,"Hi Villa Getaways team,",your Phuket villas have,Phuket,AA,,queued,,,,,,official contact page blocked by session network; retry if allowed
-277,Elite Havens Phuket,Phuket,,,"Hi Elite Havens Phuket team,",,Phuket,AA,,research,,,,,,"villa operator, 30+ Phuket villas; find PR/marketing or Phuket reservations email on elitehavens.com"
+276,Villa Getaways,Phuket,Sales@VillaGetaways.com,,"Hi Villa Getaways team,",your Phuket villas have,Phuket,AA,,sent,2026-11-11T13:25+08:00,1a1c903480662bea,"three ways we could work together, Villa Getaways",,,sales email from official contact page
+277,Elite Havens Phuket,Phuket,reservations@elitehavens.com,,"Hi Elite Havens Phuket team,",,Phuket,AA,,sent,2026-11-11T13:25+08:00,1a1c903474b3fea8,"three ways we could work together, Elite Havens Phuket",,,email from official Elite Havens press kit + 1 listing
 278,Shibumi Services,Phuket,,,"Hi Shibumi Services team,",,Phuket,AA,,research,,,,,,"luxury villa manager, Kamala; pitch as villa portfolio"
 279,The Luxury Signature,Phuket,,,"Hi The Luxury Signature team,",,Phuket,AA,,research,,,,,,Phuket luxury villa collection (theluxurysignature.com)
 280,Latisha Villa,Phuket,,,"Hi Latisha Villa team,",,Phuket,AA,,research,,,,,,"Rawai; markets itself for influencer shoots; may be WhatsApp-only, so mark no_email if there is no email"
-281,Villa Amanzi,Phuket,,,"Hi Villa Amanzi team,",,Phuket,AA,,research,,,,,,"villa: Kamala (Cape Sol), Elite Havens"
+281,Villa Amanzi,Phuket,,,"Hi Villa Amanzi team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
 282,Samsara Private Estate,Phuket,,,"Hi Samsara Private Estate team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
-283,Malaiwana Estate,Phuket,,,"Hi Malaiwana Estate team,",,Phuket,AA,,research,,,,,,villa: Layan; Villa Haleana / Duplex / Villa M
-284,Villa Sammasan,Phuket,,,"Hi Villa Sammasan team,",,Phuket,AA,,research,,,,,,"villa: Surin, Elite Havens"
-285,Villa Sapna,Phuket,,,"Hi Villa Sapna team,",,Phuket,AA,,research,,,,,,"villa: Cape Yamu, Elite Havens"
-286,Casa Alma,Phuket,,,"Hi Casa Alma team,",,Phuket,AA,,research,,,,,,"villa: Rawai, Elite Havens"
-287,Katamanda,Phuket,,,"Hi Katamanda team,",,Phuket,AA,,research,,,,,,villa: Kata
+283,Malaiwana Estate,Phuket,,,"Hi Malaiwana Estate team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
+284,Villa Sammasan,Phuket,,,"Hi Villa Sammasan team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
+285,Villa Sapna,Phuket,,,"Hi Villa Sapna team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
+286,Casa Alma,Phuket,,,"Hi Casa Alma team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
+287,Katamanda,Phuket,,,"Hi Katamanda team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
 288,Grand Villa Noi,Phuket,,,"Hi Grand Villa Noi team,",,Phuket,AA,,research,,,,,,villa: architect Duangrit Bunnag
-289,Baan Paradise,Phuket,,,"Hi Baan Paradise team,",,Phuket,AA,,research,,,,,,villa: Villa Getaways villa
+289,Baan Paradise,Phuket,,,"Hi Baan Paradise team,",,Phuket,AA,,done,,,,,,Villa Getaways villa; covered by Villa Getaways pitch 2026-11-11
 290,Villa Padma,Phuket,,,"Hi Villa Padma team,",,Phuket,AA,,research,,,,,,villa: Naithon; verify it exists
 291,Villa Chan Grajang,Phuket,,,"Hi Villa Chan Grajang team,",,Phuket,AA,,research,,,,,,villa: Surin; verify
 292,Villa Lomchoy,Phuket,,,"Hi Villa Lomchoy team,",,Phuket,AA,,research,,,,,,villa: Surin; verify
