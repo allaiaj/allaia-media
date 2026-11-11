@@ -136,3 +136,6 @@ em { font-style: italic; }
 
 /* Story opener: one-line beats set apart, like spoken pauses. */
 .story .beat { font-family: 'Playfair', serif; font-style: italic; font-weight: 700; font-size: 14pt; line-height: 1.25; color: var(--terra-deep); margin: 5mm 0 4mm; }
+.story p { margin-bottom: 2.6mm; }
+.story .beat { margin: 3.5mm 0 2.6mm; }
+.story h3 { margin-top: 5mm; }
