@@ -66,10 +66,10 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 65,JW Marriott Khao Lak Resort & Spa,Phang Nga/Khao Lak,jw.khaolak.reservation@marriott.com,,"Hi JW Marriott Khao Lak Resort & Spa team,",,the Phuket area,AA,,sent,2026-11-11T10:20+08:00,1a1c85d838b4f3e4,"three ways we could work together, JW Marriott Khao Lak",,,email from official Marriott pages
 66,Devasom Khao Lak Beach Resort & Villas,Phang Nga/Khao Lak,rsvn.khaolak@devasom.com,,"Hi Devasom Khao Lak Beach Resort & Villas team,",,the Phuket area,AA,,sent,2026-11-11T08:30+08:00,1a1c7f1da9a76416,"three ways we could work together, Devasom Khao Lak",,,email confirmed by 2 independent listings
 67,Pullman Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Pullman Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-68,Le Méridien Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi Le Méridien Khao Lak Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+68,Le Méridien Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi Le Méridien Khao Lak Resort & Spa team,",,the Phuket area,AA,,no_email,,,,,,no verified email found 2026-11-11
 69,La Vela Khao Lak,Phang Nga/Khao Lak,,,"Hi La Vela Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,single-source email only 2026-11-11
 70,Casa de La Flora Khao Lak,Phang Nga/Khao Lak,,,"Hi Casa de La Flora Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,no verified email (single source or none) 2026-11-11
-71,Avani+ Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Avani+ Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+71,Avani+ Khao Lak Resort,Phang Nga/Khao Lak,salesadmin.vkhl@avanihotels.com,,"Hi Avani+ Khao Lak Resort team,",,the Phuket area,AA,,sent,2026-11-11T10:25+08:00,1a1c85e0e94048a6,"three ways we could work together, Avani+ Khao Lak",,,sales email from official Minor Hotels page
 72,The Haven Khao Lak,Phang Nga/Khao Lak,,,"Hi The Haven Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 73,ananea Beyond Khaolak,Phang Nga/Khao Lak,,,"Hi ananea Beyond Khaolak team,",,the Phuket area,AA,,no_email,,,,,,no verified email (single source or none) 2026-11-11
 74,Moracea by Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Moracea by Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
@@ -274,13 +274,13 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 273,The Westin Resort Nusa Dua,Bali,,,"Hi The Westin Resort Nusa Dua team,",,Bali,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 274,Kimpton Naranta Bali,Bali,,,"Hi Kimpton Naranta Bali team,",,Bali,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
 275,Hotel Indigo Bali Seminyak Beach,Bali,,,"Hi Hotel Indigo Bali Seminyak Beach team,",,Bali,AA,,skipped,,,,,,out of scope: Allaia wants Phuket only (2026-11-09)
-276,Villa Getaways,Phuket,Sales@VillaGetaways.com,,"Hi Villa Getaways team,",your Phuket villas have,Phuket,AA,,queued,,,,,,villa operator; hosted LA influencer groups at Andara & Baan Paradise (villagetaways blog)
+276,Villa Getaways,Phuket,Sales@VillaGetaways.com,,"Hi Villa Getaways team,",your Phuket villas have,Phuket,AA,,queued,,,,,,official contact page blocked by session network; retry if allowed
 277,Elite Havens Phuket,Phuket,,,"Hi Elite Havens Phuket team,",,Phuket,AA,,research,,,,,,"villa operator, 30+ Phuket villas; find PR/marketing or Phuket reservations email on elitehavens.com"
 278,Shibumi Services,Phuket,,,"Hi Shibumi Services team,",,Phuket,AA,,research,,,,,,"luxury villa manager, Kamala; pitch as villa portfolio"
 279,The Luxury Signature,Phuket,,,"Hi The Luxury Signature team,",,Phuket,AA,,research,,,,,,Phuket luxury villa collection (theluxurysignature.com)
 280,Latisha Villa,Phuket,,,"Hi Latisha Villa team,",,Phuket,AA,,research,,,,,,"Rawai; markets itself for influencer shoots; may be WhatsApp-only, so mark no_email if there is no email"
 281,Villa Amanzi,Phuket,,,"Hi Villa Amanzi team,",,Phuket,AA,,research,,,,,,"villa: Kamala (Cape Sol), Elite Havens"
-282,Samsara Private Estate,Phuket,,,"Hi Samsara Private Estate team,",,Phuket,AA,,research,,,,,,villa: Kamala
+282,Samsara Private Estate,Phuket,,,"Hi Samsara Private Estate team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
 283,Malaiwana Estate,Phuket,,,"Hi Malaiwana Estate team,",,Phuket,AA,,research,,,,,,villa: Layan; Villa Haleana / Duplex / Villa M
 284,Villa Sammasan,Phuket,,,"Hi Villa Sammasan team,",,Phuket,AA,,research,,,,,,"villa: Surin, Elite Havens"
 285,Villa Sapna,Phuket,,,"Hi Villa Sapna team,",,Phuket,AA,,research,,,,,,"villa: Cape Yamu, Elite Havens"
