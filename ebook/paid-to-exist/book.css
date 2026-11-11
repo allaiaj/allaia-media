@@ -133,3 +133,6 @@ em { font-style: italic; }
 .plain .lede { margin-bottom: 4mm; padding-bottom: 3.5mm; }
 .plain h3 { margin-top: 5mm; }
 .plain .box p { font-size: 10pt; line-height: 1.4; }
+
+/* Story opener: one-line beats set apart, like spoken pauses. */
+.story .beat { font-family: 'Playfair', serif; font-style: italic; font-weight: 700; font-size: 14pt; line-height: 1.25; color: var(--terra-deep); margin: 5mm 0 4mm; }
