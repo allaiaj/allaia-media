@@ -115,3 +115,21 @@ em { font-style: italic; }
 
 /* Headings never hyphenate; body text does. */
 .display, h3, .lede, .pull, .cover-title, .part-text h2, .toc, .tpl { hyphens: manual; }
+
+/* Cover: the four ways you get paid, set as a clean list. */
+.cover-body { bottom: 20mm; }
+.cover-kicker { margin-bottom: 4mm; }
+.cover-title { margin-bottom: 4mm; }
+.cover-sub { font-size: 12.4pt; color: var(--cream); margin-bottom: 5mm; }
+.cover-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 5mm; border-top: 0.4pt solid rgba(242,237,229,.3); }
+.cover-list li { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 7.8pt; line-height: 1.3; color: var(--cream); padding: 2.4mm 0; border-bottom: 0.4pt solid rgba(242,237,229,.3); }
+.cover-list b { color: #E0A48F; font-size: 6.6pt; letter-spacing: 0.1em; margin-right: 2.2mm; }
+
+/* Plain-words page: four-column table. */
+.tbl.pay { font-size: 9pt; }
+.tbl.pay td:first-child { width: 28%; }
+.tbl.pay td:last-child, .tbl.pay th:last-child { text-align: right; color: var(--terra); font-family: 'Inter', sans-serif; font-size: 7pt; padding-right: 0; }
+
+.plain .lede { margin-bottom: 4mm; padding-bottom: 3.5mm; }
+.plain h3 { margin-top: 5mm; }
+.plain .box p { font-size: 10pt; line-height: 1.4; }
