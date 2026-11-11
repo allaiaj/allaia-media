@@ -42,13 +42,13 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 41,Angsana Villas Resort Phuket,Phuket,,,"Hi Angsana Villas Resort Phuket team,",,Phuket,AA,,no_email,,,,,,no verified email found 11-10
 42,The Westin Siray Bay Resort & Spa Phuket,Phuket,,,"Hi The Westin Siray Bay Resort & Spa Phuket team,",,Phuket,AA,,no_email,,,,,,no verified email found 11-10
 43,Silavadee Pool Spa Resort,Phuket,,,"Hi Silavadee Pool Spa Resort team,",,Phuket,AA,,skipped,,,,,,"Koh Samui, out of scope"
-44,Akyra Beach Club Phuket,Phuket,rsvn.akph@theakyra.com,,"Hi Akyra Beach Club Phuket team,",,the Phuket area,AA,,sent,2026-11-10T15:16+08:00,1a1c44fb06efa76c,"three ways we could work together, Akyra Beach Club Phuket",,,
+44,Akyra Beach Club Phuket,Phuket,rsvn.akph@theakyra.com,,"Hi Akyra Beach Club Phuket team,",,the Phuket area,AA,,bounced,2026-11-10T15:16+08:00,1a1c44fb06efa76c,"three ways we could work together, Akyra Beach Club Phuket",,,address not found 2026-11-10
 45,Baba Beach Club Phuket,Phuket,,,"Hi Baba Beach Club Phuket team,",,Phuket,AA,,no_email,,,,,,no verified email found 11-10
-46,Wyndham Grand Nai Harn Beach Phuket,Phuket,,,"Hi Wyndham Grand Nai Harn Beach Phuket team,",,Phuket,AA,,research,,,,,,
-47,Pullman Phuket Karon Beach Resort,Phuket,,,"Hi Pullman Phuket Karon Beach Resort team,",,Phuket,AA,,research,,,,,,
-48,Le Méridien Phuket Mai Khao Beach Resort,Phuket,,,"Hi Le Méridien Phuket Mai Khao Beach Resort team,",,Phuket,AA,,research,,,,,,
-49,Kalima Resort & Spa Phuket,Phuket,,,"Hi Kalima Resort & Spa Phuket team,",,Phuket,AA,,research,,,,,,
-50,Cape Sienna Phuket Gourmet Hotel & Villas,Phuket,,,"Hi Cape Sienna Phuket Gourmet Hotel & Villas team,",,Phuket,AA,,research,,,,,,
+46,Wyndham Grand Nai Harn Beach Phuket,Phuket,,,"Hi Wyndham Grand Nai Harn Beach Phuket team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
+47,Pullman Phuket Karon Beach Resort,Phuket,,,"Hi Pullman Phuket Karon Beach Resort team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
+48,Le Méridien Phuket Mai Khao Beach Resort,Phuket,rsvn@lemeridienmaikhao.com,,"Hi Le Méridien Phuket Mai Khao Beach Resort team,",,Phuket,AA,,sent,2026-11-11T08:10+08:00,1a1c7ef6f0d8c1b6,"three ways we could work together, Le Méridien Phuket Mai Khao",,,email from official press release
+49,Kalima Resort & Spa Phuket,Phuket,,,"Hi Kalima Resort & Spa Phuket team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
+50,Cape Sienna Phuket Gourmet Hotel & Villas,Phuket,,,"Hi Cape Sienna Phuket Gourmet Hotel & Villas team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
 51,Amari Phuket,Phuket,,,"Hi Amari Phuket team,",,Phuket,AA,,research,,,,,,
 52,Boathouse Phuket,Phuket,,,"Hi Boathouse Phuket team,",,Phuket,AA,,research,,,,,,
 53,Andaman Beach Suites Hotel,Phuket,,,"Hi Andaman Beach Suites Hotel team,",,Phuket,AA,,research,,,,,,
@@ -56,18 +56,18 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 55,Thanyapura Health & Sports Resort,Phuket,,,"Hi Thanyapura Health & Sports Resort team,",,Phuket,AA,,research,,,,,,
 56,Avadina Hills Phuket,Phuket,,,"Hi Avadina Hills Phuket team,",,Phuket,AA,,research,,,,,,
 57,Mövenpick Resort Bangtao Beach Phuket,Phuket,,,"Hi Mövenpick Resort Bangtao Beach Phuket team,",,Phuket,AA,,research,,,,,,
-58,Aleenta Phuket-Phang Nga Resort & Spa,Phang Nga/Khao Lak,,,"Hi Aleenta Phuket-Phang Nga Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+58,Aleenta Phuket-Phang Nga Resort & Spa,Phang Nga/Khao Lak,,,"Hi Aleenta Phuket-Phang Nga Resort & Spa team,",,the Phuket area,AA,,no_email,,,,,,no verified email found 2026-11-11
 59,"The Naka Island, a Luxury Collection Resort",Phang Nga/Khao Lak,,,"Hi The Naka Island, a Luxury Collection Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-60,Koyao Island Resort,Phang Nga/Khao Lak,,,"Hi Koyao Island Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-61,TreeHouse Villas Koh Yao Noi,Phang Nga/Khao Lak,,,"Hi TreeHouse Villas Koh Yao Noi team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-62,Santhiya Koh Yao Yai Resort & Spa,Phang Nga/Khao Lak,,,"Hi Santhiya Koh Yao Yai Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-63,Cape Kudu Hotel Koh Yao Noi,Phang Nga/Khao Lak,,,"Hi Cape Kudu Hotel Koh Yao Noi team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-64,The Sarojin Khao Lak,Phang Nga/Khao Lak,,,"Hi The Sarojin Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+60,Koyao Island Resort,Phang Nga/Khao Lak,,,"Hi Koyao Island Resort team,",,the Phuket area,AA,,no_email,,,,,,single-source email only 2026-11-11
+61,TreeHouse Villas Koh Yao Noi,Phang Nga/Khao Lak,res@treehouse-villas.com,,"Hi TreeHouse Villas Koh Yao Noi team,",,the Phuket area,AA,,sent,2026-11-11T08:30+08:00,1a1c7f1d97473288,"three ways we could work together, TreeHouse Villas",,,email confirmed by 2 independent listings
+62,Santhiya Koh Yao Yai Resort & Spa,Phang Nga/Khao Lak,reservation@santhiya.com,,"Hi Santhiya Koh Yao Yai Resort & Spa team,",,the Phuket area,AA,,sent,2026-11-11T08:20+08:00,1a1c7f1643c7b2ad,"three ways we could work together, Santhiya Koh Yao Yai",,,email from official site
+63,Cape Kudu Hotel Koh Yao Noi,Phang Nga/Khao Lak,reservations@capekuduhotel.com,,"Hi Cape Kudu Hotel Koh Yao Noi team,",,the Phuket area,AA,,sent,2026-11-11T08:20+08:00,1a1c7f16619ed901,"three ways we could work together, Cape Kudu Hotel",,,email from official contact page
+64,The Sarojin Khao Lak,Phang Nga/Khao Lak,,,"Hi The Sarojin Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,no verified email found 2026-11-11
 65,JW Marriott Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi JW Marriott Khao Lak Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-66,Devasom Khao Lak Beach Resort & Villas,Phang Nga/Khao Lak,,,"Hi Devasom Khao Lak Beach Resort & Villas team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+66,Devasom Khao Lak Beach Resort & Villas,Phang Nga/Khao Lak,rsvn.khaolak@devasom.com,,"Hi Devasom Khao Lak Beach Resort & Villas team,",,the Phuket area,AA,,sent,2026-11-11T08:30+08:00,1a1c7f1da9a76416,"three ways we could work together, Devasom Khao Lak",,,email confirmed by 2 independent listings
 67,Pullman Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Pullman Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 68,Le Méridien Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi Le Méridien Khao Lak Resort & Spa team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
-69,La Vela Khao Lak,Phang Nga/Khao Lak,,,"Hi La Vela Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
+69,La Vela Khao Lak,Phang Nga/Khao Lak,,,"Hi La Vela Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,single-source email only 2026-11-11
 70,Casa de La Flora Khao Lak,Phang Nga/Khao Lak,,,"Hi Casa de La Flora Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 71,Avani+ Khao Lak Resort,Phang Nga/Khao Lak,,,"Hi Avani+ Khao Lak Resort team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
 72,The Haven Khao Lak,Phang Nga/Khao Lak,,,"Hi The Haven Khao Lak team,",,the Phuket area,AA,,research,,,,,,"Phang Nga, released by Allaia 2026-11-09"
