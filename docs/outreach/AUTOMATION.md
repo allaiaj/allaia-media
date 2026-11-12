@@ -8,7 +8,7 @@
 - new resort and villa pitches until **Tuesday 1 December 2026**. Brand pitches continue after that
 - two follow-ups per resort: day 3 and day 7 after the first email
 
-**Scope: Phuket and Phang Nga** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island, plus Phang Nga (Khao Lak, Natai, Koh Yao, Phang Nga Bay), whose `place` is "the Phuket area". Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`.
+**Scope: Phuket and Phang Nga** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island (from 2026-11-12, Allaia widened this to any 5-star hotel, not only ultra-luxury ones, plus more villas and villa companies; 4-star hotels stay out), plus Phang Nga (Khao Lak, Natai, Koh Yao, Phang Nga Bay), whose `place` is "the Phuket area". Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`.
 
 **Sending route (Allaia, 2026-11-09): send through the Gmail connector (`send_message`).** Her Mac isn't available, and she checked the test email: the links reached her looking normal, so she approved this route. The connector wraps links in a google.com/url redirect; she has accepted that. `scripts/outreach/send_batch.py` stays as a fallback if she ever wants the Mac route.
 
@@ -61,6 +61,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
      - Set `proof`: `LA` for wellness- or spa-led properties, otherwise `AA`.
      - Dedupe: search Gmail `in:sent` for the email domain and the resort name. If it was pitched before, mark `skipped`.
      - If no credible email exists, mark `no_email` and move to the next row.
+     - **Groups:** before pitching, check whether the same hotel group or owner already declined or passed Allaia to marketing (e.g. Minor/Anantara, Banyan Tree, Kasemkij/Cape Kudu). If so, skip and note it.
      - **Villas:** many Phuket villas are run by a management company (Elite Havens, Villa Getaways, Shibumi and others). If the only address you can find belongs to a management company that has already been pitched, mark the villa `skipped` with the note "covered by <company>". Never email the same company twice in the same round. If a villa has its own direct address, pitch the villa.
    - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 20", "What I'd create" and "38.2K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
    - Record `sent_at`, `thread_id`, `subject` and `status=sent`.
@@ -69,7 +70,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
 8. **Safety stops.** Pause the scheduled task (`update_trigger enabled=false`) and tell Allaia if:
    - there are 5 or more bounces in one day,
    - Gmail returns a sending-limit or spam error, or
-   - fewer than 5 sendable rows remain, after researching and appending more 5-star resorts and luxury private villas on Phuket and in Phang Nga first.
+   - fewer than 5 sendable rows remain, after researching and appending more 5-star hotels (ultra-luxury not required) and villas on Phuket and in Phang Nga first.
 9. **End.** After 2026-12-01, send no new resort or villa pitches, but keep sending their follow-ups until they are done. Brand pitches and follow-ups continue. Only disable the scheduled task when Allaia asks, or when the brand list can't be topped up and nothing is left in `sent` or `fu1`, and then send her a final summary.
 
 ## Phase 2: brands (rows where `place` is `brand`)
