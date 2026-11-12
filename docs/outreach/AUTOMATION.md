@@ -8,6 +8,8 @@
 - new resort and villa pitches until **Tuesday 1 December 2026**. Brand pitches continue after that
 - two follow-ups per resort: day 3 and day 7 after the first email
 
+**Travel dates (Allaia, 2026-11-12): December 8 to 16.** Earlier pitches said 8 to 20; new pitches and all follow-ups use 8 to 16.
+
 **Scope: Phuket and Phang Nga** (Allaia, 2026-11-09). That means 5-star resorts and luxury villas on Phuket island (from 2026-11-12, Allaia widened this to any 5-star hotel, not only ultra-luxury ones, plus more villas and villa companies; 4-star hotels stay out), plus Phang Nga (Khao Lak, Natai, Koh Yao, Phang Nga Bay), whose `place` is "the Phuket area". Bali, Bangkok, Samui, Krabi and the rest of Thailand are `skipped`.
 
 **Sending route (Allaia, 2026-11-09): send through the Gmail connector (`send_message`).** Her Mac isn't available, and she checked the test email: the links reached her looking normal, so she approved this route. The connector wraps links in a google.com/url redirect; she has accepted that. `scripts/outreach/send_batch.py` stays as a fallback if she ever wants the Mac route.
@@ -63,7 +65,7 @@ Columns: `n, resort, area, to, cc, greeting, hook, place, proof, draft_id, statu
      - If no credible email exists, mark `no_email` and move to the next row.
      - **Groups:** before pitching, check whether the same hotel group or owner already declined or passed Allaia to marketing (e.g. Minor/Anantara, Banyan Tree, Kasemkij/Cape Kudu). If so, skip and note it.
      - **Villas:** many Phuket villas are run by a management company (Elite Havens, Villa Getaways, Shibumi and others). If the only address you can find belongs to a management company that has already been pitched, mark the villa `skipped` with the note "covered by <company>". Never email the same company twice in the same round. If a villa has its own direct address, pitch the villa.
-   - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 20", "What I'd create" and "38.2K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
+   - For a row with `draft_id`: get the draft and check it contains "luxury travel & lifestyle creator", "December 8 and 16", "What I'd create" and "38.2K". If it does, `send_message(draftId=...)`. If not, rebuild the email from the template below.
    - Record `sent_at`, `thread_id`, `subject` and `status=sent`.
 6. Commit `queue.csv` with message `outreach: <date> run <time>` and push it. Use a plain push, never force; if the push is rejected, pull and retry.
 7. **Report** to Allaia in the session: what was sent, any replies (with the resort and a one-line gist), bounces and errors. At the 15:07 run, give the day's totals.
@@ -118,7 +120,7 @@ Subject: `three ways we could work together, <resort>`
 
 `<place_line>`:
 
-- If `place` is Phuket, "the Phuket area" or Thailand: `I'll be in <place> anytime between December 8 and 20, and I'd love to feature a stay with you.`
+- If `place` is Phuket, "the Phuket area" or Thailand: `I'll be in <place> anytime between December 8 and 16, and I'd love to feature a stay with you.`
 - If `place` is Bali: `I'm based in Bali, so I can work around dates that suit you, and I'd love to feature a stay with you.`
 
 `<proof>`:
@@ -145,7 +147,7 @@ HTML body (the plain-text body has the same words, with full URLs):
 ```
 <greeting>
 
-Floating this back up in case it got buried. I'm planning my stays for December 8 to 20 and would love to include <resort>.
+Floating this back up in case it got buried. I'm planning my stays for December 8 to 16 and would love to include <resort>.
 
 Just reply 1, 2 or 3 and I'll take it from there.
 

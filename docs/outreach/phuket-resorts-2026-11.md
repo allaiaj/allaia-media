@@ -62,7 +62,7 @@ Forms only (no email found; Allaia to apply directly):
 
 ## Offer and dates (added 2026-11-09; applies to all 21 drafts)
 
-- **Travel window.** "Anytime between December 8 and 20". Phuket properties say Phuket. Natai and Yao Noi say "the Phuket area". Samui, Krabi and SAii say Thailand.
+- **Travel window.** "Anytime between December 8 and 16". Phuket properties say Phuket. Natai and Yao Noi say "the Phuket area". Samui, Krabi and SAii say Thailand.
 - **What I'd create:**
   - 1 cinematic Instagram Reel, potentially as a Collab Post
   - 1 carousel of professionally styled photography
