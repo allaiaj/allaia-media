@@ -65,7 +65,7 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 64,The Sarojin Khao Lak,Phang Nga/Khao Lak,,,"Hi The Sarojin Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,no verified email found 2026-11-11
 65,JW Marriott Khao Lak Resort & Spa,Phang Nga/Khao Lak,jw.khaolak.reservation@marriott.com,,"Hi JW Marriott Khao Lak Resort & Spa team,",,the Phuket area,AA,,sent,2026-11-11T10:20+08:00,1a1c85d838b4f3e4,"three ways we could work together, JW Marriott Khao Lak",,,email from official Marriott pages
 66,Devasom Khao Lak Beach Resort & Villas,Phang Nga/Khao Lak,rsvn.khaolak@devasom.com,,"Hi Devasom Khao Lak Beach Resort & Villas team,",,the Phuket area,AA,,replied,2026-11-11T08:30+08:00,1a1c7f1da9a76416,"three ways we could work together, Devasom Khao Lak",,,"2026-11-11: reservations forwarded to MarCom (cc), who will contact Allaia if interested"
-67,Pullman Khao Lak Resort,Phang Nga/Khao Lak,HB436-RE@accor.com,,"Hi Pullman Khao Lak Resort team,",,the Phuket area,AA,,replied,2026-11-11T13:15+08:00,1a1c9026799c74a2,"three ways we could work together, Pullman Khao Lak Resort",,,2026-11-11: reservations forwarded to the relevant department
+67,Pullman Khao Lak Resort,Phang Nga/Khao Lak,HB436-RE@accor.com,,"Hi Pullman Khao Lak Resort team,",,the Phuket area,AA,,replied,2026-11-11T13:15+08:00,1a1c9026799c74a2,"three ways we could work together, Pullman Khao Lak Resort",,,"2026-11-12: marketing declined, peak season during Dec dates; open to future"
 68,Le Méridien Khao Lak Resort & Spa,Phang Nga/Khao Lak,,,"Hi Le Méridien Khao Lak Resort & Spa team,",,the Phuket area,AA,,no_email,,,,,,no verified email found 2026-11-11
 69,La Vela Khao Lak,Phang Nga/Khao Lak,,,"Hi La Vela Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,single-source email only 2026-11-11
 70,Casa de La Flora Khao Lak,Phang Nga/Khao Lak,,,"Hi Casa de La Flora Khao Lak team,",,the Phuket area,AA,,no_email,,,,,,no verified email (single source or none) 2026-11-11
@@ -278,7 +278,7 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 277,Elite Havens Phuket,Phuket,reservations@elitehavens.com,,"Hi Elite Havens Phuket team,",,Phuket,AA,,sent,2026-11-11T13:25+08:00,1a1c903474b3fea8,"three ways we could work together, Elite Havens Phuket",,,email from official Elite Havens press kit + 1 listing
 278,Shibumi Services,Phuket,,,"Hi Shibumi Services team,",,Phuket,AA,,no_email,,,,,,no email published (form/phone only) 2026-11-11
 279,The Luxury Signature,Phuket,,,"Hi The Luxury Signature team,",,Phuket,AA,,no_email,,,,,,no email published (form/phone only) 2026-11-11
-280,Latisha Villa,Phuket,,,"Hi Latisha Villa team,",,Phuket,AA,,research,,,,,,"Rawai; markets itself for influencer shoots; may be WhatsApp-only, so mark no_email if there is no email"
+280,Latisha Villa,Phuket,,,"Hi Latisha Villa team,",,Phuket,AA,,no_email,,,,,,no direct email; agency or booking-platform contact only 2026-11-12
 281,Villa Amanzi,Phuket,,,"Hi Villa Amanzi team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
 282,Samsara Private Estate,Phuket,,,"Hi Samsara Private Estate team,",,Phuket,AA,,no_email,,,,,,no verified email found 2026-11-11
 283,Malaiwana Estate,Phuket,,,"Hi Malaiwana Estate team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
@@ -286,7 +286,7 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 285,Villa Sapna,Phuket,,,"Hi Villa Sapna team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
 286,Casa Alma,Phuket,,,"Hi Casa Alma team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
 287,Katamanda,Phuket,,,"Hi Katamanda team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-11
-288,Grand Villa Noi,Phuket,,,"Hi Grand Villa Noi team,",,Phuket,AA,,research,,,,,,villa: architect Duangrit Bunnag
+288,Grand Villa Noi,Phuket,,,"Hi Grand Villa Noi team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-12
 289,Baan Paradise,Phuket,,,"Hi Baan Paradise team,",,Phuket,AA,,done,,,,,,Villa Getaways villa; covered by Villa Getaways pitch 2026-11-11
 290,Villa Padma,Phuket,,,"Hi Villa Padma team,",,Phuket,AA,,research,,,,,,villa: Naithon; verify it exists
 291,Villa Chan Grajang,Phuket,,,"Hi Villa Chan Grajang team,",,Phuket,AA,,research,,,,,,villa: Surin; verify
@@ -295,8 +295,8 @@ n,resort,area,to,cc,greeting,hook,place,proof,draft_id,status,sent_at,thread_id,
 294,Villa Sawarin,Phuket,,,"Hi Villa Sawarin team,",,Phuket,AA,,research,,,,,,villa: Kamala; verify
 295,Villa Yin,Phuket,,,"Hi Villa Yin team,",,Phuket,AA,,research,,,,,,villa: Kamala; verify
 296,Villa Aye,Phuket,,,"Hi Villa Aye team,",,Phuket,AA,,research,,,,,,villa: Kamala; verify
-297,Villa Analaya,Phuket,,,"Hi Villa Analaya team,",,Phuket,AA,,research,,,,,,villa: verify
-298,Baan Paa Talee,Phuket,,,"Hi Baan Paa Talee team,",,Phuket,AA,,research,,,,,,villa: verify
+297,Villa Analaya,Phuket,,,"Hi Villa Analaya team,",,Phuket,AA,,no_email,,,,,,no direct email; agency or booking-platform contact only 2026-11-12
+298,Baan Paa Talee,Phuket,,,"Hi Baan Paa Talee team,",,Phuket,AA,,done,,,,,,Elite Havens villa; covered by Elite Havens pitch 2026-11-12
 299,Liquido Active,Activewear,,,"Hi Liquido Active team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
 300,Yoga Design Lab,Activewear,,,"Hi Yoga Design Lab team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
 301,Natalie Rolt,Fashion,,,"Hi Natalie Rolt team,",,brand,BB,,research,,,,,,tier=ID; phase 2 brand; check that it ships to Indonesia first
