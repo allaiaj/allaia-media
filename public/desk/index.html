@@ -185,6 +185,42 @@ ul.news .meta { color: var(--muted); font-size: 12px; }
 .ruin { overflow-x: auto; }
 .ruin table { min-width: 420px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
 footer { color: var(--muted); font-size: 12px; padding-block: 0 40px; max-width: 80ch; }
+/* Gem radar */
+.radar-intro { display: grid; gap: 8px; max-width: 80ch; }
+.radar-intro h2 { font-size: 26px; font-weight: 800; font-stretch: 80%; text-transform: uppercase; }
+.radar-intro p { margin: 0; }
+.sources { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; }
+.gems { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 12px; }
+.gem { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.gem.is-red { border-color: var(--down); }
+.gem-head { display: flex; align-items: center; gap: 10px; }
+.gem-head img, .gem-ph { width: 36px; height: 36px; border-radius: 50%; flex: none; }
+.gem-ph { display: grid; place-items: center; background: var(--surface-2); color: var(--muted); font-family: var(--display); font-weight: 800; }
+.gem-head .who { min-width: 0; flex: 1; }
+.gem-head .sym { font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: 19px; }
+.gem-head .nm { color: var(--muted); font-size: 12px; }
+.gem-head .meta { font-size: 12px; color: var(--muted); }
+.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px; }
+.metrics div { display: grid; min-width: 0; }
+.metrics small { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.metrics .num { font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
+.bsbar { height: 6px; border-radius: 3px; background: var(--down); opacity: .85; overflow: hidden; }
+.bsbar i { display: block; height: 100%; background: var(--up); }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.c-reddit { background: var(--accent); color: var(--accent-ink); }
+.gem .why { margin: 0; padding-left: 18px; font-size: 13px; display: grid; gap: 2px; }
+.gem .why li.neg { color: var(--down); }
+.gem .why li.amber, .warn { color: var(--warn); }
+.checks { margin: 0; padding: 0; list-style: none; font-size: 13px; display: grid; gap: 2px; }
+.gem-links { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; font-size: 13px; font-family: var(--mono); word-break: break-all; text-align: left; }
+.sel { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.check { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; }
+.buzz { display: grid; gap: 10px; }
+.tablebox.flat { border: 0; border-radius: 0; }
+table.mini { min-width: 720px; }
+table.mini td.title-cell { white-space: normal; min-width: 260px; }
+.picks-radar { margin-top: 8px; }
 @media (max-width: 520px) {
   .pick { grid-template-columns: 1fr auto; }
   .pick .rank { display: none; }
@@ -205,6 +241,7 @@ footer { color: var(--muted); font-size: 12px; padding-block: 0 40px; max-width:
     <nav class="tabs" role="tablist" aria-label="Sections">
       <button role="tab" id="tab-picks" aria-selected="true" data-tab="picks" type="button">Top picks</button>
       <button role="tab" id="tab-crypto" aria-selected="false" data-tab="crypto" type="button">Crypto scanner</button>
+      <button role="tab" id="tab-radar" aria-selected="false" data-tab="radar" type="button">Gem radar</button>
       <button role="tab" id="tab-stocks" aria-selected="false" data-tab="stocks" type="button">Stock scanner</button>
       <button role="tab" id="tab-playbook" aria-selected="false" data-tab="playbook" type="button">Playbook</button>
       <button role="tab" id="tab-setup" aria-selected="false" data-tab="setup" type="button">Setup</button>
@@ -215,7 +252,7 @@ footer { color: var(--muted); font-size: 12px; padding-block: 0 40px; max-width:
 <main class="wrap" id="main"></main>
 
 <footer class="wrap">
-  Grades come from price trend, momentum, volume, volatility, news tone and the overall market backdrop. They're probabilities, not promises, and they can be wrong for weeks at a time. Data: CoinGecko, Binance, Alternative.me, Twelve Data, Finnhub. Not financial advice. Every trade is your call and your risk.
+  Grades come from price trend, momentum, volume, volatility, news tone and the overall market backdrop. They're probabilities, not promises, and they can be wrong for weeks at a time. Data: CoinGecko, Binance, Alternative.me, Twelve Data, Finnhub, DexScreener, GeckoTerminal, Reddit and GoPlus Security. Not financial advice. Every trade is your call and your risk.
 </footer>
 
 <dialog id="sheet" aria-labelledby="sheetTitle"><div class="sheet" id="sheetBody"></div></dialog>
@@ -234,7 +271,8 @@ const store = {
 };
 function fmtPrice(p) {
   if (!isFinite(p)) return '–';
-  const d = p >= 1000 ? 0 : p >= 1 ? 2 : p >= 0.01 ? 4 : 8;
+  if (p > 0 && p < 0.01) return '$' + p.toLocaleString('en-US', { maximumSignificantDigits: 3 });
+  const d = p >= 1000 ? 0 : p >= 1 ? 2 : 4;
   return '$' + p.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
 }
 const fmtUSD = x => isFinite(x) ? '$' + x.toLocaleString('en-US', { maximumFractionDigits: x < 100 ? 2 : 0 }) : '–';
@@ -263,7 +301,7 @@ async function pool(items, n, fn) {
 
 /* ---------- settings ---------- */
 const DEFAULT_WATCHLIST = 'SPY, QQQ, IWM, NVDA, MSFT, AAPL, AMZN, META, GOOGL, TSLA, AMD, AVGO, PLTR, COIN, HOOD, SOFI';
-const settings = Object.assign({ tdKey: '', fhKey: '', account: 500, riskPct: 2, maxPosPct: 25, watchlist: DEFAULT_WATCHLIST, cryptoCount: 60 }, store.get('settings', {}));
+const settings = Object.assign({ tdKey: '', fhKey: '', account: 500, riskPct: 2, maxPosPct: 25, watchlist: DEFAULT_WATCHLIST, cryptoCount: 60, gemPct: 1 }, store.get('settings', {}));
 const watchSymbols = () => [...new Set(settings.watchlist.split(/[\s,]+/).map(s => s.trim().toUpperCase()).filter(s => /^[A-Z.\-]{1,10}$/.test(s)))];
 const ETFS = new Set(['SPY', 'QQQ', 'IWM', 'DIA', 'VOO', 'VTI', 'XLK', 'XLF', 'XLE', 'ARKK', 'SMH', 'SOXX', 'TLT', 'GLD']);
 
@@ -605,6 +643,7 @@ async function refresh() {
   if (state.busy) return; state.busy = true; $('#refreshBtn').disabled = true;
   let crypto = [], live = true;
   const fngP = loadFng();
+  if (state.radar.status !== 'loading') loadRadar().catch(() => { state.radar.status = 'empty'; render(); });
   try { crypto = await loadCrypto(); } catch (e) { live = false; }
   if (!live || !crypto.length) {
     state.sample = true; state.assets = sampleAssets(); state.regime.fng = null; state.updated = Date.now();
@@ -685,7 +724,8 @@ function renderPicks(main) {
         <div class="picks">${shortList.length ? shortList.map((a, i) => pickCard(a, i, 'short')).join('') : empty('No short-term setups grade B- or better today.')}</div></section>
       <section class="col"><h2>Long-term holds</h2><p class="sub">Months and longer. Build these slowly, buy weakness, keep them sized so you can sleep.</p>
         <div class="picks">${longList.length ? longList.map((a, i) => pickCard(a, i, 'long')).join('') : empty('No long-term holds grade B- or better today.')}</div></section>
-    </div>`;
+    </div>
+    <div class="picks-radar">${radarStrip()}</div>`;
 }
 
 const COLS = [
@@ -743,6 +783,7 @@ function renderSetup(main) {
     <div class="field"><label for="s-td">Twelve Data API key (stocks)</label><input id="s-td" type="password" autocomplete="off" value="${esc(settings.tdKey)}" placeholder="Free at twelvedata.com"><span class="hint">Free plan: 800 calls a day, 8 symbols a minute. Stock history is cached for 4 hours to save calls.</span></div>
     <div class="field"><label for="s-fh">Finnhub API key (news)</label><input id="s-fh" type="password" autocomplete="off" value="${esc(settings.fhKey)}" placeholder="Free at finnhub.io"><span class="hint">Adds headline tone to every grade and the market news read.</span></div>
     <div class="field"><label for="s-watch">Stock watchlist</label><textarea id="s-watch" rows="3">${esc(settings.watchlist)}</textarea><span class="hint">Tickers separated by commas. Keep SPY in so the desk can read the stock market backdrop.</span></div>
+    <div class="field"><label for="s-gem">Gem radar stake per coin (%)</label><input id="s-gem" type="number" min="0.25" max="5" step="0.25" value="${settings.gemPct}"><span class="hint">Lottery-ticket size for brand-new coins. 1% is plenty.</span></div>
     <div class="field"><label for="s-count">Crypto coins to scan</label><input id="s-count" type="number" min="10" max="120" step="10" value="${settings.cryptoCount}"><span class="hint">Top coins by market cap, stablecoins and wrapped tokens removed.</span></div>
     <div class="toolbar"><button class="btn primary" type="submit">Save and refresh</button><button class="btn" type="button" id="clearCache">Clear stock cache</button><span class="note" id="saveNote" role="status"></span></div>
   </form>`;
@@ -751,7 +792,7 @@ function renderSetup(main) {
     const num = (id, d) => { const v = parseFloat($(id).value); return isFinite(v) && v > 0 ? v : d; };
     const oldWatch = settings.watchlist;
     Object.assign(settings, { account: num('#s-account', 500), riskPct: clamp(num('#s-risk', 2), 0.1, 10), maxPosPct: clamp(num('#s-maxpos', 25), 1, 100),
-      tdKey: $('#s-td').value.trim(), fhKey: $('#s-fh').value.trim(), watchlist: $('#s-watch').value, cryptoCount: clamp(Math.round(num('#s-count', 60)), 10, 120) });
+      tdKey: $('#s-td').value.trim(), fhKey: $('#s-fh').value.trim(), watchlist: $('#s-watch').value, cryptoCount: clamp(Math.round(num('#s-count', 60)), 10, 120), gemPct: clamp(num('#s-gem', 1), 0.1, 5) });
     const ok = store.set('settings', settings);
     $('#saveNote').textContent = ok ? 'Saved. Refreshing data…' : 'Saved for this visit only (this browser blocks storage).';
     if (oldWatch !== settings.watchlist) state.assets = state.assets.filter(a => a.kind !== 'stock');
@@ -785,6 +826,16 @@ function renderPlaybook(main) {
     <h3>How to read a grade</h3>
     <p>Each asset gets two grades from A+ to F. <b>Short-term</b> reads the next few days to weeks: trend versus the 20 and 50-day averages, MACD and RSI momentum, volume, how stretched price is, the news tone and the market backdrop. <b>Long-term</b> reads months: the 200-day trend, six-month momentum adjusted for volatility, distance from the 1-year high, size and liquidity.</p>
     <p>Open any asset to see the evidence. The <b>signal history</b> panel shows what happened over the next 10 days every past time that asset graded A- or better, against a random day. If the signal has no edge on that asset, the desk tells you.</p>
+    <h3>Hunting new coins</h3>
+    <p>This is where 10× and 100× moves happen, and where most people lose everything. Play it like a professional:</p>
+    <ol>
+      <li><b>Lottery-ticket size only.</b> ${settings.gemPct}% of the account per coin (${fmtUSD(acct * settings.gemPct / 100)}), 5% across all of them. Assume each one can go to zero, because most do.</li>
+      <li><b>At 2×, take your original stake out.</b> What's left is pure profit, and you can let it ride with no stress.</li>
+      <li><b>Never buy a red flag.</b> Honeypots, active mint or freeze authority, unlocked liquidity and thin liquidity are how rug pulls work. The desk checks these for you.</li>
+      <li><b>Copy the contract address from the desk, never from a Reddit comment or a DM.</b> Fake copies of trending coins with the same ticker launch every hour.</li>
+      <li><b>Reddit buzz is attention, not proof.</b> Many posts are paid shills. Early buzz plus real liquidity plus a clean contract is the setup. Buzz alone is the trap.</li>
+      <li><b>Under an hour old is the bots' game.</b> The best risk-reward is usually a coin that's a few days old, survived its first dump, and still has buyers.</li>
+    </ol>
     <h3>What the desk can't see</h3>
     <p>Earnings dates, company balance sheets, token unlocks, regulatory news after the close, and anything a headline can't capture. Check the earnings date before you buy a stock for a short-term trade. A surprise there can jump right past your stop.</p>
   </article>`;
@@ -797,6 +848,7 @@ function render() {
   if (state.tab === 'picks') renderPicks(main);
   else if (state.tab === 'crypto') renderTable(main, 'crypto');
   else if (state.tab === 'stocks') renderTable(main, 'stock');
+  else if (state.tab === 'radar') renderRadar(main);
   else if (state.tab === 'playbook') renderPlaybook(main);
   else if (state.tab === 'setup') { if (!$('#setupForm')) renderSetup(main); }
   if ($('#sheet').open && state.openId) { const a = state.assets.find(x => x.id === state.openId); if (a) openSheet(a, true); }
@@ -904,6 +956,339 @@ function drawChart(a) {
   const lx = x(n - 1), ly = y(c[n - 1]); g.fillStyle = col('--ink'); g.beginPath(); g.arc(lx, ly, 3.5, 0, Math.PI * 2); g.fill();
 }
 
+/* ---------- Gem radar: new and under-the-radar coins ---------- */
+const MAJORS = new Set(['BTC', 'ETH', 'SOL', 'XRP', 'BNB', 'DOGE', 'ADA', 'TRX', 'USDT', 'USDC', 'DAI', 'WETH', 'WBTC', 'WSOL', 'USD', 'TON', 'AVAX', 'LINK', 'DOT', 'LTC', 'BCH', 'SHIB', 'XLM', 'SUI', 'HBAR', 'USDE', 'FDUSD', 'PYUSD', 'EUR', 'CBBTC', 'STETH']);
+const CASHTAG_STOP = new Set(['USD', 'CEO', 'ATH', 'ETF', 'NFT', 'DEX', 'CEX', 'APY', 'APR', 'AI', 'THE', 'FOMO', 'DYOR', 'IMO', 'LFG', 'GM', 'SEC', 'FUD', 'MC', 'LP', 'CA', 'EU', 'US', 'UK', 'MCAP', 'K', 'M', 'B']);
+const GP_CHAIN = { ethereum: '1', bsc: '56', base: '8453', arbitrum: '42161', polygon: '137', avalanche: '43114', optimism: '10' };
+const REDDIT_SUBS = ['CryptoMoonShots', 'SatoshiStreetBets', 'altcoin', 'CryptoCurrency', 'memecoins', 'solana', 'CryptoMarkets'];
+const fmtCompact = x => !isFinite(x) || x <= 0 ? '–' : '$' + (x >= 1e9 ? (x / 1e9).toFixed(1) + 'B' : x >= 1e6 ? (x / 1e6).toFixed(1) + 'M' : x >= 1e3 ? (x / 1e3).toFixed(0) + 'K' : x.toFixed(0));
+const fmtAge = ms => { if (!isFinite(ms)) return 'age unknown'; const h = (Date.now() - ms) / 36e5; return h < 1 ? Math.max(1, Math.round(h * 60)) + ' min old' : h < 48 ? Math.round(h) + ' h old' : Math.round(h / 24) + ' days old'; };
+const addrKey = a => a && a.startsWith('0x') ? a.toLowerCase() : a;
+const shortAddr = a => a ? a.slice(0, 5) + '…' + a.slice(-4) : '';
+const CHAIN_NAMES = { solana: 'Solana', ethereum: 'Ethereum', base: 'Base', bsc: 'BNB Chain', arbitrum: 'Arbitrum', polygon: 'Polygon', avalanche: 'Avalanche', optimism: 'Optimism', sui: 'Sui', ton: 'TON', tron: 'Tron', hyperliquid: 'Hyperliquid', abstract: 'Abstract' };
+const chainName = c => CHAIN_NAMES[c] || (c ? c[0].toUpperCase() + c.slice(1) : 'Unknown');
+
+state.radar = { status: 'idle', items: [], buzz: [], sources: {}, cgTrending: [], updated: null, filterChain: 'all', hideRed: true };
+
+function scanRedditPosts(posts) {
+  const tick = new Map(), addr = new Map();
+  const bump = (map, key, p, extra) => {
+    let m = map.get(key); if (!m) { m = { key, posts: [], score: 0, comments: 0, subs: new Set(), ...extra }; map.set(key, m); }
+    if (m.posts.some(x => x.id === p.id)) return m;
+    m.posts.push(p); m.score += Math.max(0, p.score); m.comments += p.num_comments; m.subs.add(p.subreddit); return m;
+  };
+  posts.forEach(p => {
+    const text = p.title + ' ' + (p.selftext || '').slice(0, 4000);
+    const tags = [...new Set((text.match(/\$[A-Za-z][A-Za-z0-9]{1,9}\b/g) || []).map(t => t.slice(1).toUpperCase()))].filter(t => !CASHTAG_STOP.has(t));
+    tags.forEach(t => bump(tick, t, p));
+    const evm = text.match(/\b0x[a-fA-F0-9]{40}\b/g) || [];
+    const sol = (text.match(/\b[1-9A-HJ-NP-Za-km-z]{32,44}\b/g) || []).filter(s => /\d/.test(s) && /[a-z]/.test(s) && /[A-Z]/.test(s));
+    [...new Set([...evm, ...sol])].forEach(a => bump(addr, addrKey(a), p, { raw: a, ticker: tags.length === 1 ? tags[0] : null }));
+  });
+  return { tick, addr };
+}
+
+async function loadRadar() {
+  const R = state.radar;
+  R.status = 'loading'; R.sources = {}; if (state.tab === 'radar' || state.tab === 'picks') render();
+  const cands = new Map();
+  const cand = (address, tag) => { if (!address) return null; const k = addrKey(address); let c = cands.get(k); if (!c) { c = { address, tags: new Set(), reddit: null }; cands.set(k, c); } if (tag) c.tags.add(tag); return c; };
+  const DS = 'https://api.dexscreener.com';
+  const [profiles, boosts, gtNew, gtTrend, cgTrend, rNew, rHot] = await Promise.allSettled([
+    getJSON(`${DS}/token-profiles/latest/v1`),
+    getJSON(`${DS}/token-boosts/top/v1`),
+    getJSON('https://api.geckoterminal.com/api/v2/networks/new_pools?include=base_token'),
+    getJSON('https://api.geckoterminal.com/api/v2/networks/trending_pools?include=base_token'),
+    getJSON('https://api.coingecko.com/api/v3/search/trending'),
+    getJSON(`https://www.reddit.com/r/${REDDIT_SUBS.join('+')}/new.json?limit=100&raw_json=1`, 12000),
+    getJSON(`https://www.reddit.com/r/${REDDIT_SUBS.join('+')}/hot.json?limit=100&raw_json=1`, 12000)
+  ]);
+  const ok = r => r.status === 'fulfilled' && r.value;
+  if (ok(profiles)) { R.sources.dex = true; profiles.value.slice(0, 40).forEach(p => cand(p.tokenAddress, 'New on DexScreener')); }
+  if (ok(boosts)) boosts.value.slice(0, 20).forEach(p => cand(p.tokenAddress, 'Paid boost'));
+  const gtPools = (r, tag) => { if (!ok(r) || !r.value.data) return; R.sources.gt = true; r.value.data.slice(0, 30).forEach(pl => { const id = pl.relationships && pl.relationships.base_token && pl.relationships.base_token.data && pl.relationships.base_token.data.id; if (id) cand(id.slice(id.lastIndexOf('_') + 1), tag); }); };
+  gtPools(gtNew, 'New pool'); gtPools(gtTrend, 'GeckoTerminal trending');
+
+  // Reddit: count cashtags and contract addresses across the last 72 hours of posts.
+  let tickMentions = new Map();
+  if (ok(rNew) || ok(rHot)) {
+    const seen = new Map(), cutoff = Date.now() / 1000 - 72 * 3600;
+    [rNew, rHot].forEach(r => { if (ok(r) && r.value.data) r.value.data.children.forEach(ch => { const d = ch.data; if (d && d.created_utc > cutoff && !d.stickied) seen.set(d.id, d); }); });
+    const posts = [...seen.values()];
+    R.sources.reddit = posts.length;
+    const { tick, addr } = scanRedditPosts(posts);
+    tickMentions = tick;
+    addr.forEach(m => { const c = cand(m.raw, 'Reddit'); c.reddit = m; });
+    R.buzz = [...tick.values()].filter(m => !MAJORS.has(m.key)).sort((a, b) => b.posts.length - a.posts.length || b.score - a.score).slice(0, 12);
+  }
+  if (ok(cgTrend)) { R.sources.cg = true; R.cgTrending = (cgTrend.value.coins || []).map(c => c.item).filter(Boolean); }
+
+  // Resolve every contract address to its most liquid trading pair.
+  const items = new Map();
+  const take = (p, c) => {
+    if (!p || !p.baseToken) return;
+    const k = addrKey(p.baseToken.address);
+    const cur = items.get(k);
+    if (!cur || (p.liquidity && p.liquidity.usd || 0) > cur.liq) {
+      const it = radarItem(p);
+      it.tags = new Set(c ? c.tags : []); it.reddit = c ? c.reddit : null;
+      if (cur) { cur.tags.forEach(t => it.tags.add(t)); it.reddit = it.reddit || cur.reddit; }
+      items.set(k, it);
+    }
+  };
+  const addrs = [...cands.values()].map(c => c.address);
+  const chunks = []; for (let i = 0; i < addrs.length; i += 30) chunks.push(addrs.slice(i, i + 30));
+  await pool(chunks, 3, async ch => {
+    const j = await getJSON(`${DS}/latest/dex/tokens/${ch.join(',')}`);
+    (j.pairs || []).forEach(p => { const c = cands.get(addrKey(p.baseToken.address)); if (c) take(p, c); });
+  });
+
+  // Reddit cashtags and CoinGecko trending names without an address: look the ticker up.
+  const lookups = [];
+  R.buzz.slice(0, 12).forEach(m => lookups.push({ sym: m.key, tag: 'Reddit', reddit: m }));
+  R.cgTrending.filter(c => !MAJORS.has(String(c.symbol).toUpperCase()) && (!c.market_cap_rank || c.market_cap_rank > 150)).slice(0, 10)
+    .forEach(c => lookups.push({ sym: String(c.symbol).toUpperCase(), tag: 'CoinGecko trending' }));
+  await pool(lookups, 4, async L => {
+    const j = await getJSON(`${DS}/latest/dex/search?q=${encodeURIComponent(L.sym)}`);
+    const best = (j.pairs || []).filter(p => p.baseToken && p.baseToken.symbol.toUpperCase() === L.sym && (p.liquidity && p.liquidity.usd || 0) >= 10000)
+      .sort((a, b) => b.liquidity.usd - a.liquidity.usd)[0];
+    if (!best) return;
+    const k = addrKey(best.baseToken.address);
+    const existing = items.get(k);
+    if (existing) { existing.tags.add(L.tag); existing.reddit = mergeReddit(existing.reddit, L.reddit); return; }
+    const it = radarItem(best); it.tags = new Set([L.tag]); it.reddit = L.reddit || tickMentions.get(L.sym) || null; it.tickerMatch = L.tag === 'Reddit';
+    items.set(k, it);
+  });
+  // Give every resolved coin its Reddit cashtag count, even if it came from another feed.
+  items.forEach(it => { const m = tickMentions.get(String(it.symbol).toUpperCase()); if (m) { it.reddit = mergeReddit(it.reddit, m); it.tags.add('Reddit'); } });
+
+  R.items = [...items.values()].filter(it => !MAJORS.has(String(it.symbol).toUpperCase()) && it.liq >= 5000
+    && ((isFinite(it.created) && Date.now() - it.created < 120 * 864e5) || it.mcap < 150e6));
+  R.items.forEach(it => { it.g = gemScore(it); });
+  R.items.sort((a, b) => b.g.score - a.g.score);
+  R.status = R.items.length ? 'done' : 'empty'; R.updated = Date.now();
+  if (state.tab === 'radar' || state.tab === 'picks') render();
+
+  // Run the contract safety check on the strongest candidates automatically.
+  const top = R.items.filter(it => !it.g.red && securitySupported(it)).slice(0, 10);
+  await pool(top, 2, async it => { await runSecurity(it, false); });
+  R.items.sort((a, b) => b.g.score - a.g.score);
+  if (state.tab === 'radar' || state.tab === 'picks') render();
+}
+
+function mergeReddit(a, b) {
+  if (!a) return b || null; if (!b || a === b) return a;
+  const posts = a.posts.slice(); b.posts.forEach(p => { if (!posts.some(x => x.id === p.id)) posts.push(p); });
+  return { key: a.key, posts, score: posts.reduce((s, p) => s + Math.max(0, p.score), 0), comments: posts.reduce((s, p) => s + p.num_comments, 0), subs: new Set([...a.subs, ...b.subs]) };
+}
+function radarItem(p) {
+  const n = x => isFinite(+x) ? +x : NaN, t = p.txns || {}, v = p.volume || {}, c = p.priceChange || {}, info = p.info || {};
+  return {
+    key: addrKey(p.baseToken.address), chainId: p.chainId, address: p.baseToken.address, symbol: p.baseToken.symbol, name: p.baseToken.name,
+    price: n(p.priceUsd), liq: (p.liquidity && p.liquidity.usd) || 0, fdv: p.fdv || 0, mcap: p.marketCap || p.fdv || 0,
+    vol24: v.h24 || 0, vol6: v.h6 || 0, vol1: v.h1 || 0, ch1: n(c.h1), ch6: n(c.h6), ch24: n(c.h24),
+    buys24: (t.h24 && t.h24.buys) || 0, sells24: (t.h24 && t.h24.sells) || 0, created: p.pairCreatedAt || NaN,
+    url: p.url, dex: p.dexId, image: info.imageUrl, websites: info.websites || [], socials: info.socials || [],
+    boosted: !!(p.boosts && p.boosts.active > 0), tags: new Set(), reddit: null, security: null
+  };
+}
+
+function gemScore(it) {
+  const R = [], F = []; let s = 40;
+  const add = (w, t) => { s += w; if (t) R.push({ w, t }); };
+  const flag = (lvl, t) => F.push({ lvl, t });
+  const ageH = isFinite(it.created) ? (Date.now() - it.created) / 36e5 : NaN;
+  if (isFinite(ageH)) {
+    if (ageH < 1) { add(-10, 'Under an hour old. Snipers and bots own this stage'); flag('amber', 'Less than 1 hour old'); }
+    else if (ageH < 24) { add(3, 'Launched in the last day. Still early'); flag('amber', 'Less than a day old'); }
+    else if (ageH < 24 * 7) add(8, `${Math.floor(ageH / 24)} days old. Survived the launch dump`);
+    else if (ageH < 24 * 60) add(5, `${Math.floor(ageH / 24)} days old and still trading actively`);
+  }
+  const L = it.liq;
+  if (L < 20000) { add(-15, `Only ${fmtCompact(L)} liquidity. Selling will crash the price`); flag('red', `Liquidity only ${fmtCompact(L)}`); }
+  else if (L < 50000) { add(-5, `Thin liquidity (${fmtCompact(L)})`); flag('amber', 'Thin liquidity'); }
+  else if (L < 250000) add(5, `Tradeable liquidity (${fmtCompact(L)})`);
+  else add(9, `Deep liquidity for a new coin (${fmtCompact(L)})`);
+  const turn = L ? it.vol24 / L : 0;
+  if (turn > 15) { add(-4, `Volume is ${turn.toFixed(0)}× liquidity. Possible wash trading`); flag('amber', 'Possible wash trading'); }
+  else if (turn > 2) add(8, `Heavy trading: ${turn.toFixed(1)}× its liquidity in 24h`);
+  else if (turn > 0.5) add(4, 'Active trading');
+  else add(-4, 'Little trading interest');
+  const b = it.buys24, sl = it.sells24, tot = b + sl;
+  if (b > 30 && sl === 0) { add(-35, 'Buys but zero sells. Classic honeypot pattern'); flag('red', 'No sells recorded (possible honeypot)'); }
+  else if (tot >= 50) {
+    const br = b / tot;
+    if (br > 0.85) { add(-4, 'Almost only buys. Bots or a coordinated pump'); flag('amber', 'One-sided buying'); }
+    else if (br >= 0.55) add(6, `Buyers outnumber sellers (${Math.round(br * 100)}% buys)`);
+    else if (br < 0.4) add(-8, `Sellers in control (${Math.round(br * 100)}% buys)`);
+  } else add(-5, `Only ${tot} trades in 24h`);
+  if (isFinite(it.ch24)) {
+    if (it.ch24 > 1000) { add(-8, `Already up ${Math.round(it.ch24)}% today. You'd be someone's exit`); flag('amber', 'Already pumped more than 10×'); }
+    else if (it.ch24 >= 10) add(6, `Up ${Math.round(it.ch24)}% in 24h`);
+    else if (it.ch24 < -40) add(-10, `Down ${Math.round(-it.ch24)}% in 24h`);
+  }
+  if (it.ch1 > 0 && it.ch6 > 0) add(5, 'Rising over both 1 hour and 6 hours');
+  if (it.vol6 > 0 && it.vol1 * 6 > it.vol6 * 1.3) add(6, 'Volume is accelerating this hour');
+  const hasSite = it.websites.length > 0, hasSoc = it.socials.length > 0;
+  if (hasSite && hasSoc) add(5, 'Has a website and social channels');
+  else if (!hasSite && !hasSoc) { add(-8, 'No website or socials listed'); flag('amber', 'No website or socials'); }
+  if (it.fdv && L && it.fdv / L > 60) { add(-6, `Valued at ${Math.round(it.fdv / L)}× its liquidity`); flag('amber', 'Valuation far above liquidity'); }
+  const rd = it.reddit;
+  if (rd && rd.posts.length) add(Math.min(14, rd.posts.length * 3 + Math.log10(1 + rd.score) * 2), `Mentioned in ${rd.posts.length} Reddit post${rd.posts.length > 1 ? 's' : ''} (${rd.score} upvotes, ${rd.comments} comments)`);
+  if (it.tags.has('CoinGecko trending')) add(6, 'Trending in CoinGecko searches');
+  if (it.tags.has('GeckoTerminal trending')) add(4, 'Trending pool on GeckoTerminal');
+  if (it.boosted || it.tags.has('Paid boost')) flag('amber', 'Paid promotion on DexScreener');
+  if (it.tickerMatch) flag('amber', 'Matched by ticker only. Confirm the contract address in the post');
+  const sec = it.security;
+  if (sec && sec.supported) {
+    sec.checks.forEach(c => { if (!c.ok) { add(c.w, c.t); flag(c.lvl, c.t); } });
+    if (sec.checks.length && sec.checks.every(c => c.ok)) add(6, 'Contract safety check passed');
+  }
+  const red = F.some(f => f.lvl === 'red');
+  return { score: clamp(Math.round(s), 0, 100), reasons: R, flags: F, red,
+    risk: red ? 'Extreme risk' : (F.length >= 2 || L < 50000 || ageH < 24) ? 'Very high risk' : 'High risk' };
+}
+
+const securitySupported = it => it.chainId === 'solana' || !!GP_CHAIN[it.chainId];
+async function runSecurity(it, rerender = true) {
+  if (!securitySupported(it)) { it.security = { supported: false }; return; }
+  it.security = { loading: true, supported: true, checks: [] }; if (rerender) render();
+  const frac = x => { const v = parseFloat(x); return isFinite(v) ? (v > 1 ? v / 100 : v) : NaN; };
+  const checks = [];
+  try {
+    if (it.chainId === 'solana') {
+      const j = await getJSON(`https://api.gopluslabs.io/api/v1/solana/token_security?contract_addresses=${it.address}`);
+      const r = j.result && (j.result[it.address] || Object.values(j.result)[0]);
+      if (!r) throw new Error('No result');
+      if (r.mintable) checks.push({ ok: r.mintable.status !== '1', t: 'Mint authority still active. Supply can be inflated', okText: 'Mint authority revoked', lvl: 'red', w: -15 });
+      if (r.freezable) checks.push({ ok: r.freezable.status !== '1', t: 'Freeze authority active. Your tokens can be frozen', okText: 'No freeze authority', lvl: 'red', w: -15 });
+      if (Array.isArray(r.holders) && r.holders.length) { const top = r.holders.slice(0, 10).reduce((s, h) => s + (frac(h.percent) || 0), 0); checks.push({ ok: top <= 0.5, t: `Top 10 wallets hold ${Math.round(top * 100)}%`, okText: `Top 10 wallets hold ${Math.round(top * 100)}%`, lvl: 'amber', w: -10 }); }
+    } else {
+      const addr = it.address.toLowerCase();
+      const j = await getJSON(`https://api.gopluslabs.io/api/v1/token_security/${GP_CHAIN[it.chainId]}?contract_addresses=${addr}`);
+      const r = j.result && (j.result[addr] || Object.values(j.result)[0]);
+      if (!r) throw new Error('No result');
+      checks.push({ ok: r.is_honeypot !== '1', t: 'Honeypot: you can buy but not sell', okText: 'Not a honeypot', lvl: 'red', w: -50 });
+      if (r.cannot_sell_all === '1') checks.push({ ok: false, t: "Contract blocks selling your whole balance", lvl: 'red', w: -20 });
+      const st = frac(r.sell_tax), bt = frac(r.buy_tax);
+      if (isFinite(st)) checks.push({ ok: st <= 0.1, t: `Sell tax ${Math.round(st * 100)}%`, okText: `Sell tax ${Math.round(st * 100)}%`, lvl: st > 0.25 ? 'red' : 'amber', w: -15 });
+      if (isFinite(bt) && bt > 0.1) checks.push({ ok: false, t: `Buy tax ${Math.round(bt * 100)}%`, lvl: 'amber', w: -6 });
+      if (r.hidden_owner === '1' || r.can_take_back_ownership === '1') checks.push({ ok: false, t: 'Hidden or reclaimable ownership', lvl: 'red', w: -15 });
+      if (r.is_mintable != null) checks.push({ ok: r.is_mintable !== '1', t: 'Owner can mint more tokens', okText: 'Fixed supply', lvl: 'amber', w: -8 });
+      if (r.is_open_source != null) checks.push({ ok: r.is_open_source === '1', t: 'Contract code not verified', okText: 'Contract code verified', lvl: 'amber', w: -8 });
+      if (Array.isArray(r.holders) && r.holders.length) { const top = r.holders.filter(h => String(h.is_locked) !== '1' && String(h.is_contract) !== '1').slice(0, 10).reduce((s, h) => s + (frac(h.percent) || 0), 0); checks.push({ ok: top <= 0.5, t: `Top 10 wallets hold ${Math.round(top * 100)}%`, okText: `Top 10 wallets hold ${Math.round(top * 100)}%`, lvl: 'amber', w: -10 }); }
+      if (Array.isArray(r.lp_holders) && r.lp_holders.length) { const locked = r.lp_holders.filter(h => String(h.is_locked) === '1').reduce((s, h) => s + (frac(h.percent) || 0), 0); checks.push({ ok: locked >= 0.5, t: 'Most liquidity is unlocked (rug-pull risk)', okText: `${Math.round(locked * 100)}% of liquidity locked`, lvl: 'amber', w: -8 }); }
+    }
+    it.security = { supported: true, checks };
+  } catch (e) { it.security = { supported: true, failed: true, checks: [] }; }
+  it.g = gemScore(it);
+  if (rerender) render();
+}
+
+function gemCall(g) {
+  if (g.red) return { label: 'Avoid', c: 'c-avoid' };
+  if (g.score >= 70) return { label: 'Speculative buy', c: 'c-buy' };
+  if (g.score >= 55) return { label: 'Watch', c: 'c-watch' };
+  return { label: 'Pass', c: 'c-neutral' };
+}
+
+function gemCard(it) {
+  const g = it.g, call = gemCall(g), stake = settings.account * settings.gemPct / 100;
+  const tot = it.buys24 + it.sells24, br = tot ? it.buys24 / tot : 0.5;
+  const tags = [...it.tags].filter(t => t !== 'Paid boost');
+  const pos = g.reasons.filter(r => r.w > 0).sort((a, b) => b.w - a.w).slice(0, 3);
+  const sec = it.security;
+  const secHtml = !securitySupported(it) ? `<p class="note">No automated contract check for ${esc(chainName(it.chainId))}. Check it by hand before buying.</p>`
+    : !sec ? `<button class="btn" type="button" data-sec="${esc(it.key)}">Run contract safety check</button>`
+    : sec.loading ? `<p class="note">Checking the contract…</p>`
+    : sec.failed ? `<p class="note">The safety service didn't answer. <button class="btn" type="button" data-sec="${esc(it.key)}">Try again</button></p>`
+    : `<ul class="checks">${sec.checks.map(c => `<li class="${c.ok ? 'up' : c.lvl === 'red' ? 'down' : 'warn'}">${c.ok ? '✓' : '✕'} ${esc(c.ok ? c.okText || c.t : c.t)}</li>`).join('')}</ul>`;
+  const redditLink = it.reddit && it.reddit.posts.length ? it.reddit.posts.slice().sort((a, b) => b.score - a.score)[0] : null;
+  return `<article class="gem${g.red ? ' is-red' : ''}">
+    <div class="gem-head">
+      ${it.image ? `<img src="${esc(it.image)}" alt="" width="36" height="36" loading="lazy">` : `<span class="gem-ph" aria-hidden="true">${esc(String(it.symbol).slice(0, 2))}</span>`}
+      <div class="who"><div><span class="sym">${esc(it.symbol)}</span> <span class="nm">${esc(it.name)}</span></div>
+        <div class="meta"><span class="chip c-neutral">${esc(chainName(it.chainId))}</span> ${esc(fmtAge(it.created))} · <span class="${g.red ? 'down' : 'warn'}">${g.risk}</span></div></div>
+      ${gradeBox(g.score)}
+    </div>
+    <div class="metrics">
+      <div><small>Price</small><span class="num">${fmtPrice(it.price)}</span></div>
+      <div><small>Market cap</small><span class="num">${fmtCompact(it.mcap)}</span></div>
+      <div><small>Liquidity</small><span class="num">${fmtCompact(it.liq)}</span></div>
+      <div><small>Volume 24h</small><span class="num">${fmtCompact(it.vol24)}</span></div>
+      <div><small>1h</small><span class="num ${cls(it.ch1)}">${isFinite(it.ch1) ? pct(it.ch1 / 100, 0) : '–'}</span></div>
+      <div><small>24h</small><span class="num ${cls(it.ch24)}">${isFinite(it.ch24) ? pct(it.ch24 / 100, 0) : '–'}</span></div>
+    </div>
+    <div><div class="bsbar" role="img" aria-label="${it.buys24} buys and ${it.sells24} sells in 24 hours"><i style="width:${(br * 100).toFixed(0)}%"></i></div>
+      <div class="note">${it.buys24.toLocaleString()} buys · ${it.sells24.toLocaleString()} sells in 24h</div></div>
+    ${tags.length ? `<div class="badges">${tags.map(t => `<span class="chip ${t === 'Reddit' ? 'c-reddit' : 'c-neutral'}">${esc(t === 'Reddit' && it.reddit ? `Reddit ×${it.reddit.posts.length}` : t)}</span>`).join('')}</div>` : ''}
+    <div class="gem-call"><span class="chip ${call.c}">${call.label}</span>${call.label === 'Speculative buy' ? ` <span class="note">Max stake ${fmtUSD(stake)}. Sell your first ${fmtUSD(stake)} back out at 2×.</span>` : ''}</div>
+    <ul class="why">${pos.map(r => `<li>${esc(r.t)}</li>`).join('')}${g.flags.map(f => `<li class="${f.lvl === 'red' ? 'neg' : 'amber'}">${f.lvl === 'red' ? 'Red flag' : 'Caution'}: ${esc(f.t)}</li>`).join('')}</ul>
+    <div class="sec">${secHtml}</div>
+    <div class="gem-links">
+      <a href="${esc(it.url)}" target="_blank" rel="noopener">Chart on DexScreener ↗</a>
+      ${redditLink ? `<a href="https://www.reddit.com${esc(redditLink.permalink)}" target="_blank" rel="noopener">Top Reddit post ↗</a>` : ''}
+      <button class="linkbtn" type="button" data-copy="${esc(it.address)}" title="${esc(it.address)}">Copy contract ${esc(shortAddr(it.address))}</button>
+    </div>
+  </article>`;
+}
+
+function renderRadar(main) {
+  const R = state.radar;
+  const src = R.sources;
+  const srcLine = `<div class="sources">
+    <span class="${src.reddit ? 'up' : 'muted'}">${src.reddit ? '●' : '○'} Reddit ${src.reddit ? `(${src.reddit} posts, last 72h)` : R.status === 'loading' ? '' : "didn't respond"}</span>
+    <span class="${src.dex ? 'up' : 'muted'}">${src.dex ? '●' : '○'} DexScreener</span>
+    <span class="${src.gt ? 'up' : 'muted'}">${src.gt ? '●' : '○'} GeckoTerminal</span>
+    <span class="${src.cg ? 'up' : 'muted'}">${src.cg ? '●' : '○'} CoinGecko trending</span>
+    ${R.updated ? `<span class="muted">Scanned ${ago(R.updated)}</span>` : ''}</div>`;
+  const intro = `<div class="radar-intro"><h2>Gem radar</h2>
+    <p>Coins most people haven't heard of yet. New launches on DexScreener and GeckoTerminal, tokens trending on CoinGecko, and the tickers and contract addresses people are posting on r/CryptoMoonShots, r/SatoshiStreetBets, r/altcoin, r/memecoins and r/CryptoCurrency. Every coin goes through the trap filter: liquidity, honeypot patterns, wash trading, paid promotion and an on-chain contract check.</p>
+    <p class="note">Most new coins go to zero. Treat every buy here as a lottery ticket: ${settings.gemPct}% of your account at most (${fmtUSD(settings.account * settings.gemPct / 100)}), and never more than 5% across all of them.</p></div>`;
+  if (R.status === 'idle' || (R.status === 'loading' && !R.items.length)) { main.innerHTML = intro + srcLine + `<p class="muted">Scanning new launches and Reddit…</p>`; return; }
+  if (!R.items.length) { main.innerHTML = intro + srcLine + `<div class="empty"><h3>Nothing came back</h3><p>The new-coin feeds didn't answer from this browser. Hit Refresh in a minute.</p></div>`; return; }
+  const chains = [...new Set(R.items.map(i => i.chainId))].sort();
+  let list = R.items.slice();
+  if (R.filterChain !== 'all') list = list.filter(i => i.chainId === R.filterChain);
+  const hidden = R.hideRed ? list.filter(i => i.g.red).length : 0;
+  if (R.hideRed) list = list.filter(i => !i.g.red);
+  const buzz = R.buzz.length ? `<section class="panel buzz"><h3>Reddit buzz · most-mentioned cashtags</h3>
+      <div class="tablebox flat"><table class="mini"><thead><tr><th>Ticker</th><th class="num">Posts</th><th class="num">Upvotes</th><th class="num">Comments</th><th>Where</th><th>Top post</th></tr></thead><tbody>
+      ${R.buzz.map(m => { const top = m.posts.slice().sort((a, b) => b.score - a.score)[0]; const matched = R.items.find(i => String(i.symbol).toUpperCase() === m.key);
+        return `<tr><td><b>$${esc(m.key)}</b>${matched ? (matched.g.red ? ' <span class="chip c-avoid">Red flag</span>' : ` ${tinyGrade(matched.g.score)}`) : ''}</td><td class="num">${m.posts.length}</td><td class="num">${m.score}</td><td class="num">${m.comments}</td><td class="muted">${esc([...m.subs].map(s => 'r/' + s).join(', '))}</td><td class="title-cell"><a href="https://www.reddit.com${esc(top.permalink)}" target="_blank" rel="noopener">${esc(top.title.slice(0, 80))}</a></td></tr>`; }).join('')}
+      </tbody></table></div><p class="note">Buzz tells you where attention is, not whether a coin is good. Reddit crypto threads are full of paid shills, and the loudest post is often the exit.</p></section>` : '';
+  main.innerHTML = intro + srcLine + `
+    <div class="toolbar">
+      <label class="note" for="radarChain">Chain</label>
+      <select id="radarChain" class="sel"><option value="all">All chains</option>${chains.map(c => `<option value="${esc(c)}" ${R.filterChain === c ? 'selected' : ''}>${esc(chainName(c))}</option>`).join('')}</select>
+      <label class="check"><input type="checkbox" id="radarHide" ${R.hideRed ? 'checked' : ''}> Hide coins with red flags${hidden ? ` (${hidden} hidden)` : ''}</label>
+      <span class="note">${list.length} coins, best first</span>
+    </div>
+    <div class="gems">${list.slice(0, 30).map(gemCard).join('') || '<div class="empty"><p>No coins pass the filter on this chain.</p></div>'}</div>
+    ${buzz}`;
+  $('#radarChain').addEventListener('change', e => { R.filterChain = e.target.value; render(); });
+  $('#radarHide').addEventListener('change', e => { R.hideRed = e.target.checked; render(); });
+}
+
+function radarStrip() {
+  const R = state.radar;
+  if (R.status === 'idle' || R.status === 'loading' && !R.items.length) return `<section class="col"><h2>From the gem radar</h2><p class="sub">Scanning new launches and Reddit…</p></section>`;
+  const best = R.items.filter(i => !i.g.red && i.g.score >= 60).slice(0, 3);
+  if (!best.length) return `<section class="col"><h2>From the gem radar</h2><p class="sub">No new coin passes the trap filter with a good grade right now. <a href="#" data-goto="radar">Open the radar</a> to see everything.</p></section>`;
+  return `<section class="col"><h2>From the gem radar</h2><p class="sub">Early, small and risky. Lottery-ticket size only. <a href="#" data-goto="radar">See the full radar</a></p><div class="gems">${best.map(gemCard).join('')}</div></section>`;
+}
+
+document.addEventListener('click', async e => {
+  const s = e.target.closest('[data-sec]');
+  if (s) { const it = state.radar.items.find(i => i.key === s.dataset.sec); if (it) { await runSecurity(it); state.radar.items.sort((a, b) => b.g.score - a.g.score); render(); } return; }
+  const cp = e.target.closest('[data-copy]');
+  if (cp) {
+    const text = cp.dataset.copy;
+    try { await navigator.clipboard.writeText(text); cp.textContent = 'Copied'; }
+    catch { cp.textContent = text; const r = document.createRange(); r.selectNodeContents(cp); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+  }
+});
+
 /* ---------- events ---------- */
 document.querySelector('nav.tabs').addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (!b) return; state.tab = b.dataset.tab; store.set('tab', state.tab); render(); });
 document.addEventListener('click', e => {
@@ -915,9 +1300,10 @@ $('#sheet').addEventListener('click', e => { if (e.target === $('#sheet')) $('#s
 $('#refreshBtn').addEventListener('click', () => refresh());
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if ($('#sheet').open) { const a = state.assets.find(x => x.id === state.openId); if (a) drawChart(a); } }, 150); });
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if ($('#sheet').open) { const a = state.assets.find(x => x.id === state.openId); if (a) drawChart(a); } });
+setInterval(() => { if (state.tab === 'radar' && state.radar.status === 'done' && Date.now() - state.radar.updated > 10 * 60e3) loadRadar().catch(() => {}); }, 60e3);
 setInterval(() => { if (!state.busy && !state.sample && document.visibilityState === 'visible' && state.updated && Date.now() - state.updated > 15 * 60e3) refresh(); }, 60e3);
 
-state.tab = ['picks', 'crypto', 'stocks', 'playbook', 'setup'].includes(store.get('tab', 'picks')) ? store.get('tab', 'picks') : 'picks';
+state.tab = ['picks', 'crypto', 'radar', 'stocks', 'playbook', 'setup'].includes(store.get('tab', 'picks')) ? store.get('tab', 'picks') : 'picks';
 render();
 refresh();
 </script>
