@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Allaia Market Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a trading desk. Regime strip on top, two-column picks board, then sortable scanners and a detail sheet per asset. */
+:root {
+  --bg: #e9edf1;
+  --surface: #ffffff;
+  --surface-2: #f4f6f8;
+  --ink: #0e1924;
+  --muted: #566573;
+  --line: #d3dbe2;
+  --accent: #a3501a;
+  --accent-ink: #ffffff;
+  --up: #0f7a55;
+  --up-soft: #dff2ea;
+  --down: #b8342c;
+  --down-soft: #f8e3e1;
+  --warn: #8f5d00;
+  --warn-soft: #f7ecd3;
+  --sma20: #2c6fb5;
+  --sma50: #a3501a;
+  --sma200: #6b4fa3;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --r: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1117; --surface: #121b24; --surface-2: #17222d; --ink: #e5ecf2; --muted: #8b9bab; --line: #233140;
+    --accent: #e3995a; --accent-ink: #1a0f06; --up: #3fcf93; --up-soft: #12332a; --down: #ff7469; --down-soft: #3a1c1b;
+    --warn: #f0bb55; --warn-soft: #3a2e14; --sma20: #6fb0ff; --sma50: #e3995a; --sma200: #b49cf0; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1117; --surface: #121b24; --surface-2: #17222d; --ink: #e5ecf2; --muted: #8b9bab; --line: #233140;
+  --accent: #e3995a; --accent-ink: #1a0f06; --up: #3fcf93; --up-soft: #12332a; --down: #ff7469; --down-soft: #3a1c1b;
+  --warn: #f0bb55; --warn-soft: #3a2e14; --sma20: #6fb0ff; --sma50: #e3995a; --sma200: #b49cf0; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--body); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.num, td.num, .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+a { color: var(--accent); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Header */
+header.top { border-bottom: 1px solid var(--line); background: var(--surface); }
+.top-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-block: 14px; }
+.brand { display: flex; align-items: baseline; gap: 10px; margin-right: auto; }
+.brand h1 { font-size: 22px; font-weight: 800; font-stretch: 78%; letter-spacing: 0.01em; text-transform: uppercase; }
+.brand span { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+.status { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; min-width: 0; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.dot.live { background: var(--up); box-shadow: 0 0 0 3px var(--up-soft); }
+.dot.busy { background: var(--warn); animation: pulse 1.2s infinite; }
+.dot.sample { background: var(--warn); }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .dot.busy { animation: none; } }
+.btn { border: 1px solid var(--line); background: var(--surface-2); border-radius: 8px; padding: 7px 12px; cursor: pointer; font-weight: 600; font-size: 13px; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:disabled { opacity: .5; cursor: default; }
+
+/* Regime strip */
+.regime { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+.regime > div { background: var(--surface); padding: 10px 14px; min-width: 0; }
+.regime .k { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.regime .v { font-family: var(--display); font-weight: 700; font-stretch: 85%; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+.regime .s { font-size: 12px; color: var(--muted); }
+
+nav.tabs { display: flex; gap: 4px; overflow-x: auto; padding-block: 12px 0; }
+nav.tabs button { border: 0; background: none; padding: 10px 14px; border-bottom: 2px solid transparent; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+main { padding-block: 20px 60px; display: grid; gap: 20px; }
+.banner { border: 1px solid var(--warn); background: var(--warn-soft); color: var(--ink); border-radius: var(--r); padding: 12px 14px; font-size: 13px; }
+.banner strong { color: var(--warn); }
+.brief { font-size: 15px; max-width: 75ch; }
+.brief b { font-weight: 600; }
+
+/* Picks board */
+.board { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 20px; }
+.col h2 { font-size: 20px; font-weight: 800; font-stretch: 80%; text-transform: uppercase; letter-spacing: .02em; }
+.col .sub { color: var(--muted); font-size: 13px; margin: 2px 0 12px; }
+.picks { display: grid; gap: 10px; }
+.pick { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; cursor: pointer; text-align: left; width: 100%; }
+.pick:hover { border-color: var(--muted); }
+.pick .rank { font-family: var(--mono); color: var(--muted); font-size: 12px; padding-top: 4px; }
+.pick .who { min-width: 0; }
+.pick .sym { font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: 19px; }
+.pick .nm { color: var(--muted); font-size: 12px; margin-left: 6px; }
+.pick .why { grid-column: 2 / 4; font-size: 13px; color: var(--ink); margin: 4px 0 0; padding-left: 16px; }
+.pick .why li.neg { color: var(--down); }
+.pick .plan { grid-column: 2 / 4; font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; border-top: 1px dashed var(--line); padding-top: 8px; margin-top: 6px; }
+.pick .plan b { color: var(--ink); font-weight: 600; }
+.grade { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-width: 52px; padding: 4px 8px; border-radius: 8px; font-family: var(--display); font-weight: 800; font-size: 20px; line-height: 1; }
+.grade small { font-family: var(--mono); font-size: 10px; font-weight: 400; margin-top: 3px; opacity: .8; }
+.g-a { background: var(--up-soft); color: var(--up); }
+.g-b { background: var(--surface-2); color: var(--up); }
+.g-c { background: var(--surface-2); color: var(--muted); }
+.g-d { background: var(--down-soft); color: var(--down); }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
+.c-buy { background: var(--up-soft); color: var(--up); }
+.c-watch { background: var(--warn-soft); color: var(--warn); }
+.c-neutral { background: var(--surface-2); color: var(--muted); }
+.c-avoid { background: var(--down-soft); color: var(--down); }
+.up { color: var(--up); } .down { color: var(--down); } .muted { color: var(--muted); }
+
+/* Scanner tables */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.toolbar input[type=search] { flex: 1 1 220px; min-width: 0; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); }
+.tablebox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; min-width: 860px; }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+th { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--surface-2); position: sticky; top: 0; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { color: var(--ink); }
+th[aria-sort] { color: var(--ink); }
+td.num, th.num { text-align: right; }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: 0; }
+.asset { display: flex; align-items: center; gap: 8px; }
+.asset img { width: 20px; height: 20px; border-radius: 50%; }
+.asset .sym { font-weight: 700; font-family: var(--display); font-stretch: 85%; font-size: 15px; }
+.asset .nm { color: var(--muted); font-size: 12px; max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+.tg { font-family: var(--display); font-weight: 800; font-size: 15px; padding: 2px 8px; border-radius: 6px; display: inline-block; min-width: 36px; text-align: center; }
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: var(--r); padding: 22px; display: grid; gap: 10px; max-width: 70ch; }
+.empty h3 { font-size: 18px; }
+.empty ol { margin: 0; padding-left: 20px; }
+
+/* Detail sheet */
+dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); padding: 0; width: min(980px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); }
+dialog::backdrop { background: rgba(5, 10, 15, .55); }
+.sheet { padding: 20px; display: grid; gap: 18px; }
+.sheet-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.sheet-head h2 { font-size: 26px; font-weight: 800; font-stretch: 80%; }
+.sheet-head .px { font-family: var(--mono); font-size: 18px; }
+.sheet-head .close { margin-left: auto; }
+.chartbox { position: relative; width: 100%; aspect-ratio: 16 / 7; min-height: 220px; max-width: 100%; }
+.chartbox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.panel { border: 1px solid var(--line); border-radius: var(--r); padding: 14px; min-width: 0; background: var(--surface); }
+.panel h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; margin-bottom: 10px; font-family: var(--body); }
+dl.kv { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 0; }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+ul.reasons { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+ul.reasons li { display: grid; grid-template-columns: 38px 1fr; gap: 8px; font-size: 13px; }
+ul.reasons .w { font-family: var(--mono); text-align: right; }
+ul.news { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+ul.news li { display: grid; grid-template-columns: auto 1fr; gap: 10px; font-size: 13px; align-items: start; }
+ul.news .meta { color: var(--muted); font-size: 12px; }
+.note { font-size: 12px; color: var(--muted); }
+
+/* Forms */
+.form { display: grid; gap: 16px; max-width: 720px; }
+.field { display: grid; gap: 4px; }
+.field label { font-weight: 600; }
+.field input, .field textarea { padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); width: 100%; }
+.field .hint { font-size: 12px; color: var(--muted); }
+.row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+
+/* Playbook */
+.playbook { display: grid; gap: 18px; max-width: 760px; }
+.playbook h2 { font-size: 28px; font-weight: 800; font-stretch: 80%; text-transform: uppercase; }
+.playbook h3 { font-size: 18px; font-weight: 700; font-stretch: 90%; margin-top: 6px; }
+.playbook p { margin: 0; max-width: 68ch; }
+.playbook ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; max-width: 68ch; }
+.ruin { overflow-x: auto; }
+.ruin table { min-width: 420px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+footer { color: var(--muted); font-size: 12px; padding-block: 0 40px; max-width: 80ch; }
+@media (max-width: 520px) {
+  .pick { grid-template-columns: 1fr auto; }
+  .pick .rank { display: none; }
+  .pick .why, .pick .plan { grid-column: 1 / 3; }
+  .sheet { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <div class="brand"><h1>Allaia Market Desk</h1><span>Stocks · Crypto</span></div>
+    <div class="status" role="status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusText">Starting up…</span></div>
+    <button class="btn primary" id="refreshBtn" type="button">Refresh data</button>
+  </div>
+  <div class="regime" id="regime" aria-label="Market backdrop"></div>
+  <div class="wrap">
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-picks" aria-selected="true" data-tab="picks" type="button">Top picks</button>
+      <button role="tab" id="tab-crypto" aria-selected="false" data-tab="crypto" type="button">Crypto scanner</button>
+      <button role="tab" id="tab-stocks" aria-selected="false" data-tab="stocks" type="button">Stock scanner</button>
+      <button role="tab" id="tab-playbook" aria-selected="false" data-tab="playbook" type="button">Playbook</button>
+      <button role="tab" id="tab-setup" aria-selected="false" data-tab="setup" type="button">Setup</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<footer class="wrap">
+  Grades come from price trend, momentum, volume, volatility, news tone and the overall market backdrop. They're probabilities, not promises, and they can be wrong for weeks at a time. Data: CoinGecko, Binance, Alternative.me, Twelve Data, Finnhub. Not financial advice. Every trade is your call and your risk.
+</footer>
+
+<dialog id="sheet" aria-labelledby="sheetTitle"><div class="sheet" id="sheetBody"></div></dialog>
+
+<script>
+'use strict';
+/* ---------- utilities ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const mean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : NaN;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('desk:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('desk:' + k, JSON.stringify(v)); return true; } catch { return false; } }
+};
+function fmtPrice(p) {
+  if (!isFinite(p)) return '–';
+  const d = p >= 1000 ? 0 : p >= 1 ? 2 : p >= 0.01 ? 4 : 8;
+  return '$' + p.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+const fmtUSD = x => isFinite(x) ? '$' + x.toLocaleString('en-US', { maximumFractionDigits: x < 100 ? 2 : 0 }) : '–';
+const pct = (x, d = 1) => isFinite(x) ? (x > 0 ? '+' : '') + (x * 100).toFixed(d) + '%' : '–';
+const cls = x => x > 0 ? 'up' : x < 0 ? 'down' : 'muted';
+function fmtUnits(u, kind) { if (!isFinite(u)) return '–'; return u >= 100 ? u.toFixed(0) : u >= 1 ? u.toFixed(2) : u.toPrecision(3); }
+function isoDate(d) { return d.toISOString().slice(0, 10); }
+function ago(ts) { const m = Math.round((Date.now() - ts) / 60000); if (m < 1) return 'just now'; if (m < 60) return m + ' min ago'; const h = Math.round(m / 60); if (h < 48) return h + ' h ago'; return Math.round(h / 24) + ' days ago'; }
+
+async function getJSON(url, timeout = 15000) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), timeout);
+  try {
+    const r = await fetch(url, { signal: ctl.signal });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+async function pool(items, n, fn) {
+  const out = new Array(items.length); let i = 0;
+  await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => {
+    while (i < items.length) { const k = i++; try { out[k] = await fn(items[k], k); } catch (e) { out[k] = null; } }
+  }));
+  return out;
+}
+
+/* ---------- settings ---------- */
+const DEFAULT_WATCHLIST = 'SPY, QQQ, IWM, NVDA, MSFT, AAPL, AMZN, META, GOOGL, TSLA, AMD, AVGO, PLTR, COIN, HOOD, SOFI';
+const settings = Object.assign({ tdKey: '', fhKey: '', account: 500, riskPct: 2, maxPosPct: 25, watchlist: DEFAULT_WATCHLIST, cryptoCount: 60 }, store.get('settings', {}));
+const watchSymbols = () => [...new Set(settings.watchlist.split(/[\s,]+/).map(s => s.trim().toUpperCase()).filter(s => /^[A-Z.\-]{1,10}$/.test(s)))];
+const ETFS = new Set(['SPY', 'QQQ', 'IWM', 'DIA', 'VOO', 'VTI', 'XLK', 'XLF', 'XLE', 'ARKK', 'SMH', 'SOXX', 'TLT', 'GLD']);
+
+/* ---------- indicators (all causal: value at i uses data up to i) ---------- */
+function sma(a, n) { const o = new Array(a.length).fill(NaN); let s = 0; for (let i = 0; i < a.length; i++) { s += a[i]; if (i >= n) s -= a[i - n]; if (i >= n - 1) o[i] = s / n; } return o; }
+function ema(a, n) { const o = new Array(a.length).fill(NaN); const k = 2 / (n + 1); let e; for (let i = 0; i < a.length; i++) { if (i === n - 1) { let s = 0; for (let j = 0; j < n; j++) s += a[j]; e = s / n; o[i] = e; } else if (i >= n) { e = a[i] * k + e * (1 - k); o[i] = e; } } return o; }
+function rsi(c, n = 14) {
+  const o = new Array(c.length).fill(NaN); let g = 0, l = 0;
+  for (let i = 1; i < c.length; i++) {
+    const d = c[i] - c[i - 1], up = Math.max(d, 0), dn = Math.max(-d, 0);
+    if (i <= n) { g += up; l += dn; if (i === n) { g /= n; l /= n; o[i] = l === 0 ? 100 : 100 - 100 / (1 + g / l); } }
+    else { g = (g * (n - 1) + up) / n; l = (l * (n - 1) + dn) / n; o[i] = l === 0 ? 100 : 100 - 100 / (1 + g / l); }
+  }
+  return o;
+}
+function macdHist(c) {
+  const e12 = ema(c, 12), e26 = ema(c, 26), start = 25;
+  const line = c.map((_, i) => e12[i] - e26[i]);
+  const sig = new Array(c.length).fill(NaN);
+  if (c.length > start + 9) { const es = ema(line.slice(start), 9); es.forEach((v, i) => sig[i + start] = v); }
+  return line.map((v, i) => v - sig[i]);
+}
+function atr(h, l, c, n = 14) {
+  const o = new Array(c.length).fill(NaN); let a = 0;
+  for (let i = 1; i < c.length; i++) {
+    const tr = Math.max(h[i] - l[i], Math.abs(h[i] - c[i - 1]), Math.abs(l[i] - c[i - 1]));
+    if (i <= n) { a += tr; if (i === n) { a /= n; o[i] = a; } } else { a = (a * (n - 1) + tr) / n; o[i] = a; }
+  }
+  return o;
+}
+function rollStd(c, n = 20) {
+  const r = c.map((x, i) => i ? Math.log(x / c[i - 1]) : 0);
+  const o = new Array(c.length).fill(NaN);
+  for (let i = n; i < c.length; i++) { let s = 0, q = 0; for (let j = i - n + 1; j <= i; j++) { s += r[j]; q += r[j] * r[j]; } const m = s / n; o[i] = Math.sqrt(Math.max(q / n - m * m, 0)); }
+  return o;
+}
+function rollMax(a, n) { const o = new Array(a.length).fill(NaN); for (let i = 0; i < a.length; i++) { let m = -Infinity; for (let j = Math.max(0, i - n + 1); j <= i; j++) m = Math.max(m, a[j]); o[i] = m; } return o; }
+
+function buildSeries(k) {
+  const c = k.c, h = k.h, l = k.l, v = k.v;
+  return {
+    t: k.t, close: c, high: h, low: l, vol: v,
+    sma20: sma(c, 20), sma50: sma(c, 50), sma200: sma(c, 200),
+    rsi: rsi(c), hist: macdHist(c), atr: atr(h, l, c), dvol: rollStd(c, 20), dvol60: rollStd(c, 60),
+    va5: sma(v, 5), va50: sma(v, 50), hi252: rollMax(c, 252)
+  };
+}
+
+/* ---------- scoring ---------- */
+function shortScore(S, i, ctx = {}) {
+  const R = []; let s = 50;
+  const add = (w, t) => { if (!isFinite(w)) return; s += w; if (t && Math.abs(w) >= 1) R.push({ w, t }); };
+  const c = S.close[i];
+  if (isFinite(S.sma20[i])) add(c > S.sma20[i] ? 8 : -8, c > S.sma20[i] ? 'Holding above its 20-day average' : 'Trading under its 20-day average');
+  if (isFinite(S.sma50[i])) { const up = S.sma20[i] > S.sma50[i]; add(up ? 6 : -6, up ? 'Short trend (20-day) is above the 50-day' : 'Short trend (20-day) has slipped under the 50-day'); }
+  const h = S.hist[i], hp = S.hist[i - 1];
+  if (isFinite(h) && isFinite(hp)) {
+    if (h > 0 && h > hp) add(10, 'MACD momentum is positive and building');
+    else if (h > 0) add(3, 'MACD positive but fading');
+    else if (h > hp) add(-2, 'MACD negative but improving');
+    else add(-10, 'MACD momentum is negative and getting worse');
+  }
+  const r = S.rsi[i];
+  if (isFinite(r)) {
+    const rs = r.toFixed(0);
+    if (r >= 75) add(-10, `RSI ${rs}: overbought. Chasing here is how small accounts get hurt`);
+    else if (r >= 68) add(2, `RSI ${rs}: strong but getting stretched`);
+    else if (r >= 50) add(8, `RSI ${rs}: healthy bullish momentum`);
+    else if (r >= 40) add(-3, `RSI ${rs}: momentum is soft`);
+    else if (r >= 30) add(-7, `RSI ${rs}: sellers in control`);
+    else add(3, `RSI ${rs}: oversold. A bounce is possible but the trend is down`);
+  }
+  const dv = S.dvol[i];
+  if (dv > 0 && i >= 20) {
+    const r5 = c / S.close[i - 5] - 1, r20 = c / S.close[i - 20] - 1;
+    const z5 = r5 / (dv * Math.sqrt(5)), z20 = r20 / (dv * Math.sqrt(20));
+    add(clamp(z5 * 4, -8, 8), Math.abs(z5) > 1 ? `${pct(r5)} in the last 5 days` : null);
+    add(clamp(z20 * 5, -10, 10), Math.abs(z20) > 1 ? `${pct(r20)} over 20 days` : null);
+    const vr = S.va5[i] / S.va50[i];
+    if (isFinite(vr) && vr > 1.5) add(r5 > 0 ? 6 : -6, r5 > 0 ? `Volume running ${vr.toFixed(1)}× normal on the way up` : `Heavy selling volume, ${vr.toFixed(1)}× normal`);
+  }
+  if (S.atr[i] > 0 && isFinite(S.sma20[i])) { const ext = (c - S.sma20[i]) / S.atr[i]; if (ext > 3) add(-6, `Stretched ${ext.toFixed(1)} ATR above the 20-day. Wait for a pullback`); }
+  if (ctx.newsCount > 0 && isFinite(ctx.news)) { const w = clamp(ctx.news * 12, -10, 10); add(w, Math.abs(w) >= 2 ? (w > 0 ? `News tone is positive (${ctx.newsCount} recent headline${ctx.newsCount > 1 ? 's' : ''})` : `News tone is negative (${ctx.newsCount} recent headline${ctx.newsCount > 1 ? 's' : ''})`) : null); }
+  if (ctx.regime === 1) add(3, 'Market backdrop is risk-on');
+  else if (ctx.regime === -1) add(-6, 'Market backdrop is risk-off');
+  let score = clamp(Math.round(s), 0, 100);
+  const stretched = (isFinite(r) && r >= 75) || (S.atr[i] > 0 && (c - S.sma20[i]) / S.atr[i] > 3);
+  if (stretched && score > 68) { R.push({ w: 68 - score, t: 'Capped: too stretched to buy today. Wait for a pullback toward the 20-day' }); score = 68; }
+  return { score, reasons: R };
+}
+
+function longScore(S, i, ctx = {}) {
+  const R = []; let s = 50;
+  const add = (w, t) => { if (!isFinite(w)) return; s += w; if (t && Math.abs(w) >= 1) R.push({ w, t }); };
+  const c = S.close[i], ann = ctx.kind === 'stock' ? 252 : 365;
+  if (isFinite(S.sma200[i])) {
+    add(c > S.sma200[i] ? 12 : -12, c > S.sma200[i] ? 'Above its 200-day average: long-term uptrend' : 'Below its 200-day average: long-term downtrend');
+    add(S.sma50[i] > S.sma200[i] ? 8 : -8, S.sma50[i] > S.sma200[i] ? '50-day is above the 200-day (golden-cross regime)' : '50-day is under the 200-day (death-cross regime)');
+    if (i >= 220) { const up = S.sma200[i] > S.sma200[i - 20]; add(up ? 5 : -5, up ? 'The 200-day itself is rising' : 'The 200-day itself is falling'); }
+  } else add(-4, 'Less than 200 days of history, so the long-term read is thin');
+  const dv = S.dvol60[i];
+  if (dv > 0) {
+    if (i >= 120) { const r120 = c / S.close[i - 120] - 1; const z = r120 / (dv * Math.sqrt(120)); add(clamp(z * 6, -12, 12), Math.abs(z) > 0.7 ? `${pct(r120, 0)} over ~6 months` : null); }
+    if (i >= 60) { const r60 = c / S.close[i - 60] - 1; const z = r60 / (dv * Math.sqrt(60)); add(clamp(z * 3, -6, 6), null); }
+    const av = dv * Math.sqrt(ann);
+    if (av > 1.0) add(-8, `Very volatile (${(av * 100).toFixed(0)}% a year). Size it small`);
+    else if (av > 0.7) add(-4, `High volatility (${(av * 100).toFixed(0)}% a year)`);
+    else if (av < 0.35) add(4, `Relatively steady (${(av * 100).toFixed(0)}% a year volatility)`);
+  }
+  if (isFinite(S.hi252[i])) {
+    const dd = c / S.hi252[i] - 1;
+    if (dd > -0.12) add(4, dd > -0.01 ? 'Trading at its 1-year high' : `Within ${Math.abs(dd * 100).toFixed(0)}% of its 1-year high`);
+    else if (dd < -0.5) add(-8, `${Math.abs(dd * 100).toFixed(0)}% below its 1-year high. Don't catch falling knives`);
+  }
+  if (ctx.kind === 'crypto' && ctx.rank) {
+    if (ctx.rank <= 10) add(5, `Top-10 coin by market cap (#${ctx.rank}): deep liquidity`);
+    else if (ctx.rank <= 25) add(2, `Large-cap coin (#${ctx.rank})`);
+    else if (ctx.rank > 60) add(-3, `Smaller coin (#${ctx.rank}): thinner liquidity, bigger swings`);
+  }
+  if (ctx.kind === 'stock' && ETFS.has(ctx.symbol)) add(4, 'Diversified index fund: no single-company risk');
+  if (ctx.newsCount > 0 && isFinite(ctx.news)) add(clamp(ctx.news * 6, -5, 5), null);
+  return { score: clamp(Math.round(s), 0, 100), reasons: R };
+}
+
+const GRADES = [[85, 'A+'], [78, 'A'], [72, 'A-'], [66, 'B+'], [60, 'B'], [55, 'B-'], [50, 'C+'], [45, 'C'], [40, 'C-'], [32, 'D'], [0, 'F']];
+const grade = s => GRADES.find(([m]) => s >= m)[1];
+const gradeClass = g => 'g-' + g[0].toLowerCase().replace('f', 'd');
+function action(s, horizon) {
+  if (s >= 72) return { label: horizon === 'long' ? 'Accumulate' : 'Buy setup', c: 'c-buy' };
+  if (s >= 60) return { label: horizon === 'long' ? 'Hold / add on dips' : 'Watch for entry', c: 'c-watch' };
+  if (s >= 45) return { label: 'Neutral', c: 'c-neutral' };
+  return { label: 'Avoid', c: 'c-avoid' };
+}
+
+function tradePlan(a) {
+  const S = a.S, i = S.close.length - 1, c = isFinite(a.price) && a.price > 0 ? a.price : S.close[i], A = S.atr[i];
+  const risk = 2 * A, stop = c - risk;
+  const riskBudget = settings.account * settings.riskPct / 100;
+  let units = riskBudget / risk, cost = units * c;
+  const cap = settings.account * settings.maxPosPct / 100;
+  let capped = false;
+  if (cost > cap) { units = cap / c; cost = cap; capped = true; }
+  return { entry: c, stop, t1: c + 1.5 * risk, t2: c + 3 * risk, units, cost, risk: units * risk, stopPct: risk / c, capped,
+    addZone: S.sma50[i], invalidate: isFinite(S.sma200[i]) ? S.sma200[i] : NaN };
+}
+
+function backtest(S, fwd = 10, thr = 72) {
+  const N = S.close.length, sig = [], all = [];
+  for (let i = 210; i < N - fwd; i++) {
+    const f = S.close[i + fwd] / S.close[i] - 1; all.push(f);
+    if (shortScore(S, i).score >= thr) sig.push(f);
+  }
+  const hit = a => a.length ? a.filter(x => x > 0).length / a.length : NaN;
+  return { n: sig.length, hit: hit(sig), avg: mean(sig), baseN: all.length, baseHit: hit(all), baseAvg: mean(all), fwd, thr };
+}
+
+/* ---------- news tone ---------- */
+const POS = ['beat', 'beats', 'surge', 'surges', 'soar', 'soars', 'rally', 'rallies', 'record', 'upgrade', 'upgrades', 'upgraded', 'outperform', 'bullish', 'growth', 'profit', 'profits', 'gain', 'gains', 'jump', 'jumps', 'approval', 'approved', 'approves', 'partnership', 'launch', 'launches', 'expands', 'raises', 'raised', 'strong', 'tops', 'wins', 'breakthrough', 'adoption', 'inflows', 'buyback', 'climbs', 'rebound', 'rebounds', 'boost', 'boosts', 'optimism', 'higher', 'rises', 'rise', 'accelerates', 'exceeds', 'all-time'];
+const NEG = ['miss', 'misses', 'missed', 'plunge', 'plunges', 'drop', 'drops', 'fall', 'falls', 'downgrade', 'downgrades', 'downgraded', 'underperform', 'bearish', 'loss', 'losses', 'lawsuit', 'sues', 'probe', 'investigation', 'hack', 'hacked', 'exploit', 'outflows', 'bankruptcy', 'fraud', 'recall', 'layoffs', 'cuts', 'warning', 'warns', 'weak', 'delay', 'delays', 'ban', 'crash', 'crashes', 'slump', 'tumble', 'tumbles', 'sinks', 'fined', 'halt', 'halts', 'selloff', 'sell-off', 'lower', 'fears', 'slides', 'slashes', 'liquidations', 'investigates', 'charges', 'decline', 'declines', 'risk'];
+const POSS = new Set(POS), NEGS = new Set(NEG);
+function tone(text) {
+  const w = String(text).toLowerCase().match(/[a-z\-]+/g) || [];
+  let p = 0, n = 0; w.forEach(x => { if (POSS.has(x)) p++; else if (NEGS.has(x)) n++; });
+  return p + n ? (p - n) / (p + n) : 0;
+}
+function aggregateNews(items) {
+  if (!items || !items.length) return { score: NaN, count: 0, items: [] };
+  const now = Date.now() / 1000; let ws = 0, s = 0;
+  const scored = items.map(x => ({ ...x, tone: tone(x.headline + ' ' + (x.summary || '')) }));
+  scored.forEach(x => { const age = Math.max(0, (now - x.datetime) / 86400); const w = Math.pow(0.5, age / 2); ws += w; s += w * x.tone; });
+  scored.sort((a, b) => b.datetime - a.datetime);
+  return { score: ws ? s / ws : 0, count: items.length, items: scored.slice(0, 8) };
+}
+
+/* ---------- state ---------- */
+const state = { assets: [], regime: { crypto: null, stock: null, fng: null }, marketNews: null, sample: false, updated: null, tab: 'picks',
+  sort: { crypto: { key: 'short', dir: -1 }, stocks: { key: 'short', dir: -1 } }, filter: { crypto: '', stocks: '' }, stockMsg: '', cryptoMsg: '', busy: false };
+
+function setStatus(text, mode) { $('#statusText').textContent = text; $('#statusDot').className = 'dot ' + (mode || ''); }
+
+function makeAsset(meta, k) {
+  if (!k || k.c.length < 60) return null;
+  const S = buildSeries(k), i = S.close.length - 1, c = S.close[i];
+  return { ...meta, S, price: meta.price ?? c,
+    chg1d: meta.chg1d ?? (c / S.close[i - 1] - 1), chg7d: c / S.close[i - 7] - 1, chg30d: c / S.close[i - 30] - 1, rsi: S.rsi[i] };
+}
+function analyze(a) {
+  const i = a.S.close.length - 1;
+  const reg = a.kind === 'crypto' ? state.regime.crypto : state.regime.stock;
+  const ctx = { kind: a.kind, rank: a.rank, symbol: a.symbol, regime: reg ? reg.dir : 0, news: a.news ? a.news.score : NaN, newsCount: a.news ? a.news.count : 0 };
+  a.short = shortScore(a.S, i, ctx); a.long = longScore(a.S, i, ctx);
+  a.plan = tradePlan(a);
+  if (!a.bt) a.bt = backtest(a.S);
+}
+function regimeFrom(a, label) {
+  if (!a) return null;
+  const S = a.S, i = S.close.length - 1, c = S.close[i];
+  const above = c > S.sma200[i], golden = S.sma50[i] > S.sma200[i];
+  const dir = above && golden ? 1 : !above && !golden ? -1 : 0;
+  return { dir, label, text: dir === 1 ? 'Risk-on' : dir === -1 ? 'Risk-off' : 'Mixed', detail: `${a.symbol} ${above ? 'above' : 'below'} 200-day, 50-day ${golden ? 'above' : 'below'} 200-day` };
+}
+
+/* ---------- crypto feed ---------- */
+const EXCLUDE = new Set(['usdt', 'usdc', 'dai', 'fdusd', 'usde', 'tusd', 'pyusd', 'usds', 'usdd', 'busd', 'frax', 'gusd', 'usdp', 'lusd', 'susde', 'usd0', 'usdy', 'usdtb', 'rlusd', 'usd1', 'bfusd', 'eurc', 'xaut', 'paxg', 'jitosol', 'msol', 'bnsol', 'jupsol', 'lbtc', 'solvbtc', 'ezeth', 'rseth', 'oseth', 'bsc-usd', 'susds', 'syrupusdc', 'buidl', 'ousg', 'usdf', 'usdg', 'usdx']);
+const isExcluded = c => { const s = c.symbol.toLowerCase(); return EXCLUDE.has(s) || /wrapped|staked|bridged|restaked|liquid staking|binance-peg/i.test(c.name) || (/^(w|st|ws|cb|we|r|m|k|tb)(eth|btc)$/i.test(s)) || /usd$/i.test(s) && s !== 'usd'; };
+
+async function loadCrypto() {
+  setStatus('Scanning the crypto market…', 'busy');
+  const mk = await getJSON('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=150&page=1&sparkline=false&price_change_percentage=24h,7d,30d');
+  const coins = mk.filter(c => !isExcluded(c)).slice(0, settings.cryptoCount);
+  const noPair = [];
+  const results = await pool(coins, 6, async c => {
+    const sym = c.symbol.toUpperCase() + 'USDT';
+    try {
+      const k = await getJSON(`https://data-api.binance.vision/api/v3/klines?symbol=${sym}&interval=1d&limit=500`, 12000);
+      const o = { t: [], h: [], l: [], c: [], v: [] };
+      k.forEach(r => { o.t.push(r[0]); o.h.push(+r[2]); o.l.push(+r[3]); o.c.push(+r[4]); o.v.push(+r[7]); });
+      return { c, k: o };
+    } catch { noPair.push(c); return null; }
+  });
+  const assets = [];
+  results.forEach(r => { if (!r) return; const a = makeAsset(cryptoMeta(r.c), r.k); if (a) assets.push(a); });
+  // Coins with no Binance pair: daily closes from CoinGecko, gently paced for the free rate limit.
+  for (const c of noPair.slice(0, 8)) {
+    try {
+      await sleep(2500);
+      const m = await getJSON(`https://api.coingecko.com/api/v3/coins/${c.id}/market_chart?vs_currency=usd&days=365&interval=daily`);
+      const o = { t: [], h: [], l: [], c: [], v: [] };
+      m.prices.forEach((p, i) => { o.t.push(p[0]); o.c.push(p[1]); o.h.push(p[1]); o.l.push(p[1]); o.v.push((m.total_volumes[i] || [0, 0])[1]); });
+      const a = makeAsset(cryptoMeta(c), o); if (a) { a.closeOnly = true; assets.push(a); }
+    } catch { /* skip */ }
+  }
+  state.cryptoMsg = `${assets.length} coins scored${noPair.length > 8 ? `, ${noPair.length - 8} skipped (no daily history available)` : ''}.`;
+  return assets;
+}
+function cryptoMeta(c) {
+  return { id: 'c:' + c.id, cgId: c.id, kind: 'crypto', symbol: c.symbol.toUpperCase(), name: c.name, rank: c.market_cap_rank, image: c.image,
+    price: c.current_price, chg1d: (c.price_change_percentage_24h_in_currency ?? c.price_change_percentage_24h) / 100, mcap: c.market_cap, volume: c.total_volume };
+}
+async function loadFng() {
+  try { const j = await getJSON('https://api.alternative.me/fng/?limit=8'); const d = j.data; return { value: +d[0].value, label: d[0].value_classification, weekAgo: d[7] ? +d[7].value : NaN }; }
+  catch { return null; }
+}
+
+/* ---------- stock feed (Twelve Data free plan: 8 symbols a minute) ---------- */
+async function loadStocks(onBatch) {
+  const syms = watchSymbols();
+  if (!settings.tdKey) { state.stockMsg = 'nokey'; return []; }
+  const cache = store.get('stockCache', { data: {} });
+  const fresh = s => cache.data[s] && Date.now() - cache.data[s].ts < 4 * 3600e3;
+  const need = syms.filter(s => !fresh(s));
+  const errors = [];
+  for (let b = 0; b < need.length; b += 8) {
+    if (b > 0) {
+      for (let s = 61; s > 0; s--) { setStatus(`Loading stocks ${b + 1}–${Math.min(b + 8, need.length)} of ${need.length} in ${s}s (free plan: 8 a minute)`, 'busy'); await sleep(1000); }
+    } else setStatus(`Loading ${need.length} stocks…`, 'busy');
+    const batch = need.slice(b, b + 8);
+    let j;
+    try { j = await getJSON(`https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(batch.join(','))}&interval=1day&outputsize=500&apikey=${encodeURIComponent(settings.tdKey)}`, 25000); }
+    catch (e) { errors.push(batch.join(', ') + ': ' + e.message); continue; }
+    if (j.status === 'error') { errors.push(j.message || 'Twelve Data refused the request'); if (j.code === 401) break; continue; }
+    const map = batch.length === 1 ? { [batch[0]]: j } : j;
+    batch.forEach(s => {
+      const r = map[s];
+      if (!r || r.status === 'error' || !r.values) { errors.push(`${s}: ${r && r.message ? r.message : 'no data'}`); return; }
+      const v = r.values.slice().reverse();
+      cache.data[s] = { ts: Date.now(), name: r.meta && (r.meta.symbol + (r.meta.exchange ? ' · ' + r.meta.exchange : '')),
+        k: { t: v.map(x => Date.parse(x.datetime)), h: v.map(x => +x.high), l: v.map(x => +x.low), c: v.map(x => +x.close), v: v.map(x => +(x.volume || 0)) } };
+    });
+    store.set('stockCache', cache);
+    if (onBatch) onBatch(buildStockAssets(syms, cache));
+  }
+  state.stockMsg = errors.length ? 'Some symbols failed: ' + errors.slice(0, 3).join(' · ') : '';
+  return buildStockAssets(syms, cache);
+}
+function buildStockAssets(syms, cache) {
+  return syms.map(s => cache.data[s] ? makeAsset({ id: 's:' + s, kind: 'stock', symbol: s, name: ETFS.has(s) ? 'Index ETF' : 'US stock' }, cache.data[s].k) : null).filter(Boolean);
+}
+
+/* ---------- news feed (Finnhub free plan) ---------- */
+async function loadNews(assets) {
+  if (!settings.fhKey) return;
+  const tok = encodeURIComponent(settings.fhKey);
+  const to = isoDate(new Date()), from = isoDate(new Date(Date.now() - 7 * 864e5));
+  setStatus('Reading the news…', 'busy');
+  try {
+    const [gen, cry] = await Promise.all([
+      getJSON(`https://finnhub.io/api/v1/news?category=general&token=${tok}`),
+      getJSON(`https://finnhub.io/api/v1/news?category=crypto&token=${tok}`)
+    ]);
+    state.marketNews = aggregateNews(gen.slice(0, 40));
+    assets.filter(a => a.kind === 'crypto').forEach(a => {
+      const nm = a.name.toLowerCase(), sy = a.symbol.toLowerCase();
+      const re = sy.length >= 3 ? new RegExp(`\\b(${sy.replace(/[^a-z0-9]/g, '')}|${nm.replace(/[^a-z0-9 ]/g, '')})\\b`, 'i') : new RegExp(`\\b${nm.replace(/[^a-z0-9 ]/g, '')}\\b`, 'i');
+      const hits = cry.filter(n => re.test(n.headline + ' ' + (n.summary || '')));
+      a.news = aggregateNews(hits);
+    });
+  } catch { /* news is optional */ }
+  const stocks = assets.filter(a => a.kind === 'stock' && !ETFS.has(a.symbol));
+  await pool(stocks, 4, async a => {
+    const j = await getJSON(`https://finnhub.io/api/v1/company-news?symbol=${a.symbol}&from=${from}&to=${to}&token=${tok}`);
+    if (Array.isArray(j)) a.news = aggregateNews(j.slice(0, 40));
+  });
+}
+
+/* ---------- sample mode (only when live feeds can't be reached) ---------- */
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function sampleK(seed, start, vol, n = 500) {
+  const rnd = mulberry32(seed); let p = start, drift = (rnd() - 0.45) * vol * 0.25;
+  const o = { t: [], h: [], l: [], c: [], v: [] }; const day = 864e5, t0 = Date.now() - n * day;
+  for (let i = 0; i < n; i++) {
+    if (i % 90 === 0) drift = (rnd() - 0.45) * vol * 0.3;
+    const z = (rnd() + rnd() + rnd() - 1.5) * 2, prev = p;
+    p = p * Math.exp(drift + vol * z);
+    o.t.push(t0 + i * day); o.c.push(p); o.h.push(Math.max(prev, p) * (1 + rnd() * vol * 0.6)); o.l.push(Math.min(prev, p) * (1 - rnd() * vol * 0.6));
+    o.v.push(1e6 * (0.6 + rnd() * 0.8) * (1 + Math.abs(z)));
+  }
+  return o;
+}
+function sampleAssets() {
+  const cr = [['BTC', 'Bitcoin', 60000, .028], ['ETH', 'Ethereum', 3000, .036], ['SOL', 'Solana', 150, .05], ['XRP', 'XRP', .6, .045], ['BNB', 'BNB', 550, .03], ['DOGE', 'Dogecoin', .15, .06], ['ADA', 'Cardano', .45, .05], ['LINK', 'Chainlink', 15, .052], ['AVAX', 'Avalanche', 30, .055], ['SUI', 'Sui', 1.5, .065], ['TON', 'Toncoin', 5, .045], ['NEAR', 'NEAR', 5, .058]];
+  const st = watchSymbols().slice(0, 16);
+  const out = [];
+  cr.forEach(([s, n, p, v], i) => { const a = makeAsset({ id: 'c:' + s, kind: 'crypto', symbol: s, name: n + ' (sample)', rank: i + 1 }, sampleK(1000 + i * 7, p, v)); if (a) out.push(a); });
+  st.forEach((s, i) => { const a = makeAsset({ id: 's:' + s, kind: 'stock', symbol: s, name: 'Sample data' }, sampleK(5000 + i * 13, 40 + i * 23, ETFS.has(s) ? .011 : .024)); if (a) out.push(a); });
+  return out;
+}
+
+/* ---------- orchestration ---------- */
+function recompute() {
+  const btc = state.assets.find(a => a.kind === 'crypto' && a.symbol === 'BTC');
+  const spy = state.assets.find(a => a.kind === 'stock' && (a.symbol === 'SPY' || a.symbol === 'VOO')) || state.assets.find(a => a.kind === 'stock' && a.symbol === 'QQQ');
+  state.regime.crypto = regimeFrom(btc, 'Crypto backdrop');
+  state.regime.stock = regimeFrom(spy, 'Stock backdrop');
+  state.assets.forEach(analyze);
+  render();
+}
+async function refresh() {
+  if (state.busy) return; state.busy = true; $('#refreshBtn').disabled = true;
+  let crypto = [], live = true;
+  const fngP = loadFng();
+  try { crypto = await loadCrypto(); } catch (e) { live = false; }
+  if (!live || !crypto.length) {
+    state.sample = true; state.assets = sampleAssets(); state.regime.fng = null; state.updated = Date.now();
+    recompute(); setStatus('Live feeds unreachable. Showing sample data', 'sample');
+    state.busy = false; $('#refreshBtn').disabled = false; return;
+  }
+  state.sample = false; state.regime.fng = await fngP;
+  state.assets = crypto; state.updated = Date.now(); recompute();
+  const stocks = await loadStocks(partial => { state.assets = crypto.concat(partial); recompute(); });
+  state.assets = crypto.concat(stocks);
+  await loadNews(state.assets);
+  state.updated = Date.now(); recompute();
+  setStatus(`Live · updated ${new Date(state.updated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, 'live');
+  state.busy = false; $('#refreshBtn').disabled = false;
+}
+
+/* ---------- rendering ---------- */
+function gradeBox(sc) { const g = grade(sc); return `<span class="grade ${gradeClass(g)}">${g}<small>${sc}</small></span>`; }
+function tinyGrade(sc) { const g = grade(sc); return `<span class="tg ${gradeClass(g)}" title="Score ${sc}/100">${g}</span>`; }
+function spark(a, n = 30) {
+  const c = a.S.close.slice(-n), mn = Math.min(...c), mx = Math.max(...c), w = 90, h = 26;
+  const pts = c.map((v, i) => `${(i / (c.length - 1) * w).toFixed(1)},${(h - 2 - (v - mn) / (mx - mn || 1) * (h - 4)).toFixed(1)}`).join(' ');
+  const col = c[c.length - 1] >= c[0] ? 'var(--up)' : 'var(--down)';
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline fill="none" stroke="${col}" stroke-width="1.5" points="${pts}"/></svg>`;
+}
+
+function renderRegime() {
+  const r = state.regime, cells = [];
+  const reg = (x, fallback) => x ? `<div><div class="k">${x.label}</div><div class="v"><span class="chip ${x.dir === 1 ? 'c-buy' : x.dir === -1 ? 'c-avoid' : 'c-watch'}">${x.text}</span></div><div class="s">${esc(x.detail)}</div></div>` : `<div><div class="k">${fallback}</div><div class="v muted">–</div><div class="s">${fallback === 'Stock backdrop' ? 'Add SPY to your watchlist and a stock data key' : 'Waiting for data'}</div></div>`;
+  cells.push(reg(r.crypto, 'Crypto backdrop'));
+  cells.push(reg(r.stock, 'Stock backdrop'));
+  if (r.fng) {
+    const v = r.fng.value, note = v <= 25 ? 'Extreme fear: long-term buyers get paid here' : v >= 75 ? 'Extreme greed: tighten stops, don\'t chase' : 'No extreme in sentiment';
+    cells.push(`<div><div class="k">Crypto fear &amp; greed</div><div class="v"><span class="num">${v}</span> <span class="chip ${v <= 25 ? 'c-buy' : v >= 75 ? 'c-avoid' : 'c-neutral'}">${esc(r.fng.label)}</span></div><div class="s">${note}${isFinite(r.fng.weekAgo) ? ` · ${r.fng.weekAgo} a week ago` : ''}</div></div>`);
+  } else cells.push(`<div><div class="k">Crypto fear &amp; greed</div><div class="v muted">–</div><div class="s">${state.sample ? 'Not available in sample mode' : 'Loading'}</div></div>`);
+  const mn = state.marketNews;
+  if (mn && mn.count) cells.push(`<div><div class="k">Market news tone</div><div class="v"><span class="${cls(mn.score)}">${mn.score > 0.08 ? 'Positive' : mn.score < -0.08 ? 'Negative' : 'Neutral'}</span></div><div class="s">${mn.count} headlines today</div></div>`);
+  else cells.push(`<div><div class="k">Market news tone</div><div class="v muted">–</div><div class="s">${settings.fhKey ? 'Loading' : 'Add a free Finnhub key in Setup'}</div></div>`);
+  $('#regime').innerHTML = cells.join('');
+}
+
+function pickCard(a, i, horizon) {
+  const sc = horizon === 'long' ? a.long : a.short, ac = action(sc.score, horizon), p = a.plan;
+  const pos = sc.reasons.filter(r => r.w > 0).sort((x, y) => y.w - x.w).slice(0, 3);
+  const neg = sc.reasons.filter(r => r.w < 0).sort((x, y) => x.w - y.w).slice(0, 1);
+  const plan = horizon === 'long'
+    ? `<span>Price <b>${fmtPrice(a.price)}</b></span><span>Add near <b>${fmtPrice(p.addZone)}</b> (50-day)</span>${isFinite(p.invalidate) ? `<span>Thesis breaks under <b>${fmtPrice(p.invalidate)}</b></span>` : ''}`
+    : `<span>Entry <b>${fmtPrice(p.entry)}</b></span><span>Stop <b class="down">${fmtPrice(p.stop)}</b></span><span>Target <b class="up">${fmtPrice(p.t1)}</b> / <b class="up">${fmtPrice(p.t2)}</b></span><span>Size <b>${fmtUSD(p.cost)}</b>, risking <b>${fmtUSD(p.risk)}</b></span>`;
+  return `<button class="pick" type="button" data-id="${esc(a.id)}">
+    <span class="rank">${String(i + 1).padStart(2, '0')}</span>
+    <span class="who"><span class="sym">${esc(a.symbol)}</span><span class="nm">${esc(a.kind === 'crypto' ? a.name : a.name)}</span><br>
+      <span class="chip ${ac.c}">${ac.label}</span> <span class="num ${cls(a.chg1d)}" style="font-size:12px">${pct(a.chg1d)} today</span></span>
+    ${gradeBox(sc.score)}
+    <ul class="why">${pos.map(r => `<li>${esc(r.t)}</li>`).join('')}${neg.map(r => `<li class="neg">Risk: ${esc(r.t)}</li>`).join('')}</ul>
+    <span class="plan">${plan}</span>
+  </button>`;
+}
+
+function renderPicks(main) {
+  const A = state.assets;
+  if (!A.length) { main.innerHTML = `<p class="muted">Loading the market…</p>`; return; }
+  const shortList = A.filter(a => a.short.score >= 55).sort((x, y) => y.short.score - x.short.score).slice(0, 6);
+  const longList = A.filter(a => a.long.score >= 55).sort((x, y) => y.long.score - x.long.score).slice(0, 6);
+  const strong = A.filter(a => a.short.score >= 72).length;
+  const rc = state.regime.crypto, rs = state.regime.stock;
+  const lines = [];
+  if (rc) lines.push(`Crypto is <b>${rc.text.toLowerCase()}</b>.`);
+  if (rs) lines.push(`Stocks are <b>${rs.text.toLowerCase()}</b>.`);
+  lines.push(strong ? `<b>${strong}</b> of ${A.length} assets show an A-grade short-term setup right now.` : `Nothing on the board grades A- or better short-term. Sitting in cash is a position too.`);
+  if ((rc && rc.dir === -1) || (rs && rs.dir === -1)) lines.push('In a risk-off tape, cut position sizes in half and take profits faster.');
+  const banner = state.sample ? `<div class="banner"><strong>Sample data.</strong> The live feeds couldn't be reached from this browser, so every price and grade below is simulated to show how the desk works. Don't trade on it. Hit Refresh once you're online.</div>` : '';
+  const stockNote = !settings.tdKey && !state.sample ? `<div class="banner"><strong>Stocks are off.</strong> Add a free Twelve Data key in <a href="#" data-goto="setup">Setup</a> to scan your stock watchlist alongside crypto.</div>` : '';
+  const empty = msg => `<div class="empty"><p>${msg}</p></div>`;
+  main.innerHTML = `${banner}${stockNote}
+    <p class="brief">${lines.join(' ')}</p>
+    <div class="board">
+      <section class="col"><h2>Short-term setups</h2><p class="sub">Days to a few weeks. Every one comes with a stop. Respect it.</p>
+        <div class="picks">${shortList.length ? shortList.map((a, i) => pickCard(a, i, 'short')).join('') : empty('No short-term setups grade B- or better today.')}</div></section>
+      <section class="col"><h2>Long-term holds</h2><p class="sub">Months and longer. Build these slowly, buy weakness, keep them sized so you can sleep.</p>
+        <div class="picks">${longList.length ? longList.map((a, i) => pickCard(a, i, 'long')).join('') : empty('No long-term holds grade B- or better today.')}</div></section>
+    </div>`;
+}
+
+const COLS = [
+  { key: 'asset', label: 'Asset' }, { key: 'price', label: 'Price', num: true }, { key: 'chg1d', label: '24h', num: true }, { key: 'chg7d', label: '7d', num: true },
+  { key: 'chg30d', label: '30d', num: true }, { key: 'spark', label: '30-day' }, { key: 'rsi', label: 'RSI', num: true },
+  { key: 'short', label: 'Short', num: true }, { key: 'long', label: 'Long', num: true }, { key: 'act', label: 'Call' }
+];
+function sortVal(a, k) { return k === 'short' ? a.short.score : k === 'long' ? a.long.score : k === 'asset' ? (a.rank || 0) || a.symbol : a[k]; }
+function renderTable(main, kind) {
+  const tabKey = kind === 'crypto' ? 'crypto' : 'stocks';
+  let A = state.assets.filter(a => a.kind === kind);
+  if (kind === 'stock' && !A.length && !state.sample) {
+    main.innerHTML = settings.tdKey
+      ? `<div class="empty"><h3>No stock data yet</h3><p>${esc(state.stockMsg || 'Stocks load after crypto. The free plan allows 8 symbols a minute, so a 16-symbol watchlist takes about two minutes.')}</p></div>`
+      : `<div class="empty"><h3>Turn on the stock scanner</h3><p>Stock prices need a free key from Twelve Data. It takes about a minute.</p>
+          <ol><li>Sign up free at <a href="https://twelvedata.com/pricing" target="_blank" rel="noopener">twelvedata.com</a>.</li><li>Copy your API key from the dashboard.</li><li>Paste it in <a href="#" data-goto="setup">Setup</a> and press Save.</li></ol></div>`;
+    return;
+  }
+  const f = state.filter[tabKey].toLowerCase();
+  if (f) A = A.filter(a => a.symbol.toLowerCase().includes(f) || a.name.toLowerCase().includes(f));
+  const { key, dir } = state.sort[tabKey];
+  A.sort((x, y) => { const a = sortVal(x, key), b = sortVal(y, key); return (typeof a === 'string' ? a.localeCompare(b) : (a - b)) * dir; });
+  const msg = kind === 'crypto' ? state.cryptoMsg : state.stockMsg;
+  main.innerHTML = `
+    <div class="toolbar"><input type="search" id="filter-${tabKey}" placeholder="Filter by symbol or name" value="${esc(state.filter[tabKey])}" aria-label="Filter assets">
+      <span class="note">${A.length} shown${msg && kind === 'crypto' ? ' · ' + esc(msg) : ''}. Tap a row for the chart, the reasoning and a trade plan.</span></div>
+    ${kind === 'stock' && msg && msg !== 'nokey' ? `<div class="banner">${esc(msg)}</div>` : ''}
+    <div class="tablebox"><table><thead><tr>${COLS.map(c => {
+      const sortable = c.key !== 'spark' && c.key !== 'act';
+      return `<th class="${c.num ? 'num ' : ''}${sortable ? 'sortable' : ''}" ${sortable ? `data-sort="${c.key}" tabindex="0"` : ''} ${key === c.key ? `aria-sort="${dir < 0 ? 'descending' : 'ascending'}"` : ''}>${c.label}${key === c.key ? (dir < 0 ? ' ↓' : ' ↑') : ''}</th>`;
+    }).join('')}</tr></thead><tbody>${A.map(a => {
+      const ac = action(a.short.score, 'short');
+      return `<tr data-id="${esc(a.id)}" tabindex="0">
+        <td><span class="asset">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy">` : ''}<span class="sym">${esc(a.symbol)}</span><span class="nm">${esc(a.name)}</span></span></td>
+        <td class="num">${fmtPrice(a.price)}</td><td class="num ${cls(a.chg1d)}">${pct(a.chg1d)}</td><td class="num ${cls(a.chg7d)}">${pct(a.chg7d)}</td><td class="num ${cls(a.chg30d)}">${pct(a.chg30d)}</td>
+        <td>${spark(a)}</td><td class="num">${isFinite(a.rsi) ? a.rsi.toFixed(0) : '–'}</td>
+        <td class="num">${tinyGrade(a.short.score)}</td><td class="num">${tinyGrade(a.long.score)}</td><td><span class="chip ${ac.c}">${ac.label}</span></td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  const inp = $('#filter-' + tabKey);
+  inp.addEventListener('input', () => { state.filter[tabKey] = inp.value; const pos = inp.selectionStart; renderTable(main, kind); const n = $('#filter-' + tabKey); n.focus(); n.setSelectionRange(pos, pos); });
+  main.querySelectorAll('th[data-sort]').forEach(th => {
+    const go = () => { const k = th.dataset.sort, s = state.sort[tabKey]; if (s.key === k) s.dir *= -1; else { s.key = k; s.dir = k === 'asset' ? 1 : -1; } renderTable(main, kind); };
+    th.addEventListener('click', go); th.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
+}
+
+function renderSetup(main) {
+  main.innerHTML = `<form class="form" id="setupForm">
+    <div><h2 style="font-size:22px;text-transform:uppercase;font-stretch:80%">Setup</h2><p class="note">Saved only in this browser. Keys never leave your device except to call each data provider directly.</p></div>
+    <div class="row3">
+      <div class="field"><label for="s-account">Trading account ($)</label><input id="s-account" type="number" min="10" step="10" value="${settings.account}"><span class="hint">The money you're actually putting at risk.</span></div>
+      <div class="field"><label for="s-risk">Risk per trade (%)</label><input id="s-risk" type="number" min="0.25" max="10" step="0.25" value="${settings.riskPct}"><span class="hint">How much you lose if the stop hits. Pros use 0.5–2%.</span></div>
+      <div class="field"><label for="s-maxpos">Max per position (%)</label><input id="s-maxpos" type="number" min="5" max="100" step="5" value="${settings.maxPosPct}"><span class="hint">Caps any single position.</span></div>
+    </div>
+    <div class="field"><label for="s-td">Twelve Data API key (stocks)</label><input id="s-td" type="password" autocomplete="off" value="${esc(settings.tdKey)}" placeholder="Free at twelvedata.com"><span class="hint">Free plan: 800 calls a day, 8 symbols a minute. Stock history is cached for 4 hours to save calls.</span></div>
+    <div class="field"><label for="s-fh">Finnhub API key (news)</label><input id="s-fh" type="password" autocomplete="off" value="${esc(settings.fhKey)}" placeholder="Free at finnhub.io"><span class="hint">Adds headline tone to every grade and the market news read.</span></div>
+    <div class="field"><label for="s-watch">Stock watchlist</label><textarea id="s-watch" rows="3">${esc(settings.watchlist)}</textarea><span class="hint">Tickers separated by commas. Keep SPY in so the desk can read the stock market backdrop.</span></div>
+    <div class="field"><label for="s-count">Crypto coins to scan</label><input id="s-count" type="number" min="10" max="120" step="10" value="${settings.cryptoCount}"><span class="hint">Top coins by market cap, stablecoins and wrapped tokens removed.</span></div>
+    <div class="toolbar"><button class="btn primary" type="submit">Save and refresh</button><button class="btn" type="button" id="clearCache">Clear stock cache</button><span class="note" id="saveNote" role="status"></span></div>
+  </form>`;
+  $('#setupForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const num = (id, d) => { const v = parseFloat($(id).value); return isFinite(v) && v > 0 ? v : d; };
+    const oldWatch = settings.watchlist;
+    Object.assign(settings, { account: num('#s-account', 500), riskPct: clamp(num('#s-risk', 2), 0.1, 10), maxPosPct: clamp(num('#s-maxpos', 25), 1, 100),
+      tdKey: $('#s-td').value.trim(), fhKey: $('#s-fh').value.trim(), watchlist: $('#s-watch').value, cryptoCount: clamp(Math.round(num('#s-count', 60)), 10, 120) });
+    const ok = store.set('settings', settings);
+    $('#saveNote').textContent = ok ? 'Saved. Refreshing data…' : 'Saved for this visit only (this browser blocks storage).';
+    if (oldWatch !== settings.watchlist) state.assets = state.assets.filter(a => a.kind !== 'stock');
+    state.assets.forEach(a => { a.plan = tradePlan(a); });
+    refresh();
+  });
+  $('#clearCache').addEventListener('click', () => { store.set('stockCache', { data: {} }); $('#saveNote').textContent = 'Stock cache cleared.'; });
+}
+
+function renderPlaybook(main) {
+  const acct = settings.account, r = settings.riskPct / 100;
+  const rows = [10, 25, 50].map(l => `<tr><td class="num">-${l}%</td><td class="num">+${(100 * (1 / (1 - l / 100) - 1)).toFixed(0)}%</td><td class="num">${fmtUSD(acct * (1 - l / 100))}</td></tr>`).join('');
+  main.innerHTML = `<article class="playbook">
+    <h2>The playbook</h2>
+    <p>Small money grows fast in one way only: you stay in the game long enough for a few big winners to show up. Fast money that ignores risk is how accounts go to zero. So the desk is built around one idea. Protect the account first, then let the winners run.</p>
+    <h3>The rules</h3>
+    <ol>
+      <li><b>Risk ${settings.riskPct}% per trade, never more.</b> On ${fmtUSD(acct)} that's ${fmtUSD(acct * r)}. If the stop hits, that's the whole loss. Every trade plan on this desk is sized to that number.</li>
+      <li><b>The stop goes in the moment you buy.</b> Use the stop price on the card as a real stop order. Moving it lower because you "believe" in the trade is the most expensive habit in trading.</li>
+      <li><b>Sell half at target one, trail the rest.</b> Target one is 1.5× your risk. Once it hits, move your stop to your entry price. The rest of the trade is now free.</li>
+      <li><b>Only trade A-grade setups.</b> B-grades are for the watchlist. If nothing grades A, do nothing. Cash is a position.</li>
+      <li><b>When the backdrop is risk-off, halve your size.</b> Most coins and stocks fall together when the market turns.</li>
+      <li><b>Never chase.</b> RSI above 75 or price far above its 20-day means you're late. Wait for the pullback the desk flags.</li>
+      <li><b>Keep long-term holds separate.</b> Build them slowly, in pieces, on red days. Don't trade them on the short-term signal.</li>
+      <li><b>No leverage, no futures, no options until you've been profitable for six months.</b> Leverage turns a normal bad week into a wiped account.</li>
+    </ol>
+    <h3>Why the math is on your side only if you size small</h3>
+    <p>Losses compound against you faster than gains compound for you:</p>
+    <div class="ruin"><table><thead><tr><th>If you lose</th><th class="num">You need to make back</th><th class="num">Your ${fmtUSD(acct)} becomes</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p>With 2% risk per trade, ten losers in a row still leaves you with about 82% of the account. With 20% risk, ten losers leaves you with about 11%.</p>
+    <h3>How to read a grade</h3>
+    <p>Each asset gets two grades from A+ to F. <b>Short-term</b> reads the next few days to weeks: trend versus the 20 and 50-day averages, MACD and RSI momentum, volume, how stretched price is, the news tone and the market backdrop. <b>Long-term</b> reads months: the 200-day trend, six-month momentum adjusted for volatility, distance from the 1-year high, size and liquidity.</p>
+    <p>Open any asset to see the evidence. The <b>signal history</b> panel shows what happened over the next 10 days every past time that asset graded A- or better, against a random day. If the signal has no edge on that asset, the desk tells you.</p>
+    <h3>What the desk can't see</h3>
+    <p>Earnings dates, company balance sheets, token unlocks, regulatory news after the close, and anything a headline can't capture. Check the earnings date before you buy a stock for a short-term trade. A surprise there can jump right past your stop.</p>
+  </article>`;
+}
+
+function render() {
+  renderRegime();
+  document.querySelectorAll('nav.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === state.tab)));
+  const main = $('#main');
+  if (state.tab === 'picks') renderPicks(main);
+  else if (state.tab === 'crypto') renderTable(main, 'crypto');
+  else if (state.tab === 'stocks') renderTable(main, 'stock');
+  else if (state.tab === 'playbook') renderPlaybook(main);
+  else if (state.tab === 'setup') { if (!$('#setupForm')) renderSetup(main); }
+  if ($('#sheet').open && state.openId) { const a = state.assets.find(x => x.id === state.openId); if (a) openSheet(a, true); }
+}
+
+/* ---------- detail sheet ---------- */
+function openSheet(a, keepOpen) {
+  state.openId = a.id;
+  const p = a.plan, bt = a.bt, i = a.S.close.length - 1;
+  const reasonList = sc => `<ul class="reasons">${sc.reasons.slice().sort((x, y) => y.w - x.w).map(r => `<li><span class="w ${cls(r.w)}">${r.w > 0 ? '+' : ''}${Math.round(r.w)}</span><span>${esc(r.t)}</span></li>`).join('')}</ul>`;
+  const sa = action(a.short.score, 'short'), la = action(a.long.score, 'long');
+  const edge = bt.n >= 5 ? (bt.avg - bt.baseAvg) : NaN;
+  const btText = bt.n < 5
+    ? `Only ${bt.n} past A-grade signals on this asset. Too few to judge the signal here.`
+    : edge > 0.005 ? `On this asset, A-grade signals have beaten a random day by ${pct(edge)} over ${bt.fwd} days.` : `On this asset the signal hasn't added an edge. Treat its grade with extra caution.`;
+  const news = a.news && a.news.items.length
+    ? `<ul class="news">${a.news.items.map(n => `<li><span class="chip ${n.tone > 0.2 ? 'c-buy' : n.tone < -0.2 ? 'c-avoid' : 'c-neutral'}">${n.tone > 0.2 ? 'Pos' : n.tone < -0.2 ? 'Neg' : 'Neu'}</span><span><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.headline)}</a><br><span class="meta">${esc(n.source)} · ${ago(n.datetime * 1000)}</span></span></li>`).join('')}</ul>`
+    : `<p class="note">${settings.fhKey ? 'No recent headlines matched this asset.' : 'Add a free Finnhub key in Setup to read the news on every asset.'}</p>`;
+  $('#sheetBody').innerHTML = `
+    <div class="sheet-head">
+      ${a.image ? `<img src="${esc(a.image)}" alt="" width="32" height="32" style="border-radius:50%">` : ''}
+      <h2 id="sheetTitle">${esc(a.symbol)} <span class="muted" style="font-size:15px;font-weight:500;font-family:var(--body)">${esc(a.name)}${a.rank ? ' · #' + a.rank : ''}</span></h2>
+      <span class="px">${fmtPrice(a.price)} <span class="${cls(a.chg1d)}" style="font-size:14px">${pct(a.chg1d)}</span></span>
+      <button class="btn close" type="button" id="closeSheet">Close</button>
+    </div>
+    ${state.sample ? '<div class="banner"><strong>Sample data.</strong> Simulated prices for illustration only.</div>' : ''}
+    <div><div class="chartbox"><canvas id="chart" role="img" aria-label="${esc(a.symbol)} daily price, last 180 days, with 20, 50 and 200-day averages"></canvas></div>
+      <div class="legend"><span><i style="background:var(--ink)"></i>Price</span><span><i style="background:var(--sma20)"></i>20-day</span><span><i style="background:var(--sma50)"></i>50-day</span><span><i style="background:var(--sma200)"></i>200-day</span><span>Bars: volume</span></div></div>
+    <div class="grid2">
+      <div class="panel"><h3>Short-term · days to weeks</h3><div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">${gradeBox(a.short.score)}<span class="chip ${sa.c}">${sa.label}</span></div>${reasonList(a.short)}</div>
+      <div class="panel"><h3>Long-term · months+</h3><div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">${gradeBox(a.long.score)}<span class="chip ${la.c}">${la.label}</span></div>${reasonList(a.long)}</div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Trade plan for your ${fmtUSD(settings.account)}</h3>
+        <dl class="kv">
+          <dt>Entry</dt><dd>${fmtPrice(p.entry)}</dd>
+          <dt>Stop loss (2× ATR)</dt><dd class="down">${fmtPrice(p.stop)} (-${(p.stopPct * 100).toFixed(1)}%)</dd>
+          <dt>Target 1: sell half</dt><dd class="up">${fmtPrice(p.t1)} (+${(p.stopPct * 150).toFixed(1)}%)</dd>
+          <dt>Target 2: trail the rest</dt><dd class="up">${fmtPrice(p.t2)} (+${(p.stopPct * 300).toFixed(1)}%)</dd>
+          <dt>Position size</dt><dd>${fmtUnits(p.units)} ${a.kind === 'stock' ? 'shares' : a.symbol} · ${fmtUSD(p.cost)}</dd>
+          <dt>Max loss if stopped</dt><dd class="down">${fmtUSD(p.risk)}</dd>
+          <dt>Long-term add zone (50-day)</dt><dd>${fmtPrice(p.addZone)}</dd>
+          ${isFinite(p.invalidate) ? `<dt>Long thesis breaks under (200-day)</dt><dd>${fmtPrice(p.invalidate)}</dd>` : ''}
+        </dl>
+        <p class="note" style="margin:10px 0 0">${p.capped ? `Capped at your ${settings.maxPosPct}% max position, so the real risk is below ${settings.riskPct}%. ` : `Sized so a stop-out costs ${settings.riskPct}% of the account. `}${a.kind === 'stock' ? 'Most brokers allow fractional shares.' : ''}</p></div>
+      <div class="panel"><h3>Signal history on ${esc(a.symbol)}</h3>
+        <dl class="kv">
+          <dt>Past A-grade signals</dt><dd>${bt.n}</dd>
+          <dt>Up after ${bt.fwd} days</dt><dd>${isFinite(bt.hit) ? (bt.hit * 100).toFixed(0) + '%' : '–'}</dd>
+          <dt>Average ${bt.fwd}-day move</dt><dd class="${cls(bt.avg)}">${pct(bt.avg)}</dd>
+          <dt>Any random day: up</dt><dd>${isFinite(bt.baseHit) ? (bt.baseHit * 100).toFixed(0) + '%' : '–'}</dd>
+          <dt>Any random day: average move</dt><dd class="${cls(bt.baseAvg)}">${pct(bt.baseAvg)}</dd>
+        </dl>
+        <p class="note" style="margin:10px 0 0">${btText} Past results on ${bt.baseN} trading days. Signals overlap and history doesn't repeat exactly.</p></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Indicators</h3><dl class="kv">
+        <dt>RSI (14)</dt><dd>${isFinite(a.S.rsi[i]) ? a.S.rsi[i].toFixed(1) : '–'}</dd>
+        <dt>ATR (14)</dt><dd>${fmtPrice(a.S.atr[i])}</dd>
+        <dt>20 / 50 / 200-day</dt><dd>${fmtPrice(a.S.sma20[i])} / ${fmtPrice(a.S.sma50[i])} / ${fmtPrice(a.S.sma200[i])}</dd>
+        <dt>7d / 30d change</dt><dd><span class="${cls(a.chg7d)}">${pct(a.chg7d)}</span> / <span class="${cls(a.chg30d)}">${pct(a.chg30d)}</span></dd>
+        <dt>From 1-year high</dt><dd>${pct(a.S.close[i] / a.S.hi252[i] - 1)}</dd>
+        ${a.mcap ? `<dt>Market cap</dt><dd>${fmtUSD(a.mcap)}</dd>` : ''}
+      </dl>${a.closeOnly ? '<p class="note">Daily closes only for this coin, so ATR is approximate.</p>' : ''}</div>
+      <div class="panel"><h3>News ${a.news && a.news.count ? `· tone <span class="${cls(a.news.score)}">${a.news.score > 0.08 ? 'positive' : a.news.score < -0.08 ? 'negative' : 'neutral'}</span>` : ''}</h3>${news}</div>
+    </div>`;
+  $('#closeSheet').addEventListener('click', () => $('#sheet').close());
+  if (!keepOpen) $('#sheet').showModal();
+  requestAnimationFrame(() => drawChart(a));
+}
+
+function drawChart(a) {
+  const cv = $('#chart'); if (!cv) return;
+  const css = getComputedStyle(document.documentElement), col = n => css.getPropertyValue(n).trim();
+  const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+  const n = Math.min(180, a.S.close.length), off = a.S.close.length - n;
+  const sl = arr => arr.slice(off);
+  const c = sl(a.S.close), s20 = sl(a.S.sma20), s50 = sl(a.S.sma50), s200 = sl(a.S.sma200), v = sl(a.S.vol), t = sl(a.S.t);
+  const all = c.concat(s20, s50, s200).filter(isFinite);
+  let mn = Math.min(...all), mx = Math.max(...all); const pad = (mx - mn) * 0.06; mn -= pad; mx += pad;
+  const L = 8, R = 74, T = 10, B = 22, volH = (H - T - B) * 0.18, pH = H - T - B - volH - 6;
+  const x = i => L + i / (n - 1) * (W - L - R), y = p => T + (mx - p) / (mx - mn) * pH;
+  g.font = '11px ' + col('--mono'); g.textBaseline = 'middle'; g.lineWidth = 1;
+  for (let k = 0; k <= 4; k++) {
+    const p = mn + (mx - mn) * k / 4, yy = y(p);
+    g.strokeStyle = col('--line'); g.beginPath(); g.moveTo(L, yy); g.lineTo(W - R, yy); g.stroke();
+    g.fillStyle = col('--muted'); g.textAlign = 'left'; g.fillText(fmtPrice(p), W - R + 6, yy);
+  }
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  for (let k = 0; k < n; k += Math.ceil(n / 5)) { const d = new Date(t[k]); g.fillStyle = col('--muted'); g.fillText(d.toLocaleDateString([], { month: 'short', day: 'numeric' }), x(k), H - 6); }
+  const vmax = Math.max(...v) || 1, vb = T + pH + 6 + volH, bw = Math.max(1, (W - L - R) / n - 1);
+  for (let k = 0; k < n; k++) { const up = k === 0 || c[k] >= c[k - 1]; g.fillStyle = up ? col('--up') : col('--down'); g.globalAlpha = 0.35; const hh = v[k] / vmax * volH; g.fillRect(x(k) - bw / 2, vb - hh, bw, hh); }
+  g.globalAlpha = 1;
+  const line = (arr, color, w) => { g.strokeStyle = color; g.lineWidth = w; g.beginPath(); let st = false; arr.forEach((p, k) => { if (!isFinite(p)) return; if (!st) { g.moveTo(x(k), y(p)); st = true; } else g.lineTo(x(k), y(p)); }); g.stroke(); };
+  const grad = g.createLinearGradient(0, T, 0, T + pH); grad.addColorStop(0, col('--accent')); grad.addColorStop(1, 'transparent');
+  g.save(); g.globalAlpha = 0.12; g.fillStyle = grad; g.beginPath(); g.moveTo(x(0), T + pH); c.forEach((p, k) => g.lineTo(x(k), y(p))); g.lineTo(x(n - 1), T + pH); g.closePath(); g.fill(); g.restore();
+  line(s200, col('--sma200'), 1.5); line(s50, col('--sma50'), 1.5); line(s20, col('--sma20'), 1.5); line(c, col('--ink'), 2);
+  const p = a.plan;
+  [[p.stop, col('--down'), 'Stop'], [p.t1, col('--up'), 'T1']].forEach(([lv, cc, lab]) => {
+    if (lv < mn || lv > mx) return; g.setLineDash([4, 4]); g.strokeStyle = cc; g.lineWidth = 1; g.beginPath(); g.moveTo(L, y(lv)); g.lineTo(W - R, y(lv)); g.stroke(); g.setLineDash([]);
+    g.fillStyle = cc; g.textAlign = 'left'; g.fillText(lab, L + 2, y(lv) - 4);
+  });
+  const lx = x(n - 1), ly = y(c[n - 1]); g.fillStyle = col('--ink'); g.beginPath(); g.arc(lx, ly, 3.5, 0, Math.PI * 2); g.fill();
+}
+
+/* ---------- events ---------- */
+document.querySelector('nav.tabs').addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (!b) return; state.tab = b.dataset.tab; store.set('tab', state.tab); render(); });
+document.addEventListener('click', e => {
+  const go = e.target.closest('[data-goto]'); if (go) { e.preventDefault(); state.tab = go.dataset.goto; render(); return; }
+  const row = e.target.closest('[data-id]'); if (row && !e.target.closest('a')) { const a = state.assets.find(x => x.id === row.dataset.id); if (a) openSheet(a); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('tr[data-id]')) { const a = state.assets.find(x => x.id === e.target.dataset.id); if (a) openSheet(a); } });
+$('#sheet').addEventListener('click', e => { if (e.target === $('#sheet')) $('#sheet').close(); });
+$('#refreshBtn').addEventListener('click', () => refresh());
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if ($('#sheet').open) { const a = state.assets.find(x => x.id === state.openId); if (a) drawChart(a); } }, 150); });
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if ($('#sheet').open) { const a = state.assets.find(x => x.id === state.openId); if (a) drawChart(a); } });
+setInterval(() => { if (!state.busy && !state.sample && document.visibilityState === 'visible' && state.updated && Date.now() - state.updated > 15 * 60e3) refresh(); }, 60e3);
+
+state.tab = ['picks', 'crypto', 'stocks', 'playbook', 'setup'].includes(store.get('tab', 'picks')) ? store.get('tab', 'picks') : 'picks';
+render();
+refresh();
+</script>
+</body>
+</html>
